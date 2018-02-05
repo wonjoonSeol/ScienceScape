@@ -205,6 +205,11 @@ coverage.xml
 
 # Django stuff:
 *.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media
 local_settings.py
 
 # Flask stuff:
