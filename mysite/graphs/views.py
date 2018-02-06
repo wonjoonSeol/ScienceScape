@@ -1,13 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import UploadFileForm
-from ./management/commands import UploadedFiles
+#from .commands import UploadedFiles
 
 
-def home(request) :
-	return render(request, 'index.html')
-
-def upload_file(request):
+def home(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -15,4 +12,4 @@ def upload_file(request):
             return HttpResponseRedirect('/success/url/')
     else:
         form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form})
+    return render(request, 'index.html', {'form': form})
