@@ -21,7 +21,7 @@ def add_annotations(items_name,references_article_grouped,g):
 	# add item category
 	with codecs.open(os.path.join(CONFIG["parsed_data"],span,"%s.dat"%items_name),"r",encoding="UTF-8") as items_file:
 		articles_items=[(l.split("\t")[0],l.split("\t")[-1]) for l in items_file.read().split("\n")[:-1]]
-		if CONFIG["process_verbose"] : print "imported %s"%items_name
+		if CONFIG["process_verbose"] : print("imported %s"%items_name)
 	
 	# grouping by item
 	articles_items.sort(key=lambda e:e[1])
@@ -30,13 +30,13 @@ def add_annotations(items_name,references_article_grouped,g):
 	# filtering by occ
 	items_occs=dict((item,len(items_arts)) for item,items_arts in item_articles_grouped if len(items_arts)>=CONFIG["spans"][span][items_name]["occ"])
 	article_items = [t for _ in (items_arts for item,items_arts in item_articles_grouped if len(items_arts)>=CONFIG["spans"][span][items_name]["occ"]) for t in _]
-	if CONFIG["report_verbose"] :print "filtered %s by occ>=%s"%(items_name,CONFIG["spans"][span][items_name]["occ"])
+	if CONFIG["report_verbose"] :print("filtered %s by occ>=%s"%(items_name,CONFIG["spans"][span][items_name]["occ"]))
 	del item_articles_grouped 
 
 	# grouping by article
 	article_items.sort(key=lambda e:e[0])
 	article_items = dict((a,list(s for _,s in a_s )) for (a,a_s) in itertools.groupby(article_items,key=lambda e:e[0]) )
-	if CONFIG["process_verbose"] : print "%s grouped by articles"%items_name
+	if CONFIG["process_verbose"] : print("%s grouped by articles"%items_name)
 
 	for r,r_as in references_article_grouped:
 		# print r_as
@@ -57,10 +57,10 @@ def add_annotations(items_name,references_article_grouped,g):
 		del items_filtered
 
 	
-	if CONFIG["process_verbose"] : print "remove nodes with degree = 0"
+	if CONFIG["process_verbose"] : print("remove nodes with degree = 0")
 	g.remove_nodes_from(r for (r,d) in g.degree_iter() if d <1)
 	nb_items_added=len(g.nodes())-nb_nodes_before
-	if CONFIG["report_verbose"] : print "added %s %s nodes in network"%(nb_items_added,items_name)
+	if CONFIG["report_verbose"] : print("added %s %s nodes in network"%(nb_items_added,items_name))
 	CONFIG["spans"][span][items_name]["occ_filtered"]=nb_items_added
 	return g
 
@@ -73,30 +73,30 @@ if CONFIG["report_csv"]:
 
 for span in sorted(CONFIG["spans"]):
 
-	if CONFIG["process_verbose"] or CONFIG["report_verbose"] : print "\n#%s"%span
+	if CONFIG["process_verbose"] or CONFIG["report_verbose"] : print("\n#%s"%span)
 
 	g=networkx.Graph()
 	if CONFIG["export_ref_format"] =="gexf":
-		if CONFIG["process_verbose"] : print "read gexf"
-		g=networkx.read_gexf(os.path.join(CONFIG["parsed_data"],span,"%s.gexf"%span),node_type=unicode)
+		if CONFIG["process_verbose"] : print("read gexf")
+		g=networkx.read_gexf(os.path.join(CONFIG["parsed_data"],span,"%s.gexf"%span),node_type=str)
 	elif CONFIG["export_ref_format"] == "edgelist":
-		if CONFIG["process_verbose"] : print "read csv export"
+		if CONFIG["process_verbose"] : print("read csv export")
 		g=networkx.read_weighted_edgelist(os.path.join(CONFIG["parsed_data"],span,"%s.csv"%span),delimiter="\t")
 	elif CONFIG["export_ref_format"] == "pajek":
-		if CONFIG["process_verbose"] : print "read pajek export"
+		if CONFIG["process_verbose"] : print("read pajek export")
 		g=networkx.read_pajek(os.path.join(CONFIG["parsed_data"],span,"%s.csv"%span))
 	elif CONFIG["export_ref_format"] == "json":
-		if CONFIG["process_verbose"] : print "read pajek export"
+		if CONFIG["process_verbose"] : print("read pajek export")
 		data=json.load(open(os.path.join(CONFIG["parsed_data"],span,"%s.json"%span),"r"),encoding="UTF-8")
 		g=json_graph.node_link_graph(data)
 	else:
-		print  "no export compatible export format specified"
+		print("no export compatible export format specified")
 		exit(1)
 
 	network_references=g.nodes()
 	nb_network_references=len(network_references)
 
-	if CONFIG["report_verbose"] : print "load %s ref from graph"%nb_network_references
+	if CONFIG["report_verbose"] : print("load %s ref from graph"%nb_network_references)
 	CONFIG["spans"][span]["references"]["occ_filtered"]=nb_network_references
 
 	with codecs.open(os.path.join(CONFIG["parsed_data"],span,"references.dat"),"r",encoding="UTF-8") as file:
@@ -118,14 +118,14 @@ for span in sorted(CONFIG["spans"]):
 		s2=set(network_references)
 		to_remove = s1 - s2
 		if len(to_remove)>0:
-			if CONFIG["report_verbose"] : print "filtering ref which are not in original network : removing %s ref"%len(to_remove)
+			if CONFIG["report_verbose"] : print("filtering ref which are not in original network : removing %s ref"%len(to_remove))
 			references_article_grouped=[ (r,ref_arts) for r,ref_arts in references_article_grouped if r not in to_remove]
 		del s1
 		del s2
 	del ref_filtered
 	del network_references
 	# print references_article_grouped
-	if CONFIG["report_verbose"] : print "imported, filtered and grouped references by articles"
+	if CONFIG["report_verbose"] : print("imported, filtered and grouped references by articles")
 
 	add_annotations("subjects",references_article_grouped,g)
 	add_annotations("authors",references_article_grouped,g)
@@ -133,26 +133,26 @@ for span in sorted(CONFIG["spans"]):
 	add_annotations("keywords",references_article_grouped,g)
 	add_annotations("countries",references_article_grouped,g)
 	del references_article_grouped
-	if CONFIG["report_verbose"] : print "have now %s nodes"%len(g.nodes())
+	if CONFIG["report_verbose"] : print("have now %s nodes"%len(g.nodes()))
 
 
 	if not os.path.exists(CONFIG["output_directory"]):
 	    os.mkdir(CONFIG["output_directory"])
 
 	if CONFIG["export_ref_annotated_format"] =="gexf":
-		if CONFIG["process_verbose"] : print "write gexf export"
+		if CONFIG["process_verbose"] : print("write gexf export")
 		networkx.write_gexf(g,os.path.join(CONFIG["output_directory"],"%s_annotated.gexf"%span))
 	elif CONFIG["export_ref_annotated_format"] == "edgelist":
-		if CONFIG["process_verbose"] : print "write csv export"
+		if CONFIG["process_verbose"] : print("write csv export")
 		networkx.write_weighted_edgelist(g,os.path.join(CONFIG["output_directory"],"%s_annotated.csv"%span),delimiter="\t")
 	elif CONFIG["export_ref_annotated_format"] == "pajek":
-		if CONFIG["process_verbose"] : print "write pajek export"
+		if CONFIG["process_verbose"] : print("write pajek export")
 		networkx.write_pajek(g,os.path.join(CONFIG["output_directory"],"%s_annotated.net"%span))
 	elif CONFIG["export_ref_annotated_format"] == "graphml":
-		if CONFIG["process_verbose"] : print "write pajek export"
+		if CONFIG["process_verbose"] : print("write pajek export")
 		networkx.write_graphml(g,os.path.join(CONFIG["output_directory"],"%s_annotated.graphml"%span))
 	else:
-		print  "no compatible export format specified"
+		print("no compatible export format specified")
 
 	with codecs.open(os.path.join(CONFIG["parsed_data"],span,"articles.dat"),"r",encoding="UTF-8") as articles_file:
 		nb_articles=len(articles_file.read().split("\n")[:-1])

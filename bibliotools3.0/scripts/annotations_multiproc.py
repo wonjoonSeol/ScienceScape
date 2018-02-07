@@ -60,7 +60,7 @@ def add_annotations(span,items_name,references_article_grouped,g,log):
 
     
     log("remove nodes with degree = 0")
-    g.remove_nodes_from(r for (r,d) in g.degree_iter() if d <1)
+    g.remove_nodes_from(r for (r,d) in g.degree() if d <1)
     nb_items_added=len(g.nodes())-nb_nodes_before
     log("added %s %s nodes in network"%(nb_items_added,items_name))
     return nb_items_added 
@@ -78,7 +78,7 @@ def process_span(span,span_done,log_messages):
     g=networkx.Graph()
     if CONFIG["export_ref_format"] =="gexf":
         if CONFIG["process_verbose"] : log("read gexf")
-        g=networkx.read_gexf(os.path.join(CONFIG["parsed_data"],span,"%s.gexf"%span),node_type=unicode)
+        g=networkx.read_gexf(os.path.join(CONFIG["parsed_data"],span,"%s.gexf"%span),node_type=str)
     elif CONFIG["export_ref_format"] == "edgelist":
         if CONFIG["process_verbose"] : log("read csv export")
         g=networkx.read_weighted_edgelist(os.path.join(CONFIG["parsed_data"],span,"%s.csv"%span),delimiter="\t")
@@ -224,13 +224,13 @@ while len(spans_to_process)>0 or len(span_procs)>0:
     del span_procs[s["span"]]
 
     # create a new process if needed
-    print "still %s spans to process"%len(spans_to_process)
+    print("still %s spans to process"%len(spans_to_process))
     if len(spans_to_process)>0:
         next_span=spans_to_process.pop()
         span_procs[next_span]=Process(target=process_span, args=(next_span,span_done,log_messages))
         span_procs[next_span].daemon = True
         span_procs[next_span].start()
-        print "new process on %s"%next_span
+        print("new process on %s"%next_span)
     # write csv
     if CONFIG["report_csv"]:
         csv_export=[]

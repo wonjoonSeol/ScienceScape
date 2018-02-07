@@ -76,47 +76,47 @@ def data_filter(in_dir,out_dir,verbose):
   labos_art =dict();
 
   ## OUTPUT SELECTED DATA
-  if verbose: print "..creating output data"
+  if verbose: print("..creating output data")
 
   if 1==1:
       #article 
-      if verbose: print "....copying articles"
+      if verbose: print("....copying articles")
       pl = Utils.Article()
       pl.read_file(src1)
       for l in pl.articles:
           f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (l.id,l.firstAU,l.year,l.journal,l.volume,l.page,l.doi,l.pubtype,l.doctype,l.times_cited,l.title,l.uniqueID))
       #authors
-      if verbose: print "....copying authors"
+      if verbose: print("....copying authors")
       pl = Utils.Author()
       pl.read_file(src2)
       for l in pl.authors:
           f_authors.write("%d\t%d\t%s\n" % (l.id,l.rank,l.author))
       #keywords
-      if verbose: print "....copying keywords"
+      if verbose: print("....copying keywords")
       pl = Utils.Keyword()
       pl.read_file(src3)
       for l in pl.keywords:
           f_keywords.write("%d\t%s\t%s\n" % (l.id,l.ktype,l.keyword))
       #subjects
-      if verbose: print "....copying subjects"
+      if verbose: print("....copying subjects")
       pl = Utils.Subject()
       pl.read_file(src4)
       for l in pl.subjects:
           f_subjects.write("%d\t%s\n" % (l.id,l.subject))
       #references
-      if verbose: print "....copying references"
+      if verbose: print("....copying references")
       pl = Utils.Ref()
       pl.read_file(src5)
       for l in pl.refs:
           f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" % (l.id,l.firstAU,l.year,l.journal,l.volume,l.page))
       #countries 
-      if verbose: print "....copying countries"
+      if verbose: print("....copying countries")
       pl = Utils.Country()
       pl.read_file(src6)
       for l in pl.countries:
           f_countries.write("%d\t%d\t%s\n" % (l.id,l.rank,l.country))
       #institutions
-      if verbose: print "....cleaning institutions / extracting labs"
+      if verbose: print("....cleaning institutions / extracting labs")
       pl = Utils.Institution()
       pl.read_file(src7)
       for l in pl.institutions:
@@ -140,7 +140,7 @@ def data_filter(in_dir,out_dir,verbose):
 
   f_hom = open("labos_homonyms.dat",'w')
   for labo in kompt_labos: 
-    L_hom = kompt_labos[labo].items()
+    L_hom = list(kompt_labos[labo].items())
     L_hom.sort(cmpval)
     f_hom.write("%s\n--------\n" % (labo) )
     for elm in L_hom:
@@ -149,7 +149,7 @@ def data_filter(in_dir,out_dir,verbose):
   f_hom.close()
  
   ## END
-  if verbose: print "..Done!"
+  if verbose: print("..Done!")
 
   f_articles.close()
   f_authors.close()
@@ -210,11 +210,11 @@ def main():
   args = parser.parse_args()
   
   if (not os.path.exists(args.in_dir[0])):
-      print "Error: Input directory does not exist: ", args.in_dir[0]
+      print("Error: Input directory does not exist: ", args.in_dir[0])
       exit()
 
   if (not os.path.exists(args.out_dir[0])):
-      print "Error: Output directory does not exist: ", args.out_dir[0]
+      print("Error: Output directory does not exist: ", args.out_dir[0])
       exit()
 
   ##      

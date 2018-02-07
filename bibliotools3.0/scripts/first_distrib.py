@@ -56,7 +56,7 @@ def first_distrib(in_dir,verbose):
 
 
   ## CREATE HETEROGENEOUS TABLE
-  if verbose: print "..creating tables"
+  if verbose: print("..creating tables")
  
   het_table = dict();
   Y_table = dict();
@@ -115,8 +115,8 @@ def first_distrib(in_dir,verbose):
       if l.id not in het_table[('C',l.country)]: het_table[('C',l.country)].append( l.id )
 
   ## OUTPUT PROBA TABLES
-  if verbose: print "..nb_art = %d" % (nb_art) 
-  if verbose: print "..output 'proba_*.dat' tables"
+  if verbose: print("..nb_art = %d" % (nb_art)) 
+  if verbose: print("..output 'proba_*.dat' tables")
 
   #create and sort lists
   Y_list = []
@@ -180,7 +180,7 @@ def first_distrib(in_dir,verbose):
 
 
   ## PLOT DISTRIB
-  if verbose: print "..plot distrib"
+  if verbose: print("..plot distrib")
 
   xxY = []
   yyY = []
@@ -308,7 +308,7 @@ def main():
   args = parser.parse_args()
   
   if (not os.path.exists(args.in_dir[0])):
-      print "Error: Input directory does not exist: ", args.in_dir[0]
+      print("Error: Input directory does not exist: ", args.in_dir[0])
       exit()
 
   ##      

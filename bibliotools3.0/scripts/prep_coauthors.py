@@ -28,7 +28,7 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
   src2  = os.path.join(in_dir, "authors.dat")
 
   ## CREATE HETEROGENEOUS TABLE
-  if verbose: print "..create authors table"
+  if verbose: print("..create authors table")
  
   het_table = dict();
   Y_table = dict();
@@ -64,9 +64,9 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
   confirm = 'n'
   while confirm != 'y':
       confirm_threshold(vA,len(A_list),yyA,nb_art)
-      confirm = raw_input("Confirm (y/n): ")
+      confirm = input("Confirm (y/n): ")
       if confirm == 'n':
-          vA  = input("threshold for authors, used at least ? times:")
+          vA  = eval(input("threshold for authors, used at least ? times:"))
 
   ## ... selecting relevant data thanks to the thresholds
   het_table2 = dict()
@@ -76,21 +76,21 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
 
   confirm = 'n'; l_thr=1
   while confirm != 'y':
-      print "We keep links between nodes co-used at least %d times" % (l_thr)
-      confirm = raw_input("Confirm (y/n): ")
+      print("We keep links between nodes co-used at least %d times" % (l_thr))
+      confirm = input("Confirm (y/n): ")
       if confirm == 'n':
-          l_thr  = input("threshold for links -- nodes should be co-used at least ? times:")
+          l_thr  = eval(input("threshold for links -- nodes should be co-used at least ? times:"))
 
   ## PREP GEPHI STATIC COAUTHORS NETWORK FILE 
   if(dyn_window == 0):
-      if verbose: print "..Preparing the gdf file"
+      if verbose: print("..Preparing the gdf file")
 
       ## ... ini
       dst = os.path.join(out_dir, "coauthors_static.gdf")
       f_gephi = open(dst,'w')
  
       ## ... prep nodes
-      if verbose: print "Nodes..........."
+      if verbose: print("Nodes...........")
 
       id_table = dict()
       i = 0
@@ -103,11 +103,11 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
       i_range = i
 
       ## ... prep edges
-      if verbose: print "Edges..........."
+      if verbose: print("Edges...........")
 
       e = len(het_table2) * len(het_table2) / 2; ee = 0; p=5 
       f_gephi.write("edgedef>node1 VARCHAR,node2 VARCHAR,weight DOUBLE,nb_comm DOUBLE")
-      if verbose: print "0%"
+      if verbose: print("0%")
       for i in range(i_range):
           for j in range(i_range):
               if(i < j):
@@ -118,8 +118,8 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
                   for u in het_table2[elm_i]:
                       if u in het_table2[elm_j]: nb_comm += 1       
                   if nb_comm >= l_thr: f_gephi.write("\n%d,%d,%f,%d" % (i, j, nb_comm/math.sqrt(li*lj), nb_comm) ) 
-                  if (ee > (1.0 * e * p) / 100) and verbose: print "%d%%" % (p); p +=5
-      if verbose: print "100%"
+                  if (ee > (1.0 * e * p) / 100) and verbose: print("%d%%" % (p)); p +=5
+      if verbose: print("100%")
 
       ## ... end
       f_gephi.close() 
@@ -127,7 +127,7 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
 
   ## PREP GEPHI DYNAMIC HETEROGENEOUS NETWORK FILE 
   if(dyn_window > 0):
-      if verbose: print "..Preparing the gexf file"
+      if verbose: print("..Preparing the gexf file")
 
       ## ... ini
       dst = os.path.join(out_dir, "coauthors_dyn.gexf")
@@ -136,7 +136,7 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
 
  
       ## ... prep nodes
-      if verbose: print "Nodes..........."
+      if verbose: print("Nodes...........")
       id_table = dict()
       het_table3 = dict()
       i = 0
@@ -173,10 +173,10 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
 
 
       ## ... prep edges
-      if verbose: print "Edges..........."
+      if verbose: print("Edges...........")
       e = i_range * i_range / 2; ee = 0; p=5 
       f_gephi.write("\t<edges>\n")
-      if verbose: print "0%"
+      if verbose: print("0%")
       for i in range(i_range):
           for j in range(i_range):
               if(i < j):
@@ -205,9 +205,9 @@ def prep_coA(in_dir,out_dir,dyn_window,verbose):
                           f_gephi.write("\t\t\t<spell start=\"%d-01-01\" end=\"%d-12-31\"/>\n" % (y, y + dyn_window -1) )  
                       f_gephi.write("\t\t</spells>\n\t</edge>\n")  
 
-                  if (ee > (1.0 * e * p) / 100) and verbose: print "%d%%" % (p); p +=5
+                  if (ee > (1.0 * e * p) / 100) and verbose: print("%d%%" % (p)); p +=5
               #end edge
-      if verbose: print "100%"
+      if verbose: print("100%")
 
       f_gephi.write("\t</edges>\n")
 
@@ -231,7 +231,7 @@ def confirm_threshold(vA,lA,yyA,nb_art):
   while v <= nb_art: auxA += yyA[v]; v += 1
 
   
-  print "..THRESHOLD proposed: keep authors appearing in at least ...x... articles (this ensures faster computing and lighter gexf output files. Keep in mind that additionnal filtering can also be performed later with GEPHI):\n..Authors used in at least ...%d... articles\n ==> %d authors out of %d" % (vA,auxA,lA)
+  print("..THRESHOLD proposed: keep authors appearing in at least ...x... articles (this ensures faster computing and lighter gexf output files. Keep in mind that additionnal filtering can also be performed later with GEPHI):\n..Authors used in at least ...%d... articles\n ==> %d authors out of %d" % (vA,auxA,lA))
 
 ## ##################################################
 ## ##################################################
@@ -276,11 +276,11 @@ def main():
   args = parser.parse_args()
   
   if (not os.path.exists(args.in_dir[0])):
-      print "Error: Input directory does not exist: ", args.in_dir[0]
+      print("Error: Input directory does not exist: ", args.in_dir[0])
       exit()
 
   if (not os.path.exists(args.out_dir[0])):
-      print "Error: Output directory does not exist: ", args.out_dir[0]
+      print("Error: Output directory does not exist: ", args.out_dir[0])
       exit()
   ##      
 

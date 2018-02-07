@@ -3,7 +3,6 @@ from parser import Wos_parser
 from config import CONFIG
 import traceback
 
-
 indir=os.path.dirname(CONFIG["one_file_corpus"])
 output_dir=CONFIG["wos_data_grouped"]
 if not os.path.exists(os.path.join(indir,output_dir)):
@@ -12,10 +11,10 @@ outdir_prefix=CONFIG["parsed_data"]
 if not os.path.exists(outdir_prefix):
 	os.mkdir(outdir_prefix)
 
-years_spans=dict((s,data["years"]) for s,data in CONFIG["spans"].iteritems())
+years_spans=dict((s,data["years"]) for s,data in CONFIG["spans"].items())
 
 files={}
-for (l,ys) in years_spans.iteritems():
+for (l,ys) in years_spans.items():
 	if not os.path.exists(os.path.join(indir,output_dir,l)):
 		os.mkdir(os.path.join(indir,output_dir,l))
 	if os.path.exists(os.path.join(indir,output_dir,l,l)+".txt"):
@@ -29,16 +28,16 @@ for line in onefile_output.readlines():
 	# filter blank lines
 	if "\t" in line:
 		try:
-			y=int(line.split("\t")[42])
-			for (l,ys) in years_spans.iteritems():
+			y=int(line.split("\t")[CONFIG["year_index_position"]])
+			for (l,ys) in years_spans.items():
 				if y >= ys[0] and y<= ys[1]:
 					files[l].write(line)
 		
 		except Exception as e:
-			print traceback.format_exc()
+			print(traceback.format_exc())
 			exit()
 
-for (l,ys) in years_spans.iteritems():
+for (l,ys) in years_spans.items():
 	files[l].close()
 	if not os.path.exists(os.path.join(outdir_prefix,l)):
 		os.mkdir(os.path.join(outdir_prefix,l))

@@ -30,7 +30,7 @@ punctuation = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '.', 
 def Wos_parser(in_dir,out_dir,verbose):
 
   ## INITIALIZATION
-  if verbose: print "..Analysing files %s/*.txt" % (in_dir)
+  if verbose: print("..Analysing files %s/*.txt" % (in_dir))
 
   srccomp = "%s/*.txt" % in_dir
   srclst = glob.glob(srccomp)
@@ -65,7 +65,7 @@ def Wos_parser(in_dir,out_dir,verbose):
       pl = Utils.ArticleList()
       pl.read_file(src)
       if verbose:
-          print "..processing %d articles in file %s" % (len(pl.articles), src)
+          print("..processing %d articles in file %s" % (len(pl.articles), src))
       if (len(pl.articles) > 0):
           for article in pl.articles:
             
@@ -158,8 +158,8 @@ def Wos_parser(in_dir,out_dir,verbose):
 
 
   ## END
-  if verbose: print("..%d parsed articles in total") % (id + 1)
-  if verbose: print("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (kompt_corrupt_refs, kompt_refs, (100.0 * kompt_corrupt_refs) / kompt_refs if kompt_refs!=0 else 0)
+  if verbose: print(("..%d parsed articles in total") % (id + 1))
+  if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (kompt_corrupt_refs, kompt_refs, (100.0 * kompt_corrupt_refs) / kompt_refs if kompt_refs!=0 else 0))
 
   f_articles.close()
   f_authors.close()
@@ -211,11 +211,11 @@ def main():
   args = parser.parse_args()
 
   if (not os.path.exists(args.in_dir[0])):
-      print "Error: Input directory does not exist: ", args.in_dir[0]
+      print("Error: Input directory does not exist: ", args.in_dir[0])
       exit()
 
   if (not os.path.exists(args.out_dir[0])):
-      print "Error: Output directory does not exist: ", args.out_dir[0]
+      print("Error: Output directory does not exist: ", args.out_dir[0])
       exit()
 
   ##

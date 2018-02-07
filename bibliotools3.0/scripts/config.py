@@ -1,19 +1,23 @@
+import os
+dir = os.path.dirname(os.path.dirname(__file__))
+
+year_index_position = 44
 
 CONFIG={
 	# step one (merging_corpus.py) mandatory 
-	"wos_data":"path_to_wos_data_exports",
-	"one_file_corpus":"filename_with_path_in_which_to_merge_all_wos_data",
-	"reports_directory":"path_to_where_to_store_reports",
+	"wos_data": os.path.join(dir, "data-wos/"),
+	"one_file_corpus": os.path.join(dir, "Result/one_file_corpus.txt"),
+	"reports_directory": os.path.join(dir, "Result/report"),
 
 	# step two (parse_and_group.py) mandatory 
-	"wos_data_grouped":"path_where_to_store_wos_data_grouped_by_time_span",
-	"parsed_data":"path_where_to_store_wos_data_parsed",
+	"wos_data_grouped": os.path.join(dir, "Result/grouped_data"),
+	"parsed_data": os.path.join(dir, "Result/parsed_data"),
 	# a span is a period of time defined by years
 	# large wos corpus are likely to be cutted into time-spans
 	# any data outside spans will be ignored
 	"spans":{
 			"span_name":{
-				"years":[1900,1969],
+				"years":[1900,1999],
 				
 				#filtering:
 				# occ : minimum number of occurences in corpus 
@@ -32,20 +36,20 @@ CONFIG={
 				"countries":{"occ":0,"weight":1},
 			},
 			"span_name_2":{
-				"years":[1970,1989],
-				"references":{"occ":8,"weight":1},
-				"subjects":{"occ":0,"weight":2},
-				"authors":{"occ":2,"weight":10},
-				"institutions":{"occ":2,"weight":8},
+				"years":[2000, 2018],
+				"references":{"occ":0,"weight":1},
+				"subjects":{"occ":0,"weight":1},
+				"authors":{"occ":0,"weight":1},
+				"institutions":{"occ":0,"weight":1},
 				"article_keywords":{"occ":0,"weight":1},
 				"title_keywords":{"occ":0,"weight":1},
 				"isi_keywords":{"occ":0,"weight":1},
-				"countries":{"occ":2,"weight":3},
+				"countries":{"occ":0,"weight":1},
 			}
 
 	},
 	#output directory
-	"output_directory":"path_to_directory",
+	"output_directory": os.path.join(dir, "Result/Output"),
 
 	#step three mandatory
 	# network formats should be choosen in networkx format list
@@ -72,9 +76,8 @@ CONFIG={
 	
 	"export_ref_annotated_format":"graphml",#can't be gexf because of bug #1296 in networkx see https://github.com/networkx/networkx/issues/1296
 	# If your wos export file don't have this first line, it's not going to work!
-	"wos_headers":"PT	AU	BA	BE	GP	AF	BF	CA	TI	SO	SE	BS	LA	DT	CT	CY	CL	SP	HO	DE	ID	AB	C1	RP	EM	RI	OI	FU	FX	CR	NR	TC	Z9	PU	PI	PA	SN	EI	BN	J9	JI	PD	PY	VL	IS	PN	SU	SI	MA	BP	EP	AR	DI	D2	PG	WC	SC	GA	UT	PM",
-
-
+    "wos_headers" : "PT	AU	BA	BE	GP	AF	BF	CA	TI	SO	SE	BS	LA	DT	CT	CY	CL	SP	HO	DE	ID	AB	C1	RP	EM	RI	OI	FU	FX	CR	NR	TC	Z9	U1	U2	PU	PI	PA	SN	EI	BN	J9	JI	PD	PY	VL	IS	PN	SU	SI	MA	BP	EP	AR	DI	D2	EA	EY	PG	WC	SC	GA	UT	PM	OA	HC	HP	DA",
+    "year_index_position" : 44,
 }
 
 

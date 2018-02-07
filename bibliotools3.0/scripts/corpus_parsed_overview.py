@@ -3,7 +3,7 @@ import itertools
 from config import CONFIG
 
 def print_and_report(message):
-	print message
+	print(message)
 	with open(os.path.join(CONFIG["reports_directory"],"corpus_overview.txt"),"a") as f:
 		f.write(message+"\n")
 

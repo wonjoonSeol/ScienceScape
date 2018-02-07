@@ -36,7 +36,7 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
   src8  = os.path.join(in_dir, "labos.dat")
 
   ## CREATE HETEROGENEOUS TABLE
-  if verbose: print "..create heterogeneous table"
+  if verbose: print("..create heterogeneous table")
 
   het_table = dict();
   Y_table = dict();
@@ -45,7 +45,7 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
   pl = Utils.Article()
   pl.read_file(src1)
   nb_art = len(pl.articles) # store the number of articles within database
-  if verbose: print "..parsing articles"
+  if verbose: print("..parsing articles")
   for l in pl.articles:
       if (l.year > 1900 and l.year < 2050):
           Y_table[l.id] = l.year # store the publication year of each article
@@ -55,7 +55,7 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
           else: het_table[('Y',l.year)] = [l.id]
           if ('J',l.journal) in het_table: het_table[('J',l.journal)].append( l.id )
           else: het_table[('J',l.journal)] = [l.id]
-  if verbose: print "..parsing authors"
+  if verbose: print("..parsing authors")
   pl = Utils.Author()
   pl.read_file(src2)
   for l in pl.authors:
@@ -63,7 +63,7 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
           if (l.id not in het_table[('A',l.author)]): het_table[('A',l.author)].append( l.id )
       else: het_table[('A',l.author)] = [l.id]
 
-  if verbose: print "..parsing Keywords"
+  if verbose: print("..parsing Keywords")
   pl = Utils.Keyword()
   pl.read_file(src3)
   for l in pl.keywords:
@@ -78,7 +78,7 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
               if (l.id not in het_table[('TK',l.keyword)]): het_table[('TK',l.keyword)].append( l.id )
           else: het_table[('TK',l.keyword)] = [l.id]
 
-  if verbose: print "..parsing Subjects"
+  if verbose: print("..parsing Subjects")
   pl = Utils.Subject()
   pl.read_file(src4)
   for l in pl.subjects:
@@ -86,7 +86,7 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
           if (l.id not in het_table[('S',l.subject)]): het_table[('S',l.subject)].append( l.id )
       else: het_table[('S',l.subject)] = [l.id]
 
-  if verbose: print "..parsing References"
+  if verbose: print("..parsing References")
   pl = Utils.Ref()
   pl.read_file(src5)
   for l in pl.refs:
@@ -96,21 +96,21 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
       if ('RJ',l.journal) in het_table: het_table[('RJ',l.journal)].append( l.id )
       else: het_table[('RJ',l.journal)] = [l.id]
 
-  if verbose: print "..parsing Institution"
+  if verbose: print("..parsing Institution")
   pl = Utils.Institution()
   pl.read_file(src7)
   for l in pl.institutions:
       if ('I',l.institution) not in het_table: het_table[('I',l.institution)] = []
       if l.id not in het_table[('I',l.institution)]: het_table[('I',l.institution)].append( l.id )
 
-  if verbose: print "..parsing Country"
+  if verbose: print("..parsing Country")
   pl = Utils.Country()
   pl.read_file(src6)
   for l in pl.countries:
       if ('C',l.country) not in het_table: het_table[('C',l.country)] = [];
       if l.id not in het_table[('C',l.country)]: het_table[('C',l.country)].append( l.id )
 
-  if verbose: print "..parsing Labo"
+  if verbose: print("..parsing Labo")
   pl = Utils.Labo()
   pl.read_file(src8)
   for l in pl.labos:
@@ -181,18 +181,18 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
     confirm = 'n'
     while confirm != 'n':
         confirm_threshold(vA,vY,vC,vJ,vK,vTK,vS,vI,vR,vRJ,len(A_list),len(xxY),len(C_list),len(J_list),len(K_list),len(TK_list),len(S_list),len(I_list),len(R_list),len(RJ_list),yyA,yyY,yyC,yyJ,yyK,yyTK,yyS,yyI,yyR,yyRJ,nb_art)
-        confirm = raw_input("Confirm (y/n): ")
+        confirm = input("Confirm (y/n): ")
         if confirm == 'n':
-            vA  = input("threshold for authors, used at least ? times:")
-            vY  = input("threshold for publication years, used at least ? times:")
-            vJ  = input("threshold for journals, used at least ? times:")
-            vK  = input("threshold for keywords, used at least ? times:")
-            vTK  = input("threshold for title words, used at least ? times:")
-            vS  = input("threshold for subjects, used at least ? times:")
-            vI  = input("threshold for institutions, used at least ? times:")
-            vC  = input("threshold for countries, used at least ? times:")
-            vR  = input("threshold for refs, used at least ? times:")
-            vRJ = input("threshold for refs journals, used at least ? times:")
+            vA  = eval(input("threshold for authors, used at least ? times:"))
+            vY  = eval(input("threshold for publication years, used at least ? times:"))
+            vJ  = eval(input("threshold for journals, used at least ? times:"))
+            vK  = eval(input("threshold for keywords, used at least ? times:"))
+            vTK  = eval(input("threshold for title words, used at least ? times:"))
+            vS  = eval(input("threshold for subjects, used at least ? times:"))
+            vI  = eval(input("threshold for institutions, used at least ? times:"))
+            vC  = eval(input("threshold for countries, used at least ? times:"))
+            vR  = eval(input("threshold for refs, used at least ? times:"))
+            vRJ = eval(input("threshold for refs journals, used at least ? times:"))
 
 
   ## ... selecting relevant data thanks to the thresholds
@@ -214,21 +214,21 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
   ##
   confirm = 'n'; l_thr=thresholds.get("l_thr",1)
   while confirm != 'n':
-      print "We keep links between nodes co-used at least %d times" % (l_thr)
-      confirm = raw_input("Confirm (y/n): ")
+      print("We keep links between nodes co-used at least %d times" % (l_thr))
+      confirm = input("Confirm (y/n): ")
       if confirm == 'n':
-          l_thr  = input("threshold for links -- nodes should be co-used at least ? times:")
+          l_thr  = eval(input("threshold for links -- nodes should be co-used at least ? times:"))
 
   ## PREP GEPHI STATIC HETEROGENEOUS NETWORK FILE
   if(dyn_window == 0):
-      if verbose: print "\nPreparing the gdf file"
+      if verbose: print("\nPreparing the gdf file")
 
       ## ... ini
       dst = os.path.join(out_dir, "het_static.gdf")
       f_gephi = open(dst,'w')
 
       ## ... prep nodes
-      if verbose: print "Nodes..........."
+      if verbose: print("Nodes...........")
 
       color_nodes = {'Y': '255,255,0', 'J': '150,0,150', 'A': '20,50,255', 'K': '255,0,255', 'TK': '205,0,205', 'S': '50,0,150', 'R': '255,0,0', 'RJ': '255,97,0', 'I': '0,255,0', 'C': '0,255,255', 'L': '0,180,0'}
 
@@ -243,14 +243,14 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
       i_range = i
 
       ## ... prep edges
-      if verbose: print "Edges..........."
+      if verbose: print("Edges...........")
 
       e = len(het_table2) * len(het_table2) / 2; ee = 0; p=5
       f_gephi.write("edgedef>node1 VARCHAR,node2 VARCHAR,type VARCHAR,weight DOUBLE,nb_comm DOUBLE")
-      if verbose: print "0%"
+      if verbose: print("0%")
 
-      for i,elm_i in ((i,e_i) for (i,e_i) in id_table.iteritems() if e_i[0] =="R"):
-          for j,elm_j in ((j,e_j) for (j,e_j) in id_table.iteritems() if (j>i or (j<i and e_j[0]!="R")) ):
+      for i,elm_i in ((i,e_i) for (i,e_i) in id_table.items() if e_i[0] =="R"):
+          for j,elm_j in ((j,e_j) for (j,e_j) in id_table.items() if (j>i or (j<i and e_j[0]!="R")) ):
 
                     edge_type="_".join(sorted([elm_i[0],elm_j[0]]))
                   # if "R" in edge_type :
@@ -263,8 +263,8 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
                         f_gephi.write("\n%d,%d,%s,%f,%d" % (i, j, edge_type, nb_comm/math.sqrt(li*lj), nb_comm) )
 
                     ee += 1
-                    if verbose and (ee > (1.0 * e * p) / 100): print "%d%%" % (p); p +=5
-      if verbose: print "100%"
+                    if verbose and (ee > (1.0 * e * p) / 100): print("%d%%" % (p)); p +=5
+      if verbose: print("100%")
 
       ## ... end
       f_gephi.close()
@@ -272,7 +272,7 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
 
   ## PREP GEPHI DYNAMIC HETEROGENEOUS NETWORK FILE
   if(dyn_window > 0):
-      if verbose: print "\nPreparing the gexf file"
+      if verbose: print("\nPreparing the gexf file")
 
       ## ... ini
       dst = os.path.join(out_dir, "het_dyn.gexf")
@@ -281,7 +281,7 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
 
 
       ## ... prep nodes
-      if verbose: print "Nodes..........."
+      if verbose: print("Nodes...........")
       id_table = dict()
       het_table3 = dict()
       i = 0
@@ -318,10 +318,10 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
 
 
       ## ... prep edges
-      if verbose: print "Edges..........."
+      if verbose: print("Edges...........")
       e = i_range * i_range / 2; ee = 0; p=5
       f_gephi.write("\t<edges>\n")
-      if verbose: print "0%"
+      if verbose: print("0%")
       for i in range(i_range):
           for j in range(i_range):
               if(i < j):
@@ -350,9 +350,9 @@ def prep_het_graph(in_dir,out_dir,dyn_window,verbose,thresholds={}):
                           f_gephi.write("\t\t\t<spell start=\"%d-01-01\" end=\"%d-12-31\"/>\n" % (y, y + dyn_window -1) )
                       f_gephi.write("\t\t</spells>\n\t</edge>\n")
 
-                  if (ee > (1.0 * e * p) / 100) and verbose: print "%d%%" % (p); p +=5
+                  if (ee > (1.0 * e * p) / 100) and verbose: print("%d%%" % (p)); p +=5
               #end edge
-      if verbose: print "100%"
+      if verbose: print("100%")
 
       f_gephi.write("\t</edges>\n")
 
@@ -394,7 +394,7 @@ def confirm_threshold(vA,vY,vC,vJ,vK,vTK,vS,vI,vR,vRJ,lA,lY,lC,lJ,lK,lTK,lS,lI,l
   while v <= lR: auxRJ += yyRJ[v]; v += 1
 
 
-  print "\n THRESHOLDS proposed: keep items of each type used at least ...x... times (this ensures faster computing and lighter gexf output files. Keep in mind that additionnal filtering can also be performed later with GEPHI):\n Authors used in at least ...%d... articles\n ==> %d authors out of %d\n Publication Years used in at least ...%d... articles \n ==> %d PY out of %d\n Journals used in at least ...%d... articles \n ==> %d journals out of %d\n Keywords used in at least ...%d... articles \n ==> %d keywords out of %d\n Title words used in at least ...%d... articles \n ==> %d title words out of %d\n Subjects used in at least ...%d... articles \n ==> %d subjects out of %d\n Institutions used in at least ...%d... articles \n ==> %d institutions out of %d\n Countries used in at least ...%d... articles \n ==> %d countries out of %d\n Refs used in at least ...%d... articles \n ==> %d refs out of %d\n Refs Journals used in at least ...%d... references \n ==> %d RJ out of %d" % (vA,auxA,lA,vY,auxY,lY,vJ,auxJ,lJ,vK,auxK,lK,vTK,auxTK,lTK,vS,auxS,lS,vI,auxI,lI,vC,auxC,lC,vR,auxR,lR,vRJ,auxRJ,lRJ)
+  print("\n THRESHOLDS proposed: keep items of each type used at least ...x... times (this ensures faster computing and lighter gexf output files. Keep in mind that additionnal filtering can also be performed later with GEPHI):\n Authors used in at least ...%d... articles\n ==> %d authors out of %d\n Publication Years used in at least ...%d... articles \n ==> %d PY out of %d\n Journals used in at least ...%d... articles \n ==> %d journals out of %d\n Keywords used in at least ...%d... articles \n ==> %d keywords out of %d\n Title words used in at least ...%d... articles \n ==> %d title words out of %d\n Subjects used in at least ...%d... articles \n ==> %d subjects out of %d\n Institutions used in at least ...%d... articles \n ==> %d institutions out of %d\n Countries used in at least ...%d... articles \n ==> %d countries out of %d\n Refs used in at least ...%d... articles \n ==> %d refs out of %d\n Refs Journals used in at least ...%d... references \n ==> %d RJ out of %d" % (vA,auxA,lA,vY,auxY,lY,vJ,auxJ,lJ,vK,auxK,lK,vTK,auxTK,lTK,vS,auxS,lS,vI,auxI,lI,vC,auxC,lC,vR,auxR,lR,vRJ,auxRJ,lRJ))
 
 ## ##################################################
 ## ##################################################
@@ -439,11 +439,11 @@ def main():
   args = parser.parse_args()
 
   if (not os.path.exists(args.in_dir[0])):
-      print "Error: Input directory does not exist: ", args.in_dir[0]
+      print("Error: Input directory does not exist: ", args.in_dir[0])
       exit()
 
   if (not os.path.exists(args.out_dir[0])):
-      print "Error: Output directory does not exist: ", args.out_dir[0]
+      print("Error: Output directory does not exist: ", args.out_dir[0])
       exit()
   ##
 

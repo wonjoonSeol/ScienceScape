@@ -35,7 +35,7 @@ def comm_tables(in_dir,partition,thr,verbose):
   ## Communities sizes - we are mostly interested by articles within communities of size > thr
   comm_size = dict();
   for com in set(partition.values()) :
-    list_nodes = [nodes for nodes in partition.keys() if partition[nodes] == com]
+    list_nodes = [nodes for nodes in list(partition.keys()) if partition[nodes] == com]
     comm_size[com] = len(list_nodes)
 
   ## TREAT DATA
@@ -51,7 +51,7 @@ def comm_tables(in_dir,partition,thr,verbose):
 
   #######
   # KEYWORDS
-  if verbose: print "....most frequent keywords"
+  if verbose: print("....most frequent keywords")
   art_wK = dict(); ## lists article with keywords
   probaK = dict(); ## records the freq of each keyword in the whole database
   freqK  = dict(); ## "" in each community of size > thr
@@ -80,7 +80,7 @@ def comm_tables(in_dir,partition,thr,verbose):
     for com in freqK:
       cs = comm_size[com]
       stuffK[com] = dict()
-      L = freqK[com].items()
+      L = list(freqK[com].items())
       L.sort(cmpval)
       for i in range(min(20,len(L))):
         keyw = L[i][0]
@@ -92,7 +92,7 @@ def comm_tables(in_dir,partition,thr,verbose):
 
   #######
   # SUBJECTS
-  if verbose: print "....most frequent subjects"
+  if verbose: print("....most frequent subjects")
   art_wS = dict(); ## lists article with subjects
   probaS = dict(); ## records the freq of each subject in the whole database
   freqS  = dict(); ## "" in each community of size > thr
@@ -120,7 +120,7 @@ def comm_tables(in_dir,partition,thr,verbose):
     for com in freqS:
       cs = comm_size[com]
       stuffS[com] = dict()
-      L = freqS[com].items()
+      L = list(freqS[com].items())
       L.sort(cmpval)
       for i in range(min(10,len(L))):
         subj = L[i][0]
@@ -132,7 +132,7 @@ def comm_tables(in_dir,partition,thr,verbose):
 
   #######
   # JOURNALS
-  if verbose: print "....most frequent journals"
+  if verbose: print("....most frequent journals")
   art_wJ = dict(); ## lists article with journals
   probaJ = dict(); ## records the freq of each journal in the whole database
   freqJ  = dict(); ## "" in each community of size > thr
@@ -161,7 +161,7 @@ def comm_tables(in_dir,partition,thr,verbose):
     for com in freqJ:
       cs = comm_size[com]
       stuffJ[com] = dict()
-      L = freqJ[com].items()
+      L = list(freqJ[com].items())
       L.sort(cmpval)
       for i in range(min(10,len(L))):
         jour = L[i][0]
@@ -173,7 +173,7 @@ def comm_tables(in_dir,partition,thr,verbose):
 
   #######
   # AUTHORS
-  if verbose: print "....most frequent authors"
+  if verbose: print("....most frequent authors")
   art_wA = dict(); ## lists article with authors
   probaA = dict(); ## records the freq of each author in the whole database
   freqA  = dict(); ## "" in each community of size > thr
@@ -201,7 +201,7 @@ def comm_tables(in_dir,partition,thr,verbose):
     for com in freqA:
       cs = comm_size[com]
       stuffA[com] = dict()
-      L = freqA[com].items()
+      L = list(freqA[com].items())
       L.sort(cmpval)
       for i in range(min(10,len(L))):
         auth = L[i][0]
@@ -213,7 +213,7 @@ def comm_tables(in_dir,partition,thr,verbose):
 
   #######
   # INSTITUTIONS
-  if verbose: print "....most frequent institutions"
+  if verbose: print("....most frequent institutions")
   art_wI = dict(); ## lists article with institutions
   probaI = dict(); ## records the freq of each institution in the whole database
   freqI  = dict(); ## "" in each community of size > thr
@@ -252,7 +252,7 @@ def comm_tables(in_dir,partition,thr,verbose):
     for com in freqI:
       cs = comm_size[com]
       stuffI[com] = dict()
-      L = freqI[com].items()
+      L = list(freqI[com].items())
       L.sort(cmpval)
       for i in range(min(20,len(L))):
         inst = L[i][0]
@@ -264,7 +264,7 @@ def comm_tables(in_dir,partition,thr,verbose):
 
   #######
   # COUNTRIES
-  if verbose: print "....most frequent countries"
+  if verbose: print("....most frequent countries")
   art_wC = dict(); ## lists article with countries
   probaC = dict(); ## records the freq of each country in the whole database
   freqC  = dict(); ## "" in each community of size > thr
@@ -303,7 +303,7 @@ def comm_tables(in_dir,partition,thr,verbose):
     for com in freqC:
       cs = comm_size[com]
       stuffC[com] = dict()
-      L = freqC[com].items()
+      L = list(freqC[com].items())
       L.sort(cmpval)
       for i in range(min(10,len(L))):
         coun = L[i][0]
@@ -315,7 +315,7 @@ def comm_tables(in_dir,partition,thr,verbose):
 
   #######
   # REFERENCES
-  if verbose: print "....most frequent references"
+  if verbose: print("....most frequent references")
   art_wR = dict(); ## lists article with refs
   probaR = dict(); ## records the freq of each ref in the whole database
   freqR  = dict(); ## "" in each community of size > thr
@@ -344,7 +344,7 @@ def comm_tables(in_dir,partition,thr,verbose):
     for com in freqR:
       cs = comm_size[com]
       stuffR[com] = dict()
-      L = freqR[com].items()
+      L = list(freqR[com].items())
       L.sort(cmpval)
       for i in range(min(25,len(L))):
         ref = L[i][0]
@@ -356,7 +356,7 @@ def comm_tables(in_dir,partition,thr,verbose):
 
   #######
   # REFS JOURNALS
-  if verbose: print "....most frequent refs journals"
+  if verbose: print("....most frequent refs journals")
   art_wRJ = dict(); ## lists article with refj
   probaRJ = dict(); ## records the freq of each refj in the whole database
   freqRJ  = dict(); ## "" in each community of size > thr
@@ -397,7 +397,7 @@ def comm_tables(in_dir,partition,thr,verbose):
     for com in freqRJ:
       cs = comm_size[com]
       stuffRJ[com] = dict()
-      L = freqRJ[com].items()
+      L = list(freqRJ[com].items())
       L.sort(cmpval)
       for i in range(min(10,len(L))):
         refj = L[i][0]
@@ -467,15 +467,15 @@ def main():
   args = parser.parse_args()
   
   if (not os.path.exists(args.in_dir[0])):
-      print "Error: Input directory does not exist: ", args.in_dir[0]
+      print("Error: Input directory does not exist: ", args.in_dir[0])
       exit()
 
   if (not os.path.exists(args.partition[0])):
-      print "Error: Input partition does not exist: ", args.partition[0]
+      print("Error: Input partition does not exist: ", args.partition[0])
       exit()
 
   if (not os.path.exists(args.out_dir[0])):
-      print "Error: Output directory does not exist: ", args.out_dir[0]
+      print("Error: Output directory does not exist: ", args.out_dir[0])
       exit()
 
   ##

@@ -28,7 +28,7 @@ import community, BCUtils
 def BC_network(in_dir,out_dir,verbose):
 
   ## INPUT DATA
-  if verbose: print "..Initialize"
+  if verbose: print("..Initialize")
 
   src1  = os.path.join(in_dir, "articles.dat") 
   src5  = os.path.join(in_dir, "references.dat")
@@ -46,12 +46,12 @@ def BC_network(in_dir,out_dir,verbose):
 
 
   ## CREATE BC WEIGHT TABLE
-  if verbose: print "..Create the 'Bibliographic Coupling' weight table"
+  if verbose: print("..Create the 'Bibliographic Coupling' weight table")
  
   ref_table = dict() # store the id of articles using a given ref
   BC_table = dict() # store the number of common refs between pairs of articles
 
-  if verbose: print "....loading refs table"
+  if verbose: print("....loading refs table")
   pl = Utils.Ref()
   pl.read_file(src5)  
   for l in pl.refs:
@@ -60,7 +60,7 @@ def BC_network(in_dir,out_dir,verbose):
       else: ref_table[foo] = [l.id]
       nR[l.id] += 1
 
-  if verbose: print "....detecting common references"
+  if verbose: print("....detecting common references")
   for foo in ref_table:
     if len(ref_table[foo]) > 1:
       for i in ref_table[foo]:
@@ -87,21 +87,21 @@ def BC_network(in_dir,out_dir,verbose):
   confirm = 'n'; thr=1;
   
   while confirm != 'y':
-    if thr == 1: print "Keep BC links between articles sharing at least %d reference" % (thr)
-    else: print "Keep BC links between articles sharing at least %d references" % (thr)
-    confirm = raw_input("Confirm (y/n): ")
+    if thr == 1: print("Keep BC links between articles sharing at least %d reference" % (thr))
+    else: print("Keep BC links between articles sharing at least %d references" % (thr))
+    confirm = input("Confirm (y/n): ")
     while confirm not in ['n','y']:
-      confirm = raw_input("...typing error!\n Confirm (y/n): ")
+      confirm = input("...typing error!\n Confirm (y/n): ")
     if confirm == 'n':
-      thr = input("threshold for BC links -- articles should be share at least ? references:")
+      thr = eval(input("threshold for BC links -- articles should be share at least ? references:"))
 
   bcthr = thr
 
   ##############################
   ## BC COMMUNITIES
-  if verbose: print "..BC communities"
+  if verbose: print("..BC communities")
   #... define BC network
-  if verbose: print "....define graph in networkx format"
+  if verbose: print("....define graph in networkx format")
   G=nx.Graph()
   for i in BC_table:
     for j in BC_table[i]:
@@ -110,27 +110,27 @@ def BC_network(in_dir,out_dir,verbose):
         G.add_edge(i, j, weight=w_ij)
 
   #...
-  if verbose: print "....computing communities with Louvain algo"
+  if verbose: print("....computing communities with Louvain algo")
   dendogram = community.generate_dendogram(G, part_init=None)
 
   #... output infos
-  print "....There are %d articles in the database" % (nb_art)
-  print "....There are %d articles in the BC network\n......(ie sharing at least one reference with another article)" % (len(G.nodes()) )
+  print("....There are %d articles in the database" % (nb_art))
+  print("....There are %d articles in the BC network\n......(ie sharing at least one reference with another article)" % (len(G.nodes()) ))
   for level in range(len(dendogram)):
     part = community.partition_at_level(dendogram, level)
     mod = community.modularity(part, G)
     nb_comm = len(set(part.values()))
     size_sup10 = 0; size_sup100 = 0;  #communities_caracteristics(partition, thr, level)
     for com in set(part.values()) :
-      list_nodes = [nodes for nodes in part.keys() if part[nodes] == com]
+      list_nodes = [nodes for nodes in list(part.keys()) if part[nodes] == com]
       if len(list_nodes) > 100: size_sup100 += 1
       if len(list_nodes) > 10: size_sup10 += 1
-    print "....level %d: %d communities [%d with size > 10, %d with size > 100], modularity Q=%1.6f" % (level, nb_comm, size_sup10, size_sup100, mod)
+    print("....level %d: %d communities [%d with size > 10, %d with size > 100], modularity Q=%1.6f" % (level, nb_comm, size_sup10, size_sup100, mod))
 
 
   ##############################
   ## WHICH EXTRACTION ?
-  print "..BC communities extraction"
+  print("..BC communities extraction")
   #
   confirm = 'n'; level = len(dendogram) - 1; thr = 10
   while confirm != 'y':
@@ -138,29 +138,29 @@ def BC_network(in_dir,out_dir,verbose):
     nb_comm = len(set(part.values()))
     size_sup_thr = 0; n_sup_thr = 0;
     for com in set(part.values()) :
-      list_nodes = [nodes for nodes in part.keys() if part[nodes] == com]
+      list_nodes = [nodes for nodes in list(part.keys()) if part[nodes] == com]
       if len(list_nodes) > thr: 
         n_sup_thr += len(list_nodes)
         size_sup_thr += 1
-    print "....Extraction of level %d BC communities with size > %d\n......(%d articles gathered in %d communities):" % (level, thr, n_sup_thr, size_sup_thr)
-    confirm = raw_input("....do you confirm? (y/n): ")
+    print("....Extraction of level %d BC communities with size > %d\n......(%d articles gathered in %d communities):" % (level, thr, n_sup_thr, size_sup_thr))
+    confirm = input("....do you confirm? (y/n): ")
     if confirm == 'n':
-      level  = input("......level you want to extract:")
-      thr  = input("......keep communities of size > to:")
+      level  = eval(input("......level you want to extract:"))
+      thr  = eval(input("......keep communities of size > to:"))
 
   #... partition
   partition = community.partition_at_level(dendogram, level)
   list_nodes= dict();
   for com in set(partition.values()) :
-    list_nodes[com] = [nodes for nodes in partition.keys() if partition[nodes] == com]
+    list_nodes[com] = [nodes for nodes in list(partition.keys()) if partition[nodes] == com]
 
   ##############################
   ## COMMUNITIES CARACTERISTICS
-  if verbose: print"..Computing communities caracteristics"
+  if verbose: print("..Computing communities caracteristics")
   #.. ini
   filename = os.path.join(out_dir, "BCcomm_ID_Cards.tex")
   f_out = open(filename,"w")
-  f_out.write("\documentclass[a4paper,11pt]{report}\n\usepackage[english]{babel}\n\usepackage[latin1]{inputenc}\n\usepackage{amsfonts,amssymb,amsmath}\n\usepackage{pdflscape}\n\usepackage{color}\n\n\\addtolength{\evensidemargin}{-60pt}\n\\addtolength{\oddsidemargin}{-60pt}\n\\addtolength{\\textheight}{80pt}\n\n\\title{{\\bf Communities ID Cards}}\n\date{\\begin{flushleft}This document gather the ``ID Cards'' of the BC communities found within your database.\\\\\n The BC network was built by keeping a link between articles sharing at least %d references. The communities characterized here correspond to the ones found in the level %d (in the sense of the Louvain algo) which gathers more than %d articles.\\\\\n These ID cards displays the most frequent keywords, subject categories, journals of publication, institution, countries, authors, references and reference journals of the articles of each community. The significance of an item $\sigma = \sqrt{N} (f - p) / \sqrt{p(1-p)}$ [where $N$ is the number of articles within the community and $f$ and $p$ are the proportion of articles respectively within the community and within the database displaying that item ] is also given (for example $\sigma > 5$ is really highly significant).\\\\\n\\vspace{1cm}\n\copyright Sebastian Grauwin - BiblioTools2.1 (July 2012) \end{flushleft}}\n\n\\begin{document}\n\\begin{landscape}\n\maketitle\n" % (bcthr, level, thr))
+  f_out.write("\documentclass[a4paper,11pt]{report}\n\\usepackage[english]{babel}\n\\usepackage[latin1]{inputenc}\n\\usepackage{amsfonts,amssymb,amsmath}\n\\usepackage{pdflscape}\n\\usepackage{color}\n\n\\addtolength{\evensidemargin}{-60pt}\n\\addtolength{\oddsidemargin}{-60pt}\n\\addtolength{\\textheight}{80pt}\n\n\\title{{\\bf Communities ID Cards}}\n\date{\\begin{flushleft}This document gather the ``ID Cards'' of the BC communities found within your database.\\\\\n The BC network was built by keeping a link between articles sharing at least %d references. The communities characterized here correspond to the ones found in the level %d (in the sense of the Louvain algo) which gathers more than %d articles.\\\\\n These ID cards displays the most frequent keywords, subject categories, journals of publication, institution, countries, authors, references and reference journals of the articles of each community. The significance of an item $\sigma = \sqrt{N} (f - p) / \sqrt{p(1-p)}$ [where $N$ is the number of articles within the community and $f$ and $p$ are the proportion of articles respectively within the community and within the database displaying that item ] is also given (for example $\sigma > 5$ is really highly significant).\\\\\n\\vspace{1cm}\n\copyright Sebastian Grauwin - BiblioTools2.1 (July 2012) \end{flushleft}}\n\n\\begin{document}\n\\begin{landscape}\n\maketitle\n" % (bcthr, level, thr))
 
 
   #.. quantitative
@@ -175,7 +175,7 @@ def BC_network(in_dir,out_dir,verbose):
     W *= 2.0 / (size * (size -1))
     comm_innerw[com]= 1.0 / W
     comm_size[com] = size
-  Lcomm_size = comm_size.items()
+  Lcomm_size = list(comm_size.items())
   Lcomm_size.sort(cmpval)
 
   #.. frequency / significance of keywords, etc...
@@ -308,25 +308,25 @@ def BC_network(in_dir,out_dir,verbose):
   #.. end
   f_out.write("\end{landscape}\n\n\end{document}\n")
   f_out.close()
-  if verbose: print"..Communities caracteristics extracted in .tex 'IDCards' file"
+  if verbose: print("..Communities caracteristics extracted in .tex 'IDCards' file")
 
   ##############################
   ## OUTPUT GEPHI FILES
 
   #... output gephi
-  if verbose: print "..Preparing gephi gdf file for BC communities network"
+  if verbose: print("..Preparing gephi gdf file for BC communities network")
 
   ## ... ini
   name = "BC_comm_level%d.gdf" % level
   dst = os.path.join(out_dir, name)
   f_gephi = open(dst,'w')
   ## ... prep nodes
-  if verbose: print "....nodes"
+  if verbose: print("....nodes")
   f_gephi.write("nodedef>name VARCHAR,most_frequent_k VARCHAR,size DOUBLE,inv_innerweight DOUBLE\n")
   for com in comm_size:
     if comm_size[com] > thr: f_gephi.write("%d,'%s',%d,%1.0f\n" % (com, comm_label[com], comm_size[com], comm_innerw[com]) )    
   ## ... prep edges
-  if verbose: print "....edges"
+  if verbose: print("....edges")
   f_gephi.write("edgedef>node1 VARCHAR,node2 VARCHAR,weight DOUBLE,logweight DOUBLE\n")
   for com1 in list_nodes:
     for com2 in list_nodes:
@@ -342,21 +342,21 @@ def BC_network(in_dir,out_dir,verbose):
           f_gephi.write("%d,%d,%1.9f,%1.2f\n" % (com1, com2, W, 6 + math.log(W)/math.log(10)) ) 
   ## ... end
   f_gephi.close() 
-  if verbose: print"..Done!\n"
+  if verbose: print("..Done!\n")
 
 
   ##
   ##
 
   ##... output the BC networks?  
-  confirm = raw_input("..There are %d articles in the BC network.\n....do you want to create a gephi file with the BC networks at the articles level? (y/n): " % (len(G.nodes())) )
+  confirm = input("..There are %d articles in the BC network.\n....do you want to create a gephi file with the BC networks at the articles level? (y/n): " % (len(G.nodes())) )
   if confirm == 'y':
     ## ... ini
     name = "BCnetwork.gdf"
     dst = os.path.join(out_dir, name)
     f_gephi = open(dst,'w')
     ## ... prep nodes
-    if verbose: print "....nodes"
+    if verbose: print("....nodes")
     f_gephi.write("nodedef>name VARCHAR,label VARCHAR,BCcom VARCHAR,firstAU VARCHAR,journal VARCHAR,year VARCHAR,nb_refs DOUBLE\n")
     pl = Utils.Article()
     pl.read_file(src1)  
@@ -366,7 +366,7 @@ def BC_network(in_dir,out_dir,verbose):
         foo = l.firstAU + ', ' + l.journal + ', ' + str(l.year)
         f_gephi.write("%d,'%s',%s,%s,%s,%d,%d\n" % (l.id, foo, BCcom, l.firstAU, l.journal,l.year,nR[l.id]) )  
     ## ... prep edges
-    if verbose: print "....edges"
+    if verbose: print("....edges")
     f_gephi.write("edgedef>node1 VARCHAR,node2 VARCHAR,weight DOUBLE,nb_comm_refs DOUBLE")
     for i in BC_table:
       for j in BC_table[i]:
@@ -375,7 +375,7 @@ def BC_network(in_dir,out_dir,verbose):
           f_gephi.write("\n%d,%d,%f,%d" % (i, j, w_ij, BC_table[i][j]))  
     ## ... end
     f_gephi.close()
-  if verbose: print"..Done!\n"
+  if verbose: print("..Done!\n")
 
 
   ## ###################################
@@ -428,11 +428,11 @@ def main():
   args = parser.parse_args()
   
   if (not os.path.exists(args.in_dir[0])):
-      print "Error: Input directory does not exist: ", args.in_dir[0]
+      print("Error: Input directory does not exist: ", args.in_dir[0])
       exit()
 
   if (not os.path.exists(args.out_dir[0])):
-      print "Error: Output directory does not exist: ", args.out_dir[0]
+      print("Error: Output directory does not exist: ", args.out_dir[0])
       exit()
 
   ##      

@@ -104,7 +104,7 @@ class Wosline:
             self.WC = s[defCols['WC']] ## Web of Science Category
             self.UT = s[defCols['UT']] ## Unique Article Identifier
         else:
-            print "ARG %s != %s"%(len(s),numCols)
+            print(("ARG %s != %s"%(len(s),numCols)))
 ## ##################################################
 
 def defColumns(line):
@@ -158,7 +158,7 @@ class ArticleList:
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "file does not exist"
+            print("file does not exist")
 
         self.articles   = articles_list
 ## ##################################################
@@ -220,7 +220,7 @@ class Article:
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "file does not exist"
+            print("file does not exist")
 
         self.articles   = articles_list
 
@@ -250,7 +250,7 @@ class Author:
             else:
                 fd = sys.stdin
             # read
-	    lncnt=0
+            lncnt=0
             for line in fd.readlines():
                 line = line.strip() # removes \n
                 if (line != ""):
@@ -259,18 +259,19 @@ class Author:
                     aline.id = int(s[0])
                     aline.rank = int(s[1])
                     if len(s)<3:
-                        print "missing author in : %s %s"%(lncnt,s)
+                        print(("missing author in : %s %s"%(lncnt,s)))
                         aline.author = "name missing"
                     else:
                         aline.author = s[2]
 		    #print int(s[0]), int(s[1]),s[2], 'author' 
                     alines_list.append( aline )
-		    lncnt+=1
+		   
+            lncnt+=1
             # close  
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "file does not exist"
+            print("file does not exist")
 
         self.authors   = alines_list
 
@@ -314,7 +315,7 @@ class Country:
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "file does not exist"
+            print("file does not exist")
 
         self.countries   = clines_list
 
@@ -359,7 +360,7 @@ class Institution:
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "file does not exist"
+            print("file does not exist")
 
         self.institutions   = ilines_list
 
@@ -403,7 +404,7 @@ class Keyword:
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "file does not exist"
+            print("file does not exist")
 
         self.keywords   = klines_list
 
@@ -478,7 +479,7 @@ class Ref:
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "file does not exist"
+            print("file does not exist")
 
         self.refs   = refs_list
 
@@ -520,7 +521,7 @@ class Subject:
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "file does not exist"
+            print("file does not exist")
 
         self.subjects   = slines_list
 
@@ -564,7 +565,7 @@ class Labo:
             if filename != 'stdin':
                 fd.close()
         except IOError:
-            print "..labos.dat file does not exist"
+            print("..labos.dat file does not exist")
 
         self.labos   = llines_list
 

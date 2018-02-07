@@ -60,7 +60,7 @@ def data_filter(in_dir,out_dir,ymin,ymax,verbose):
 
   ## SELECT ID
   if verbose:
-      print "selecting articles to keep "
+      print("selecting articles to keep ")
 
   if (ymin > 1500 or ymax < 2100):
       pl = Utils.Article()
@@ -71,47 +71,47 @@ def data_filter(in_dir,out_dir,ymin,ymax,verbose):
 
   ## OUTPUT SELECTED DATA
   if verbose:
-      print "creating output data"
+      print("creating output data")
 
   if len(selection) > 0:
       #article 
-      if verbose: print "(1/7) filtering articles"
+      if verbose: print("(1/7) filtering articles")
       pl = Utils.Article()
       pl.read_file(src1)
       for l in pl.articles:
           if l.id in selection: f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (l.id,l.firstAU,l.year,l.journal,l.volume,l.page,l.doi,l.pubtype,l.doctype,l.times_cited,l.title,l.uniqueID))
       #authors
-      if verbose: print "(2/7) filtering authors"
+      if verbose: print("(2/7) filtering authors")
       pl = Utils.Author()
       pl.read_file(src2)
       for l in pl.authors:
           if l.id in selection: f_authors.write("%d\t%d\t%s\n" % (l.id,l.rank,l.author))
       #keywords
-      if verbose: print "(3/7) filtering keywords"
+      if verbose: print("(3/7) filtering keywords")
       pl = Utils.Keyword()
       pl.read_file(src3)
       for l in pl.keywords:
           if l.id in selection: f_keywords.write("%d\t%s\t%s\n" % (l.id,l.ktype,l.keyword))
       #subjects
-      if verbose: print "(4/7) filtering subjects"
+      if verbose: print("(4/7) filtering subjects")
       pl = Utils.Subject()
       pl.read_file(src4)
       for l in pl.subjects:
           if l.id in selection: f_subjects.write("%d\t%s\n" % (l.id,l.subject))
       #references
-      if verbose: print "(5/7) filtering references"
+      if verbose: print("(5/7) filtering references")
       pl = Utils.Ref()
       pl.read_file(src5)
       for l in pl.refs:
           if l.id in selection: f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" % (l.id,l.firstAU,l.year,l.journal,l.volume,l.page))
       #countries 
-      if verbose: print "(6/7) filtering countries"
+      if verbose: print("(6/7) filtering countries")
       pl = Utils.Country()
       pl.read_file(src6)
       for l in pl.countries:
           if l.id in selection: f_countries.write("%d\t%d\t%s\n" % (l.id,l.rank,l.country))
       #institutions
-      if verbose: print "(7/7) filtering institutions"
+      if verbose: print("(7/7) filtering institutions")
       pl = Utils.Institution()
       pl.read_file(src7)
       for l in pl.institutions:
@@ -120,7 +120,7 @@ def data_filter(in_dir,out_dir,ymin,ymax,verbose):
 
   ## END
 
-  if verbose: print("filtered %d articles out of %d (%f%%)") % (len(selection), nb_art, (100.0 * len(selection)) / nb_art)
+  if verbose: print(("filtered %d articles out of %d (%f%%)") % (len(selection), nb_art, (100.0 * len(selection)) / nb_art))
 
 
   f_articles.close()
@@ -179,11 +179,11 @@ def main():
   args = parser.parse_args()
   
   if (not os.path.exists(args.in_dir[0])):
-      print "Error: Input directory does not exist: ", args.in_dir[0]
+      print("Error: Input directory does not exist: ", args.in_dir[0])
       exit()
 
   if (not os.path.exists(args.out_dir[0])):
-      print "Error: Output directory does not exist: ", args.out_dir[0]
+      print("Error: Output directory does not exist: ", args.out_dir[0])
       exit()
 
   ##      
