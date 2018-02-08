@@ -39,6 +39,8 @@ class FieldSelectionForm(forms.Form):
 		for field in self.listOfFields:
 			self.fields['{name}'.format(name=field.name())] = field
 		
-		
-			
-			
+	
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=100)
+    file = forms.FileField()
+

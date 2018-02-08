@@ -3,7 +3,7 @@
 	<div class="card-body">
 		<form action="" method="POST">
 			{%csrf_token%}
-			{{form}}
+			{{fields.as_p}}
 		</form>
 	</div>
 </div>
