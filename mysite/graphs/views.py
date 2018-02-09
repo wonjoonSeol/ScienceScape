@@ -22,11 +22,9 @@ def addFieldsForm(request):
 	for field in range(1, 20):
 		f = AbstractField("FIELD: {x}".format(x = field), [(("1", "RECORD 1"))])
 		fields.append(f)
-		print("Fields addition loop")
 
 	if request.method == 'POST':
 		form = FieldSelectionForm(request.POST)
-		form.addFieldSet(fields)
 		print("Fields form created")
 
 		if form.is_valid():
