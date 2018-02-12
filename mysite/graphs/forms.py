@@ -8,8 +8,6 @@ class AbstractField(forms.MultipleChoiceField):
 		self._name = name
 		super().__init__(required=False, widget=forms.Select, choices=choice)
 
-	def addRecord(self, recordName):
-		self.__choicesInField.append(recordName)
 
 	def name(self, aName = None):
 		if aName: self._name = aName
@@ -42,3 +40,4 @@ class FieldSelectionForm(forms.Form):
 
 class UploadFileForm(forms.Form):
     myFile = forms.FileField()
+	

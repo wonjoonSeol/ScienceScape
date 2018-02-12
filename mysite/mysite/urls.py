@@ -24,4 +24,5 @@ urlpatterns = [
    # path('graphs/', include('graphs.urls')),
    # path('admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
+    url(r'^processFields/(.*)/$', views.fieldForm, name='fields')
 ]

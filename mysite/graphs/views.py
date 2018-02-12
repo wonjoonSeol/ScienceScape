@@ -1,42 +1,36 @@
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import *
-from .commands import *
+from .commands import checkCSV, handleUploadedFile
 
 # BE CAREFUL OF REQUEST METHODS
 
-def home(request) :
-
+def home(request):
 	uploadForm = addUploadForm(request)
-	fieldsFrom = addFieldsForm(request)
-	return render(request, 'index.html', {'upload': uploadForm, 'fields': fieldsFrom})
+	return render(request, 'index.html', {'upload': uploadForm})
 
-
-
-
-def addFieldsForm(request):
-	print("Fields form called")
-	fields = []
-
-	for field in range(1, 20):
-		f = AbstractField("FIELD: {x}".format(x = field), [(("1", "RECORD 1"))])
-		fields.append(f)
-
-	if request.method == 'POST':
-		form = FieldSelectionForm(request.POST)
-		print("Fields form created")
-
-		if form.is_valid():
-			print("Valid from fields")
-		else:
-			print("Not valid")
-
+def fieldForm(request, fieldSet):
+	fieldForm = addFieldsForm(request, fieldSet)
+	return render(request, 'fields.html', {'fields': fieldForm})
+	
+	
+def addFieldsForm(fields, request):
+	if request:
+		if request.method == 'POST':
+			
+			form = FieldSelectionForm(request.POST)
+			
+			if form.is_valid():
+				print("Field selection valid")
+			else:
+				print("Field selection not valid")
+				
 	else:
 		form = FieldSelectionForm()
 		form.addFieldSet(fields)
 		print("Blank Fields form created")
-
+		
 	return form
 
 def addUploadForm(request):
@@ -49,7 +43,8 @@ def addUploadForm(request):
 			if uploadedFile:
 				print("There is a file")
 				if checkCSV(uploadedFile):
-					handleUploadedFile(uploadedFile)
+					fields = handleUploadedFile(uploadedFile)
+					return addFieldsForm(fields, None)
 		else:
 			print("Upload error possibly due to encryption")
 	else:
