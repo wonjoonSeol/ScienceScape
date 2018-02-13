@@ -10,8 +10,11 @@
 		</div>	
 	
 		<div class="col-sm-8">
-			{% include "search_bar.html" %}
-			
+			{%if upload%}
+				{% include "search_bar.html" %}
+			{% else %}
+				{% include "file_preview.html" %}
+			{%endif%}
 		</div>
 		
 		<div class="col-sm-2">
@@ -29,7 +32,9 @@
 		</div>	
 		<div class="col-sm-8">
 			<div>
-				{% include "fields.html" %}	
+				{%if fields%}
+					{% include "fields.html" %}	
+				{%endif%}
 			</div>	
 		</div>	
 		<div class="col-sm-2">

@@ -15,14 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 #from django.conf.urls import include
-#from django.conf.urls import path
+#from django.conf.urls import path, register_converter
 from django.conf.urls import url
 
 from graphs import views
+from graphs import converters
+
+#register_converter(converters.FilePath, 'fPath')
 
 urlpatterns = [
    # path('graphs/', include('graphs.urls')),
    # path('admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
-    url(r'^processFields/(.*)/$', views.fieldForm, name='fields')
+    url(r'^addFields/(.*)', views.fieldForm, name='fields')
 ]
