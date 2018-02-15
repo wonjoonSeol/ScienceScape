@@ -125,4 +125,4 @@ STATIC_URL = '/static/'
 
 # Login redirect information
 
-LOGIN_REDIRECT_URL = 'graphs'
+LOGIN_REDIRECT_URL = '/graphs'
