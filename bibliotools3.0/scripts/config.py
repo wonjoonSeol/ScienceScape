@@ -1,4 +1,18 @@
 import os
+import argparse
+
+parser = argparse.ArgumentParser(description='For each time span enter a range \"YYYY-YYYY\"', 
+usage='%(prog)s [-h] span span [span ...]')
+parser.add_argument('-bound', nargs='+', metavar='bound', help='Year value', default={"1900-1999", "2000-2018"})
+args = parser.parse_args()
+
+for range in vars(args)['bound']:
+  boundPair = range.split("-") #string separated by '-' retains lowerbound-upperbound ordering
+  lowerBound = boundPair[0]
+  upperBound = boundPair[1]
+  print(lowerBound)
+  print(upperBound)
+
 dir = os.path.dirname(os.path.dirname(__file__))
 
 year_index_position = 44
@@ -15,8 +29,8 @@ CONFIG={
 	# a span is a period of time defined by years
 	# large wos corpus are likely to be cutted into time-spans
 	# any data outside spans will be ignored
-	"spans":{
-			"span_name":{
+	  "spans":{
+	  	"span_name":{
 				"years":[1900,1999],
 				
 				#filtering:
