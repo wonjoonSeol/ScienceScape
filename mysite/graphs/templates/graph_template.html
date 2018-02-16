@@ -9,7 +9,7 @@
 </style>
 
 <div class="card">
-<div class="card-header bg-dark" style="color: white">Test Graph</div>
+<div class="card-header bg-dark" style="color: white">Test graph's file path is: {{filePath}}</div>
 <div class="card-body">
     <div id="container">
 
@@ -20,11 +20,18 @@
 
 <script src="{% static 'javascript/sigma.js-1.2.1/build/sigma.min.js'%}"></script>
 <script src="{% static 'javascript/sigma.js-1.2.1/build/plugins/sigma.parsers.json.min.js'%}"></script>
+<script src="path/to/sigma.parsers.gexf.min.js"></script>
 <script>
-  sigma.parsers.json('{% static 'testfile.json'%}', {
-    container: 'container',
-    settings: {
-      defaultNodeColor: '#ec5148'
+  sigma.parsers.gexf(
+    {{filePath}},
+    { // Here is the ID of the DOM element that
+      // will contain the graph:
+      container: 'sigma-container'
+    },
+    function(s) {
+      // This function will be executed when the
+      // graph is displayed, with "s" the related
+      // sigma instance.
     }
-  });
+  );
 </script>

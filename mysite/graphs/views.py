@@ -8,7 +8,7 @@ from .commands import *
 # BE CAREFUL OF REQUEST METHODS
 
 def home(request):
-	
+
 	if request.method == 'POST' and request.FILES['myFile']:
 		print("Check")
 		form = UploadFileForm(request.POST, request.FILES)
@@ -17,42 +17,45 @@ def home(request):
 			uploadedFile = request.FILES['myFile']
 			if uploadedFile:
 				print("There is a file")
-				if checkCSV(uploadedFile):	
+				if checkCSV(uploadedFile):
 					fPath = saveFile(uploadedFile)
 					return redirect('fields', fPath)
 		else:
 			print("Upload error possibly due to encryption or method")
 	else:
 		form = UploadFileForm()
-	
+
 	return render(request, 'index.html', {'upload': form})
-	
+
 
 def fieldForm(request, filePath):
-	
+
 	fields = loadFromFilePath(filePath)
-		
+
 	if request.method == 'POST':
 
 			form = FieldSelectionForm(request.POST)
 			form.addFieldSet(fields)
-			
+
 			if form.is_valid():
 				data = form.cleaned_data
-				
+
 				refreshDataBase(data,filePath)
-				
+
 				print("Field selection valid")
 				print(data)
-				
+				APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+				gexfFilePath = os.path.join(APP_DIR, 'testFile.gexf')
+				return redirect('loadGraph', gexfFilePath)
+
 			else:
 				print("Field selection not valid")
-				
+
 	else:
 		form = FieldSelectionForm()
 		form.addFieldSet(fields)
-		print("Blank Fields form created")
-	
+		print("Blank fields form created")
+
 	if filePath:
 		fname =  str(filePath)
 		tokens = fname.split('/')
@@ -60,7 +63,8 @@ def fieldForm(request, filePath):
 	else:
 		fname = None
 		print(form)
-		
+
 	return render(request, 'index.html', {'fields': form, 'filename': fname})
 
-	
+def loadGraph(request, filePath):
+	render(request, 'index.html', {'filePath': filePath})
