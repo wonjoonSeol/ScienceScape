@@ -8,6 +8,7 @@ from .commands import *
 # BE CAREFUL OF REQUEST METHODS
 
 def home(request):
+	
 	if request.method == 'POST' and request.FILES['myFile']:
 		print("Check")
 		form = UploadFileForm(request.POST, request.FILES)
@@ -28,18 +29,26 @@ def home(request):
 	
 
 def fieldForm(request, filePath):
+	
+	fields = loadFromFilePath(filePath)
+		
 	if request.method == 'POST':
+
 			form = FieldSelectionForm(request.POST)
-			userDefinedDictionary = dict()
+			form.addFieldSet(fields)
+			
 			if form.is_valid():
-				for field in form.cleaned_data:
-					userDefinedDictionary[field] = form.cleaned_data[field]	
-				print("User Defined Dictionary: {x}".format(x = userDefinedDictionary))
+				data = form.cleaned_data
+				
+				refreshDataBase(data,filePath)
+				
+				print("Field selection valid")
+				print(data)
+				
 			else:
 				print("Field selection not valid")
-				filename
+				
 	else:
-		fields = loadFromFilePath(filePath)
 		form = FieldSelectionForm()
 		form.addFieldSet(fields)
 		print("Blank Fields form created")
@@ -50,6 +59,7 @@ def fieldForm(request, filePath):
 		fname = tokens[-1]
 	else:
 		fname = None
+		print(form)
 		
 	return render(request, 'index.html', {'fields': form, 'filename': fname})
 

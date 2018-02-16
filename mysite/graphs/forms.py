@@ -6,9 +6,8 @@ class AbstractField(forms.MultipleChoiceField):
 
 	def __init__(self, name, choice = [("DEFAULT", "Select a value")]):
 		self._name = name
-		super().__init__(required=False, widget=forms.Select, choices=choice)
-
-
+		super().__init__(required=False, choices=choice)
+		
 	def name(self, aName = None):
 		if aName: self._name = aName
 		return self._name
@@ -17,10 +16,6 @@ class AbstractField(forms.MultipleChoiceField):
 
 class FieldSelectionForm(forms.Form):
 	listOfFields = []
-
-	def __init__(self, *args, **kwargs):
-		self.addFieldSelection(AbstractField(name ="DEFAULT"))
-		super(FieldSelectionForm, self).__init__(*args, **kwargs)
 
 	def addFieldSet(self, fields):
 		for field in fields:
@@ -36,7 +31,6 @@ class FieldSelectionForm(forms.Form):
 	def populateForm(self):
 		for field in self.listOfFields:
 			self.fields['{name}'.format(name=field.name())] = field
-
 
 class UploadFileForm(forms.Form):
     myFile = forms.FileField()

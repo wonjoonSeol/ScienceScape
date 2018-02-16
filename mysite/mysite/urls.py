@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.conf.urls import url
 
 from graphs import views
-from graphs import converters
+from . import converters
 
 #register_converter(converters.FilePath, 'fPath')
 

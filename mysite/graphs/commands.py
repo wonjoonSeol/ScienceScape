@@ -3,6 +3,8 @@ from csv import DictReader
 from csv import reader
 import os
 import re
+from django.db import models
+from .models import Mappings
 
 '''Takes an uploaded file and does the following:
 	1.Saves the file to userFiles
@@ -138,6 +140,16 @@ def detectHeadersFrom(dictionary):
 '''		
 def dataProcess(key = None, weights = 0, minOccur = 0):	
 	return dictionary[key]
+
+'''This method refreshes the database adds mappings of the file names its true value eg mapping SS to Author in file 'fileName'
+'''
+def refreshDataBase(data, fileName):
+	for key in data:
+		mapping = Mappings()
+		mapping.TRUE_NAME = key
+		mapping.FILE_NAME = data[key]
+		mapping.FILE_LINK = fileName
+		mapping.save()
 
 def generateUser():
 	return folderDirectory
