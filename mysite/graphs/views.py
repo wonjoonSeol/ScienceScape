@@ -45,7 +45,7 @@ def fieldForm(request, filePath):
 				print("Field selection valid")
 				print(data)
 				APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-				gexfFilePath = os.path.join(APP_DIR, 'testFile.gexf')
+				gexfFilePath = os.path.join(APP_DIR, 'userFiles/testFile.gexf')
 				return redirect('loadGraph', gexfFilePath)
 
 			else:
@@ -67,4 +67,5 @@ def fieldForm(request, filePath):
 	return render(request, 'index.html', {'fields': form, 'filename': fname})
 
 def loadGraph(request, filePath):
-	render(request, 'index.html', {'filePath': filePath})
+
+	return render(request, 'index.html', {'filePath': filePath})
