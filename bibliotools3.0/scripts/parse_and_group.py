@@ -18,9 +18,6 @@ years_spans = dict((s, data["years"]) for s, data in CONFIG["spans"].items())
 
 files = {}	# Collection of span files
 
-
-
-
 def is_year_within_span(startYear, endYear, year):
 	if year >= startYear and year <= endYear:
 		return True
@@ -48,9 +45,7 @@ def separate_years(line):
 			for (span,bounds) in years_spans.items():
 				# If the publication year is within a time span,
 				# write it in the adequate file
-				print("hey")
 				if is_year_within_span(bounds[0], bounds[1], year):
-					print("writing line")
 					files[span].write(line)
 		except Exception as e:
 			print(traceback.format_exc())
@@ -63,10 +58,6 @@ def parse_span(span):
 
 	# Use Wos_parser function from parser.py to parse the lines
 	Wos_parser(os.path.join(input_dir, output_dir, span), os.path.join(outdir_prefix, span), True)
-
-
-
-
 
 # -- Main Script --
 
