@@ -11,7 +11,7 @@
 <div class="card">
 <div class="card-header bg-dark" style="color: white">Test graph's file path is: {{filePath}}</div>
 <div class="card-body">
-    <div id="container">
+    <div id="sigma-container">
 
     </div>
 </div>
@@ -23,7 +23,7 @@
 <script src="{% static 'javascript/sigma.js-1.2.1/build/plugins/sigma.parsers.gexf.min.js'%}"></script>
 <script>
   sigma.parsers.gexf(
-    {{filePath}},
+    '{{filePath}}',
     { // Here is the ID of the DOM element that
       // will contain the graph:
       container: 'sigma-container'
