@@ -1,4 +1,4 @@
-from .forms import AbstractField
+from .forms import *
 from csv import DictReader
 from csv import reader
 import os
@@ -10,7 +10,7 @@ from .models import Mappings
 	1.Saves the file to userFiles
 	2.Produces a dictionary of raw headers mapped to a set of its records
 	3.Attempts to detect which headers belong to which fields
-	4.Returns a list of AbstractFields to be added to the fields form.
+	4.Returns a form.
 '''
 def handleUploadedFile(f):
     if f:
@@ -18,7 +18,7 @@ def handleUploadedFile(f):
         filePath = saveFile(f)
         dictionary = processCSVIntoDictionary(filePath)
         knownAndUnknownValues = detectHeadersFrom(dictionary)
-        fields = produceAbstractFields(knownAndUnknownValues['headers'], knownAndUnknownValues['unknownValues'])
+        form = produceFormSet(knownAndUnknownValues['headers'], knownAndUnknownValues['unknownValues'])
 
         return fields
 
@@ -27,9 +27,9 @@ def handleUploadedFile(f):
 def loadFromFilePath(fp):
 	dictionary = processCSVIntoDictionary(fp)
 	knownAndUnknownValues = detectHeadersFrom(dictionary)
-	fields = produceAbstractFields(knownAndUnknownValues['headers'], knownAndUnknownValues['unknownValues'])
+	formSet = produceFormSet(knownAndUnknownValues['headers'], knownAndUnknownValues['unknownValues'])
 
-	return fields
+	return formSet
 
 '''Checks a file to make sure it is a csv file
 '''
@@ -89,24 +89,6 @@ def saveFile(myFile):
     print("File saved at {s}".format(s=fullFileName))
     return fullFileName
 
-'''dictionary: the dictionary of all headers in the csv file
-	unknownValues: values from the csv headers that have not yet been allocated
-	Returns a list of AbstractFields to be added to the FieldsForm.
-'''
-def produceAbstractFields(dictionary, unknownValues):
-	fields = []
-	unknown = []
-	for attribute in unknownValues:
-		unknown.append((attribute,attribute ))
-
-	for key in dictionary:
-		if dictionary[key] == None:
-			fields.append(AbstractField(key, unknown))
-		else:
-			fields.append(AbstractField(key, [(dictionary[key],dictionary[key]),("Wrong detection?", "Wrong detection?")]))
-
-	return fields
-
 
 '''Returns a dictionary of attributes mapped to Bibliotools representation of those attributes eg. Date: SS,
 	and a list of unknown attributes that could not be detected.
@@ -115,25 +97,46 @@ def produceAbstractFields(dictionary, unknownValues):
 '''
 countries = ["United States of America","Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina","Burma","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Rep","Chad","Chile","People's Republic of China","Republic of China","Colombia","Comoros","Democratic Republic of the Congo","Republic of the Congo","Costa Rica,","Croatia","Cuba","Cyprus","Czech Republic","Danzig","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gaza Strip","The Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Holy Roman Empire","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Republic of Ireland","Israel","Italy","Ivory Coast","Jamaica","Japan","Jonathanland","Jordan","Kazakhstan","Kenya","Kiribati","North Korea","South Korea","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mount Athos","Mozambique","Namibia","Nauru","Nepal","Newfoundland","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Ottoman Empire","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Prussia","Qatar","Romania","Rome","Russian Federation","Rwanda","St Kitts & Nevis","St Lucia","Saint Vincent & the","Grenadines","Samoa","San Marino","Sao Tome & Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Tajikistan","Tanzania","Thailand","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"]
 
-def detectHeadersFrom(dictionary):
+def detectHeadersFromAndRemove(dictionary):
 
 	headers = dict(Author=None, Date=None, Country=None)
 	unknownValues = []
 	datePattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
-
+	
 	for k in dictionary:
 		unknownValues.append(k)
-	print('This is the dictionary {x}'.format(x=dictionary))
-	for k in dictionary:
+	#print('This is the dictionary {x}'.format(x=dictionary))
+	for k in dictionary:	
 		if datePattern.match(dictionary[k].pop()):
 			headers['Date'] = k
 			unknownValues.remove(k)
+			print(headers['Date'])
 			print("matched date")
 		elif dictionary[k] in countries:
 			headers['Country'] = k
 			unknownValues.remove(k)
 			print("matched country")
+	
+	return {'headers': headers, 'unknownValues': unknownValues}
 
+def detectHeadersFrom(dictionary):
+
+	headers = dict(Author=None, Date=None, Country=None)
+	unknownValues = []
+	datePattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
+	
+	for k in dictionary:
+		unknownValues.append(k)
+	print('This is the dictionary {x}'.format(x=dictionary))
+	for k in dictionary:	
+		if datePattern.match(dictionary[k].pop()):
+			headers['Date'] = k
+			print(headers['Date'])
+			print("matched date")
+		elif dictionary[k] in countries:
+			headers['Country'] = k
+			print("matched country")
+	
 	return {'headers': headers, 'unknownValues': unknownValues}
 
 '''

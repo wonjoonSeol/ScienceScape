@@ -1,37 +1,38 @@
 from django import forms
+from django.forms import formset_factory
 
-class AbstractField(forms.MultipleChoiceField):
+def createMiniForm(choices = [("DEFAULT", "Select a value")], request = None):
+	
+	class MiniForm(forms.Form):
+		choicesInField = choices
+		Name = forms.CharField()
+		Key = forms.MultipleChoiceField(required = True, choices = choices)
+	
+	if request:
+		return MiniForm(request)
 
-	__choicesInField = [("DEFAULT", "Select a value")]
-
-	def __init__(self, name, choice = [("DEFAULT", "Select a value")]):
-		self._name = name
-		super().__init__(required=False, choices=choice)
-		
-	def name(self, aName = None):
-		if aName: self._name = aName
-		return self._name
-
-
-
-class FieldSelectionForm(forms.Form):
-	listOfFields = []
-
-	def addFieldSet(self, fields):
-		for field in fields:
-			self.addFieldSelection(field)
-
-		self.populateForm()
-
-	def addFieldSelection(self, field):
-		if isinstance(field, AbstractField):
-			field.label = field.name()
-			self.listOfFields.append(field)
-
-	def populateForm(self):
-		for field in self.listOfFields:
-			self.fields['{name}'.format(name=field.name())] = field
-
+	return MiniForm
+	
+	
 class UploadFileForm(forms.Form):
     myFile = forms.FileField()
+
+
+def produceFormSet(dictionary, unknownValues):
+	fields = []
+	unknown = []
+	itial = []
+	count = 0
+	for key in dictionary:
+		if dictionary[key]:
+			count = count + 1
+			itial.append({'Key': dictionary[key],'Name': key})
+			print(dictionary[key])
+				
+	for i in unknownValues:
+		unknown.append((i,i))
 	
+	form = formset_factory(createMiniForm(unknown), extra = (len(unknown) - count))
+	finalForm = form(initial = itial) 
+	
+	return {'form' : finalForm, 'count' : len(unknown)}
