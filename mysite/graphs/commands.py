@@ -7,22 +7,9 @@ from django.db import models
 from .models import Mappings
 
 '''Takes an uploaded file and does the following:
-	1.Saves the file to userFiles
-	2.Produces a dictionary of raw headers mapped to a set of its records
-	3.Attempts to detect which headers belong to which fields
-	4.Returns a form.
-'''
-def handleUploadedFile(f):
-    if f:
-        print("File has been uploaded successfully!")
-        filePath = saveFile(f)
-        dictionary = processCSVIntoDictionary(filePath)
-        knownAndUnknownValues = detectHeadersFrom(dictionary)
-        form = produceFormSet(knownAndUnknownValues['headers'], knownAndUnknownValues['unknownValues'])
-
-        return fields
-
-'''Does the same thing as handleUploadedFile, but from a filePath instead
+	1.Produces a dictionary of raw headers mapped to a set of its records
+	2.Attempts to detect which headers belong to which fields
+	3.Returns a form set.
 '''
 def loadFromFilePath(fp):
 	dictionary = processCSVIntoDictionary(fp)
@@ -143,16 +130,30 @@ def detectHeadersFrom(dictionary):
 '''
 def dataProcess(key = None, weights = 0, minOccur = 0):
 	return dictionary[key]
-
+	
 '''This method refreshes the database adds mappings of the file names its true value eg mapping SS to Author in file 'fileName'
+	data must be in the form of a dictionary.
 '''
-def refreshDataBase(data, fileName):
+def refreshDataBase(data, filePath):
 	for key in data:
 		mapping = Mappings()
 		mapping.TRUE_NAME = key
 		mapping.FILE_NAME = data[key]
-		mapping.FILE_LINK = fileName
+		mapping.FILE_LINK = filePath
 		mapping.save()
 
+'''This method is used for retrieving mappings of file names to is true values for the file of the filePath passed in.
+	Mappings are returned in the form of a dictionary 
+'''
+def retrieveFromDataBase(filePath):
+	dictionary = dict()
+	mapping = Mappings.objects.filter(FILE_LINK = filePath)
+	for k in mapping:
+		dictionary[k.TRUE_NAME] = k.FILE_NAME
+	
+	print("dictionary from database is {x}".format(x = dictionary))
+		
+	return dictionary
+	
 def generateUser():
 	return folderDirectory
