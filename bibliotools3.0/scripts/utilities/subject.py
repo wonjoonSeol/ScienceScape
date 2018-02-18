@@ -1,9 +1,9 @@
 #! /usr/bin/env python
 
 class Subject:
-    self.id      = 0
-    self.subject = ""       
+    def __init__(self, data):
+        self.id      = 0
+        self.subject = ""       
 
-    def __init__(self):
-        sline.id = int(s[0])
-        sline.subject = s[1] 
+        self.id = int(data[0])
+        self.subject = data[1] 

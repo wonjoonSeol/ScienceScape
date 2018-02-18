@@ -1,15 +1,15 @@
 #! /usr/bin/env python
 
 class Ref:
-    self.id      = 0
-    self.firstAU = ""       
-    self.year    = 0
-    self.journal = ""
-    self.volume  = 0
-    self.page    = 0
-
 
     def __init__(self, data):
+        self.id      = 0
+        self.firstAU = ""       
+        self.year    = 0
+        self.journal = ""
+        self.volume  = 0
+        self.page    = 0
+
         self.id = int(data[0])
         self.firstAU = data[1]
         self.year = int(data[2]) 

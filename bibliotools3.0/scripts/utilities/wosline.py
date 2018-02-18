@@ -1,5 +1,8 @@
 #! /usr/bin/env python
 
+#TODO see what this does in the grand scheme of things. it's different from the
+# other objects in the utilities
+
 import os
 import sys
 import glob
@@ -67,6 +70,7 @@ class Wosline:
         self.GA = "" ## Document Delivery Number
         self.UT = "" ## Unique Article Identifier
 
+    
     def parse_line(self, line, defCols, numCols):
         """
         parse a line of the WoS txt output file  
