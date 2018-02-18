@@ -8,13 +8,22 @@ from .models import Mappings
 
 '''Takes an uploaded file and does the following:
 	1.Produces a dictionary of raw headers mapped to a set of its records
-	2.Attempts to detect which headers belong to which fields
-	3.Returns a form set.
+	2.Checks whether this file has been uploaded before and hence retrieves the header values
+	3.Otherwise attempts to detect which headers belong to which fields
+	4.Returns a form set.
 '''
 def loadFromFilePath(fp):
 	dictionary = processCSVIntoDictionary(fp)
-	knownAndUnknownValues = detectHeadersFrom(dictionary)
-	formSet = produceFormSet(knownAndUnknownValues['headers'], knownAndUnknownValues['unknownValues'])
+	checkIfInDataBase = retrieveFromDataBase(fp)
+	
+	if checkIfInDataBase:
+		known = []
+		for header in checkIfInDataBase:
+			known.append(checkIfInDataBase[header])
+		formSet = produceFormSet(checkIfInDataBase, known)
+	else:
+		knownAndUnknownValues = detectHeadersFrom(dictionary)
+		formSet = produceFormSet(knownAndUnknownValues['headers'], knownAndUnknownValues['unknownValues'])
 
 	return formSet
 
@@ -148,11 +157,13 @@ def refreshDataBase(data, filePath):
 def retrieveFromDataBase(filePath):
 	dictionary = dict()
 	mapping = Mappings.objects.filter(FILE_LINK = filePath)
-	for k in mapping:
-		dictionary[k.TRUE_NAME] = k.FILE_NAME
-	
-	print("dictionary from database is {x}".format(x = dictionary))
-		
+	if mapping:
+		for k in mapping:
+			dictionary[k.TRUE_NAME] = k.FILE_NAME
+	else:
+		return None
+
+	print("dictionary from database is {x}".format(x = dictionary))		
 	return dictionary
 	
 def generateUser():

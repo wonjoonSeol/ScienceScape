@@ -19,10 +19,10 @@ class UploadFileForm(forms.Form):
 
 
 def produceFormSet(dictionary, unknownValues):
-	fields = []
 	unknown = []
 	itial = []
 	count = 0
+	
 	for key in dictionary:
 		if dictionary[key]:
 			count = count + 1

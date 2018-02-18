@@ -40,7 +40,6 @@ def fieldForm(request, filePath):
 				data[request.POST.get('form-{n}-Name'.format(n = i))] = request.POST.get('form-{n}-Key'.format(n = i))
 			
 			refreshDataBase(data, filePath)
-			retrieveFromDataBase(filePath)
 			
 			APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 			gexfFilePath = os.path.join(APP_DIR, 'userFiles/yeast.gexf')
