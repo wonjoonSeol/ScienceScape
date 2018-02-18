@@ -10,11 +10,7 @@
 		</div>
 
 		<div class="col-sm-8">
-			{%if upload%}
-				{% include "search_bar.html" %}
-			{% else %}
-				{% include "file_preview.html" %}
-			{%endif%}
+				{% include "login.html" %}
 		</div>
 
 		<div class="col-sm-2">
@@ -32,9 +28,7 @@
 		</div>
 		<div class="col-sm-8">
 			<div>
-				{%if fields%}
-					{% include "fields.html" %}
-				{%endif%}
+			
 			</div>
 		</div>
 		<div class="col-sm-2">
@@ -50,7 +44,7 @@
 		</div>
 		<div class="col-sm-8">
 			<div>
-				{% include "graph_template.html" %}
+				<!--{% include "graph_template.html" %}-->
 
 			</div>
 		</div>
