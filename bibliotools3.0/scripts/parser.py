@@ -186,13 +186,7 @@ def Wos_parser(in_dir, out_dir, verbose):
     if verbose: print(("..%d parsed articles in total") % (id + 1))
     if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (kompt_corrupt_refs, kompt_refs, (100.0 * kompt_corrupt_refs) / kompt_refs if kompt_refs!=0 else 0))
 
-    f_articles.close()
-    f_authors.close()
-    f_article_keywords.close()
-    f_title_keywords.close()
-    f_isi_keywords.close()
-    f_subjects.close()
-    f_refs.close()
-    f_countries.close()
-    f_institutions.close()
+    closeList = [f_articles, f_authors, f_article_keywords, f_title_keywords, f_isi_keywords, f_subjects, f_refs, f_countries, f_institutions]
+    for d in closeList:
+        d.close()
     return
