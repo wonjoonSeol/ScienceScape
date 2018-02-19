@@ -17,6 +17,7 @@ common_words = ['a', 'able', 'about', 'across', 'after', 'all', 'almost', 'also'
 
 punctuation = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~', ' - ']
 
+"""
 # TODO Use config file accessors instead when the config file is working!
 accession_number = 'UT'
 authors = 'AU'
@@ -34,6 +35,7 @@ doi = 'DI'
 publication_type = 'PT'
 document_type = 'DT'
 wos_core_collection_times_cited = 'TC'
+"""
 
 def Wos_parser(in_dir, out_dir, verbose):
 
@@ -43,7 +45,9 @@ def Wos_parser(in_dir, out_dir, verbose):
     srccomp = "%s/*.txt" % in_dir
     srclst = glob.glob(srccomp)
     id = int(-1)
-
+   
+    utility = Utility(srclst)
+"""
     dst1  = os.path.join(out_dir, "articles.dat")
     f_articles = open(dst1,'w')
 
@@ -181,8 +185,9 @@ def Wos_parser(in_dir, out_dir, verbose):
                         if (country[length_split_address-3:length_split_address] == 'USA' or country[0:3] == 'AL ' or country[0:3] == 'AK ' or country[0:3] == 'AZ ' or country[0:3] == 'AR ' or country[0:3] == 'CA ' or country[0:3] == 'NC ' or country[0:3] == 'SC ' or country[0:3] == 'CO ' or country[0:3] == 'CT ' or country[0:3] == 'ND ' or country[0:3] == 'SD ' or country[0:3] == 'DE ' or country[0:3] == 'FL ' or country[0:3] == 'GA ' or country[0:3] == 'HI ' or country[0:3] == 'ID ' or country[0:3] == 'IL ' or country[0:3] == 'IN ' or country[0:3] == 'IA ' or country[0:3] == 'KS ' or country[0:3] == 'KY ' or country[0:3] == 'LA ' or country[0:3] == 'ME ' or country[0:3] == 'MD ' or country[0:3] == 'MA ' or country[0:3] == 'MI ' or country[0:3] == 'MN ' or country[0:3] == 'MS ' or country[0:3] == 'MO ' or country[0:3] == 'MT ' or country[0:3] == 'NE ' or country[0:3] == 'NV ' or country[0:3] == 'NH ' or country[0:3] == 'NJ ' or country[0:3] == 'NM ' or country[0:3] == 'NY ' or country[0:3] == 'OH ' or country[0:3] == 'OK ' or country[0:3] == 'or ' or country[0:3] == 'PA ' or country[0:3] == 'RI ' or country[0:3] == 'TN ' or country[0:3] == 'TX ' or country[0:3] == 'UT ' or country[0:3] == 'VT ' or country[0:3] == 'VA ' or country[0:3] == 'WV ' or country[0:3] == 'WA ' or country[0:3] == 'WI ' or country[0:3] == 'WY ' or country[0:3] == 'DC '): country = 'USA'
 
                         f_countries.write("%d\t%d\t%s\n" % (id,i,country))
-
-    # End
+"""
+      
+   # End
     if verbose: print(("..%d parsed articles in total") % (id + 1))
     if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (kompt_corrupt_refs, kompt_refs, (100.0 * kompt_corrupt_refs) / kompt_refs if kompt_refs!=0 else 0))
 
