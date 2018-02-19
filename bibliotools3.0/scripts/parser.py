@@ -186,8 +186,7 @@ def Wos_parser(in_dir, out_dir, verbose):
 
                         f_countries.write("%d\t%d\t%s\n" % (id,i,country))
 """
-      """
-   # End
+    """
     if verbose: print(("..%d parsed articles in total") % (id + 1))
     if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (kompt_corrupt_refs, kompt_refs, (100.0 * kompt_corrupt_refs) / kompt_refs if kompt_refs!=0 else 0))
 
