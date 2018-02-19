@@ -10,7 +10,7 @@ import re
 #personal modules
 import utilities
 
-class Utilities:
+class Utility:
     #list for all the utily objects
     __articles = []
     __authors = []
@@ -36,17 +36,17 @@ class Utilities:
         with open(file_path) as f:
             content = [x.strip('\n') for x in f.readlines()]
             for line in content: 
-                object_name = Utilities.file_name(file_path)
+                object_name = Utility.file_name(file_path)
                 re_line = re.split(', | ', line)
-                Utilities.collection[object_name].append(
-                        Utilities.__new_object(object_name, re_line))
+                Utility.collection[object_name].append(
+                        Utility.__new_object(object_name, re_line))
  
     
     def __init__(self, files_list):
         for path in files_list: 
             name = path.strip('.dat')
             print('name ' + name)
-            Utilities.read_file(path, name)
+            Utility.read_file(path, name)
 
 
    
@@ -73,8 +73,8 @@ class Utilities:
 
 def main():
     path_list = ['/Users/paul/testing/articles.dat']
-    utilities = Utilities(path_list)
-    print(Utilities.collection)
+    utilities = Utility(path_list)
+    print(Utility.collection)
 
 if __name__ == "__main__":
     main()
