@@ -11,7 +11,7 @@ import argparse
 
 class Wosline:
     
-    def __init__(self):
+    def __init__(self, line):
         #TODO create a map which reads these values from an external file to
         # improve decoupling, readability and efficiency
 
@@ -70,6 +70,8 @@ class Wosline:
         self.GA = "" ## Document Delivery Number
         self.UT = "" ## Unique Article Identifier
 
+        parse_line(line,  defColums(line)[0], defColums(line)[1])
+
     
     def parse_line(self, line, defCols, numCols):
         """
@@ -101,7 +103,8 @@ class Wosline:
             self.UT = s[defCols['UT']] ## Unique Article Identifier
         else:
             print(("ARG %s != %s"%(len(s),numCols)))
-## ##################################################
+
+####################################################
 
 def defColumns(line):
 
@@ -110,11 +113,13 @@ def defColumns(line):
   defCols = dict();
   
   # match columns number in "line"
-  foo = line.replace('\xef\xbb\xbf','').split('\t')
-  for i in range(len(foo)):
-    if foo[i] in Cols: 
-      defCols[foo[i]] = i
-  numCols = len(foo)
+  parsed_line_list = line.replace('\xef\xbb\xbf','').split('\t')
+
+  for i in range(len(parsed_line_list)):
+    if parsed_line_list[i] in Cols: 
+      defCols[parsed_line_list[i]] = i
+
+  numCols = len(parsed_line_list)
 
   return (defCols, numCols)
 
