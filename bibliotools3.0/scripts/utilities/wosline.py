@@ -11,9 +11,10 @@ import argparse
 
 class Wosline:
     
-    def __init__(self, list_from_line):
+    def __init__(self, list_from_line, defCols, numCols):
         #TODO create a map which reads these values from an external file to
         # improve decoupling, readability and efficiency
+
         self.PT = "" ## Publication Type (J=Journal; B=Book; S=Series)
         self.AU = "" ## Authors
         self.BA = "" ## Book Authors
@@ -69,7 +70,7 @@ class Wosline:
         self.GA = "" ## Document Delivery Number
         self.UT = "" ## Unique Article Identifier
 
-        parse_list(list_from_line, defColums(line)[0], defColums(line)[1])
+        parse_list(list_from_line, defColums, defColums)
 
     """
     parse a line(converted to list) of the WoS txt output file  
@@ -125,6 +126,6 @@ def defColumns(line):
 
   numCols = len(parsed_line_list)
 
-  return (defCols, numCols)
+  return (def_cols, num_cols)
 
 

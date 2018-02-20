@@ -68,16 +68,18 @@ def Wos_parser(in_dir, out_dir, verbose):
     kompt_corrupt_refs = 0
 
     WOS_IDS = dict()  # list the articles' wos-ids
-    utility = Utility(srclst)
+    utility = Utility()
 
     # Treat Data
     for src in srclst:
+        pl = utility.collection
+        Utility.init_wos(src)
         pl = Utils.ArticleList()
         pl.read_file(src)
         if verbose:
-            print("..processing %d articles in file %s" % (len(pl.articles), src))
-        if (len(pl.articles) > 0):
-            for article in pl.articles:
+            print("..processing %d articles in file %s" % (len(pl['woslines']), src))
+        if (len(pl['woslines']) > 0):
+            for article in pl['woslines']:
 
               if getattr(article, accession_number) not in WOS_IDS:
                 WOS_IDS[getattr(article, accession_number)] = ''
@@ -86,7 +88,13 @@ def Wos_parser(in_dir, out_dir, verbose):
                 #article
                 article_authors = getattr(article, authors).split('; ')
                 firstAU = article_authors[0].replace(',','')
-                f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (id,firstAU,getattr(article, year_published),getattr(article, twenty_nine_character_source_abbreviation),getattr(article, volume),getattr(article, beginning_page),getattr(article, doi),getattr(article, publication_type),getattr(article, document_type),getattr(article, wos_core_collection_times_cited),getattr(article, document_title),getattr(article, accession_number)))
+                f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % 
+                    (id,firstAU,getattr(article, year_published),
+                    getattr(article, twenty_nine_character_source_abbreviation),
+                    getattr(article, volume), getattr(article, beginning_page),
+                    getattr(article, doi), getattr(article, publication_type),
+                    getattr(article, document_type), getattr(article, wos_core_collection_times_cited),
+                    getattr(article, document_title), getattr(article, accession_number)))
 
                 #authors
                 if(getattr(article, authors) != ""):
@@ -145,7 +153,8 @@ def Wos_parser(in_dir, out_dir, verbose):
                          ref.parse_ref(article_refs[i])
                          kompt_refs += 1
                          if(ref.year > 0):
-                             f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" % (id,ref.firstAU,ref.year,ref.journal,ref.volume,ref.page))
+                             f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" % 
+                                     (id,ref.firstAU,ref.year,ref.journal,ref.volume,ref.page))
                          if(ref.year == 0): kompt_corrupt_refs += 1
 
                 #countries / institutions
@@ -172,7 +181,25 @@ def Wos_parser(in_dir, out_dir, verbose):
                         country = split_address[length_of_address-1]
                         length_split_address = len(split_address[length_of_address-1])
 
-                        if (country[length_split_address-3:length_split_address] == 'USA' or country[0:3] == 'AL ' or country[0:3] == 'AK ' or country[0:3] == 'AZ ' or country[0:3] == 'AR ' or country[0:3] == 'CA ' or country[0:3] == 'NC ' or country[0:3] == 'SC ' or country[0:3] == 'CO ' or country[0:3] == 'CT ' or country[0:3] == 'ND ' or country[0:3] == 'SD ' or country[0:3] == 'DE ' or country[0:3] == 'FL ' or country[0:3] == 'GA ' or country[0:3] == 'HI ' or country[0:3] == 'ID ' or country[0:3] == 'IL ' or country[0:3] == 'IN ' or country[0:3] == 'IA ' or country[0:3] == 'KS ' or country[0:3] == 'KY ' or country[0:3] == 'LA ' or country[0:3] == 'ME ' or country[0:3] == 'MD ' or country[0:3] == 'MA ' or country[0:3] == 'MI ' or country[0:3] == 'MN ' or country[0:3] == 'MS ' or country[0:3] == 'MO ' or country[0:3] == 'MT ' or country[0:3] == 'NE ' or country[0:3] == 'NV ' or country[0:3] == 'NH ' or country[0:3] == 'NJ ' or country[0:3] == 'NM ' or country[0:3] == 'NY ' or country[0:3] == 'OH ' or country[0:3] == 'OK ' or country[0:3] == 'or ' or country[0:3] == 'PA ' or country[0:3] == 'RI ' or country[0:3] == 'TN ' or country[0:3] == 'TX ' or country[0:3] == 'UT ' or country[0:3] == 'VT ' or country[0:3] == 'VA ' or country[0:3] == 'WV ' or country[0:3] == 'WA ' or country[0:3] == 'WI ' or country[0:3] == 'WY ' or country[0:3] == 'DC '): country = 'USA'
+                        if (country[length_split_address-3:length_split_address] == 'USA' 
+                                or country[0:3] == 'AL ' or country[0:3] == 'AK ' or country[0:3] == 'AZ ' or
+                                country[0:3] == 'AR ' or country[0:3] == 'CA ' or country[0:3] == 'NC ' or 
+                                country[0:3] == 'SC ' or country[0:3] == 'CO ' or country[0:3] == 'CT ' or 
+                                country[0:3] == 'ND ' or country[0:3] == 'SD ' or country[0:3] == 'DE ' or
+                                country[0:3] == 'FL ' or country[0:3] == 'GA ' or country[0:3] == 'HI ' or
+                                country[0:3] == 'ID ' or country[0:3] == 'IL ' or country[0:3] == 'IN ' or 
+                                country[0:3] == 'IA ' or country[0:3] == 'KS ' or country[0:3] == 'KY ' or 
+                                country[0:3] == 'LA ' or country[0:3] == 'ME ' or country[0:3] == 'MD ' or
+                                country[0:3] == 'MA ' or country[0:3] == 'MI ' or country[0:3] == 'MN ' or 
+                                country[0:3] == 'MS ' or country[0:3] == 'MO ' or country[0:3] == 'MT ' or
+                                country[0:3] == 'NE ' or country[0:3] == 'NV ' or country[0:3] == 'NH ' or
+                                country[0:3] == 'NJ ' or country[0:3] == 'NM ' or country[0:3] == 'NY ' or 
+                                country[0:3] == 'OH ' or country[0:3] == 'OK ' or country[0:3] == 'or ' or 
+                                country[0:3] == 'PA ' or country[0:3] == 'RI ' or country[0:3] == 'TN ' or 
+                                country[0:3] == 'TX ' or country[0:3] == 'UT ' or country[0:3] == 'VT ' or 
+                                country[0:3] == 'VA ' or country[0:3] == 'WV ' or country[0:3] == 'WA ' or 
+                                country[0:3] == 'WI ' or country[0:3] == 'WY ' or country[0:3] == 'DC '): 
+                            country = 'USA'
 
                         f_countries.write("%d\t%d\t%s\n" % (id,i,country))
 

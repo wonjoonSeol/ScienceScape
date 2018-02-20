@@ -58,16 +58,19 @@ class Utility:
         Takes a list of WOS txt files as source and uses the parser to generate
         .dat files for the items in the collection.
      '''
-     def init_wos(source_list):
-         #TODO
-         #call parser here to create .dat files
-         #for src in srclst:
-         #   Utility.read_file(src, 'woslines')
-         #   
-         #  if len(__woslines) > 0:
-         #       for wosline in __woslines:
-         #           parse_wosline();
-
+     def init_wos(src):
+         with open(src) as f:
+             content = [x.strip('\n') for x in f.readlines()]
+             has_header = False 
+             for line in content:
+                if line != "":
+                    re_line = re.split(', | ', line_
+                    if !has_header: # define columns thanks to 1st line
+                        (def_cols, num_cols) = wosline.defColumns(re_line)
+                        has_header = True
+                    elif (has_header): # do not take 1st line into account!
+                        Utility.collection['woslines'].append(
+                               wosline.WosLine(re_line, defCols, numCols) 
 
      '''
         Takes a list of .dat files corrresponding to the items in the
