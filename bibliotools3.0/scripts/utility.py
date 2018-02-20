@@ -30,10 +30,19 @@ class Utility:
             'keywords' : __keywords, 'labs' : __labs, 'refs' : __refs, 
             'subjects' : __subjects, 'woslines' : __woslines }
 
+    '''
+       Takes a path of a file and return the file's name without the extension.
+       eg: /foo/bar/test.txt returns test
+    '''
     def file_name(file_path):
         base = os.path.basename(file_path)
         return os.path.splitext(base)[0]
 
+    '''
+        Reads from a given file which is targeted to a specific object.
+        Based on what object is chosen, a new object of that type is created,
+        for every line of the file. Every line gets passed to its constructor.
+    '''
     def read_file(file_path, object_name):
         with open(file_path) as f:
             content = [x.strip('\n') for x in f.readlines()]
@@ -44,19 +53,26 @@ class Utility:
                 Utility.collection[object_name].append(
                         Utility.__new_object(object_name, re_line))
  
-
-
-
+        
+     '''
+        Takes a list of WOS txt files as source and uses the parser to generate
+        .dat files for the items in the collection.
+     '''
      def init_wos(source_list):
+         #TODO
          #call parser here to create .dat files
-        ''' for src in srclst:
-            Utility.read_file(src, 'woslines')
-            
-            if len(__woslines) > 0:
-                for wosline in __woslines:
-                    parse_wosline();
-        '''
+         #for src in srclst:
+         #   Utility.read_file(src, 'woslines')
+         #   
+         #  if len(__woslines) > 0:
+         #       for wosline in __woslines:
+         #           parse_wosline();
 
+
+     '''
+        Takes a list of .dat files corrresponding to the items in the
+        collection, and populates the items based on the data.
+     '''
      def init_utilites(source_list):
          #after we have .dat files created by parser, use utility to store them
          #in the collection
@@ -65,10 +81,11 @@ class Utility:
             print('name ' + name)
             Utility.read_file(path, name)
 
-
-    def __init__(self, srclines):
-          
-   
+    '''
+        A factory that creates items based on a given name. It passes the given
+        line to its constructor.
+        Returns the created item.
+    '''
     def __new_object(object_name, line):
         if(object_name == 'articles'):
             from utilities import article
