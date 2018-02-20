@@ -4,12 +4,12 @@ dir = os.path.dirname(os.path.dirname(__file__))
 year_index_position = 44
 
 CONFIG={
-	# step one (merging_corpus.py) mandatory 
+	# step one (merging_corpus.py) mandatory
 	"wos_data": os.path.join(dir, "data-wos/"),
 	"one_file_corpus": os.path.join(dir, "Result/one_file_corpus.txt"),
 	"reports_directory": os.path.join(dir, "Result/report"),
 
-	# step two (parse_and_group.py) mandatory 
+	# step two (parse_and_group.py) mandatory
 	"wos_data_grouped": os.path.join(dir, "Result/grouped_data"),
 	"parsed_data": os.path.join(dir, "Result/parsed_data"),
 	# a span is a period of time defined by years
@@ -18,11 +18,11 @@ CONFIG={
 	"spans":{
 			"span_name":{
 				"years":[1900,1999],
-				
+
 				#filtering:
-				# occ : minimum number of occurences in corpus 
+				# occ : minimum number of occurences in corpus
 				# weight : minimum number of co-occurences with reference in articles (edge weight)
-				
+
 				#filtering on reference are mandatory from step three
 				"references":{"occ":2,"weight":1},
 
@@ -68,16 +68,30 @@ CONFIG={
 	"process_verbose":False,
 	"report_verbose":True,
 	"report_csv":True,
-	
+
 	# number of processes to use in annotations_multiproc.py
-	# beware the more processes the more memory is needed 
+	# beware the more processes the more memory is needed
 	"nb_processes":2,
 
-	
+
 	"export_ref_annotated_format":"graphml",#can't be gexf because of bug #1296 in networkx see https://github.com/networkx/networkx/issues/1296
 	# If your wos export file don't have this first line, it's not going to work!
     "wos_headers" : "PT	AU	BA	BE	GP	AF	BF	CA	TI	SO	SE	BS	LA	DT	CT	CY	CL	SP	HO	DE	ID	AB	C1	RP	EM	RI	OI	FU	FX	CR	NR	TC	Z9	U1	U2	PU	PI	PA	SN	EI	BN	J9	JI	PD	PY	VL	IS	PN	SU	SI	MA	BP	EP	AR	DI	D2	EA	EY	PG	WC	SC	GA	UT	PM	OA	HC	HP	DA",
     "year_index_position" : 44,
+
+	"common_words": ['a', 'able', 'about', 'across', 'after', 'all', 'almost', 'also', 'am', 'among', 'an', 'and',
+	        'any', 'are', 'as', 'at', 'be', 'because', 'been', 'but', 'by', 'can', 'cannot', 'could', 'dear',
+	        'did', 'do', 'does', 'either', 'else', 'ever', 'every', 'for', 'from', 'get', 'got', 'had', 'has',
+	        'have', 'he', 'her', 'hers', 'him', 'his', 'how', 'however', 'i', 'if', 'in', 'into', 'is', 'it',
+	        'its', 'just', 'least', 'let', 'like', 'likely', 'may', 'me', 'might', 'most', 'must', 'my',
+	        'neither', 'no', 'nor', 'not', 'of', 'off', 'often', 'on', 'only', 'or', 'other', 'our', 'own',
+	        'rather', 'said', 'say', 'says', 'she', 'should', 'since', 'so', 'some', 'than', 'that', 'the',
+	        'their', 'them', 'then', 'there', 'these', 'they', 'this', 'tis', 'to', 'too', 'twas', 'us',
+	        'wants', 'was', 'we', 'were', 'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why',
+	        'will', 'with', 'would', 'yet', 'you', 'your'],
+
+	"punctuation": ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '.', '/',
+	        ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~', ' - '],
+
+	#TODO Add dictionary for header codes
 }
-
-
