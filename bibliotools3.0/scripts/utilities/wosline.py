@@ -10,8 +10,44 @@ import numpy
 import argparse
 
 class Wosline:
-    
-    def __init__(self, list_from_line, defCols, numCols):
+
+    """
+    parse a line(converted to list) of the WoS txt output file  
+    """
+    def parse_list(self, list_from_line, defCols, numCols):
+        if len(list_from_line) == numCols :
+            ## Publication Type (J=Journal; B=Book; S=Series)
+            if(list_from_line[defCols['PT']]=='J'): 
+                self.PT = 'Journal'             
+            if(list_from_line[defCols['PT']]=='B'): 
+                self.PT = 'Book' 
+            if(list_from_line[defCols['PT']]=='S'): 
+                self.PT = 'Series' 
+
+            self.AU = list_from_line[defCols['AU']] ## Authors
+            self.TI = list_from_line[defCols['TI']] ## Document Title
+            self.SO = list_from_line[defCols['SO']] ## Publication Name
+            self.DT = list_from_line[defCols['DT']] ## Document Type
+            self.DE = list_from_line[defCols['DE']] ## Author Keywords
+            self.ID = list_from_line[defCols['ID']] ## Keywords Plus
+            self.C1 = list_from_line[defCols['C1']] ## Author Address
+            self.CR = list_from_line[defCols['CR']] ## Cited References
+            self.TC = list_from_line[defCols['TC']] ## Times Cited
+            self.J9 = list_from_line[defCols['J9']] ## 29-Character Source Abbreviation
+            self.PD = list_from_line[defCols['PD']] ## Publication Date
+            if list_from_line[defCols['PY']].isdigit(): 
+                self.PY = int(s[defCols['PY']])
+            else:
+                self.PY = 0  ## Year Published
+            self.VL = list_from_line[defCols['VL']] ## Volume
+            self.IS = list_from_line[defCols['IS']] ## Issue
+            self.BP = list_from_line[defCols['BP']] ## Beginning Page
+            self.WC = list_from_line[defCols['WC']] ## Web of Science Category
+            self.UT = list_from_line[defCols['UT']] ## Unique Article Identifier
+        else:
+            print(("ARG %s != %s"%(len(list_from_line), numCols)))
+ 
+    def __init__(self, list_from_line, def_cols, num_cols):
         #TODO create a map which reads these values from an external file to
         # improve decoupling, readability and efficiency
 
@@ -70,47 +106,12 @@ class Wosline:
         self.GA = "" ## Document Delivery Number
         self.UT = "" ## Unique Article Identifier
 
-        parse_list(list_from_line, defColums, defColums)
+        self.parse_list(list_from_line, def_cols, num_cols)
 
-    """
-    parse a line(converted to list) of the WoS txt output file  
-    """
-    def parse_list(self, list_from_line, defCols, numCols):
-        if len(list_from_line) == numCols :
-            ## Publication Type (J=Journal; B=Book; S=Series)
-            if(list_from_line[defCols['PT']]=='J'): 
-                self.PT = 'Journal'             
-            if(list_from_line[defCols['PT']]=='B'): 
-                self.PT = 'Book' 
-            if(list_from_line[defCols['PT']]=='S'): 
-                self.PT = 'Series' 
-
-            self.AU = list_from_line[defCols['AU']] ## Authors
-            self.TI = list_from_line[defCols['TI']] ## Document Title
-            self.SO = list_from_line[defCols['SO']] ## Publication Name
-            self.DT = list_from_line[defCols['DT']] ## Document Type
-            self.DE = list_from_line[defCols['DE']] ## Author Keywords
-            self.ID = list_from_line[defCols['ID']] ## Keywords Plus
-            self.C1 = list_from_line[defCols['C1']] ## Author Address
-            self.CR = list_from_line[[defCols['CR']] ## Cited References
-            self.TC = list_from_line[[defCols['TC']] ## Times Cited
-            self.J9 = list_from_line[[defCols['J9']] ## 29-Character Source Abbreviation
-            self.PD = list_from_line[[defCols['PD']] ## Publication Date
-            if list_from_line[defCols['PY']].isdigit(): 
-                self.PY = int(s[defCols['PY']])
-            else:
-                self.PY = 0  ## Year Published
-            self.VL = list_from_line[defCols['VL']] ## Volume
-            self.IS = list_from_line[defCols['IS']] ## Issue
-            self.BP = list_from_line[defCols['BP']] ## Beginning Page
-            self.WC = list_from_line[defCols['WC']] ## Web of Science Category
-            self.UT = list_from_line[defCols['UT']] ## Unique Article Identifier
-        else:
-            print(("ARG %s != %s"%(len(s),numCols)))
-
+   
 ####################################################
 
-def defColumns(line):
+def defColumns(parsed_line_list):
 
   # initialize
   cols = ['PT', 'AU', 'TI', 'SO', 'DT', 'DE', 'ID', 'C1', 'CR', 
@@ -118,13 +119,12 @@ def defColumns(line):
   def_cols = dict()
   
   # match columns number in "line"
-  parsed_line_list = line.replace('\xef\xbb\xbf','').split('\t')
 
   for i in range(len(parsed_line_list)):
     if parsed_line_list[i] in cols: 
       def_cols[parsed_line_list[i]] = i
 
-  numCols = len(parsed_line_list)
+  num_cols = len(parsed_line_list)
 
   return (def_cols, num_cols)
 

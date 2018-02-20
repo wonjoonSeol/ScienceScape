@@ -31,8 +31,8 @@ class Utility:
             'subjects' : __subjects, 'woslines' : __woslines }
 
     '''
-       Takes a path of a file and return the file's name without the extension.
-       eg: /foo/bar/test.txt returns test
+        Takes a path of a file and return the file's name without the extension.
+        eg: /foo/bar/test.txt returns test
     '''
     def file_name(file_path):
         base = os.path.basename(file_path)
@@ -51,35 +51,36 @@ class Utility:
                 object_name = Utility.file_name(file_path)
                 re_line = re.split(', | ', line)
                 Utility.collection[object_name].append(
-                        Utility.__new_object(object_name, re_line))
+                    Utility.__new_object(object_name, re_line))
  
         
-     '''
+    '''
         Takes a list of WOS txt files as source and uses the parser to generate
         .dat files for the items in the collection.
-     '''
-     def init_wos(src):
-         with open(src) as f:
-             content = [x.strip('\n') for x in f.readlines()]
-             has_header = False 
-             for line in content:
+    '''
+    def init_wos(src):
+        with open(src) as f:
+            content = [x.strip('\n') for x in f.readlines()]
+            has_header = False 
+            for line in content:
                 if line != "":
-                    re_line = re.split(', | ', line_
-                    if !has_header: # define columns thanks to 1st line
+                    line.replace('\xef\xbb\xbf','').split('\t')
+                    re_line = re.split(', | ', line)
+                    if not has_header: # define columns thanks to 1st line
+                        from utilities import wosline
                         (def_cols, num_cols) = wosline.defColumns(re_line)
                         has_header = True
-                    elif (has_header): # do not take 1st line into account!
-                        Utility.collection['woslines'].append(
-                               wosline.WosLine(re_line, defCols, numCols) 
+                    elif has_header: # do not take 1st line into account!
+                        Utility.collection['woslines'].append(wosline.Wosline(re_line, def_cols, num_cols))
 
-     '''
+    '''
         Takes a list of .dat files corrresponding to the items in the
         collection, and populates the items based on the data.
-     '''
-     def init_utilites(source_list):
-         #after we have .dat files created by parser, use utility to store them
-         #in the collection
-         for path in files_list: 
+    '''
+    def init_utilites(source_list):
+        #after we have .dat files created by parser, use utility to store them
+        #in the collection
+        for path in files_list: 
             name = path.strip('.dat')
             print('name ' + name)
             Utility.read_file(path, name)

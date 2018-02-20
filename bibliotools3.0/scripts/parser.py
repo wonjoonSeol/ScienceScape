@@ -11,7 +11,7 @@ import os
 import sys
 import glob
 import argparse
-import Utils
+import utility 
 
 common_words = ['a', 'able', 'about', 'across', 'after', 'all', 'almost', 'also', 'am', 'among', 'an', 'and',
         'any', 'are', 'as', 'at', 'be', 'because', 'been', 'but', 'by', 'can', 'cannot', 'could', 'dear', 
@@ -48,7 +48,6 @@ wos_core_collection_times_cited = 'TC'
 def Wos_parser(in_dir, out_dir, verbose):
 
     # Initialisation
-    if verbose: print("..Analysing files %s/*.txt" %in_dir)
 
     srccomp = "%s/*.txt" % in_dir
     srclst = glob.glob(srccomp)
@@ -68,14 +67,13 @@ def Wos_parser(in_dir, out_dir, verbose):
     kompt_corrupt_refs = 0
 
     WOS_IDS = dict()  # list the articles' wos-ids
-    utility = Utility()
 
     # Treat Data
     for src in srclst:
-        pl = utility.collection
-        Utility.init_wos(src)
-        pl = Utils.ArticleList()
-        pl.read_file(src)
+        pl = utility.Utility.collection
+        utility.Utility.init_wos(src)
+        #        pl = Utils.ArticleList()
+        #        pl.read_file(src)
         if verbose:
             print("..processing %d articles in file %s" % (len(pl['woslines']), src))
         if (len(pl['woslines']) > 0):
@@ -135,9 +133,9 @@ def Wos_parser(in_dir, out_dir, verbose):
                     for p in punctuation: article_author_keywords = article_author_keywords.replace(p,'')
                     article_author_keywords = article_author_keywords.split(' ')
                     for f in article_author_keywords:
-                      lowercase = f.lower()
-                      if lowercase not in common_words and len(lowercase)>0:
-                        f_title_keywords.write("%d\tTK\t%s\n" % (id, lowercase.upper()))
+                        lowercase = f.lower()
+                        if lowercase not in common_words and len(lowercase)>0:
+                            f_title_keywords.write("%d\tTK\t%s\n" % (id, lowercase.upper()))
 
                 #subjects
                 if(getattr(article, wos_categories) != ""):
