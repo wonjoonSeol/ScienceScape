@@ -1,8 +1,9 @@
 ## Welcome
 
-<img src="/images/sciencescapes-logo.png?raw=true" align="left" width="480" height="150">
+<img src="/images/sciencescapes-logo.png?raw=true" width="50%">
 
-#### - by Team Codokans
+
+#### By Team Codokans
 
 Building upon two existing tools developed by the Sciences Po Médialab (Paris), the Codokans (from **King's College London**) are working on integrating two scientometrics applications into one usable, large-scale website as part of a 2nd-year project.
 
