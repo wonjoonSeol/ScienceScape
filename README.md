@@ -9,6 +9,20 @@ Building upon two existing tools developed by the Sciences Po Médialab (Paris),
 
 <br/>
 
+#### Developed by:
+
+```bash
+Wonjoon Seol
+Shayne Ahchoon
+Saadman Sakib
+Jack Hinshelwood
+Nicolas Volken
+Britton Forsyth
+Alexander Jermstad
+Nathan Al Sibai
+Paul Muresan
+```
+
 #### Supervised by: 
 Dr. **Jeroen Keppens** and **Dr. Solon Pissis**, Department of Informatics, <a href="http://www.kcl.ac.uk">King's College London</a>
 
