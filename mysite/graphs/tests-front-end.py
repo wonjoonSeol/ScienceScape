@@ -2,12 +2,12 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-class PythonOrgSearch(unittest.TestCase):
+class Sciencescape(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Firefox()
 
-    def test_search_in_python_org(self):
+    def test_title_in_sciencescape(self):
         driver = self.driver
         driver.get("http://127.0.0.1:8000/")
         self.assertIn("Sciencescape beta", driver.title)
@@ -19,6 +19,7 @@ class PythonOrgSearch(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
+        # self.driver.close() - closes the tab of the browser instead of quitting entirely
 
 if __name__ == "__main__":
     unittest.main()
