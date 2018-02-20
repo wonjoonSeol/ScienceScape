@@ -11,17 +11,17 @@ import os
 import sys
 import glob
 import argparse
-import utility 
+import utility
 
 common_words = ['a', 'able', 'about', 'across', 'after', 'all', 'almost', 'also', 'am', 'among', 'an', 'and',
-        'any', 'are', 'as', 'at', 'be', 'because', 'been', 'but', 'by', 'can', 'cannot', 'could', 'dear', 
-        'did', 'do', 'does', 'either', 'else', 'ever', 'every', 'for', 'from', 'get', 'got', 'had', 'has', 
-        'have', 'he', 'her', 'hers', 'him', 'his', 'how', 'however', 'i', 'if', 'in', 'into', 'is', 'it', 
-        'its', 'just', 'least', 'let', 'like', 'likely', 'may', 'me', 'might', 'most', 'must', 'my', 
+        'any', 'are', 'as', 'at', 'be', 'because', 'been', 'but', 'by', 'can', 'cannot', 'could', 'dear',
+        'did', 'do', 'does', 'either', 'else', 'ever', 'every', 'for', 'from', 'get', 'got', 'had', 'has',
+        'have', 'he', 'her', 'hers', 'him', 'his', 'how', 'however', 'i', 'if', 'in', 'into', 'is', 'it',
+        'its', 'just', 'least', 'let', 'like', 'likely', 'may', 'me', 'might', 'most', 'must', 'my',
         'neither', 'no', 'nor', 'not', 'of', 'off', 'often', 'on', 'only', 'or', 'other', 'our', 'own',
-        'rather', 'said', 'say', 'says', 'she', 'should', 'since', 'so', 'some', 'than', 'that', 'the', 
-        'their', 'them', 'then', 'there', 'these', 'they', 'this', 'tis', 'to', 'too', 'twas', 'us', 
-        'wants', 'was', 'we', 'were', 'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why', 
+        'rather', 'said', 'say', 'says', 'she', 'should', 'since', 'so', 'some', 'than', 'that', 'the',
+        'their', 'them', 'then', 'there', 'these', 'they', 'this', 'tis', 'to', 'too', 'twas', 'us',
+        'wants', 'was', 'we', 'were', 'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why',
         'will', 'with', 'would', 'yet', 'you', 'your']
 
 punctuation = ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '.', '/',
@@ -52,7 +52,7 @@ def Wos_parser(in_dir, out_dir, verbose):
     srccomp = "%s/*.txt" % in_dir
     srclst = glob.glob(srccomp)
     id = int(-1)
-    
+
     f_articles = open(os.path.join(out_dir, "articles.dat"),'w')
     f_authors = open(os.path.join(out_dir, "authors.dat"), 'w')
     f_title_keywords = open(os.path.join(out_dir, "title_keywords.dat"), 'w')
@@ -86,7 +86,7 @@ def Wos_parser(in_dir, out_dir, verbose):
                 #article
                 article_authors = getattr(article, authors).split('; ')
                 firstAU = article_authors[0].replace(',','')
-                f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % 
+                f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %
                     (id,firstAU,getattr(article, year_published),
                     getattr(article, twenty_nine_character_source_abbreviation),
                     getattr(article, volume), getattr(article, beginning_page),
@@ -147,11 +147,11 @@ def Wos_parser(in_dir, out_dir, verbose):
                 if(getattr(article, cited_references) != ""):
                      article_refs = getattr(article, cited_references).split('; ')
                      for i in range(len(article_refs)):
-                         ref = Utils.Ref()
-                         ref.parse_ref(article_refs[i])
+                         ref = utility.Utility.new_object('refs', article_refs[i])
+                         #ref.parse_ref(article_refs[i])
                          kompt_refs += 1
                          if(ref.year > 0):
-                             f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" % 
+                             f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" %
                                      (id,ref.firstAU,ref.year,ref.journal,ref.volume,ref.page))
                          if(ref.year == 0): kompt_corrupt_refs += 1
 
@@ -179,24 +179,24 @@ def Wos_parser(in_dir, out_dir, verbose):
                         country = split_address[length_of_address-1]
                         length_split_address = len(split_address[length_of_address-1])
 
-                        if (country[length_split_address-3:length_split_address] == 'USA' 
+                        if (country[length_split_address-3:length_split_address] == 'USA'
                                 or country[0:3] == 'AL ' or country[0:3] == 'AK ' or country[0:3] == 'AZ ' or
-                                country[0:3] == 'AR ' or country[0:3] == 'CA ' or country[0:3] == 'NC ' or 
-                                country[0:3] == 'SC ' or country[0:3] == 'CO ' or country[0:3] == 'CT ' or 
+                                country[0:3] == 'AR ' or country[0:3] == 'CA ' or country[0:3] == 'NC ' or
+                                country[0:3] == 'SC ' or country[0:3] == 'CO ' or country[0:3] == 'CT ' or
                                 country[0:3] == 'ND ' or country[0:3] == 'SD ' or country[0:3] == 'DE ' or
                                 country[0:3] == 'FL ' or country[0:3] == 'GA ' or country[0:3] == 'HI ' or
-                                country[0:3] == 'ID ' or country[0:3] == 'IL ' or country[0:3] == 'IN ' or 
-                                country[0:3] == 'IA ' or country[0:3] == 'KS ' or country[0:3] == 'KY ' or 
+                                country[0:3] == 'ID ' or country[0:3] == 'IL ' or country[0:3] == 'IN ' or
+                                country[0:3] == 'IA ' or country[0:3] == 'KS ' or country[0:3] == 'KY ' or
                                 country[0:3] == 'LA ' or country[0:3] == 'ME ' or country[0:3] == 'MD ' or
-                                country[0:3] == 'MA ' or country[0:3] == 'MI ' or country[0:3] == 'MN ' or 
+                                country[0:3] == 'MA ' or country[0:3] == 'MI ' or country[0:3] == 'MN ' or
                                 country[0:3] == 'MS ' or country[0:3] == 'MO ' or country[0:3] == 'MT ' or
                                 country[0:3] == 'NE ' or country[0:3] == 'NV ' or country[0:3] == 'NH ' or
-                                country[0:3] == 'NJ ' or country[0:3] == 'NM ' or country[0:3] == 'NY ' or 
-                                country[0:3] == 'OH ' or country[0:3] == 'OK ' or country[0:3] == 'or ' or 
-                                country[0:3] == 'PA ' or country[0:3] == 'RI ' or country[0:3] == 'TN ' or 
-                                country[0:3] == 'TX ' or country[0:3] == 'UT ' or country[0:3] == 'VT ' or 
-                                country[0:3] == 'VA ' or country[0:3] == 'WV ' or country[0:3] == 'WA ' or 
-                                country[0:3] == 'WI ' or country[0:3] == 'WY ' or country[0:3] == 'DC '): 
+                                country[0:3] == 'NJ ' or country[0:3] == 'NM ' or country[0:3] == 'NY ' or
+                                country[0:3] == 'OH ' or country[0:3] == 'OK ' or country[0:3] == 'or ' or
+                                country[0:3] == 'PA ' or country[0:3] == 'RI ' or country[0:3] == 'TN ' or
+                                country[0:3] == 'TX ' or country[0:3] == 'UT ' or country[0:3] == 'VT ' or
+                                country[0:3] == 'VA ' or country[0:3] == 'WV ' or country[0:3] == 'WA ' or
+                                country[0:3] == 'WI ' or country[0:3] == 'WY ' or country[0:3] == 'DC '):
                             country = 'USA'
 
                         f_countries.write("%d\t%d\t%s\n" % (id,i,country))

@@ -25,9 +25,9 @@ class Utility:
     __woslines = []
 
     #dictionary for all the objects
-    collection = { 'articles': __articles , 'authors' : __authors, 
-            'countries' : __countries, 'institutions' : __institutions, 
-            'keywords' : __keywords, 'labs' : __labs, 'refs' : __refs, 
+    collection = { 'articles': __articles , 'authors' : __authors,
+            'countries' : __countries, 'institutions' : __institutions,
+            'keywords' : __keywords, 'labs' : __labs, 'refs' : __refs,
             'subjects' : __subjects, 'woslines' : __woslines }
 
     '''
@@ -46,14 +46,14 @@ class Utility:
     def read_file(file_path, object_name):
         with open(file_path) as f:
             content = [x.strip('\n') for x in f.readlines()]
-            for line in content: 
+            for line in content:
                 #parse line based on object type
                 object_name = Utility.file_name(file_path)
                 re_line = re.split(', | ', line)
                 Utility.collection[object_name].append(
                     Utility.__new_object(object_name, re_line))
- 
-        
+
+
     '''
         Takes a list of WOS txt files as source and uses the parser to generate
         .dat files for the items in the collection.
@@ -61,11 +61,10 @@ class Utility:
     def init_wos(src):
         with open(src) as f:
             content = [x.strip('\n') for x in f.readlines()]
-            has_header = False 
+            has_header = False
             for line in content:
                 if line != "":
-                    line.replace('\xef\xbb\xbf','').split('\t')
-                    re_line = re.split(', | ', line)
+                    re_line = line.replace('\xef\xbb\xbf','').split('\t')
                     if not has_header: # define columns thanks to 1st line
                         from utilities import wosline
                         (def_cols, num_cols) = wosline.defColumns(re_line)
@@ -80,9 +79,8 @@ class Utility:
     def init_utilites(source_list):
         #after we have .dat files created by parser, use utility to store them
         #in the collection
-        for path in files_list: 
+        for path in files_list:
             name = path.strip('.dat')
-            print('name ' + name)
             Utility.read_file(path, name)
 
     '''
@@ -90,7 +88,7 @@ class Utility:
         line to its constructor.
         Returns the created item.
     '''
-    def __new_object(object_name, line):
+    def new_object(object_name, line):
         if(object_name == 'articles'):
             from utilities import article
             return article.Article(line)
@@ -101,28 +99,20 @@ class Utility:
             from utilites import country
             return country.Country(line)
         elif(object_name == 'institutions'):
-            from utilites import institution 
+            from utilites import institution
             return institution.Institution(line)
         elif(object_name == 'keywords'):
-            from utilites import keyword 
+            from utilites import keyword
             return keyword.Keyword(line)
         elif(object_name == 'labs'):
-            from utilities import lab 
+            from utilities import lab
             return keyword.Lab(line)
         elif(object_name == 'refs'):
-            from utilities import ref 
+            from utilities import ref
             return ref.Ref(line)
         elif(object_name == 'subjects'):
-            from utilities import subject 
+            from utilities import subject
             return subject.Subject(line)
         elif(object_name == 'woslines'):
             from utilities import wosline
             return wosline.WosLine(line)
-#
-#def main():
-#    path_list = ['/Users/paul/testing/articles.dat']
-#    utilities = Utility(path_list)
-#    print(Utility.collection)
-#
-#if __name__ == "__main__":
-#    main()
