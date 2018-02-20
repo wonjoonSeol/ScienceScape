@@ -24,8 +24,10 @@ Paul Muresan
 ```
 
 #### Supervised by: 
-Dr. **Jeroen Keppens** and **Dr. Solon Pissis**, Department of Informatics, <a href="http://www.kcl.ac.uk">King's College London</a>
+**Dr. Jeroen Keppens** and **Dr. Solon Pissis**, Department of Informatics, <a href="http://www.kcl.ac.uk">King's College London</a>
 
 #### Links to existing repositories
-Bibliotools 3.0 (https://github.com/medialab/bibliotools3.0)
-ScienceScape (https://github.com/medialab/sciencescape)
+<a href="https://github.com/medialab/bibliotools3.0">Bibliotools 3.0</a>
+<br/>
+<a href="https://github.com/medialab/sciencescape">ScienceScape</a>
+
