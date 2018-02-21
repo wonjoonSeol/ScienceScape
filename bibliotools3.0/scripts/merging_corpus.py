@@ -2,89 +2,120 @@ import os
 import datetime
 from config import CONFIG
 
-#preparing the one file corpus
-one_file_corpus=CONFIG["one_file_corpus"]
+'''
+File: merging_corpus.py
+This script merges all the data files found in 'data-wos' and writes
+all parseable lines to a single file, Result/one_file_corpus.txt
+'''
+
+def write_year_distribution(reports_directory, years_spans):
+    years_distribution = open(os.path.join(reports_directory, "years_distribution.csv"), "w")
+    years_distribution.write("year,nb_articles\n")
+
+    for y,n in sorted(((y,n) for (y,n) in years_spans.items()), key = lambda a: a[0]):
+        years_distribution.write("%s,%s\n" %(y,n))
+        print("%s: %s articles" %(y,n))
+
+    years_distribution.close()
+
+    print("\nYear distribution reported in %s" %os.path.join(reports_directory,"years_distribution.csv"))
+
+
+def count_occurences(one_file_corpus, reports_directory):
+    # Output the article numbers by year
+    years_spans = {}
+    onefile_output = open(one_file_corpus, "r")
+
+    # Remove the headers
+    onefile_output.readline()
+
+    for line in onefile_output.readlines():
+
+        # Filter the blank lines out
+        if "\t" in line:
+
+            # Get the year of the publication
+            year = line.split("\t")[CONFIG["year_index_position"]]
+
+            # Increment the counter for that year in years_spans
+            years_spans[year] = years_spans[year] + 1 if year in years_spans else 1
+
+    # Report the year distribution for information
+    write_year_distribution(reports_directory, years_spans)
+
+
+# Preparing the one file corpus
+one_file_corpus = CONFIG["one_file_corpus"]
 
 if not os.path.exists(os.path.dirname(one_file_corpus)):
     os.makedirs(os.path.dirname(one_file_corpus))
-    
-onefile_output=open(one_file_corpus,"w")
-wos_headers=CONFIG["wos_headers"]
-onefile_output.write(wos_headers+"\n")
 
-# check reports_directory
-reports_directory=CONFIG["reports_directory"]
+onefile_output = open(one_file_corpus, "w")
+wos_headers = CONFIG["wos_headers"]
+
+# Writing the data file header to the corpus file
+onefile_output.write(wos_headers + "\n")
+
+# Check the reports directory
+reports_directory = CONFIG["reports_directory"]
+
 if not os.path.exists(reports_directory):
     os.mkdir(reports_directory)
-    
+
 elif not os.path.isdir(reports_directory):
-    print("remove file %s or change reports_directory value in config"%reports_directory)
+    print("Remove file %s or change 'reports_directory' value in config.py"%reports_directory)
     exit()
 
-errorsfile_output=open(os.path.join(reports_directory,"wos_lines_with_errors.csv"),"w")
-errorsfile_output.write(wos_headers+"\n")
+# Writing the data file header to the error file
+errorsfile_output = open(os.path.join(reports_directory, "wos_lines_with_errors.csv"), "w")
+errorsfile_output.write(wos_headers + "\n")
 
-nb_values_in_wos=len(wos_headers.split("\t"))
+nb_values_in_wos = len(wos_headers.split("\t"))
 
-# walk the many files in wos corpus
-nb_extra_trailing_tab=0
+# Go through all the files in the WOS corpus
+nb_extra_trailing_tab = 0
+
 for root, subFolders, files in os.walk(CONFIG["wos_data"]):
     for file in files:
-        if not file.startswith('.') :
-            filepath=os.path.join(root,file)
-            print("merging %s"%filepath)
-            with open(filepath,"r") as f:
-                # remove first line containing headers
-                lines=f.read().split("\n")[1:]
-                print(lines)
-                #and remove last character if trailing tab
+        if not file.startswith('.'):
+            filepath = os.path.join(root, file)
+            print("Merging %s" %filepath)
+            with open(filepath, "r") as f:
+
+                # Remove the first line (containing headers)
+                lines = f.read().split("\n")[1:]
+
+                # And remove the last character if it's a trailing tab
                 lines = [l.strip(" ") for l in lines]
                 lines = [l.strip("\r") for l in lines]
-        
-                lines_=[]
-                lines_with_errors=[]
-                for l in lines :
+
+                parseable_lines = []
+                lines_with_errors = []
+
+                for l in lines:
+
                     if "\t" in l:
-                        # FILTERING BLANK LINES
-                        if len(l.split("\t"))>nb_values_in_wos :
-                            if l[-1]=="\t":
-                                lines_.append(l[:-1]) #stripping extra tab
-                                nb_extra_trailing_tab+=1
+                        # Filtering blank lines in the file
+                        if len(l.split("\t")) > nb_values_in_wos:   # If there are too many columns, the line is not parseable
+                            if l[-1] == "\t":
+                                parseable_lines.append(l[:-1]) # Stripping extra tab
+                                nb_extra_trailing_tab += 1
                             else:
-                                print("warning too many columns with %s"%l[-20:])
+                                print("Warning! Too many columns with %s" %l[-20:])
                                 lines_with_errors.append(l)
-                        elif len(l.split("\t"))<nb_values_in_wos:
-                            print("warning too few columns with %s"%l[-20:])
+
+                        elif len(l.split("\t")) < nb_values_in_wos: # If there are too few columns, the line is not parseable
+                            print("Warning! Too few columns with %s"%l[-20:])
                             lines_with_errors.append(l)
+
                         else:
-                            lines_.append(l)
-                onefile_output.write("\n".join(lines_)+"\n")
-                errorsfile_output.write("\n".join(lines_with_errors)+"\n")
+                            parseable_lines.append(l)
 
-print("all files merged into %s"% one_file_corpus)
-print("repaired %s lines with trailing extra tab"%(nb_extra_trailing_tab))
-print("found %s lines with extra/too few columns all merged into wos_lines_with_errors.csv"%(len(lines_with_errors)))
+                onefile_output.write("\n".join(parseable_lines) + "\n")
+                errorsfile_output.write("\n".join(lines_with_errors) + "\n")
 
-# output the articles number by years
-years_spans={}
 onefile_output.close()
-onefile_output=open(one_file_corpus,"r")
-# remove headers
-onefile_output.readline()
-for line in onefile_output.readlines():
-    # filter blank lines
-    if "\t" in line:
-        # get year
-        y=line.split("\t")[CONFIG["year_index_position"]]
-        # increment
-        years_spans[y]=years_spans[y]+1 if y in years_spans else 1
 
-# years distribution    
-years_distribution=open(os.path.join(reports_directory,"years_distribution.csv"),"w")
-years_distribution.write("year,nb_articles\n")
-print("year,nb_articles")
-for y,n in sorted(((y,n) for (y,n) in years_spans.items()),key=lambda a: a[0]):
-    years_distribution.write("%s,%s\n"%(y,n))
-    print("%s,%s"%(y,n))
-print("years distribution reported in %s"%os.path.join(reports_directory,"years_distribution.csv")) 
-years_distribution.close()
+print("All files have been merged into %s \n Repaired %s lines with trailing extra tab \n Found %s non-parseable lines, reported in wos_lines_with_errors.csv" %(one_file_corpus, nb_extra_trailing_tab, len(lines_with_errors)))
+
+count_occurences(one_file_corpus, reports_directory)
