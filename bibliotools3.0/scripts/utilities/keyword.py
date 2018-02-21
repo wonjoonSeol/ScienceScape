@@ -11,4 +11,5 @@ class Keyword:
         self.ktype = data[1]
         self.keyword = data[2].upper()  
 
-
+def __str__(self):
+        return 'keyword no ' + id + ': ' + keyword + '\n'

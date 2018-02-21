@@ -10,6 +10,7 @@ class Institution:
             self.rank = int(data[1])
             self.institution = data[2].upper()  
 
-
+	def __str__(self):
+        return 'institution no ' + id + ': ' + institution + '\n'
 
 

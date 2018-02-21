@@ -13,5 +13,7 @@ class Author:
         else:
             self.author = data[2]
 
+    def __str__(self):
+        return 'author no ' + id + ' ' + author + '\n'
 
     

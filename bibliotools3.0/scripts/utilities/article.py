@@ -29,3 +29,6 @@ class Article:
         if(len(data)>9): self.times_cited = data[9]
         if(len(data)>10): self.title = data[10]
         if(len(data)>11): self.uniqueID = data[11]
+
+    def __str__(self):
+        return 'article no ' + id + ': ' + title + '\n'

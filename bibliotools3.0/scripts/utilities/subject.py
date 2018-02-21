@@ -7,3 +7,6 @@ class Subject:
 
         self.id = int(data[0])
         self.subject = data[1] 
+
+	def __str__(self):
+        return 'subject no ' + id + ': ' + subject + '\n'

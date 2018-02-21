@@ -9,5 +9,6 @@ class Lab:
             self.id = int(data[0])
             self.lab = data[1]
    
-
+	def __str__(self):
+        return 'lab no ' + id + ': ' + lab + '\n'
 
