@@ -168,14 +168,10 @@ def Wos_parser(in_dir, out_dir, verbose):
     #generate items from parsed .dat files and add the to the collection
     utility.Utility.init_utilities(files_list)
 
-    #closse the files
-    f_articles.close()
-    f_authors.close()
-    f_article_keywords.close()
-    f_title_keywords.close()
-    f_isi_keywords.close()
-    f_subjects.close()
-    f_refs.close()
-    f_countries.close()
-    f_institutions.close()
+
+    #close the files   
+    closeList = [f_articles, f_authors, f_article_keywords, f_title_keywords, f_isi_keywords, f_subjects, f_refs, f_countries, f_institutions]
+    for d in closeList:
+        d.close()
+
     return

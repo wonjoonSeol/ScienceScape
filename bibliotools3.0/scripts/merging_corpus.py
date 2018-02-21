@@ -116,8 +116,6 @@ for root, subFolders, files in os.walk(CONFIG["wos_data"]):
 
 onefile_output.close()
 
-print("All files have been merged into %s" %one_file_corpus)
-print("Repaired %s lines with trailing extra tab" %nb_extra_trailing_tab)
-print("Found %s non-parseable lines, reported in wos_lines_with_errors.csv" %len(lines_with_errors))
+print("All files have been merged into %s \n Repaired %s lines with trailing extra tab \n Found %s non-parseable lines, reported in wos_lines_with_errors.csv" %(one_file_corpus, nb_extra_trailing_tab, len(lines_with_errors)))
 
 count_occurences(one_file_corpus, reports_directory)
