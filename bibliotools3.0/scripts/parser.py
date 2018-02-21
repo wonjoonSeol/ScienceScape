@@ -1,12 +1,3 @@
-"""
-   Author : Sebastian Grauwin (http://www.sebastian-grauwin.com/)
-   Copyright (C) 2012
-   All rights reserved.
-   BSD license.
-   .... If you are using these scripts, please cite our "Scientometrics" paper:
-   .... S Grauwin, P Jensen, Mapping Scientific Institutions. Scientometrics 89(3), 943-954 (2011)
-"""
-
 import os
 import sys
 import glob
@@ -35,7 +26,6 @@ wos_core_collection_times_cited = 'TC'
 def Wos_parser(in_dir, out_dir, verbose):
 
     # Initialisation
-
     srccomp = "%s/*.txt" % in_dir
     srclst = glob.glob(srccomp)
     id = int(-1)
@@ -50,28 +40,26 @@ def Wos_parser(in_dir, out_dir, verbose):
     f_countries = open(os.path.join(out_dir, "countries.dat"), 'w')
     f_institutions = open(os.path.join(out_dir, "institutions.dat"), 'w')
 
-    kompt_refs = 0
-    kompt_corrupt_refs = 0
+    computed_refs = 0
+    computed_corrupt_refs = 0
 
     WOS_IDS = dict()  # list the articles' wos-ids
-
+    collection = utility.Utility.collection
     # Treat Data
     for src in srclst:
-        pl = utility.Utility.collection
         utility.Utility.init_wos(src)
-        #        pl = Utils.ArticleList()
-        #        pl.read_file(src)
-        if verbose:
-            print("..processing %d articles in file %s" % (len(pl['woslines']), src))
-        if (len(pl['woslines']) > 0):
-            for article in pl['woslines']:
 
-              if getattr(article, accession_number) not in WOS_IDS:
-                WOS_IDS[getattr(article, accession_number)] = ''
+        if verbose:
+            print("..processing %d articles in file %s" % (len(collection['woslines']), src))
+        if (len(collection['woslines']) > 0):
+            for article in collection['woslines']:
+
+              if getattr(article, CONFIG['accession_number']) not in WOS_IDS:
+                WOS_IDS[getattr(article, CONFIG['accession_number'])] = ''
                 id = id + 1
 
                 #article
-                article_authors = getattr(article, authors).split('; ')
+                article_authors = getattr(article, CONFIG['authors']).split('; ')
                 firstAU = article_authors[0].replace(',','')
                 f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %
                     (id,firstAU,getattr(article, year_published),
@@ -79,7 +67,7 @@ def Wos_parser(in_dir, out_dir, verbose):
                     getattr(article, volume), getattr(article, beginning_page),
                     getattr(article, doi), getattr(article, publication_type),
                     getattr(article, document_type), getattr(article, wos_core_collection_times_cited),
-                    getattr(article, document_title), getattr(article, accession_number)))
+                    getattr(article, document_title), getattr(article, CONFIG['accession_number'])))
 
                 #authors
                 if(getattr(article, authors) != ""):
@@ -103,7 +91,7 @@ def Wos_parser(in_dir, out_dir, verbose):
                             bar1 = authors_lowercase[aux:aux+2]
                             bar2 = ' ' + authors_lowercase[aux+1].upper()
                             authors_lowercase = authors_lowercase.replace(bar1,bar2)
-                        f_authors.write("%d\t%d\t%s\n" % (id,i,authors_lowercase))
+                        f_authors.write("%d\t%d\t%s\n" % (id,i,authors_lowercase)) 
 
                 #keywords
                 if(getattr(article, author_keywords) != ""):
@@ -134,13 +122,14 @@ def Wos_parser(in_dir, out_dir, verbose):
                 if(getattr(article, cited_references) != ""):
                      article_refs = getattr(article, cited_references).split('; ')
                      for i in range(len(article_refs)):
-                         ref = utility.Utility.new_object('refs', article_refs[i])
-                         #ref.parse_ref(article_refs[i])
-                         kompt_refs += 1
-                         if(ref.year > 0):
-                             f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" %
+                        ref = utility.Utility.new_object('refs', article_refs[i])
+                        collection['references'].append(ref)
+                        computed_refs += 1
+                        
+                        if(ref.year > 0):
+                            f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" %
                                      (id,ref.firstAU,ref.year,ref.journal,ref.volume,ref.page))
-                         if(ref.year == 0): kompt_corrupt_refs += 1
+                        if(ref.year == 0): computed_corrupt_refs += 1
 
                 #countries / institutions
                 if(getattr(article, author_address) != ""):
@@ -166,32 +155,20 @@ def Wos_parser(in_dir, out_dir, verbose):
                         country = split_address[length_of_address-1]
                         length_split_address = len(split_address[length_of_address-1])
 
-                        if (country[length_split_address-3:length_split_address] == 'USA'
-                                or country[0:3] == 'AL ' or country[0:3] == 'AK ' or country[0:3] == 'AZ ' or
-                                country[0:3] == 'AR ' or country[0:3] == 'CA ' or country[0:3] == 'NC ' or
-                                country[0:3] == 'SC ' or country[0:3] == 'CO ' or country[0:3] == 'CT ' or
-                                country[0:3] == 'ND ' or country[0:3] == 'SD ' or country[0:3] == 'DE ' or
-                                country[0:3] == 'FL ' or country[0:3] == 'GA ' or country[0:3] == 'HI ' or
-                                country[0:3] == 'ID ' or country[0:3] == 'IL ' or country[0:3] == 'IN ' or
-                                country[0:3] == 'IA ' or country[0:3] == 'KS ' or country[0:3] == 'KY ' or
-                                country[0:3] == 'LA ' or country[0:3] == 'ME ' or country[0:3] == 'MD ' or
-                                country[0:3] == 'MA ' or country[0:3] == 'MI ' or country[0:3] == 'MN ' or
-                                country[0:3] == 'MS ' or country[0:3] == 'MO ' or country[0:3] == 'MT ' or
-                                country[0:3] == 'NE ' or country[0:3] == 'NV ' or country[0:3] == 'NH ' or
-                                country[0:3] == 'NJ ' or country[0:3] == 'NM ' or country[0:3] == 'NY ' or
-                                country[0:3] == 'OH ' or country[0:3] == 'OK ' or country[0:3] == 'or ' or
-                                country[0:3] == 'PA ' or country[0:3] == 'RI ' or country[0:3] == 'TN ' or
-                                country[0:3] == 'TX ' or country[0:3] == 'UT ' or country[0:3] == 'VT ' or
-                                country[0:3] == 'VA ' or country[0:3] == 'WV ' or country[0:3] == 'WA ' or
-                                country[0:3] == 'WI ' or country[0:3] == 'WY ' or country[0:3] == 'DC '):
-                            country = 'USA'
-
-                        f_countries.write("%d\t%d\t%s\n" % (id,i,country))
+                        if  country[length_split_address-3 : length_split_address] == 'USA' or country[0:3] in CONFIG['usa_country_codes']:
+                                f_countries.write("%d\t%d\t%s\n" % (id,i,country))
 
     # End
     if verbose: print(("..%d parsed articles in total") % (id + 1))
-    if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (kompt_corrupt_refs, kompt_refs, (100.0 * kompt_corrupt_refs) / kompt_refs if kompt_refs!=0 else 0))
+    if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (computed_corrupt_refs, computed_refs, (100.0 * computed_corrupt_refs) / computed_refs if computed_refs!=0 else 0))
+    files_list = [f_articles.name, f_authors.name, f_isi_keywords.name, 
+                    f_subjects.name, f_article_keywords.name, f_title_keywords.name, 
+                    f_refs.name, f_countries.name, f_institutions.name]
 
+    #generate items from parsed .dat files and add the to the collection
+    utility.Utility.init_utilities(files_list)
+
+    #closse the files
     f_articles.close()
     f_authors.close()
     f_article_keywords.close()
