@@ -1,0 +1,6 @@
+Django
+argparse
+numpy
+matplotlib
+networkx
+whitenoise
