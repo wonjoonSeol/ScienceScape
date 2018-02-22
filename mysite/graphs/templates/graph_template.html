@@ -10,8 +10,9 @@
     }
  </style>
 
+
 <div class="card">
-	<div class="card-header bg-dark" style="color: white">Test graph's file path is: {{filePath}}</div>
+	<div class="card-header bg-dark" style="color: white">Test graph's file is: {{fname}}</div>
 	<div class="card-body" id="graph-container">
   		
 	</div>
@@ -80,18 +81,13 @@
  * configuration object. The plugin will just add the "graph" key to it
  * before the instanciation.
  */
-sigma.parsers.gexf("{% static 'javascript/sigma.js-1.2.1/examples/data/arctic.gexf' %}", {
+console.log("fpath is: {{fpath}}");
+sigma.parsers.gexf("{% static fpath%}", {
   container: 'graph-container'
 });
+
 </script>
 
-Display a gexf file on a webpage
 
-Add scripts from the Sigma library and a new div for sigma to render the graph in. 
-
-This commit solves the problem of allowing the user to see data in a visual format. Previously, we had a 'a is null' error
-as certain dependencies were not declared, so these scripts have been added to support sigma.gexf.parser script. 
-
-As a result, sigma will now render a gexf file to a graph. 
 
 

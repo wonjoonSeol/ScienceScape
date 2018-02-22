@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gexf xmlns="http://www.gexf.net/1.1draft"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.gexf.net/1.1draft http://www.gexf.net/1.1draft/gexf.xsd"
-    version="1.1">
-    <graph mode="static" defaultedgetype="undirected">
-        <nodes>
-            <node id="4941" label="YBR236C"/>
+<gexf xmlns:viz="http:///www.gexf.net/1.1draft/viz" version="1.1" xmlns="http://www.gexf.net/1.1draft">
+<meta lastmodifieddate="2010-05-14+15:57">
+<creator>Gephi 0.7</creator>
+</meta>
+<graph defaultedgetype="undirected" idtype="string" type="static" backgroundx="-147.4" backgroundy="-1050.7" backgroundxratio="0.4849" backgroundyratio="0.4849">
+<attributes class="node" mode="static">
+<attribute id="latitude" title="latitude" type="float"/>
+<attribute id="longitude" title="longitude" type="float"/>
+</attributes>
+<nodes count="17">
+<node id="n1" label="n1">
+<attvalues>
+<attvalue for="latitude" value="50.93"/>
+<attvalue for="longitude" value="2.48"/>
+</attvalues>
+<viz:size value="5.5"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-2.320261" y="1036.1836" z="0.0"/>
+</node>
+<node id="4941" label="YBR236C"/>
             <node id="4942" label="YOR151C"/>
             <node id="4943" label="YML010W"/>
             <node id="4944" label="YNR016C"/>
@@ -2366,6 +2379,8 @@
             <node id="7299" label="YOR042W"/>
             <node id="7300" label="YLR422W"/>
             <node id="7301" label="YFR024C"/>
+<viz:size value="6.0"/>
+<viz:color b="1" g="179" r="255"/>
         </nodes>
         <edges>
             <edge id="13188" source="4941" target="4941"/>
@@ -9551,5 +9566,5 @@
             <edge id="20368" source="7278" target="7279"/>
             <edge id="20369" source="7293" target="7294"/>
         </edges>
-    </graph>
+</graph>
 </gexf>

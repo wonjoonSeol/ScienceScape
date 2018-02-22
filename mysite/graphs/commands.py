@@ -67,9 +67,10 @@ def processCSVIntoDictionary(filePath, forFields = False):
 def saveFile(myFile):
 
     fileName = myFile.name
-    folder = "userFiles"
+    
+    folder = "static/userFiles"
     APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+	 
     # create the folder if it doesn't exist.
     try:
     	 os.mkdir(os.path.join(APP_DIR, folder))
@@ -83,8 +84,7 @@ def saveFile(myFile):
     fileToSave.write(myFile.read().decode("utf-8"))
     fileToSave.close()
     print("File saved at {s}".format(s=fullFileName))
-    return fullFileName
-
+    return {'FULL_FILE_NAME': fullFileName, 'USER_FILE_NAME': fileName}
 
 '''Returns a dictionary of attributes mapped to Bibliotools representation of those attributes eg. Date: SS,
 	and a list of unknown attributes that could not be detected.
@@ -144,6 +144,10 @@ def dataProcess(key = None, weights = 0, minOccur = 0):
 	data must be in the form of a dictionary.
 '''
 def refreshDataBase(data, filePath):
+	existing = Mappings.objects.filter(FILE_LINK = filePath)
+	if existing:
+		existing.delete()
+		
 	for key in data:
 		mapping = Mappings()
 		mapping.TRUE_NAME = key
@@ -168,3 +172,7 @@ def retrieveFromDataBase(filePath):
 	
 def generateUser():
 	return folderDirectory
+
+def resetDatabase():
+	mappings = Mappings.objects.all()
+	mappings.delete()

@@ -5,29 +5,29 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .commands import *
 from django.forms import formset_factory
+from .tests import *
+from django.conf import settings
 
 # BE CAREFUL OF REQUEST METHODS
 
 def home(request):
-
+	
+	attemptDatabaseTest()
+	
 	if request.method == 'POST' and request.FILES['myFile']:
-		
-		print("Check")
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
-			print("File uploaded and valid")
 			uploadedFile = request.FILES['myFile']
 			if uploadedFile:
-				print("There is a file")
 				if checkCSV(uploadedFile):
-					fPath = saveFile(uploadedFile)
+					fPath = saveFile(uploadedFile)['FULL_FILE_NAME']
 					return redirect('fields', fPath)
 		else:
-			print("Upload error possibly due to encryption or method")
+			print("Form not Valid")
 	else:
 		form = UploadFileForm()
-
-	return render(request, 'index.html', {'upload': form})
+	
+	return render(request, 'index.html', {'upload': form, 'fpath':"/userFiles/arctic.gexf"})
 
 
 def fieldForm(request, filePath):
@@ -41,13 +41,7 @@ def fieldForm(request, filePath):
 			
 			refreshDataBase(data, filePath)
 			
-			APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-			gexfFilePath = os.path.join(APP_DIR, 'userFiles/yeast.gexf')
-			
-			return redirect('loadGraph', gexfFilePath)
-
-	else:
-		print("Blank fields form created")
+			return redirect('loadGraph', "INITIAL")
 
 	if filePath:
 		fname =  str(filePath)
@@ -59,6 +53,24 @@ def fieldForm(request, filePath):
 
 	return render(request, 'index.html', {'fields': form['form'], 'filename': fname})
 
-def loadGraph(request, filePath):
 
-	return render(request, 'index.html', {'filePath': filePath})
+def loadGraph(request, filePath):
+	
+	upload_gexf_form = UploadFileForm()
+	if request.method == 'POST' and request.FILES['myFile']:
+		upload_gexf_form = UploadFileForm(request.POST, request.FILES)
+		if upload_gexf_form.is_valid:
+			print("VALID")
+			
+			uploadedFile = request.FILES['myFile']
+			fname=uploadedFile.name
+			filePath = '/userFiles/' + saveFile(uploadedFile)['USER_FILE_NAME']
+			print("file path: {x}".format(x=filePath))
+		
+		else:
+			print("NOT VALID")
+	else:
+		fname="No file uploaded"
+		filePath="userFile/arctic.gexf"
+		
+	return render(request, 'index.html', {'fpath': filePath, 'upload_gexf': upload_gexf_form,'fname': fname})
