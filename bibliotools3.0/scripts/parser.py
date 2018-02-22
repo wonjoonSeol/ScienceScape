@@ -6,22 +6,22 @@ import utility
 from config import CONFIG
 
 # TODO Link with config file
-accession_number = 'UT'
-authors = 'AU'
-author_keywords = 'DE'
-keywords_plus = 'ID'
-document_title = 'TI'
-wos_categories = 'WC'
-cited_references = 'CR'
-author_address = 'C1'
-year_published = 'PY'
-twenty_nine_character_source_abbreviation = 'J9'
-volume = 'VL'
-beginning_page = 'BP'
-doi = 'DI'
-publication_type = 'PT'
-document_type = 'DT'
-wos_core_collection_times_cited = 'TC'
+accession_number = CONFIG['accession-number']
+authors = CONFIG['authors']
+author_keywords = CONFIG['author_keywords']
+keywords_plus = CONFIG['keywords_plus']
+document_title = CONFIG['document_title']
+wos_categories = CONFIG['wos_categories']
+cited_references = CONFIG['cited_references']
+author_address = CONFIG['author_address']
+year_published = CONFIG['year_published']
+twenty_nine_character_source_abbreviation = CONFIG['twenty_nine_character_source_abbreviation']
+volume = CONFIG['volume']
+beginning_page = CONFIG['beginning_page']
+doi = CONFIG['doi']
+publication_type = CONFIG['publication_type']
+document_type = CONFIG['document_type']
+wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
 
 def Wos_parser(in_dir, out_dir, verbose):
 
