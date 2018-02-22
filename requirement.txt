@@ -1,6 +1,6 @@
-Django
-argparse
-numpy
-matplotlib
-networkx
-whitenoise
+Django=2.0.2
+numpy=1.14.0
+matplotlib=2.1.2
+networkx=2.1
+whitenoise=3.3.1
+gunicorn=19.7.1
