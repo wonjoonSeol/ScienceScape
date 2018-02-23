@@ -28,5 +28,6 @@ urlpatterns = [
    # path('admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
     url(r'^addFields/(.*)', views.fieldForm, name='fields'),
-    url(r'^processGraph/(.*)', views.loadGraph, name='loadGraph')
+    url(r'^processGraph/(.*)', views.loadGraph, name='loadGraph'),
+    url(r'about/', views.about, name='about')
 ]
