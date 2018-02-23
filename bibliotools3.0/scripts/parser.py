@@ -6,7 +6,7 @@ import utility
 from config import CONFIG
 
 # TODO Link with config file
-accession_number = CONFIG['accession-number']
+accession_number = CONFIG['accession_number']
 authors = CONFIG['authors']
 author_keywords = CONFIG['author_keywords']
 keywords_plus = CONFIG['keywords_plus']
@@ -91,7 +91,7 @@ def Wos_parser(in_dir, out_dir, verbose):
                             bar1 = authors_lowercase[aux:aux+2]
                             bar2 = ' ' + authors_lowercase[aux+1].upper()
                             authors_lowercase = authors_lowercase.replace(bar1,bar2)
-                        f_authors.write("%d\t%d\t%s\n" % (id,i,authors_lowercase)) 
+                        f_authors.write("%d\t%d\t%s\n" % (id,i,authors_lowercase))
 
                 #keywords
                 if(getattr(article, author_keywords) != ""):
@@ -125,7 +125,7 @@ def Wos_parser(in_dir, out_dir, verbose):
                         ref = utility.Utility.new_object('refs', article_refs[i])
                         collection['references'].append(ref)
                         computed_refs += 1
-                        
+
                         if(ref.year > 0):
                             f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" %
                                      (id,ref.firstAU,ref.year,ref.journal,ref.volume,ref.page))
@@ -161,15 +161,15 @@ def Wos_parser(in_dir, out_dir, verbose):
     # End
     if verbose: print(("..%d parsed articles in total") % (id + 1))
     if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (computed_corrupt_refs, computed_refs, (100.0 * computed_corrupt_refs) / computed_refs if computed_refs!=0 else 0))
-    files_list = [f_articles.name, f_authors.name, f_isi_keywords.name, 
-                    f_subjects.name, f_article_keywords.name, f_title_keywords.name, 
+    files_list = [f_articles.name, f_authors.name, f_isi_keywords.name,
+                    f_subjects.name, f_article_keywords.name, f_title_keywords.name,
                     f_refs.name, f_countries.name, f_institutions.name]
 
     #generate items from parsed .dat files and add the to the collection
     utility.Utility.init_utilities(files_list)
 
 
-    #close the files   
+    #close the files
     closeList = [f_articles, f_authors, f_article_keywords, f_title_keywords, f_isi_keywords, f_subjects, f_refs, f_countries, f_institutions]
     for d in closeList:
         d.close()
