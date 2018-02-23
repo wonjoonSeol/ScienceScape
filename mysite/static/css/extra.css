@@ -311,7 +311,16 @@ nav .dropdown-content  a {
 /* UPLOAD BOX */
 
 label[for="id_myFile"] {
-  display: none !important;
+  /* display: none !important; */
+}
+
+/*******************
+  Field Selctor Page
+********************/
+
+.field-selector-header,
+.field-selector-footer {
+      background: #ccccccb3;
 }
 
 /*******************

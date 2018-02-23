@@ -1,21 +1,40 @@
-		<form action="" method="POST">
-		
-			{%csrf_token%}
-			
-    		{{ fields.management_form }}
-			{% for f in fields%}
-			
-			<br>
-			<div class="card ">
-				<div class="card-header bg-dark" style="color: white">CHOOSE YOUR FIELD</div>
-				<div class="card-body">
-					{{f.as_p}}
-			
-				</div>
-			</div>
-			<br>
-			{%endfor%}
-			
-			<input type = "submit" value = "submit"></input>
+<div class="row">
+  <div class="col s12">
+    <div class="card field-selector-header">
+      <div class="card-content">
 
-		</form>
+        <h5>Choose Fields</h5>
+				<p>Match your CSV headers to a meaningful name.</p>
+      </div> <!-- /card-content -->
+    </div>
+
+		<div class="field">
+
+				<form action="" method="POST">
+
+					{%csrf_token%}
+
+					{{ fields.management_form }}
+					{% for f in fields%}
+					<div class="card field-card">
+						<div class="card-content">
+						<h5>Choose Field</h5>
+						<br>
+								{{f.as_p}}
+						<br>
+						</div>
+					</div>
+
+					{%endfor%}
+
+					<div class="card field-selector-footer">
+						<div class="card-content">
+							<input type="submit" value="submit" class="btn blue darken-4 waves-effect"></input>
+						</div>
+					</div>
+
+				</form>
+		</div>
+
+  </div>
+</div> <!-- /row  -->
