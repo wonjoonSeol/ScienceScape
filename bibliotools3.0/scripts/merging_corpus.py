@@ -7,7 +7,6 @@ File: merging_corpus.py
 This script merges all the data files found in 'data-wos' and writes
 all parseable lines to a single file, Result/one_file_corpus.txt
 '''
-
 def write_year_distribution(reports_directory, years_spans):
     years_distribution = open(os.path.join(reports_directory, "years_distribution.csv"), "w")
     years_distribution.write("year,nb_articles\n")
@@ -40,9 +39,10 @@ def count_occurences(one_file_corpus, reports_directory):
             # Increment the counter for that year in years_spans
             years_spans[year] = years_spans[year] + 1 if year in years_spans else 1
 
+    onefile_output.close()
+
     # Report the year distribution for information
     write_year_distribution(reports_directory, years_spans)
-
 
 # Preparing the one file corpus
 one_file_corpus = CONFIG["one_file_corpus"]
