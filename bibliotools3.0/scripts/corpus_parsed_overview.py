@@ -14,14 +14,10 @@ def process_span(span):
 		print_and_report("- number of articles : %s"%len(data_lines))
 
 def print_statistics():
-	print_statistics_of("authors.dat")
-	print_statistics_of("countries.dat")
-	print_statistics_of("institutions.dat")
-	print_statistics_of("isi_keywords.dat")
-	print_statistics_of("article_keywords.dat")
-	print_statistics_of("title_keywords.dat")
-	print_statistics_of("references.dat")
-	print_statistics_of("subjects.dat")
+    dats = ["authors.dat", "countries.dat", "institutions.dat", "isi_keywords.dat", 
+	"article_keywords.dat", "title_keywords.dat", "references.dat", "subjects.dat"]
+    for item in dats:
+    		print_statistics_of(item)
 
 def print_and_report(message):
 	print(message)
