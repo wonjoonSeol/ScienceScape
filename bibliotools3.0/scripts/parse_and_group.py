@@ -65,7 +65,7 @@ def parse_and_group_data(one_file_corpus, output_dir, outdir_prefix, span_items)
 	# Create one txt file for each user-defined year span
 	create_span_files(years_spans, input_dir, output_dir, files)
 
-	onefile_output = open(CONFIG["one_file_corpus"], "r")
+	onefile_output = open(one_file_corpus, "r")
 	onefile_output.readline()
 	lines_to_write = onefile_output.readlines()
 
