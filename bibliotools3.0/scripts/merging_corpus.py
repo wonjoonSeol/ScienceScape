@@ -7,6 +7,7 @@ File: merging_corpus.py
 This script merges all the data files found in 'data-wos' and writes
 all parseable lines to a single file, Result/one_file_corpus.txt
 '''
+
 def write_year_distribution(reports_directory, years_spans):
     years_distribution = open(os.path.join(reports_directory, "years_distribution.csv"), "w")
     years_distribution.write("year,nb_articles\n")
@@ -44,78 +45,78 @@ def count_occurences(one_file_corpus, reports_directory):
     # Report the year distribution for information
     write_year_distribution(reports_directory, years_spans)
 
-# Preparing the one file corpus
-one_file_corpus = CONFIG["one_file_corpus"]
+def write_to_file(open_file, text):
+    open_file.write(text)
 
-if not os.path.exists(os.path.dirname(one_file_corpus)):
-    os.makedirs(os.path.dirname(one_file_corpus))
+def number_columns(line):
+    return len(line.split("\t"))
 
-onefile_output = open(one_file_corpus, "w")
-wos_headers = CONFIG["wos_headers"]
+def parse_line(l, nb_values_in_wos, parseable_lines, lines_with_errors):
+    repaired = 0
+    if "\t" in l:
+        # Filtering blank lines in the file
+        if number_columns(l) > nb_values_in_wos:   # If there are too many columns, the line is not parseable
+            if l[-1] == "\t":
+                parseable_lines.append(l[:-1]) # Stripping extra tab
+                repaired += 1
+            else:
+                print("Warning! Too many columns with %s" %l[-20:])
+                lines_with_errors.append(l)
+        elif number_columns(l) < nb_values_in_wos: # If there are too few columns, the line is not parseable
+            print("Warning! Too few columns with %s"%l[-20:])
+            lines_with_errors.append(l)
+        else:
+            parseable_lines.append(l)
+    return repaired     #for statistics
 
-# Writing the data file header to the corpus file
-onefile_output.write(wos_headers + "\n")
+def write_report(parseable_lines, lines_with_errors, onefile_output, errorsfile_output):
+    write_to_file(onefile_output, "\n".join(parseable_lines) + "\n")
+    write_to_file(errorsfile_output, "\n".join(lines_with_errors) + "\n")
 
-# Check the reports directory
-reports_directory = CONFIG["reports_directory"]
+def merge_corpus(one_file_corpus, wos_headers, reports_directory, wos_data):
+    if not os.path.exists(os.path.dirname(one_file_corpus)):
+        os.makedirs(os.path.dirname(one_file_corpus))
 
-if not os.path.exists(reports_directory):
-    os.mkdir(reports_directory)
+    onefile_output = open(one_file_corpus, "w")
+    write_to_file(onefile_output, wos_headers + "\n")
 
-elif not os.path.isdir(reports_directory):
-    print("Remove file %s or change 'reports_directory' value in config.py"%reports_directory)
-    exit()
+    if not os.path.exists(reports_directory):
+        os.mkdir(reports_directory)
+    elif not os.path.isdir(reports_directory):
+        print("Remove file %s or change 'reports_directory' value in config.py" %reports_directory)
+        exit()
 
-# Writing the data file header to the error file
-errorsfile_output = open(os.path.join(reports_directory, "wos_lines_with_errors.csv"), "w")
-errorsfile_output.write(wos_headers + "\n")
+    # Writing the data file header to the error file
+    errorsfile_output = open(os.path.join(reports_directory, "wos_lines_with_errors.csv"), "w")
+    write_to_file(errorsfile_output, wos_headers + "\n")
 
-nb_values_in_wos = len(wos_headers.split("\t"))
+    nb_values_in_wos = len(wos_headers.split("\t"))
 
-# Go through all the files in the WOS corpus
-nb_extra_trailing_tab = 0
+    # Go through all the files in the WOS corpus
+    nb_extra_trailing_tab = 0
+    for root, subFolders, files in os.walk(wos_data):
+        for file in files:
+            if not file.startswith('.'):
+                filepath = os.path.join(root, file)
+                print("Merging %s" %filepath)
+                with open(filepath, "r") as f:
 
-for root, subFolders, files in os.walk(CONFIG["wos_data"]):
-    for file in files:
-        if not file.startswith('.'):
-            filepath = os.path.join(root, file)
-            print("Merging %s" %filepath)
-            with open(filepath, "r") as f:
+                    # Remove the first line (containing headers)
+                    lines = f.read().split("\n")[1:]
+                    lines = [l.strip(" ") for l in lines]
+                    lines = [l.strip("\r") for l in lines]
 
-                # Remove the first line (containing headers)
-                lines = f.read().split("\n")[1:]
+                    parseable_lines = []
+                    lines_with_errors = []
 
-                # And remove the last character if it's a trailing tab
-                lines = [l.strip(" ") for l in lines]
-                lines = [l.strip("\r") for l in lines]
+                    for line in lines:
+                        nb_extra_trailing_tab += parse_line(line, nb_values_in_wos, parseable_lines, lines_with_errors)
+                    write_report(parseable_lines, lines_with_errors, onefile_output, errorsfile_output)
 
-                parseable_lines = []
-                lines_with_errors = []
+    onefile_output.close()
+    errorsfile_output.close()
+    print("All files have been merged into %s \n Repaired %s lines with trailing extra tab \n Found %s non-parseable lines, reported in wos_lines_with_errors.csv" %(one_file_corpus, nb_extra_trailing_tab, len(lines_with_errors)))
+    count_occurences(one_file_corpus, reports_directory)
 
-                for l in lines:
-
-                    if "\t" in l:
-                        # Filtering blank lines in the file
-                        if len(l.split("\t")) > nb_values_in_wos:   # If there are too many columns, the line is not parseable
-                            if l[-1] == "\t":
-                                parseable_lines.append(l[:-1]) # Stripping extra tab
-                                nb_extra_trailing_tab += 1
-                            else:
-                                print("Warning! Too many columns with %s" %l[-20:])
-                                lines_with_errors.append(l)
-
-                        elif len(l.split("\t")) < nb_values_in_wos: # If there are too few columns, the line is not parseable
-                            print("Warning! Too few columns with %s"%l[-20:])
-                            lines_with_errors.append(l)
-
-                        else:
-                            parseable_lines.append(l)
-
-                onefile_output.write("\n".join(parseable_lines) + "\n")
-                errorsfile_output.write("\n".join(lines_with_errors) + "\n")
-
-onefile_output.close()
-
-print("All files have been merged into %s \n Repaired %s lines with trailing extra tab \n Found %s non-parseable lines, reported in wos_lines_with_errors.csv" %(one_file_corpus, nb_extra_trailing_tab, len(lines_with_errors)))
-
-count_occurences(one_file_corpus, reports_directory)
+#--Main script
+merge_corpus(CONFIG["one_file_corpus"], CONFIG["wos_headers"], CONFIG["reports_directory"], CONFIG["wos_data"])
