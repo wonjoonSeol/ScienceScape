@@ -49,35 +49,34 @@ def parse_span(span, input_dir, output_dir, outdir_prefix, files):
 	# Use Wos_parser function from parser.py to parse the lines
 	Wos_parser(os.path.join(input_dir, output_dir, span), os.path.join(outdir_prefix, span), True)
 
+def get_span_parameters(span_items, year_key):
+	return dict((s, data[year_key]) for s, data in span_items)
+
+def get_lines_to_separate(one_file_corpus):
+	onefile_output = open(one_file_corpus, "r")
+	onefile_output.readline()
+	lines_to_write = onefile_output.readlines()
+	onefile_output.close()
+	return lines_to_write
 
 def parse_and_group_data(one_file_corpus, output_dir, outdir_prefix, span_items):
 	input_dir = os.path.dirname(one_file_corpus)
-
-	# Collect the user-defined year span preferences
-	years_spans = dict((s, data["years"]) for s, data in span_items)
-	files = {}
-
 	if not os.path.exists(os.path.join(input_dir, output_dir)):
 		os.mkdir(os.path.join(input_dir, output_dir))
 	if not os.path.exists(outdir_prefix):
 		os.mkdir(outdir_prefix)
 
 	# Create one txt file for each user-defined year span
+	years_spans = get_span_parameters(span_items, "years")
+	files = {}
 	create_span_files(years_spans, input_dir, output_dir, files)
 
-	onefile_output = open(one_file_corpus, "r")
-	onefile_output.readline()
-	lines_to_write = onefile_output.readlines()
-
 	# Write lines to the adequate span file
-	for line in lines_to_write:
+	for line in get_lines_to_separate(one_file_corpus):
 		separate_years(line, years_spans, files)
-
-	onefile_output.close()
 
 	for (span,ys) in years_spans.items():
 		parse_span(span, input_dir, output_dir, outdir_prefix, files)	# For each span, parse its data
-
 
 # -- Main Script --
 parse_and_group_data(CONFIG["one_file_corpus"], CONFIG["wos_data_grouped"], CONFIG["parsed_data"], CONFIG["spans"].items())
