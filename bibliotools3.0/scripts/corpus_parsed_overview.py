@@ -34,7 +34,7 @@ def print_to_overview(message, reports_directory):
     with open(os.path.join(reports_directory, "corpus_overview.txt"), "a") as f:
         f.write(message + "\n")
 
-def print_statistics_of(parsed_data_folder, reports_directory, filename):
+def print_statistics_of(parsed_data_folder, reports_directory, filename, span):
     stats = get_stats(parsed_data_folder, span, filename)
     entity_name = filename.split(".")[0]
     print_to_overview("- number of %s : unique %s total links with articles %s" %(entity_name, stats[2], stats[3]), reports_directory)
@@ -54,11 +54,11 @@ def print_statistics_of(parsed_data_folder, reports_directory, filename):
             to_write += "%02d,%02d,%04.1f%%\n" %(e)
         f.write(to_write)
 
-def print_statistics(parsed_data_folder, reports_directory):
+def print_statistics(parsed_data_folder, reports_directory, span):
     dat_files = ["authors.dat", "countries.dat", "institutions.dat", "isi_keywords.dat",
     "article_keywords.dat", "title_keywords.dat", "references.dat", "subjects.dat"]
     for item in dat_files:
-            print_statistics_of(parsed_data_folder, reports_directory, item)
+            print_statistics_of(parsed_data_folder, reports_directory, item, span)
 
 # -- Main script --
 
@@ -70,4 +70,4 @@ if os.path.exists(os.path.join(reports_directory, "corpus_overview.txt")):
 for span in CONFIG["spans"]:
     print_to_overview("\n\n#%s" %span, reports_directory)
     print_to_overview("- number of articles : %s" %get_no_articles(parsed_data_folder, span), reports_directory)
-    print_statistics(parsed_data_folder, reports_directory)
+    print_statistics(parsed_data_folder, reports_directory, span)
