@@ -3,25 +3,8 @@ import sys
 import glob
 import argparse
 import utility
-from config import CONFIG
 
-# TODO Link with config file
-accession_number = CONFIG['accession_number']
-authors = CONFIG['authors']
-author_keywords = CONFIG['author_keywords']
-keywords_plus = CONFIG['keywords_plus']
-document_title = CONFIG['document_title']
-wos_categories = CONFIG['wos_categories']
-cited_references = CONFIG['cited_references']
-author_address = CONFIG['author_address']
-year_published = CONFIG['year_published']
-twenty_nine_character_source_abbreviation = CONFIG['twenty_nine_character_source_abbreviation']
-volume = CONFIG['volume']
-beginning_page = CONFIG['beginning_page']
-doi = CONFIG['doi']
-publication_type = CONFIG['publication_type']
-document_type = CONFIG['document_type']
-wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
+CONFIG = {}
 
 def Wos_parser(in_dir, out_dir, verbose):
 
@@ -62,16 +45,16 @@ def Wos_parser(in_dir, out_dir, verbose):
                 article_authors = getattr(article, CONFIG['authors']).split('; ')
                 firstAU = article_authors[0].replace(',','')
                 f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %
-                    (id,firstAU,getattr(article, year_published),
-                    getattr(article, twenty_nine_character_source_abbreviation),
-                    getattr(article, volume), getattr(article, beginning_page),
-                    getattr(article, doi), getattr(article, publication_type),
-                    getattr(article, document_type), getattr(article, wos_core_collection_times_cited),
-                    getattr(article, document_title), getattr(article, CONFIG['accession_number'])))
+                    (id,firstAU,getattr(article, CONFIG['year_published']),
+                    getattr(article, CONFIG['twenty_nine_character_source_abbreviation']),
+                    getattr(article, CONFIG['volume']), getattr(article, CONFIG['beginning_page']),
+                    getattr(article, CONFIG['doi']), getattr(article, CONFIG['publication_type']),
+                    getattr(article, CONFIG['document_type']), getattr(article, CONFIG['wos_core_collection_times_cited']),
+                    getattr(article, CONFIG['document_title']), getattr(article, CONFIG['accession_number'])))
 
                 #authors
-                if(getattr(article, authors) != ""):
-                    article_authors = getattr(article, authors).split('; ')
+                if(getattr(article, CONFIG['authors']) != ""):
+                    article_authors = getattr(article, CONFIG['authors']).split('; ')
                     for i in range(len(article_authors)):
                         article_authors[i] = article_authors[i].replace(',','')
                         aux1 = article_authors[i].rfind(' ')
@@ -94,16 +77,16 @@ def Wos_parser(in_dir, out_dir, verbose):
                         f_authors.write("%d\t%d\t%s\n" % (id,i,authors_lowercase))
 
                 #keywords
-                if(getattr(article, author_keywords) != ""):
-                    article_author_keywords = getattr(article, author_keywords).split('; ')
+                if(getattr(article, CONFIG['author_keywords']) != ""):
+                    article_author_keywords = getattr(article, CONFIG['author_keywords']).split('; ')
                     for f in article_author_keywords:
                         f_article_keywords.write("%d\tAK\t%s\n" % (id,f.upper()))
-                if(getattr(article, keywords_plus) != ""):
-                    article_author_keywords = getattr(article, keywords_plus).split('; ')
+                if(getattr(article, CONFIG['keywords_plus']) != ""):
+                    article_author_keywords = getattr(article, CONFIG['keywords_plus']).split('; ')
                     for f in article_author_keywords:
                         f_isi_keywords.write("%d\tIK\t%s\n" % (id,f.upper()))
-                if(getattr(article, document_title) != ""):
-                    article_author_keywords = getattr(article, document_title)
+                if(getattr(article, CONFIG['document_title']) != ""):
+                    article_author_keywords = getattr(article, CONFIG['document_title'])
                     #... remove ponctuations !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~
                     for p in CONFIG['punctuation']: article_author_keywords = article_author_keywords.replace(p,'')
                     article_author_keywords = article_author_keywords.split(' ')
@@ -113,14 +96,14 @@ def Wos_parser(in_dir, out_dir, verbose):
                             f_title_keywords.write("%d\tTK\t%s\n" % (id, lowercase.upper()))
 
                 #subjects
-                if(getattr(article, wos_categories) != ""):
-                    article_wos_cat = getattr(article, wos_categories).split('; ')
+                if(getattr(article, CONFIG['wos_categories']) != ""):
+                    article_wos_cat = getattr(article, CONFIG['wos_categories']).split('; ')
                     for i in range(len(article_wos_cat)):
                         f_subjects.write("%d\t%s\n" % (id,article_wos_cat[i]))
 
                 #references
-                if(getattr(article, cited_references) != ""):
-                     article_refs = getattr(article, cited_references).split('; ')
+                if(getattr(article, CONFIG['cited_references']) != ""):
+                     article_refs = getattr(article, CONFIG['cited_references']).split('; ')
                      for i in range(len(article_refs)):
                         ref = utility.Utility.new_object('refs', article_refs[i])
                         collection['references'].append(ref)
@@ -132,8 +115,8 @@ def Wos_parser(in_dir, out_dir, verbose):
                         if(ref.year == 0): computed_corrupt_refs += 1
 
                 #countries / institutions
-                if(getattr(article, author_address) != ""):
-                    address = getattr(article, author_address)
+                if(getattr(article, CONFIG['author_address']) != ""):
+                    address = getattr(article, CONFIG['author_address'])
                     aux1 = address.find('[')
                     aux2 = address.find(']')
 

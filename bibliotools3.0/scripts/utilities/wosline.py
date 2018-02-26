@@ -44,8 +44,6 @@ class Wosline:
             self.BP = list_from_line[defCols['BP']] ## Beginning Page
             self.WC = list_from_line[defCols['WC']] ## Web of Science Category
             self.UT = list_from_line[defCols['UT']] ## Unique Article Identifier
-        else:
-            print(("ARG %s != %s"%(len(list_from_line), numCols)))
 
     def __init__(self, list_from_line, def_cols, num_cols):
         #TODO create a map which reads these values from an external file to

@@ -6,7 +6,8 @@ import json
 import codecs
 from multiprocessing import Process
 from multiprocessing import JoinableQueue
-from config import CONFIG
+
+CONFIG = {}
 
 def add_edge_weight(graph, node1, node2, weight = 1):
     if graph.has_edge(node1, node2):
@@ -206,52 +207,52 @@ def write_to_csv(lines):
 
 
 # -- Main Script --
+def run():
+    span_done = JoinableQueue()
+    log_messages = JoinableQueue()
 
-span_done = JoinableQueue()
-log_messages = JoinableQueue()
+    spans_to_process = sorted(CONFIG["spans"],reverse=True)
 
-spans_to_process = sorted(CONFIG["spans"],reverse=True)
+    # Create the logger process
+    log_filename = "annotated_network_processing.log"
+    if os.path.exists(log_filename):
+        os.remove(log_filename)
+    loggerP = Process(target = logger, args = (log_filename, log_messages))
+    loggerP.daemon = True
+    loggerP.start()
 
-# Create the logger process
-log_filename = "annotated_network_processing.log"
-if os.path.exists(log_filename):
-    os.remove(log_filename)
-logger = Process(target = logger, args = (log_filename, log_messages))
-logger.daemon = True
-logger.start()
-
-# Create the first process on spans
-span_procs = {}
-for _ in range(min(CONFIG["nb_processes"], len(spans_to_process))):
-    span = spans_to_process.pop()
-    p = Process(target = process_span, args = (span,span_done, log_messages))
-    p.daemon = True
-    p.start()
-    span_procs[span] = p
-
-if CONFIG["report_csv"]:
-    prepare_csv()
-
-while len(spans_to_process) > 0 or len(span_procs) > 0:
-    s = span_done.get()
-    span = s["span"]
-    span_procs[s["span"]].join()
-    log_messages.put("%s done" %s['span'])
-    del span_procs[s["span"]]
-
-    # Create a new process if needed
-    print("still %s spans to process" %len(spans_to_process))
-    if len(spans_to_process) > 0:
-        next_span = spans_to_process.pop()
-        span_procs[next_span] = Process(target = process_span, args = (next_span, span_done, log_messages))
-        span_procs[next_span].daemon = True
-        span_procs[next_span].start()
-        print("new process on %s" %next_span)
+    # Create the first process on spans
+    span_procs = {}
+    for _ in range(min(CONFIG["nb_processes"], len(spans_to_process))):
+        span = spans_to_process.pop()
+        p = Process(target = process_span, args = (span,span_done, log_messages))
+        p.daemon = True
+        p.start()
+        span_procs[span] = p
 
     if CONFIG["report_csv"]:
-        csv_writing(s)
-        span_done.task_done()
+        prepare_csv()
 
-span_done.join()
-log_messages.join()
-logger.terminate()
+    while len(spans_to_process) > 0 or len(span_procs) > 0:
+        s = span_done.get()
+        span = s["span"]
+        span_procs[s["span"]].join()
+        log_messages.put("%s done" %s['span'])
+        del span_procs[s["span"]]
+
+        # Create a new process if needed
+        print("still %s spans to process" %len(spans_to_process))
+        if len(spans_to_process) > 0:
+            next_span = spans_to_process.pop()
+            span_procs[next_span] = Process(target = process_span, args = (next_span, span_done, log_messages))
+            span_procs[next_span].daemon = True
+            span_procs[next_span].start()
+            print("new process on %s" %next_span)
+
+        if CONFIG["report_csv"]:
+            csv_writing(s)
+            span_done.task_done()
+
+    span_done.join()
+    log_messages.join()
+    loggerP.terminate()
