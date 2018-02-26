@@ -35,8 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.contenttypes',
-    'django.contrib.auth',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +45,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -78,6 +75,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME' : 'mydatabase',
+        'USER' : 'db_user',
+        'PASSWORD': 'db_user_password',
+        'HOST' : '',
+        'PORT' : 'db_port_number',
     }
 }
 
@@ -130,5 +131,4 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Login redirect information
-
 LOGIN_REDIRECT_URL = '/graphs'

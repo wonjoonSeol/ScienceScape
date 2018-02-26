@@ -8,6 +8,7 @@ from multiprocessing import Process
 from multiprocessing import JoinableQueue
 from config import CONFIG
 
+# Helper Subroutines
 def add_edge_weight(graph, node1, node2, weight = 1):
     if graph.has_edge(node1, node2):
         graph[node1][node2]['weight'] += weight
