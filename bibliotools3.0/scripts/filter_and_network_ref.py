@@ -5,8 +5,8 @@ from networkx.readwrite import json_graph
 import json
 import codecs
 import matplotlib.pyplot as plt
+from config import CONFIG
 
-CONFIG = {}
 
 def add_edge_weight(graph, node1, node2):
     if graph.has_edge(node1, node2):
@@ -50,36 +50,35 @@ def group_by_article(references_by_articles_filtered, span, references_occs, exp
     export(graph, span, export_ref_format, parsed_data_folder)
 
 # -- Main script --
+for span in sorted(CONFIG["spans"]):
 
-def run():
-        for span in sorted(CONFIG["spans"]):
-            print("\n#%s" %span)
+    print("\n#%s" %span)
 
-            with codecs.open(os.path.join(CONFIG["parsed_data"], span, "references.dat"), "r", encoding = "UTF-8") as file:
-            # .dat files have one trailing blank line
-                data_lines = file.read().split("\n")[:-1]
+    with codecs.open(os.path.join(CONFIG["parsed_data"], span, "references.dat"), "r", encoding = "UTF-8") as file:
+        # .dat files have one trailing blank line
+        data_lines = file.read().split("\n")[:-1]
 
-            references_by_articles = [(l.split("\t")[0], ",".join(l.split("\t")[1:])) for l in data_lines]
+    references_by_articles = [(l.split("\t")[0], ",".join(l.split("\t")[1:])) for l in data_lines]
 
-            print("%s ref occurences in articles" %len(references_by_articles))
-            references_by_articles.sort(key = lambda e:e[1])
-            del(data_lines)
+    print("%s ref occurences in articles" %len(references_by_articles))
+    references_by_articles.sort(key = lambda e:e[1])
+    del(data_lines)
 
-            # Filter the references which only occur in one article
-            references_article_grouped = [(reference,list(ref_arts)) for reference, ref_arts in itertools.groupby(references_by_articles, key = lambda e:e[1])]
-            global references_occs
-            references_occs = dict([(reference, len(list(ref_arts))) for reference, ref_arts in references_article_grouped if len(ref_arts) >= CONFIG["spans"][span]["references"]["occ"]])
+    # Filter the references which only occur in one article
+    references_article_grouped = [(reference,list(ref_arts)) for reference, ref_arts in itertools.groupby(references_by_articles, key = lambda e:e[1])]
+    references_occs = dict([(reference, len(list(ref_arts))) for reference, ref_arts in references_article_grouped if len(ref_arts) >= CONFIG["spans"][span]["references"]["occ"]])
 
-            print("filtering references")
+    print("filtering references")
+    #references_by_articles_filtered = [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= CONFIG["spans"][span]["references"]["occ"]) for t in _]
 
-            def filter_references_by_article(references_article_grouped, occurences_config_item):
-                return [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= occurences_config_item) for t in _]
+    def filter_references_by_article(references_article_grouped, occurences_config_item):
+        return [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= occurences_config_item) for t in _]
 
-            references_by_articles_filtered = filter_references_by_article(references_article_grouped, CONFIG["spans"][span]["references"]["occ"])
+    references_by_articles_filtered = filter_references_by_article(references_article_grouped, CONFIG["spans"][span]["references"]["occ"])
 
-            # Group by articles and create a ref network
-            print("Sorting references")
-            references_by_articles_filtered.sort(key = lambda e:e[0])  # Sort References
+    # Group by articles and create a ref network
+    print("Sorting references")
+    references_by_articles_filtered.sort(key = lambda e:e[0])  # Sort References
 
-            # Group by Article and Export
-            group_by_article(references_by_articles_filtered, span, references_occs, CONFIG["export_ref_format"], CONFIG["parsed_data"])
+    # Group by Article and Export
+    group_by_article(references_by_articles_filtered, span, references_occs, CONFIG["export_ref_format"], CONFIG["parsed_data"])

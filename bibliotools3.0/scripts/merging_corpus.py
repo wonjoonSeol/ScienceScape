@@ -1,7 +1,6 @@
 import os
 import datetime
-
-CONFIG = {}
+from config import CONFIG
 
 '''
 File: merging_corpus.py
@@ -46,7 +45,6 @@ def count_occurences(one_file_corpus, reports_directory):
     # Report the year distribution for information
     write_year_distribution(reports_directory, years_spans)
 
-
 def write_to_file(open_file, text):
     open_file.write(text)
 
@@ -80,7 +78,6 @@ def merge_corpus(one_file_corpus, wos_headers, reports_directory, wos_data):
         os.makedirs(os.path.dirname(one_file_corpus))
 
     onefile_output = open(one_file_corpus, "w")
-
     write_to_file(onefile_output, wos_headers + "\n")
 
     if not os.path.exists(reports_directory):
@@ -122,5 +119,4 @@ def merge_corpus(one_file_corpus, wos_headers, reports_directory, wos_data):
     count_occurences(one_file_corpus, reports_directory)
 
 #--Main script
-def run():
-        merge_corpus(CONFIG["one_file_corpus"], CONFIG["wos_headers"], CONFIG["reports_directory"], CONFIG["wos_data"])
+merge_corpus(CONFIG["one_file_corpus"], CONFIG["wos_headers"], CONFIG["reports_directory"], CONFIG["wos_data"])
