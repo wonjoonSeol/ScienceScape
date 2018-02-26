@@ -1,6 +1,7 @@
 import os
 import itertools
-from config import CONFIG
+
+CONFIG = {}
 
 '''
 File: corpus_parsed_overview.py
@@ -13,18 +14,18 @@ def process_span(span):
 		data_lines = file.read().split("\n")[:-1]
 		print_and_report("- number of articles : %s"%len(data_lines))
 
-def print_statistics():
-    dats = ["authors.dat", "countries.dat", "institutions.dat", "isi_keywords.dat", 
+def print_statistics(span):
+    dats = ["authors.dat", "countries.dat", "institutions.dat", "isi_keywords.dat",
 	"article_keywords.dat", "title_keywords.dat", "references.dat", "subjects.dat"]
     for item in dats:
-    		print_statistics_of(item)
+    		print_statistics_of(item, span)
 
 def print_and_report(message):
 	print(message)
 	with open(os.path.join(CONFIG["reports_directory"], "corpus_overview.txt"), "a") as f:
 		f.write(message + "\n")
 
-def print_statistics_of(filename):
+def print_statistics_of(filename, span):
 	with open(os.path.join(CONFIG["parsed_data"], span, filename), "r") as file:
 
 		# .dat files all have one trailing blank line
@@ -56,10 +57,10 @@ def print_statistics_of(filename):
 			f.write(to_write)
 
 # -- Main script --
+def run():
+	if os.path.exists(os.path.join(CONFIG["reports_directory"], "corpus_overview.txt")):
+		os.remove(os.path.join(CONFIG["reports_directory"], "corpus_overview.txt"))
 
-if os.path.exists(os.path.join(CONFIG["reports_directory"], "corpus_overview.txt")):
-	os.remove(os.path.join(CONFIG["reports_directory"], "corpus_overview.txt"))
-
-for span in CONFIG["spans"]:
-	process_span(span)
-	print_statistics()
+	for span in CONFIG["spans"]:
+		process_span(span)
+		print_statistics(span)

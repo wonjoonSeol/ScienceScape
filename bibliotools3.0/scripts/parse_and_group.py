@@ -1,7 +1,8 @@
 import os
-from parser import Wos_parser
-from config import CONFIG
+import parser
 import traceback
+
+CONFIG = {}
 
 '''
 File: parse_and_group.py
@@ -9,12 +10,22 @@ This script will separate the publications in the data files by year,
 and parse each data line to extract some information.
 '''
 
-input_dir = os.path.dirname(CONFIG["one_file_corpus"])
-output_dir = CONFIG["wos_data_grouped"]
-outdir_prefix = CONFIG["parsed_data"]
+input_dir = None
+output_dir = None
+outdir_prefix = None
+years_spans = None
 
-# Collect the user-defined year span preferences
-years_spans = dict((s, data["years"]) for s, data in CONFIG["spans"].items())
+def init():
+	global input_dir
+	input_dir = os.path.dirname(CONFIG["one_file_corpus"])
+	global output_dir
+	output_dir = CONFIG["wos_data_grouped"]
+	global outdir_prefix
+	outdir_prefix = CONFIG["parsed_data"]
+	# Collect the user-defined year span preferences
+	global years_spans
+	years_spans = dict((s, data["years"]) for s, data in CONFIG["spans"].items())
+
 
 files = {}	# Collection of span files
 
@@ -57,29 +68,31 @@ def parse_span(span):
 		os.mkdir(os.path.join(outdir_prefix, span))
 
 	# Use Wos_parser function from parser.py to parse the lines
-	Wos_parser(os.path.join(input_dir, output_dir, span), os.path.join(outdir_prefix, span), True)
+	parser.Wos_parser(os.path.join(input_dir, output_dir, span), os.path.join(outdir_prefix, span), True)
 
 # -- Main Script --
+def run():
+	parser.CONFIG = CONFIG
+	init()
+	if not os.path.exists(os.path.join(input_dir, output_dir)):
+		os.mkdir(os.path.join(input_dir, output_dir))
 
-if not os.path.exists(os.path.join(input_dir, output_dir)):
-	os.mkdir(os.path.join(input_dir, output_dir))
+	if not os.path.exists(outdir_prefix):
+		os.mkdir(outdir_prefix)
 
-if not os.path.exists(outdir_prefix):
-	os.mkdir(outdir_prefix)
+	# Create one txt file for each user-defined year span
+	create_span_files()
 
-# Create one txt file for each user-defined year span
-create_span_files()
+	onefile_output = open(CONFIG["one_file_corpus"], "r")
+	onefile_output.readline()
 
-onefile_output = open(CONFIG["one_file_corpus"], "r")
-onefile_output.readline()
+	lines_to_write = onefile_output.readlines()
 
-lines_to_write = onefile_output.readlines()
+	# Write lines to the adequate span file
+	for line in lines_to_write:
+		separate_years(line)
 
-# Write lines to the adequate span file
-for line in lines_to_write:
-	separate_years(line)
+	onefile_output.close()
 
-onefile_output.close()
-
-for (span,ys) in years_spans.items():
-	parse_span(span)	# For each span, parse its data
+	for (span,ys) in years_spans.items():
+		parse_span(span)	# For each span, parse its data
