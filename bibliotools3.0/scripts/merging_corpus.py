@@ -80,7 +80,6 @@ def merge_corpus(one_file_corpus, wos_headers, reports_directory, wos_data):
         os.makedirs(os.path.dirname(one_file_corpus))
 
     onefile_output = open(one_file_corpus, "w")
-
     write_to_file(onefile_output, wos_headers + "\n")
 
     if not os.path.exists(reports_directory):

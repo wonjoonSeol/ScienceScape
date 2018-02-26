@@ -63,15 +63,12 @@ def print_statistics(parsed_data_folder, reports_directory, span):
 
 # -- Main script --
 def run():
-    if os.path.exists(os.path.join(CONFIG["reports_directory"], "corpus_overview.txt")):
-        os.remove(os.path.join(CONFIG["reports_directory"], "corpus_overview.txt"))
+    reports_directory = CONFIG["reports_directory"]
+    parsed_data_folder = CONFIG["parsed_data"]
+    if os.path.exists(os.path.join(reports_directory, "corpus_overview.txt")):
+        os.remove(os.path.join(reports_directory, "corpus_overview.txt"))
 
-        reports_directory = CONFIG["reports_directory"]
-        parsed_data_folder = CONFIG["parsed_data"]
-        if os.path.exists(os.path.join(reports_directory, "corpus_overview.txt")):
-            os.remove(os.path.join(reports_directory, "corpus_overview.txt"))
-
-        for span in CONFIG["spans"]:
-            print_to_overview("\n\n#%s" %span, reports_directory)
-            print_to_overview("- number of articles : %s" %get_no_articles(parsed_data_folder, span), reports_directory)
-            print_statistics(parsed_data_folder, reports_directory, span)
+    for span in CONFIG["spans"]:
+        print_to_overview("\n\n#%s" %span, reports_directory)
+        print_to_overview("- number of articles : %s" %get_no_articles(parsed_data_folder, span), reports_directory)
+        print_statistics(parsed_data_folder, reports_directory, span)

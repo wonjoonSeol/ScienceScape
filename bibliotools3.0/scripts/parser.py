@@ -37,108 +37,108 @@ def Wos_parser(in_dir, out_dir, verbose):
         if (len(collection['woslines']) > 0):
             for article in collection['woslines']:
 
-              if getattr(article, CONFIG['accession_number']) not in WOS_IDS:
-                WOS_IDS[getattr(article, CONFIG['accession_number'])] = ''
-                id = id + 1
+                if getattr(article, CONFIG['accession_number']) not in WOS_IDS:
+                    WOS_IDS[getattr(article, CONFIG['accession_number'])] = ''
+                    id = id + 1
 
-                #article
-                article_authors = getattr(article, CONFIG['authors']).split('; ')
-                firstAU = article_authors[0].replace(',','')
-                f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %
-                    (id,firstAU,getattr(article, CONFIG['year_published']),
-                    getattr(article, CONFIG['twenty_nine_character_source_abbreviation']),
-                    getattr(article, CONFIG['volume']), getattr(article, CONFIG['beginning_page']),
-                    getattr(article, CONFIG['doi']), getattr(article, CONFIG['publication_type']),
-                    getattr(article, CONFIG['document_type']), getattr(article, CONFIG['wos_core_collection_times_cited']),
-                    getattr(article, CONFIG['document_title']), getattr(article, CONFIG['accession_number'])))
-
-                #authors
-                if(getattr(article, CONFIG['authors']) != ""):
+                    #article
                     article_authors = getattr(article, CONFIG['authors']).split('; ')
-                    for i in range(len(article_authors)):
-                        article_authors[i] = article_authors[i].replace(',','')
-                        aux1 = article_authors[i].rfind(' ')
-                        aux2 = len(article_authors[i])
-                        authors_lowercase = article_authors[i].lower().capitalize()
-                        if aux1 > 0:
-                            s1 = authors_lowercase[aux1:aux2]
-                            s2 = s1.upper()
-                            authors_lowercase = authors_lowercase.replace(s1,s2)
-                        aux = authors_lowercase.find('-')
-                        if aux > 0:
-                            bar1 = authors_lowercase[aux:aux+2]
-                            bar2 = '-' + authors_lowercase[aux+1].upper()
-                            authors_lowercase = authors_lowercase.replace(bar1,bar2)
-                        aux = authors_lowercase.find(' ')
-                        if aux > 0:
-                            bar1 = authors_lowercase[aux:aux+2]
-                            bar2 = ' ' + authors_lowercase[aux+1].upper()
-                            authors_lowercase = authors_lowercase.replace(bar1,bar2)
-                        f_authors.write("%d\t%d\t%s\n" % (id,i,authors_lowercase))
+                    firstAU = article_authors[0].replace(',','')
+                    f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %
+                        (id,firstAU,getattr(article, CONFIG['year_published']),
+                        getattr(article, CONFIG['twenty_nine_character_source_abbreviation']),
+                        getattr(article, CONFIG['volume']), getattr(article, CONFIG['beginning_page']),
+                        getattr(article, CONFIG['doi']), getattr(article, CONFIG['publication_type']),
+                        getattr(article, CONFIG['document_type']), getattr(article, CONFIG['wos_core_collection_times_cited']),
+                        getattr(article, CONFIG['document_title']), getattr(article, CONFIG['accession_number'])))
 
-                #keywords
-                if(getattr(article, CONFIG['author_keywords']) != ""):
-                    article_author_keywords = getattr(article, CONFIG['author_keywords']).split('; ')
-                    for f in article_author_keywords:
-                        f_article_keywords.write("%d\tAK\t%s\n" % (id,f.upper()))
-                if(getattr(article, CONFIG['keywords_plus']) != ""):
-                    article_author_keywords = getattr(article, CONFIG['keywords_plus']).split('; ')
-                    for f in article_author_keywords:
-                        f_isi_keywords.write("%d\tIK\t%s\n" % (id,f.upper()))
-                if(getattr(article, CONFIG['document_title']) != ""):
-                    article_author_keywords = getattr(article, CONFIG['document_title'])
-                    #... remove ponctuations !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~
-                    for p in CONFIG['punctuation']: article_author_keywords = article_author_keywords.replace(p,'')
-                    article_author_keywords = article_author_keywords.split(' ')
-                    for f in article_author_keywords:
-                        lowercase = f.lower()
-                        if lowercase not in CONFIG['common_words'] and len(lowercase)>0:
-                            f_title_keywords.write("%d\tTK\t%s\n" % (id, lowercase.upper()))
+                    #authors
+                    if(getattr(article, CONFIG['authors']) != ""):
+                        article_authors = getattr(article, CONFIG['authors']).split('; ')
+                        for i in range(len(article_authors)):
+                            article_authors[i] = article_authors[i].replace(',','')
+                            aux1 = article_authors[i].rfind(' ')
+                            aux2 = len(article_authors[i])
+                            authors_lowercase = article_authors[i].lower().capitalize()
+                            if aux1 > 0:
+                                s1 = authors_lowercase[aux1:aux2]
+                                s2 = s1.upper()
+                                authors_lowercase = authors_lowercase.replace(s1,s2)
+                            aux = authors_lowercase.find('-')
+                            if aux > 0:
+                                bar1 = authors_lowercase[aux:aux+2]
+                                bar2 = '-' + authors_lowercase[aux+1].upper()
+                                authors_lowercase = authors_lowercase.replace(bar1,bar2)
+                            aux = authors_lowercase.find(' ')
+                            if aux > 0:
+                                bar1 = authors_lowercase[aux:aux+2]
+                                bar2 = ' ' + authors_lowercase[aux+1].upper()
+                                authors_lowercase = authors_lowercase.replace(bar1,bar2)
+                            f_authors.write("%d\t%d\t%s\n" % (id,i,authors_lowercase))
 
-                #subjects
-                if(getattr(article, CONFIG['wos_categories']) != ""):
-                    article_wos_cat = getattr(article, CONFIG['wos_categories']).split('; ')
-                    for i in range(len(article_wos_cat)):
-                        f_subjects.write("%d\t%s\n" % (id,article_wos_cat[i]))
+                    #keywords
+                    if(getattr(article, CONFIG['author_keywords']) != ""):
+                        article_author_keywords = getattr(article, CONFIG['author_keywords']).split('; ')
+                        for f in article_author_keywords:
+                            f_article_keywords.write("%d\tAK\t%s\n" % (id,f.upper()))
+                    if(getattr(article, CONFIG['keywords_plus']) != ""):
+                        article_author_keywords = getattr(article, CONFIG['keywords_plus']).split('; ')
+                        for f in article_author_keywords:
+                            f_isi_keywords.write("%d\tIK\t%s\n" % (id,f.upper()))
+                    if(getattr(article, CONFIG['document_title']) != ""):
+                        article_author_keywords = getattr(article, CONFIG['document_title'])
+                        #... remove ponctuations !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~
+                        for p in CONFIG['punctuation']: article_author_keywords = article_author_keywords.replace(p,'')
+                        article_author_keywords = article_author_keywords.split(' ')
+                        for f in article_author_keywords:
+                            lowercase = f.lower()
+                            if lowercase not in CONFIG['common_words'] and len(lowercase)>0:
+                                f_title_keywords.write("%d\tTK\t%s\n" % (id, lowercase.upper()))
 
-                #references
-                if(getattr(article, CONFIG['cited_references']) != ""):
-                     article_refs = getattr(article, CONFIG['cited_references']).split('; ')
-                     for i in range(len(article_refs)):
-                        ref = utility.Utility.new_object('refs', article_refs[i])
-                        collection['references'].append(ref)
-                        computed_refs += 1
+                    #subjects
+                    if(getattr(article, CONFIG['wos_categories']) != ""):
+                        article_wos_cat = getattr(article, CONFIG['wos_categories']).split('; ')
+                        for i in range(len(article_wos_cat)):
+                            f_subjects.write("%d\t%s\n" % (id,article_wos_cat[i]))
 
-                        if(ref.year > 0):
-                            f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" %
-                                     (id,ref.firstAU,ref.year,ref.journal,ref.volume,ref.page))
-                        if(ref.year == 0): computed_corrupt_refs += 1
+                    #references
+                    if(getattr(article, CONFIG['cited_references']) != ""):
+                        article_refs = getattr(article, CONFIG['cited_references']).split('; ')
+                        for i in range(len(article_refs)):
+                            ref = utility.Utility.new_object('refs', article_refs[i])
+                            collection['references'].append(ref)
+                            computed_refs += 1
 
-                #countries / institutions
-                if(getattr(article, CONFIG['author_address']) != ""):
-                    address = getattr(article, CONFIG['author_address'])
-                    aux1 = address.find('[')
-                    aux2 = address.find(']')
+                            if(ref.year > 0):
+                                f_refs.write("%d\t%s\t%d\t%s\t%s\t%s\n" %
+                                    (id,ref.firstAU,ref.year,ref.journal,ref.volume,ref.page))
+                            if(ref.year == 0): computed_corrupt_refs += 1
 
-                    while (aux1 < aux2):
-                        aux = address[aux1:aux2+2]
-                        address = address.replace(aux,'')
+                    #countries / institutions
+                    if(getattr(article, CONFIG['author_address']) != ""):
+                        address = getattr(article, CONFIG['author_address'])
                         aux1 = address.find('[')
                         aux2 = address.find(']')
 
-                    article_address = address.split('; ')
-                    for i in range(len(article_address)):
-                        article_address[i] = article_address[i].replace(', ', ',')
-                        split_address = article_address[i].split(',')
-                        length_of_address = len(split_address)
+                        while (aux1 < aux2):
+                            aux = address[aux1:aux2+2]
+                            address = address.replace(aux,'')
+                            aux1 = address.find('[')
+                            aux2 = address.find(']')
 
-                        for j in range(length_of_address - 2):
-                            f_institutions.write("%d\t%d\t%s\n" % (id,i,split_address[j]))
+                        article_address = address.split('; ')
+                        for i in range(len(article_address)):
+                            article_address[i] = article_address[i].replace(', ', ',')
+                            split_address = article_address[i].split(',')
+                            length_of_address = len(split_address)
 
-                        country = split_address[length_of_address-1]
-                        length_split_address = len(split_address[length_of_address-1])
+                            for j in range(length_of_address - 2):
+                                f_institutions.write("%d\t%d\t%s\n" % (id,i,split_address[j]))
 
-                        if  country[length_split_address-3 : length_split_address] == 'USA' or country[0:3] in CONFIG['usa_country_codes']:
+                            country = split_address[length_of_address-1]
+                            length_split_address = len(split_address[length_of_address-1])
+
+                            if  country[length_split_address-3 : length_split_address] == 'USA' or country[0:3] in CONFIG['usa_country_codes']:
                                 f_countries.write("%d\t%d\t%s\n" % (id,i,country))
 
     # End
