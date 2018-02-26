@@ -7,31 +7,30 @@ import codecs
 import matplotlib.pyplot as plt
 from config import CONFIG
 
-
 def add_edge_weight(graph, node1, node2):
     if graph.has_edge(node1, node2):
         graph[node1][node2]['weight'] += 1
     else:
         graph.add_edge(node1, node2, weight = 1)
 
-def export(graph, span):
-    if CONFIG["export_ref_format"] == "gexf":
+def export(graph, span, export_ref_format):
+    if export_ref_format == "gexf":
         print("Writing .gexf export")
         networkx.write_gexf(graph, os.path.join(CONFIG["parsed_data"], span, "%s.gexf" %span), encoding = "UTF-8")
-    elif CONFIG["export_ref_format"] == "edgelist":
+    elif export_ref_format == "edgelist":
         print("Writing .csv export")
         networkx.write_weighted_edgelist(graph, os.path.join(CONFIG["parsed_data"], span, "%s.csv"%span), delimiter = "\t")
-    elif CONFIG["export_ref_format"] == "pajek":
+    elif export_ref_format == "pajek":
         print("Writing .pajek export")
         networkx.write_pajek(graph, os.path.join(CONFIG["parsed_data"], span, "%s.net" %span), encoding = 'UTF-8')
-    elif CONFIG["export_ref_format"] == "json":
+    elif export_ref_format == "json":
         print("Writing .json export")
         data = json_graph.node_link_data(graph)
         json.dump(data, open(os.path.join(CONFIG["parsed_data"], span, "%s.json" %span), "w"), encoding = 'UTF-8')
     else:
         print("No export compatible with the specified export format!")
 
-def group_by_article(references_by_articles_filtered, span):
+def group_by_article(references_by_articles_filtered, span, references_occs):
     print("Processing edges for references...")
     graph = networkx.Graph()
     for article, art_refs in itertools.groupby(references_by_articles_filtered, key = lambda e:e[0]):
@@ -47,13 +46,9 @@ def group_by_article(references_by_articles_filtered, span):
     networkx.set_node_attributes(graph, 'type', "reference")
 
     # Write export file
-    export(graph, span)
-
-
+    export(graph, span, CONFIG["export_ref_format"])
 
 # -- Main script --
-
-
 for span in sorted(CONFIG["spans"]):
 
     print("\n#%s" %span)
@@ -73,11 +68,16 @@ for span in sorted(CONFIG["spans"]):
     references_occs = dict([(reference, len(list(ref_arts))) for reference, ref_arts in references_article_grouped if len(ref_arts) >= CONFIG["spans"][span]["references"]["occ"]])
 
     print("filtering references")
-    references_by_articles_filtered = [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= CONFIG["spans"][span]["references"]["occ"]) for t in _]
+    #references_by_articles_filtered = [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= CONFIG["spans"][span]["references"]["occ"]) for t in _]
+
+    def filter_references_by_article(references_article_grouped, occurences_config_item):
+        return [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= occurences_config_item) for t in _]
+
+    references_by_articles_filtered = filter_references_by_article(references_article_grouped, CONFIG["spans"][span]["references"]["occ"])
 
     # Group by articles and create a ref network
     print("Sorting references")
     references_by_articles_filtered.sort(key = lambda e:e[0])  # Sort References
 
     # Group by Article and Export
-    group_by_article(references_by_articles_filtered, span)
+    group_by_article(references_by_articles_filtered, span, references_occs)
