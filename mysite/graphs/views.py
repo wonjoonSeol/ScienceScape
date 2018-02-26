@@ -13,10 +13,12 @@ from django.conf import settings
 def home(request):
 
 	attemptDatabaseTest()
-
+	
+		
 	if request.method == 'POST' and request.FILES['myFile']:
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
+		
 			uploadedFile = request.FILES['myFile']
 			if uploadedFile:
 				if checkCSV(uploadedFile):
@@ -26,13 +28,14 @@ def home(request):
 			print("Form not Valid")
 	else:
 		form = UploadFileForm()
-
+	
 	return render(request, 'index.html', {'upload': form, 'fpath':"/userFiles/arctic.gexf"})
 
 
 def fieldForm(request, filePath):
 
 	form = loadFromFilePath(filePath)
+	
 	if request.method == 'POST':
 			data = {}
 			for i in range (0, form['count']):
@@ -49,7 +52,7 @@ def fieldForm(request, filePath):
 		fname = tokens[-1]
 	else:
 		fname = None
-		print(form)
+		
 
 	return render(request, 'index.html', {'fields': form['form'], 'filename': fname})
 

@@ -6,7 +6,7 @@
 
 				<div class="row">
 						<form method="POST" action ="{% url 'home' %}" enctype="multipart/form-data">
-							<div class="col s9">
+					<!--		<div class="col s9">
 							{% csrf_token %}
 
 							<div class="file-field">
@@ -17,18 +17,36 @@
 									<input type="file">
 								</div>
 								<div class="file-path-wrapper">
-									<!-- <input class="file-path validate" type="text" value=""> -->
+									 <input class="file-path validate" type="text" value=""> 
 									{{upload}}
-									<!-- {% for x in upload %}
-
-									{% endfor %} -->
-									<!-- type="text" -->
+									{% for x in upload %}
+									{% endfor %} 
+									 type="text" 
 								</div>
 							</div>
+							
+							
+							
 							</div>
 							<div class="col s3">
 							<input class="btn blue darken-4 waves-effect" type="submit" value="submit">
-							</div>
+							</div> -->
+							{% csrf_token %}
+								<div class="file-field input-field">
+      							<div class="btn"> 
+      						 		<span>File</span>
+      						  		<!--<input type="file">-->
+      						  		{{upload}}
+     								 </div>
+   								 <div class="file-path-wrapper">
+       									 <input class="file-path validate" type="text">
+     								 </div>
+     								 <input class="btn blue darken-4 waves-effect" type="submit" value="submit">
+   							 </div>
+
+							
+							
+							
 						</form>
 
 					<!-- TODO Add upload/submit button -->

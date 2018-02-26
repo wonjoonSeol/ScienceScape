@@ -15,8 +15,8 @@ def createMiniForm(choices = [("DEFAULT", "Select a value")], request = None):
 
 
 class UploadFileForm(forms.Form):
-    #myFile = forms.FileField(widget=forms.FileInput(attrs={'class':'file-path validate', 'type':'text', 'name':'my'}), label='')
-	myFile = forms.FileField()
+    myFile = forms.FileField(label='')
+
 
 def produceFormSet(dictionary, unknownValues):
 	unknown = []
