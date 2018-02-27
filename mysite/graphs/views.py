@@ -16,11 +16,11 @@ from django.conf import settings
 def home(request):
 
 	attemptDatabaseTest()
-	
+
 	if request.method == 'POST' and request.FILES['myFile']:
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
-		
+
 			uploadedFile = request.FILES['myFile']
 			if uploadedFile:
 				if checkCSV(uploadedFile):
@@ -30,14 +30,14 @@ def home(request):
 			print("Form not Valid")
 	else:
 		form = UploadFileForm()
-	
+
 	return render(request, 'index.html', {'upload': form, 'fpath':"/userFiles/arctic.gexf"})
 
 
 def fieldForm(request, filePath):
 
 	form = loadFromFilePath(filePath)
-	
+
 	if request.method == 'POST':
 			data = {}
 			for i in range (0, form['count']):
@@ -54,13 +54,13 @@ def fieldForm(request, filePath):
 		fname = tokens[-1]
 	else:
 		fname = None
-		
+
 
 	return render(request, 'index.html', {'fields': form['form'], 'filename': fname})
 
 def about(request):
 	return render(request, 'about.html')
-	
+
 def loadGraph(request, filePath):
 
 	upload_gexf_form = UploadFileForm()
@@ -86,12 +86,12 @@ def loadGraph(request, filePath):
 def register(request):
     if request.method == 'POST':
         form = UserRegForm(request.POST)
-        if form.isValid():
+        if form.is_valid():
             formData = form.cleaned_data
             username = formData['username']
             password = formData['password']
             email = formData['email']
-            if not (User.objects.filter(username=username).exists() or 
+            if not (User.objects.filter(username=username).exists() or
                     User.objects.filter(email=email).exists()):
                     User.objects.create_user(username, email, password)
                     user = authenticate(username = username, password = password)
