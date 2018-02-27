@@ -16,15 +16,18 @@ from django.conf import settings
 def home(request):
 
 	attemptDatabaseTest()
-
+	print("Username is: {x}".format(x = request.user.username))
 	if request.method == 'POST' and request.FILES['myFile']:
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
-
 			uploadedFile = request.FILES['myFile']
 			if uploadedFile:
 				if checkCSV(uploadedFile):
-					fPath = saveFile(uploadedFile)['FULL_FILE_NAME']
+					if request.user.username:
+						fPath = saveFile(uploadedFile, request.user.username)['FULL_FILE_NAME']
+					else:
+						fPath = saveFile(uploadedFile)['FULL_FILE_NAME']
+
 					return redirect('fields', fPath)
 		else:
 			print("Form not Valid")

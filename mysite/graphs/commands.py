@@ -15,7 +15,7 @@ from .models import Mappings
 def loadFromFilePath(fp):
 	dictionary = processCSVIntoDictionary(fp)
 	checkIfInDataBase = retrieveFromDataBase(fp)
-	
+
 	if checkIfInDataBase:
 		known = []
 		for header in checkIfInDataBase:
@@ -64,27 +64,26 @@ def processCSVIntoDictionary(filePath, forFields = False):
 
 '''Saves the file to userFiles folder in project root directory
 '''
-def saveFile(myFile):
+def saveFile(myFile, username = "Public"):
+	fileName = myFile.name
+	staticUserFilesDIR = "static/userFiles"
+	folder = "static/userFiles/{x}".format(x = username)
+	APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    fileName = myFile.name
-    
-    folder = "static/userFiles"
-    APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-	 
-    # create the folder if it doesn't exist.
-    try:
-    	 os.mkdir(os.path.join(APP_DIR, folder))
-    	 print("Directory created: {x}".format(x = APP_DIR) )
-    except:
-    	pass
+	# create the folder if it doesn't exist.
+	try:
+		os.mkdir(os.path.join(APP_DIR, staticUserFilesDIR))
+		os.mkdir(os.path.join(APP_DIR, folder))
+	except:
+		pass
 
-    # save the uploaded file inside that folder.
-    fullFileName = os.path.join(APP_DIR, folder, fileName)
-    fileToSave = open(fullFileName,'w')
-    fileToSave.write(myFile.read().decode("utf-8"))
-    fileToSave.close()
-    print("File saved at {s}".format(s=fullFileName))
-    return {'FULL_FILE_NAME': fullFileName, 'USER_FILE_NAME': fileName}
+	# save the uploaded file inside that folder.
+	fullFileName = os.path.join(APP_DIR, folder, fileName)
+	fileToSave = open(fullFileName,'w')
+	fileToSave.write(myFile.read().decode("utf-8"))
+	fileToSave.close()
+	print("File saved at {s}".format(s=fullFileName))
+	return {'FULL_FILE_NAME': fullFileName, 'USER_FILE_NAME': fileName}
 
 '''Returns a dictionary of attributes mapped to Bibliotools representation of those attributes eg. Date: SS,
 	and a list of unknown attributes that could not be detected.
@@ -98,11 +97,11 @@ def detectHeadersFromAndRemove(dictionary):
 	headers = dict(Author=None, Date=None, Country=None)
 	unknownValues = []
 	datePattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
-	
+
 	for k in dictionary:
 		unknownValues.append(k)
 	#print('This is the dictionary {x}'.format(x=dictionary))
-	for k in dictionary:	
+	for k in dictionary:
 		if datePattern.match(dictionary[k].pop()):
 			headers['Date'] = k
 			unknownValues.remove(k)
@@ -112,7 +111,7 @@ def detectHeadersFromAndRemove(dictionary):
 			headers['Country'] = k
 			unknownValues.remove(k)
 			print("matched country")
-	
+
 	return {'headers': headers, 'unknownValues': unknownValues}
 
 def detectHeadersFrom(dictionary):
@@ -120,11 +119,11 @@ def detectHeadersFrom(dictionary):
 	headers = dict(Author=None, Date=None, Country=None)
 	unknownValues = []
 	datePattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
-	
+
 	for k in dictionary:
 		unknownValues.append(k)
 	print('This is the dictionary {x}'.format(x=dictionary))
-	for k in dictionary:	
+	for k in dictionary:
 		if datePattern.match(dictionary[k].pop()):
 			headers['Date'] = k
 			print(headers['Date'])
@@ -132,14 +131,14 @@ def detectHeadersFrom(dictionary):
 		elif dictionary[k] in countries:
 			headers['Country'] = k
 			print("matched country")
-	
+
 	return {'headers': headers, 'unknownValues': unknownValues}
 
 '''
 '''
 def dataProcess(key = None, weights = 0, minOccur = 0):
 	return dictionary[key]
-	
+
 '''This method refreshes the database adds mappings of the file names its true value eg mapping SS to Author in file 'fileName'
 	data must be in the form of a dictionary.
 '''
@@ -147,7 +146,7 @@ def refreshDataBase(data, filePath):
 	existing = Mappings.objects.filter(FILE_LINK = filePath)
 	if existing:
 		existing.delete()
-		
+
 	for key in data:
 		mapping = Mappings()
 		mapping.TRUE_NAME = key
@@ -156,7 +155,7 @@ def refreshDataBase(data, filePath):
 		mapping.save()
 
 '''This method is used for retrieving mappings of file names to is true values for the file of the filePath passed in.
-	Mappings are returned in the form of a dictionary 
+	Mappings are returned in the form of a dictionary
 '''
 def retrieveFromDataBase(filePath):
 	dictionary = dict()
@@ -167,9 +166,9 @@ def retrieveFromDataBase(filePath):
 	else:
 		return None
 
-	print("dictionary from database is {x}".format(x = dictionary))		
+	print("dictionary from database is {x}".format(x = dictionary))
 	return dictionary
-	
+
 def generateUser():
 	return folderDirectory
 
