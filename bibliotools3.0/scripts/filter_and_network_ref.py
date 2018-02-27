@@ -49,9 +49,12 @@ def group_by_article(references_by_articles_filtered, span, references_occs, exp
     # Write export file
     export(graph, span, export_ref_format, parsed_data_folder)
 
-# -- Main script --
-for span in sorted(CONFIG["spans"]):
+def filter_references_by_article(references_article_grouped, occurences_config_item):
+    return [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= occurences_config_item) for t in _]
 
+# -- Main script --
+
+for span in sorted(CONFIG["spans"]):
     print("\n#%s" %span)
 
     with codecs.open(os.path.join(CONFIG["parsed_data"], span, "references.dat"), "r", encoding = "UTF-8") as file:
@@ -60,7 +63,7 @@ for span in sorted(CONFIG["spans"]):
 
     references_by_articles = [(l.split("\t")[0], ",".join(l.split("\t")[1:])) for l in data_lines]
 
-    print("%s ref occurences in articles" %len(references_by_articles))
+    print("%s ref occurrences in articles" %len(references_by_articles))
     references_by_articles.sort(key = lambda e:e[1])
     del(data_lines)
 
@@ -68,12 +71,7 @@ for span in sorted(CONFIG["spans"]):
     references_article_grouped = [(reference,list(ref_arts)) for reference, ref_arts in itertools.groupby(references_by_articles, key = lambda e:e[1])]
     references_occs = dict([(reference, len(list(ref_arts))) for reference, ref_arts in references_article_grouped if len(ref_arts) >= CONFIG["spans"][span]["references"]["occ"]])
 
-    print("filtering references")
-    #references_by_articles_filtered = [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= CONFIG["spans"][span]["references"]["occ"]) for t in _]
-
-    def filter_references_by_article(references_article_grouped, occurences_config_item):
-        return [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= occurences_config_item) for t in _]
-
+    print("Filtering references")
     references_by_articles_filtered = filter_references_by_article(references_article_grouped, CONFIG["spans"][span]["references"]["occ"])
 
     # Group by articles and create a ref network
