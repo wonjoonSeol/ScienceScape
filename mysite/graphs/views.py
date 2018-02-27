@@ -6,7 +6,10 @@ from .forms import *
 from .commands import *
 from django.forms import formset_factory
 from .tests import *
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from django.conf import settings
+
 
 # BE CAREFUL OF REQUEST METHODS
 
@@ -14,7 +17,6 @@ def home(request):
 
 	attemptDatabaseTest()
 	
-		
 	if request.method == 'POST' and request.FILES['myFile']:
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
@@ -79,3 +81,26 @@ def loadGraph(request, filePath):
 		filePath="userFile/arctic.gexf"
 
 	return render(request, 'index.html', {'fpath': filePath, 'upload_gexf': upload_gexf_form,'fname': fname})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegForm(request.POST)
+        if form.isValid():
+            formData = form.cleaned_data
+            username = formData['username']
+            password = formData['password']
+            email = formData['email']
+            if not (User.objects.filter(username=username).exists() or 
+                    User.objects.filter(email=email).exists()):
+                    User.objects.create_user(username, email, password)
+                    user = authenticate(username = username, password = password)
+                    login(request,user)
+                    return HttpResponseRedirect('/')
+            else:
+                raise forms.ValidationError('This user/pswd combination already exists')
+
+    else:
+        form = UserRegForm()
+
+    return render(request, 'mysite/register.html', {'form' : form})
