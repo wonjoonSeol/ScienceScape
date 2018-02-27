@@ -37,30 +37,15 @@ def parse_article(id, article, output):
 
 
 def parse_authors(id, article, output):
-    if(getattr(article, authors) != ""):
+    if getattr(article, authors) != '':
         article_authors = getattr(article, authors).split('; ')
 
         for i in range(len(article_authors)):
             article_authors[i] = article_authors[i].replace(',','')
-            print(str(article_authors[i]))
-            aux1 = article_authors[i].rfind(' ')
-            aux2 = len(article_authors[i])
-            authors_lowercase = article_authors[i].lower().capitalize()
-            if aux1 > 0:
-                s1 = authors_lowercase[aux1:len(article_authors[i])]
-                s2 = s1.upper()
-                authors_lowercase = authors_lowercase.replace(s1,s2)
-            aux = authors_lowercase.find('-')
-            if aux > 0:
-                bar1 = authors_lowercase[aux:aux+2]
-                bar2 = '-' + authors_lowercase[aux+1].upper()
-                authors_lowercase = authors_lowercase.replace(bar1,bar2)
-            aux = authors_lowercase.find(' ')
-            if aux > 0:
-                bar1 = authors_lowercase[aux : aux+2]
-                bar2 = ' ' + authors_lowercase[aux+1].upper()
-                authors_lowercase = authors_lowercase.replace(bar1, bar2)
-            output.write("%d\t%d\t%s\n" % (id, i, authors_lowercase))
+            first_name = article_authors[i].split(' ')[0].capitalize()
+            last_name = article_authors[i].split(' ')[1].capitalize()
+            name = first_name + ' ' + last_name
+            output.write(f'{id}\t{i}\t{name}\n')
 
 
 
@@ -106,7 +91,7 @@ def Wos_parser(in_dir, out_dir, verbose):
 
                 #authors
                 parse_authors(id, article, f_authors)
-        
+
 
                 #keywords
                 if(getattr(article, author_keywords) != ""):
