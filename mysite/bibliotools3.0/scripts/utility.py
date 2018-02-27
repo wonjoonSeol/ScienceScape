@@ -8,11 +8,12 @@ import numpy
 import argparse
 import re
 
+
 #personal modules
 import utilities
 '''
 This class contains logic for various utilities used thoughout the scripts.
-It has a collection of all the items from the .dat files and the WOS Lines from 
+It has a collection of all the items from the .dat files and the WOS Lines from
 the initial files.
 '''
 class Utility:
@@ -121,4 +122,4 @@ class Utility:
             return wosline.WosLine(line)
 
     def __str__():
-       return str(collection) 
+       return str(collection)
