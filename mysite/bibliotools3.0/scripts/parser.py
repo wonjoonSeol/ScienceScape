@@ -23,6 +23,47 @@ publication_type = CONFIG['publication_type']
 document_type = CONFIG['document_type']
 wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
 
+def parse_article(id, article, output):
+    print(str(id) + 'im here')
+    article_authors = getattr(article, authors).split('; ')
+    firstAU = article_authors[0].replace(',','')
+    output.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %
+        (id,firstAU,getattr(article, year_published),
+        getattr(article, twenty_nine_character_source_abbreviation),
+        getattr(article, volume), getattr(article, beginning_page),
+        getattr(article, doi), getattr(article, publication_type),
+        getattr(article, document_type), getattr(article, wos_core_collection_times_cited),
+        getattr(article, document_title), getattr(article, accession_number)))
+
+
+def parse_authors(id, article, output):
+    if(getattr(article, authors) != ""):
+        article_authors = getattr(article, authors).split('; ')
+
+        for i in range(len(article_authors)):
+            article_authors[i] = article_authors[i].replace(',','')
+            print(str(article_authors[i]))
+            aux1 = article_authors[i].rfind(' ')
+            aux2 = len(article_authors[i])
+            authors_lowercase = article_authors[i].lower().capitalize()
+            if aux1 > 0:
+                s1 = authors_lowercase[aux1:len(article_authors[i])]
+                s2 = s1.upper()
+                authors_lowercase = authors_lowercase.replace(s1,s2)
+            aux = authors_lowercase.find('-')
+            if aux > 0:
+                bar1 = authors_lowercase[aux:aux+2]
+                bar2 = '-' + authors_lowercase[aux+1].upper()
+                authors_lowercase = authors_lowercase.replace(bar1,bar2)
+            aux = authors_lowercase.find(' ')
+            if aux > 0:
+                bar1 = authors_lowercase[aux : aux+2]
+                bar2 = ' ' + authors_lowercase[aux+1].upper()
+                authors_lowercase = authors_lowercase.replace(bar1, bar2)
+            output.write("%d\t%d\t%s\n" % (id, i, authors_lowercase))
+
+
+
 def Wos_parser(in_dir, out_dir, verbose):
 
     # Initialisation
@@ -46,6 +87,8 @@ def Wos_parser(in_dir, out_dir, verbose):
     WOS_IDS = dict()  # list the articles' wos-ids
     collection = utility.Utility.collection
     # Treat Data
+
+
     for src in srclst:
         utility.Utility.init_wos(src)
 
@@ -59,39 +102,11 @@ def Wos_parser(in_dir, out_dir, verbose):
                 id = id + 1
 
                 #article
-                article_authors = getattr(article, CONFIG['authors']).split('; ')
-                firstAU = article_authors[0].replace(',','')
-                f_articles.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %
-                    (id,firstAU,getattr(article, year_published),
-                    getattr(article, twenty_nine_character_source_abbreviation),
-                    getattr(article, volume), getattr(article, beginning_page),
-                    getattr(article, doi), getattr(article, publication_type),
-                    getattr(article, document_type), getattr(article, wos_core_collection_times_cited),
-                    getattr(article, document_title), getattr(article, CONFIG['accession_number'])))
+                parse_article(id, article, f_articles)
 
                 #authors
-                if(getattr(article, authors) != ""):
-                    article_authors = getattr(article, authors).split('; ')
-                    for i in range(len(article_authors)):
-                        article_authors[i] = article_authors[i].replace(',','')
-                        aux1 = article_authors[i].rfind(' ')
-                        aux2 = len(article_authors[i])
-                        authors_lowercase = article_authors[i].lower().capitalize()
-                        if aux1 > 0:
-                            s1 = authors_lowercase[aux1:aux2]
-                            s2 = s1.upper()
-                            authors_lowercase = authors_lowercase.replace(s1,s2)
-                        aux = authors_lowercase.find('-')
-                        if aux > 0:
-                            bar1 = authors_lowercase[aux:aux+2]
-                            bar2 = '-' + authors_lowercase[aux+1].upper()
-                            authors_lowercase = authors_lowercase.replace(bar1,bar2)
-                        aux = authors_lowercase.find(' ')
-                        if aux > 0:
-                            bar1 = authors_lowercase[aux:aux+2]
-                            bar2 = ' ' + authors_lowercase[aux+1].upper()
-                            authors_lowercase = authors_lowercase.replace(bar1,bar2)
-                        f_authors.write("%d\t%d\t%s\n" % (id,i,authors_lowercase))
+                parse_authors(id, article, f_authors)
+        
 
                 #keywords
                 if(getattr(article, author_keywords) != ""):
@@ -164,9 +179,6 @@ def Wos_parser(in_dir, out_dir, verbose):
     files_list = [f_articles.name, f_authors.name, f_isi_keywords.name,
                     f_subjects.name, f_article_keywords.name, f_title_keywords.name,
                     f_refs.name, f_countries.name, f_institutions.name]
-
-    #generate items from parsed .dat files and add the to the collection
-    utility.Utility.init_utilities(files_list)
 
 
     #close the files
