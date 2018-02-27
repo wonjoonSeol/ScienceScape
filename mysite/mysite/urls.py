@@ -17,7 +17,7 @@ from django.contrib import admin
 #from django.conf.urls import include
 #from django.conf.urls import path, register_converter
 from django.conf.urls import url
-
+from django.contrib.auth import views as auth_views
 from graphs import views
 from . import converters
 
@@ -29,5 +29,8 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^addFields/(.*)', views.fieldForm, name='fields'),
     url(r'^processGraph/(.*)', views.loadGraph, name='loadGraph'),
-    url(r'about/', views.about, name='about')
+    url(r'about/', views.about, name='about'),
+ 	 url(r'^login/$', auth_views.login, name='login'),
+    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^register/$', views.register, name='register')
 ]
