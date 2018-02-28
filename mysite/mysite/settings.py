@@ -10,10 +10,32 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
+##import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# add this to the import section of the file
+import os
+from django.core.exceptions import ImproperlyConfigured
+os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+WSGI_APPLICATION = 'mysite.wsgi.application'
+
+# Handling Key Import Errors
+def get_env_variable(var_name):
+    """ Get the environment variable or return exception """
+    try:
+        print("THE CURRENT RETRIEVED VAR IS" + os.environ[var_name])
+        print("THE CURRENT WSGI APPLICATION PATH IS" + WSGI_APPLICATION)
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
+
+# Get ENV VARIABLES key
+ENV_ROLE = get_env_variable('ENV_ROLE')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -22,7 +44,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'y)a!q*z!2+o4=rw(fft_hnh5nf*$2p*4)9r#ptozprji4ccm+x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+##SSCAPE_DB_PASS = False
+if ENV_ROLE == 'development':
+    DEBUG = True
+    TEMPLATE_DEBUG = DEBUG
+    #SSCAPE_DB_PASS = get_env_variable('SSCAPE_DB_PASS')
 
 ALLOWED_HOSTS = []
 
@@ -65,20 +93,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mysite.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME' : 'mydatabase',
-        'USER' : 'db_user',
-        'PASSWORD': 'db_user_password',
-        'HOST' : '',
-        'PORT' : 'db_port_number',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME' : 'sciencescape',
+        'USER' : 'postgres',
+        'PASSWORD': 'qwerty', #get_env_variable(SSCAPE_DB_PASS),
+        'HOST' : '/tmp',
+        'PORT' : '5432',
     }
 }
 
