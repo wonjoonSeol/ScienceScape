@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^processGraph/(.*)', views.loadGraph, name='loadGraph'),
     url(r'about/', views.about, name='about'),
  	url(r'^login/$', auth_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^logout/$', views.logoutView, name='logout'),
     url(r'^register/$', views.register, name='register'),
     url(r'^admin/', admin.site.urls)
 ]

@@ -9,7 +9,7 @@ from .tests import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.conf import settings
-
+from django.contrib.auth import logout
 
 # BE CAREFUL OF REQUEST METHODS
 
@@ -107,3 +107,9 @@ def register(request):
         form = UserRegForm()
 
     return render(request, 'mysite/register.html', {'form' : form})
+
+
+
+def logoutView(request):
+    logout(request)
+    return HttpResponseRedirect('/')
