@@ -1,6 +1,5 @@
 import os
-from parser import Wos_parser
-from config import CONFIG
+import parser
 import traceback
 
 '''
@@ -8,6 +7,8 @@ File: parse_and_group.py
 This script will separate the publications in the data files by year,
 and parse each data line to extract some information.
 '''
+
+CONFIG = {}
 
 def is_year_within_span(startYear, endYear, year):
 	if year >= startYear and year <= endYear:
@@ -47,7 +48,7 @@ def parse_span(span, input_dir, output_dir, outdir_prefix, files):
 		os.mkdir(os.path.join(outdir_prefix, span))
 
 	# Use Wos_parser function from parser.py to parse the lines
-	Wos_parser(os.path.join(input_dir, output_dir, span), os.path.join(outdir_prefix, span), True)
+	parser.Wos_parser(os.path.join(input_dir, output_dir, span), os.path.join(outdir_prefix, span), True)
 
 def get_span_parameters(span_items, year_key):
 	return dict((s, data[year_key]) for s, data in span_items)
@@ -79,4 +80,7 @@ def parse_and_group_data(one_file_corpus, output_dir, outdir_prefix, span_items,
 		parse_span(span, input_dir, output_dir, outdir_prefix, files)	# For each span, parse its data
 
 # -- Main Script --
-parse_and_group_data(CONFIG["one_file_corpus"], CONFIG["wos_data_grouped"], CONFIG["parsed_data"], CONFIG["spans"].items(), CONFIG["year_index_position"], CONFIG["wos_headers"])
+def run():
+    parser.CONFIG = CONFIG
+    parser.initHeaders()
+    parse_and_group_data(CONFIG["one_file_corpus"], CONFIG["wos_data_grouped"], CONFIG["parsed_data"], CONFIG["spans"].items(), CONFIG["year_index_position"], CONFIG["wos_headers"])

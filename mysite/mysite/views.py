@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django import forms
-from .forms import UserRegistrationForm
+from .forms import UserRegForm
 
 def home(request):
     return render(request, 'templates/home.html')
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = UserRegForm(request.POST)
         if form.isValid():
             formData = form.cleaned_data
             username = formData['username']
@@ -26,7 +26,7 @@ def register(request):
                 raise forms.ValidationError('This user/pswd combination already exists')
 
     else:
-        form = UserRegistrationForm()
+        form = UserRegForm()
 
     return render(request, 'mysite/register.html', {'form' : form})
 
