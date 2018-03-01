@@ -28,13 +28,15 @@ wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
 def parse_article(id, article, output):
     article_authors = getattr(article, authors).split('; ')
     firstAU = article_authors[0].replace(',','')
-    output.write("%d\t%s\t%d\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" %
-        (id,firstAU,getattr(article, year_published),
-        getattr(article, twenty_nine_character_source_abbreviation),
-        getattr(article, volume), getattr(article, beginning_page),
-        getattr(article, doi), getattr(article, publication_type),
-        getattr(article, document_type), getattr(article, wos_core_collection_times_cited),
-        getattr(article, document_title), getattr(article, accession_number)))
+    output.write(f'{id}\t{firstAU}\t{getattr(article, year_published)}\t\
+            {getattr(article, twenty_nine_character_source_abbreviation)}\t\
+            {getattr(article, volume)}\t{getattr(article, beginning_page)}\t\
+            {getattr(article, doi)}\t{getattr(article, publication_type)}\t\
+            {getattr(article, document_type)}\t\
+            {getattr(article, wos_core_collection_times_cited)}\t\
+            {getattr(article, document_title)}\t\
+            {getattr(article, accession_number)}\n')
+
 
 def parse_authors(id, article, output):
     if getattr(article, authors) != '':
@@ -64,7 +66,7 @@ def parse_isi_keywords(id, article, output):
 def parse_title_keywords(id, article, output):
     if getattr(article, document_title) != '':
         title_keywords = getattr(article, document_title)
-        #remove punctuation
+        #remove punctuation w/ regex
         regex = re.compile('[%s]' % re.escape(string.punctuation))
         title_keywords = regex.sub('', title_keywords)
         for keyword in title_keywords.split(' '):
@@ -79,47 +81,42 @@ def parse_subjects(id, article, output):
             output.write(f'{id}\t{subject}\n')
 
 def parse_references(id, article, collection_references, output):
-    computed_refs_local = 0
-    computed_corrupt_refs_local = 0
+    computed_refs = 0
+    computed_corrupt_refs = 0
     if getattr(article, cited_references) != '':
          article_refs = getattr(article, cited_references).split('; ')
-         for i in range(len(article_refs)):
-            ref = utility.Utility.new_object('refs', article_refs[i])
-            computed_refs_local += 1
+         for article_ref in article_refs:
+            ref = utility.Utility.new_object('refs', article_ref)
+            computed_refs += 1
 
-            if(ref.year > 0):
-                output.write(f"{id}\t{ref.firstAU}\t{ref.year}\t{ref.journal}\
-                \t{ref.volume}\t{ref.page}\n")
-            elif(ref.year == 0):
-                computed_corrupt_refs_local += 1
-    return (computed_refs_local, computed_corrupt_refs_local)
+            if ref.year > 0:
+                output.write(f"{id}\t{ref.firstAU}\t{ref.year}\t\
+                               {ref.journal}\t{ref.volume}\t{ref.page}\n")
+            elif ref.year == 0:
+                computed_corrupt_refs += 1
+    return (computed_refs, computed_corrupt_refs)
 
 def parse_countries_and_institutions(id, article, f_institutions, f_countries, usa_country_codes_storage):
     if(getattr(article, author_address) != ""):
-        address = getattr(article, author_address)
-        aux1 = address.find('[')
-        aux2 = address.find(']')
+        addresses = getattr(article, author_address)
+        regex = re.compile('\[(.*?)\]', re.IGNORECASE)
+        addresses = regex.sub('', addresses)
 
-        while (aux1 < aux2):
-            aux = address[aux1:aux2+2]
-            address = address.replace(aux,'')
-            aux1 = address.find('[')
-            aux2 = address.find(']')
+        address_list = addresses.split('; ')
 
-        article_address = address.split('; ')
-        for i in range(len(article_address)):
-            article_address[i] = article_address[i].replace(', ', ',')
-            split_address = article_address[i].split(',')
-            length_of_address = len(split_address)
+        for address in address_list:
+            split_address = address.split(', ')
+            institution = split_address[0]
+            country = split_address[-1]
+            position = address_list.index(address)
 
-            for j in range(length_of_address - 2):
-                f_institutions.write("%d\t%d\t%s\n" % (id,i,split_address[j]))
+            #filter USA
+            country_list = country.split(' ')
+            if country_list[-1] == 'USA':
+                country = country_list[-1]
 
-            country = split_address[length_of_address-1]
-            length_split_address = len(split_address[length_of_address-1])
-
-            if  country[length_split_address-3 : length_split_address] == 'USA' or country[0:3] in usa_country_codes_storage:
-                    f_countries.write("%d\t%d\t%s\n" % (id,i,country))
+            f_institutions.write(f'{id}\t{position}\t{institution}\n')
+            f_countries.write(f'{id}\t{position}\t{country}\n')
 
 def Wos_parser(in_dir, out_dir, verbose):
 
@@ -179,10 +176,6 @@ def Wos_parser(in_dir, out_dir, verbose):
     # End
     if verbose: print(("..%d parsed articles in total") % (id + 1))
     if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (computed_corrupt_refs, computed_refs, (100.0 * computed_corrupt_refs) / computed_refs if computed_refs!=0 else 0))
-    files_list = [f_articles.name, f_authors.name, f_isi_keywords.name,
-                    f_subjects.name, f_article_keywords.name, f_title_keywords.name,
-                    f_refs.name, f_countries.name, f_institutions.name]
-
 
     #close the files
     closeList = [f_articles, f_authors, f_article_keywords, f_title_keywords, f_isi_keywords, f_subjects, f_refs, f_countries, f_institutions]
