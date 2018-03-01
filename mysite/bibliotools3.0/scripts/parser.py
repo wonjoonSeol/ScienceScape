@@ -3,25 +3,42 @@ import sys
 import glob
 import argparse
 import utility
-from config import CONFIG
 
-# TODO Link with config file
-accession_number = CONFIG['accession_number']
-authors = CONFIG['authors']
-author_keywords = CONFIG['author_keywords']
-keywords_plus = CONFIG['keywords_plus']
-document_title = CONFIG['document_title']
-wos_categories = CONFIG['wos_categories']
-cited_references = CONFIG['cited_references']
-author_address = CONFIG['author_address']
-year_published = CONFIG['year_published']
-twenty_nine_character_source_abbreviation = CONFIG['twenty_nine_character_source_abbreviation']
-volume = CONFIG['volume']
-beginning_page = CONFIG['beginning_page']
-doi = CONFIG['doi']
-publication_type = CONFIG['publication_type']
-document_type = CONFIG['document_type']
-wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
+CONFIG = {}
+
+def initHeaders():
+    global accession_number
+    accession_number = CONFIG['accession_number']
+    global authors
+    authors = CONFIG['authors']
+    global author_keywords
+    author_keywords = CONFIG['author_keywords']
+    global keywords_plus
+    keywords_plus = CONFIG['keywords_plus']
+    global document_title
+    document_title = CONFIG['document_title']
+    global wos_categories
+    wos_categories = CONFIG['wos_categories']
+    global cited_references
+    cited_references = CONFIG['cited_references']
+    global author_address
+    author_address = CONFIG['author_address']
+    global year_published
+    year_published = CONFIG['year_published']
+    global twenty_nine_character_source_abbreviation
+    twenty_nine_character_source_abbreviation = CONFIG['twenty_nine_character_source_abbreviation']
+    global volume
+    volume = CONFIG['volume']
+    global beginning_page
+    beginning_page = CONFIG['beginning_page']
+    global doi
+    doi = CONFIG['doi']
+    global publication_type
+    publication_type = CONFIG['publication_type']
+    global document_type
+    document_type = CONFIG['document_type']
+    global wos_core_collection_times_cited
+    wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
 
 def parse_article(id, article, output):
     print(str(id) + 'im here')
