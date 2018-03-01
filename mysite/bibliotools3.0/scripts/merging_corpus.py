@@ -1,6 +1,5 @@
 import os
 import datetime
-from config import CONFIG
 
 
 '''
@@ -8,6 +7,8 @@ File: merging_corpus.py
 This script merges all the data files found in 'data-wos' and writes
 all parseable lines to a single file, Result/one_file_corpus.txt
 '''
+
+CONFIG = {}
 
 def write_year_distribution(reports_directory, years_spans):
     years_distribution = open(os.path.join(reports_directory, "years_distribution.csv"), "w")
@@ -35,7 +36,7 @@ def count_occurences(one_file_corpus, reports_directory):
     onefile_output.close()
     write_year_distribution(reports_directory, years_spans)     # Report year distribution for information
 
-    
+
 def write_to_file(open_file, text):
     open_file.write(text)
 
@@ -125,4 +126,5 @@ def merge_corpus(one_file_corpus, wos_headers, reports_directory, wos_data):
     count_occurences(one_file_corpus, reports_directory)
 
 # -- Main script --
-merge_corpus(CONFIG["one_file_corpus"], CONFIG["wos_headers"], CONFIG["reports_directory"], CONFIG["wos_data"])
+def run():
+    merge_corpus(CONFIG["one_file_corpus"], CONFIG["wos_headers"], CONFIG["reports_directory"], CONFIG["wos_data"])
