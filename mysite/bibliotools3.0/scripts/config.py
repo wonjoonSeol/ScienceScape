@@ -19,37 +19,25 @@ def gen():
 		# large wos corpus are likely to be cutted into time-spans
 		# any data outside spans will be ignored
 		"spans":{
-				"span_name":{
-					"years":[1900,1999],
+				("span_name_"+ str(i)):{
+                    "years": span,
 
-					#filtering:
-					# occ : minimum number of occurences in corpus
-					# weight : minimum number of co-occurences with reference in articles (edge weight)
+                    #filtering:
+                    # occ : minimum number of occurences in corpus
+                    # weight : minimum number of co-occurences with reference in articles (edge weight)
 
-					#filtering on reference are mandatory from step three
-					"references":{"occ":2,"weight":1},
+                    #filtering on reference are mandatory from step three
+                    "references":{"occ":2,"weight":1},
 
-					#filtering on items are mandatory from step four
-					"subjects":{"occ":0,"weight":1},
-					"authors":{"occ":0,"weight":1},
-					"institutions":{"occ":0,"weight":1},
-					"article_keywords":{"occ":0,"weight":1},
-					"title_keywords":{"occ":0,"weight":1},
-					"isi_keywords":{"occ":0,"weight":1},
-					"countries":{"occ":0,"weight":1},
-				},
-				"span_name_2":{
-					"years":[2000, 2018],
-					"references":{"occ":0,"weight":1},
-					"subjects":{"occ":0,"weight":1},
-					"authors":{"occ":0,"weight":1},
-					"institutions":{"occ":0,"weight":1},
-					"article_keywords":{"occ":0,"weight":1},
-					"title_keywords":{"occ":0,"weight":1},
-					"isi_keywords":{"occ":0,"weight":1},
-					"countries":{"occ":0,"weight":1},
-				}
-
+                    #filtering on items are mandatory from step four
+                    "subjects":{"occ":0,"weight":1},
+                    "authors":{"occ":0,"weight":1},
+                    "institutions":{"occ":0,"weight":1},
+                    "article_keywords":{"occ":0,"weight":1},
+                    "title_keywords":{"occ":0,"weight":1},
+                    "isi_keywords":{"occ":0,"weight":1},
+                    "countries":{"occ":0,"weight":1},
+                } for i, span in enumerate(spanYears)
 		},
 		#output directory
 		"output_directory": os.path.join(dir, "Result/Output"),
