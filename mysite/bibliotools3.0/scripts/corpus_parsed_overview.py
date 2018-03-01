@@ -1,11 +1,12 @@
 import os
 import itertools
-from config import CONFIG
 
 '''
 File: corpus_parsed_overview.py
 This file essentially prints statistics about the content of all span files
 '''
+
+CONFIG = {}
 
 def get_no_articles(parsed_data_folder, span):
     with open(os.path.join(parsed_data_folder, span, "articles.dat"), "r") as file:
@@ -61,13 +62,13 @@ def print_statistics(parsed_data_folder, reports_directory, span):
             print_statistics_of(parsed_data_folder, reports_directory, item, span)
 
 # -- Main script --
+def run():
+    reports_directory = CONFIG["reports_directory"]
+    parsed_data_folder = CONFIG["parsed_data"]
+    if os.path.exists(os.path.join(reports_directory, "corpus_overview.txt")):
+        os.remove(os.path.join(reports_directory, "corpus_overview.txt"))
 
-reports_directory = CONFIG["reports_directory"]
-parsed_data_folder = CONFIG["parsed_data"]
-if os.path.exists(os.path.join(reports_directory, "corpus_overview.txt")):
-    os.remove(os.path.join(reports_directory, "corpus_overview.txt"))
-
-for span in CONFIG["spans"]:
-    print_to_overview("\n\n#%s" %span, reports_directory)
-    print_to_overview("- number of articles : %s" %get_no_articles(parsed_data_folder, span), reports_directory)
-    print_statistics(parsed_data_folder, reports_directory, span)
+    for span in CONFIG["spans"]:
+        print_to_overview("\n\n#%s" %span, reports_directory)
+        print_to_overview("- number of articles : %s" %get_no_articles(parsed_data_folder, span), reports_directory)
+        print_statistics(parsed_data_folder, reports_directory, span)
