@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login
 
 # BE CAREFUL OF REQUEST METHODS
 
@@ -17,6 +18,8 @@ def home(request):
 
 	attemptDatabaseTest()
 	print("Username is: {x}".format(x = request.user.username))
+	Rform = UserRegForm()
+
 	if request.method == 'POST' and request.FILES['myFile']:
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
@@ -33,8 +36,26 @@ def home(request):
 			print("Form not Valid")
 	else:
 		form = UploadFileForm()
+		'''
+	if request.method == 'POST':
+		Rform = UserRegForm(request.POST)
+		if Rform.is_valid():
+			formData = Rform.cleaned_data
+			username = formData['username']
+			password = formData['password']
+			email = formData['email']
 
-	return render(request, 'index.html', {'upload': form, 'fpath':"/userFiles/arctic.gexf"})
+			if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
+				User.objects.create_user(username, email, password)
+				user = authenticate(username = username, password = password)
+				login(request,user)
+				return HttpResponseRedirect('/')
+			else:
+				raise forms.ValidationError('This user/pswd combination already exists')
+
+				'''
+
+	return render(request, 'index.html', {'upload': form,'reg_form' : Rform, 'fpath':"/userFiles/arctic.gexf"})
 
 
 def fieldForm(request, filePath):
@@ -113,3 +134,15 @@ def register(request):
 def logoutView(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+def loginProcess(request):
+	if request.POST:
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+
+	return HttpResponseRedirect('/')

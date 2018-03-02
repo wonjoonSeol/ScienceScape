@@ -67,12 +67,22 @@ def processCSVIntoDictionary(filePath, forFields = False):
 def saveFile(myFile, username = "Public"):
 	fileName = myFile.name
 	staticUserFilesDIR = "static/userFiles"
+	publicUserFilesDIR = "static/userFiles/Public"
 	folder = "static/userFiles/{x}".format(x = username)
 	APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 	# create the folder if it doesn't exist.
 	try:
 		os.mkdir(os.path.join(APP_DIR, staticUserFilesDIR))
+	except:
+		pass
+
+	try:
+		os.mkdir(os.path.join(APP_DIR, publicUserFilesDIR))
+	except:
+		pass
+
+	try:
 		os.mkdir(os.path.join(APP_DIR, folder))
 	except:
 		pass
@@ -123,6 +133,7 @@ def detectHeadersFrom(dictionary):
 	for k in dictionary:
 		unknownValues.append(k)
 	print('This is the dictionary {x}'.format(x=dictionary))
+	'''
 	for k in dictionary:
 		if datePattern.match(dictionary[k].pop()):
 			headers['Date'] = k
@@ -131,7 +142,8 @@ def detectHeadersFrom(dictionary):
 		elif dictionary[k] in countries:
 			headers['Country'] = k
 			print("matched country")
-
+	'''
+	
 	return {'headers': headers, 'unknownValues': unknownValues}
 
 '''
