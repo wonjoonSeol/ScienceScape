@@ -135,22 +135,41 @@ def parse_countries_and_institutions(id, article, f_institutions, f_countries, u
             f_institutions.write(f'{id}\t{position}\t{institution}\n')
             f_countries.write(f'{id}\t{position}\t{country}\n')
 
-def Wos_parser(in_dir, out_dir, verbose):
+def all_txt_files(directory):
+    found = "%s/*.txt" % directory
+    return glob.glob(found)
 
-    # Initialisation
-    srccomp = "%s/*.txt" % in_dir
-    srclst = glob.glob(srccomp)
+def open_dat_files(out_dir):
+    return { "articles": open(os.path.join(out_dir, "articles.dat"),'w'),
+    "authors": open(os.path.join(out_dir, "authors.dat"), 'w'),
+    "title_keywords" : open(os.path.join(out_dir, "title_keywords.dat"), 'w'),
+    "article_keywords" : open(os.path.join(out_dir, "article_keywords.dat"), 'w'),
+    "isi_keywords" : open(os.path.join(out_dir, "isi_keywords.dat"), 'w'),
+    "subjects" : open(os.path.join(out_dir, "subjects.dat"), 'w'),
+    "refs" : open(os.path.join(out_dir, "references.dat"), 'w'),
+    "countries": open(os.path.join(out_dir, "countries.dat"), 'w'),
+    "institutions" : open(os.path.join(out_dir, "institutions.dat"), 'w'),
+    }
+
+def close_dat_files(open_dat_files):
+    for key in open_dat_files:
+        open_dat_files[key].close()
+
+def wos_parser(in_dir, out_dir, verbose):
+
     id = int(-1)
 
-    f_articles = open(os.path.join(out_dir, "articles.dat"),'w')
-    f_authors = open(os.path.join(out_dir, "authors.dat"), 'w')
-    f_title_keywords = open(os.path.join(out_dir, "title_keywords.dat"), 'w')
-    f_article_keywords = open(os.path.join(out_dir, "article_keywords.dat"), 'w')
-    f_isi_keywords = open(os.path.join(out_dir, "isi_keywords.dat"), 'w')
-    f_subjects = open(os.path.join(out_dir, "subjects.dat"), 'w')
-    f_refs = open(os.path.join(out_dir, "references.dat"), 'w')
-    f_countries = open(os.path.join(out_dir, "countries.dat"), 'w')
-    f_institutions = open(os.path.join(out_dir, "institutions.dat"), 'w')
+    dat_files = open_dat_files(out_dir)
+
+    f_articles = dat_files["articles"]
+    f_authors = dat_files["authors"]
+    f_title_keywords = dat_files["title_keywords"]
+    f_article_keywords = dat_files["article_keywords"]
+    f_isi_keywords = dat_files["isi_keywords"]
+    f_subjects = dat_files["subjects"]
+    f_refs = dat_files["refs"]
+    f_countries = dat_files["countries"]
+    f_institutions = dat_files["institutions"]
 
     computed_refs = 0
     computed_corrupt_refs = 0
@@ -158,7 +177,7 @@ def Wos_parser(in_dir, out_dir, verbose):
     WOS_IDS = dict()  # list the articles' wos-ids
     collection = utility.Utility.collection
 
-    for src in srclst:
+    for src in all_txt_files(in_dir):
         utility.Utility.init_wos(src)
 
         if verbose:
@@ -194,9 +213,5 @@ def Wos_parser(in_dir, out_dir, verbose):
     if verbose: print(("..%d parsed articles in total") % (id + 1))
     if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (computed_corrupt_refs, computed_refs, (100.0 * computed_corrupt_refs) / computed_refs if computed_refs!=0 else 0))
 
-    #close the files
-    closeList = [f_articles, f_authors, f_article_keywords, f_title_keywords, f_isi_keywords, f_subjects, f_refs, f_countries, f_institutions]
-    for d in closeList:
-        d.close()
-
+    close_dat_files(dat_files)
     return

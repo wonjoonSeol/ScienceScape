@@ -1,5 +1,5 @@
 import os
-import parser
+import parsers
 import traceback
 
 '''
@@ -23,6 +23,7 @@ def create_span_files(years_spans, input_dir, output_dir, files, wos_headers):
 		if not os.path.exists(os.path.join(input_dir, output_dir, span)):
 			os.mkdir(os.path.join(input_dir, output_dir, span))
 		if os.path.exists(os.path.join(input_dir, output_dir, span, span) + ".txt"):
+			print("removed here 1")
 			os.remove(os.path.join(input_dir,output_dir, span, span) + ".txt")
 
 		# Create a txt file and write the usual headers to it
@@ -47,8 +48,8 @@ def parse_span(span, input_dir, output_dir, outdir_prefix, files):
 	if not os.path.exists(os.path.join(outdir_prefix, span)):
 		os.mkdir(os.path.join(outdir_prefix, span))
 
-	# Use Wos_parser function from parser.py to parse the lines
-	parser.Wos_parser(os.path.join(input_dir, output_dir, span), os.path.join(outdir_prefix, span), True)
+	# Use Wos_parser function from parsers.py to parse the lines
+	parsers.wos_parser(os.path.join(input_dir, output_dir, span), os.path.join(outdir_prefix, span), True)
 
 def get_span_parameters(span_items, year_key):
 	return dict((s, data[year_key]) for s, data in span_items)
@@ -71,7 +72,7 @@ def parse_and_group_data(one_file_corpus, output_dir, outdir_prefix, span_items,
 	years_spans = get_span_parameters(span_items, "years")
 	files = {}
 	create_span_files(years_spans, input_dir, output_dir, files, wos_headers)
-
+	print("Year spans: " + str(years_spans))
 	# Write lines to the adequate span file
 	for line in get_lines_to_separate(one_file_corpus):
 		separate_years(line, years_spans, files, year_index_position)
@@ -81,6 +82,6 @@ def parse_and_group_data(one_file_corpus, output_dir, outdir_prefix, span_items,
 
 # -- Main Script --
 def run():
-    parser.CONFIG = CONFIG
-    parser.initHeaders()
+    parsers.CONFIG = CONFIG
+    parsers.initHeaders()
     parse_and_group_data(CONFIG["one_file_corpus"], CONFIG["wos_data_grouped"], CONFIG["parsed_data"], CONFIG["spans"].items(), CONFIG["year_index_position"], CONFIG["wos_headers"])
