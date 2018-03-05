@@ -1,6 +1,7 @@
 import unittest
 import sys
 import os
+import glob
 
 lib_path = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'bibliotools3.0', 'scripts'))
 sys.path.append(lib_path)
@@ -74,6 +75,33 @@ class TestParsers(unittest.TestCase):
             desired_output = myfile.read().replace("\n", "")
 
         self.assertEqual(output, desired_output)
+
+    def test_open_dat_files(self):
+        dir = os.path.dirname(os.path.dirname(__file__))
+        os.makedirs(os.path.join(dir, "testFiles/test_open_dat_files_folder"))
+        output_dir = os.path.join(dir, "testFiles/test_open_dat_files_folder")
+        open_files = parsers.open_dat_files(output_dir)
+
+        for file_key in open_files:
+            open_files[file_key].close()
+
+        no_of_files_created = len(glob.glob("%s/*.dat" % output_dir))
+
+        if os.path.exists(os.path.dirname(os.path.join(dir, "testFiles/test_open_dat_files_folder/article_keywords.dat"))):
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/article_keywords.dat"))
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/articles.dat"))
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/authors.dat"))
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/countries.dat"))
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/institutions.dat"))
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/isi_keywords.dat"))
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/references.dat"))
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/subjects.dat"))
+            os.remove(os.path.join(dir, "testFiles/test_open_dat_files_folder/title_keywords.dat"))
+
+        if os.path.exists(os.path.dirname(os.path.join(dir, "testFiles/test_open_dat_files_folder"))):
+            os.rmdir(os.path.join(dir, "testFiles/test_open_dat_files_folder"))
+
+        self.assertEqual(no_of_files_created, 9)
 
 if __name__ == '__main__':
     unittest.main()
