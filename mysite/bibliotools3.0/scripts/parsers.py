@@ -135,7 +135,7 @@ def parse_countries_and_institutions(id, article, f_institutions, f_countries, u
             f_institutions.write(f'{id}\t{position}\t{institution}\n')
             f_countries.write(f'{id}\t{position}\t{country}\n')
 
-def Wos_parser(in_dir, out_dir, verbose):
+def wos_parser(in_dir, out_dir, verbose):
 
     # Initialisation
     srccomp = "%s/*.txt" % in_dir
