@@ -135,11 +135,12 @@ def parse_countries_and_institutions(id, article, f_institutions, f_countries, u
             f_institutions.write(f'{id}\t{position}\t{institution}\n')
             f_countries.write(f'{id}\t{position}\t{country}\n')
 
+def all_txt_files(directory):
+    found = "%s/*.txt" % directory
+    return glob.glob(found)
+
 def wos_parser(in_dir, out_dir, verbose):
 
-    # Initialisation
-    srccomp = "%s/*.txt" % in_dir
-    srclst = glob.glob(srccomp)
     id = int(-1)
 
     f_articles = open(os.path.join(out_dir, "articles.dat"),'w')
@@ -158,7 +159,7 @@ def wos_parser(in_dir, out_dir, verbose):
     WOS_IDS = dict()  # list the articles' wos-ids
     collection = utility.Utility.collection
 
-    for src in srclst:
+    for src in all_txt_files(in_dir):
         utility.Utility.init_wos(src)
 
         if verbose:
