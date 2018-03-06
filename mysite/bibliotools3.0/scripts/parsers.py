@@ -136,8 +136,8 @@ def parse_countries_and_institutions(id, article, f_institutions, f_countries, u
             f_countries.write(f'{id}\t{position}\t{country}\n')
 
 def all_txt_files(directory):
-    found = "%s/*.txt" % directory
-    return glob.glob(found)
+    reg_ex = "%s/*.txt" % directory
+    return glob.glob(reg_ex)
 
 def open_dat_files(out_dir):
     return { "articles": open(os.path.join(out_dir, "articles.dat"),'w'),
@@ -154,6 +154,14 @@ def open_dat_files(out_dir):
 def close_dat_files(open_dat_files):
     for key in open_dat_files:
         open_dat_files[key].close()
+
+def parse_all_criteria(id, article, dat_files):
+    parse_article(id, article, dat_files["articles"])
+    parse_authors(id, article, dat_files["authors"])
+    parse_author_keywords(id, article, dat_files["article_keywords"])
+    parse_isi_keywords(id, article, dat_files["isi_keywords"])
+    parse_title_keywords(id, article, dat_files["title_keywords"])
+    parse_subjects(id, article, dat_files["subjects"])
 
 def wos_parser(in_dir, out_dir, verbose):
     id = int(-1)
@@ -188,23 +196,17 @@ def wos_parser(in_dir, out_dir, verbose):
                 WOS_IDS[getattr(article, CONFIG['accession_number'])] = ''
                 id = id + 1
 
-                parse_article(id, article, f_articles)
-                parse_authors(id, article, f_authors)
-                parse_author_keywords(id, article, f_article_keywords)
-                parse_isi_keywords(id, article, f_isi_keywords)
-                parse_title_keywords(id, article, f_title_keywords)
-                parse_subjects(id, article, f_subjects)
-
+                parse_all_criteria(id, article, dat_files)
+                
                 parsed_references_stats = parse_references(id, article, collection["references"], f_refs)
                 computed_refs = parsed_references_stats[0]
                 computed_corrupt_refs = parsed_references_stats[1]
 
-                #countries / institutions
                 parse_countries_and_institutions(id, article, f_institutions, f_countries, CONFIG["usa_country_codes"])
 
-    # End
-    if verbose: print(("..%d parsed articles in total") % (id + 1))
-    if verbose: print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (computed_corrupt_refs, computed_refs, (100.0 * computed_corrupt_refs) / computed_refs if computed_refs!=0 else 0))
+    if verbose:
+        print(("..%d parsed articles in total") % (id + 1))
+        print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (computed_corrupt_refs, computed_refs, (100.0 * computed_corrupt_refs) / computed_refs if computed_refs != 0 else 0))
 
     close_dat_files(dat_files)
     return

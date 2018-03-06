@@ -120,5 +120,16 @@ class TestParsers(unittest.TestCase):
         if os.path.exists(os.path.dirname(os.path.join(dir, "testFiles/parser_tests/test_output"))):
             os.rmdir(os.path.join(dir, "testFiles/parser_tests/test_output"))
 
+    def test_all_txt_files_for_at_least_one_file(self):
+        dir = os.path.dirname(os.path.dirname(__file__))
+        directory = os.path.join(dir, "testFiles")
+        myfile = open(os.path.join(directory, "all_txt_file.txt"), "w")
+        result = False
+        if len(parsers.all_txt_files(directory)) >= 1:
+            result = True
+            myfile.close()
+            os.remove(os.path.join(directory, "all_txt_file.txt"))
+        self.assertEqual(True, result)
+
 if __name__ == '__main__':
     unittest.main()
