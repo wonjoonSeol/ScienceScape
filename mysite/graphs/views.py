@@ -17,6 +17,7 @@ from django.contrib.auth import authenticate, login
 def home(request):
 
 	attemptDatabaseTest()
+	testLoadFilesForUser()
 	print("Username is: {x}".format(x = request.user.username))
 	Rform = UserRegForm()
 
@@ -36,7 +37,7 @@ def home(request):
 			print("Form not Valid")
 	else:
 		form = UploadFileForm()
-	
+
 	return render(request, 'index.html', {'upload': form,'reg_form' : Rform, 'fpath':"/userFiles/arctic.gexf", 'filename': "Example"})
 
 
@@ -75,7 +76,7 @@ def about(request):
 def loadGraph(request, filePath):
 
 	upload_gexf_form = UploadFileForm()
-	
+
 	if request.method == 'POST' and request.FILES['myFile']:
 		upload_gexf_form = UploadFileForm(request.POST, request.FILES)
 		if upload_gexf_form.is_valid:
@@ -91,12 +92,12 @@ def loadGraph(request, filePath):
 	else:
 		fname="No file uploaded"
 		filePath="/userFiles/arctic.gexf"
-	
+
 	if filePath == "INITIAL":
 		print("checkpoint")
 		filePath="/userFiles/arctic.gexf"
 		fname="No file uploaded"
-		
+
 	return render(request, 'index.html', {'fpath': filePath, 'upload_gexf': upload_gexf_form,'fname': fname})
 
 

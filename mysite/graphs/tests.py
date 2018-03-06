@@ -5,7 +5,7 @@ from .commands import *
 def attemptDatabaseTest():
 	if isFormDataStoredInDatabase():
 		isDataRetrievable()
-	
+
 	#doesDatabaseReset()
 
 def isFormDataStoredInDatabase():
@@ -13,7 +13,7 @@ def isFormDataStoredInDatabase():
 	keyValuePair = dict(Key1="Value1", Key2="Value1", Key3="Value1", Key4="Value1", Key5="Value1")
 
 	refreshDataBase(keyValuePair, fPath)
-	
+
 	mapping = Mappings.objects.filter(FILE_LINK = fPath)
 	dictionary = dict()
 	if mapping:
@@ -22,15 +22,15 @@ def isFormDataStoredInDatabase():
 		if dictionary == keyValuePair:
 			mapping.delete()
 			print("Data store passed.")
-			return True	
+			return True
 		else:
 			print("Data store failed. Data was stored but not in the correct format")
 			mapping.delete()
-			return False		
+			return False
 	else:
 		print("Data store failed. Data was not stored at all")
 		return False
-	
+
 
 def isDataRetrievable():
 	keyValuePair = dict(Key1="Value1", Key2="Value1", Key3="Value1", Key4="Value1", Key5="Value1")
@@ -47,8 +47,8 @@ def isDataRetrievable():
 		mapping = Mappings.objects.filter(FILE_LINK = fPath)
 		mapping.delete()
 		return False
-		
-	
+
+
 def doesDatabaseReset():
 	mappings = Mappings.objects.all()
 	if mappings:
@@ -62,4 +62,11 @@ def doesDatabaseReset():
 	else:
 		print("Cannot perform test on empty Database.")
 		return None
-		
+
+
+def testLoadFilesForUser(name = "saadman"):
+	APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	folder = os.path.join(APP_DIR, "static/userFiles/{x}".format(x = name))
+	files = getAllFilesForUser(folder)
+	for f in files:
+		print(f)
