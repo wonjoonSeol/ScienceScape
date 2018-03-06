@@ -143,7 +143,7 @@ def detectHeadersFrom(dictionary):
 			headers['Country'] = k
 			print("matched country")
 	'''
-	
+
 	return {'headers': headers, 'unknownValues': unknownValues}
 
 '''
@@ -188,3 +188,8 @@ def generateUser():
 def resetDatabase():
 	mappings = Mappings.objects.all()
 	mappings.delete()
+
+def getAllFilesForUser(filePath):
+	f = []
+	f = os.listdir(filePath)
+	return f
