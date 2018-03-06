@@ -22,6 +22,7 @@ class TestParsers(unittest.TestCase):
     CONFIG = config.gen()
     parsers.CONFIG = CONFIG
     parsers.initHeaders()
+    os.mkdir(os.path.join(dir, "testFiles/parser_tests/test_output"))
     test_input_txt = open(os.path.join(dir, "testFiles/parser_tests/input_parser.txt"), "r")
     parsers.wos_parser(os.path.join(dir, "testFiles/parser_tests"), os.path.join(dir, "testFiles/parser_tests/test_output"), False)
     test_input_txt.close()
@@ -102,6 +103,22 @@ class TestParsers(unittest.TestCase):
             os.rmdir(os.path.join(dir, "testFiles/test_open_dat_files_folder"))
 
         self.assertEqual(no_of_files_created, 9)
+
+    def test_teardown(self):
+        dir = os.path.dirname(os.path.dirname(__file__))
+        if os.path.exists(os.path.dirname(os.path.join(dir, "testFiles/parser_tests/test_output/article_keywords.dat"))):
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/article_keywords.dat"))
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/articles.dat"))
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/authors.dat"))
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/countries.dat"))
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/institutions.dat"))
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/isi_keywords.dat"))
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/references.dat"))
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/subjects.dat"))
+            os.remove(os.path.join(dir, "testFiles/parser_tests/test_output/title_keywords.dat"))
+
+        if os.path.exists(os.path.dirname(os.path.join(dir, "testFiles/parser_tests/test_output"))):
+            os.rmdir(os.path.join(dir, "testFiles/parser_tests/test_output"))
 
 if __name__ == '__main__':
     unittest.main()

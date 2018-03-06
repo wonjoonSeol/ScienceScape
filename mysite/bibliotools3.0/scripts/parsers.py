@@ -156,7 +156,6 @@ def close_dat_files(open_dat_files):
         open_dat_files[key].close()
 
 def wos_parser(in_dir, out_dir, verbose):
-
     id = int(-1)
 
     dat_files = open_dat_files(out_dir)
@@ -189,19 +188,13 @@ def wos_parser(in_dir, out_dir, verbose):
                 WOS_IDS[getattr(article, CONFIG['accession_number'])] = ''
                 id = id + 1
 
-                #article
                 parse_article(id, article, f_articles)
-                #authors
                 parse_authors(id, article, f_authors)
-                #keywords
                 parse_author_keywords(id, article, f_article_keywords)
                 parse_isi_keywords(id, article, f_isi_keywords)
                 parse_title_keywords(id, article, f_title_keywords)
-
-                #subjects
                 parse_subjects(id, article, f_subjects)
 
-                #references
                 parsed_references_stats = parse_references(id, article, collection["references"], f_refs)
                 computed_refs = parsed_references_stats[0]
                 computed_corrupt_refs = parsed_references_stats[1]

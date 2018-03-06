@@ -166,9 +166,12 @@ class TestMergingCorpus(unittest.TestCase):
         dir = os.path.dirname(os.path.dirname(__file__))
         prepare_report_directory(os.path.join(dir, "testFiles/test_prepare_report_directory"))
         self.assertEqual(True, os.path.exists(os.path.join(dir, "testFiles/test_prepare_report_directory")))
+        if os.path.exists(os.path.join(dir, "testFiles/test_prepare_report_directory")):
+            os.rmdir(os.path.join(dir, "testFiles/test_prepare_report_directory"))
 
     def test_prepare_error_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
+        prepare_report_directory(os.path.join(dir, "testFiles/test_prepare_report_directory"))
         prepare_error_file(os.path.join(dir, "testFiles/test_prepare_report_directory"), "abcd")
         self.assertEqual(True, os.path.exists(os.path.join(dir, "testFiles/test_prepare_report_directory/wos_lines_with_errors.csv")))
         os.remove(os.path.join(dir, "testFiles/test_prepare_report_directory/wos_lines_with_errors.csv"))
