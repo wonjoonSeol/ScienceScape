@@ -6,7 +6,7 @@ def createMiniForm(choices = [("DEFAULT", "Select a value")], request = None):
 	class MiniForm(forms.Form):
 		choicesInField = choices
 		Name = forms.CharField()
-		Key = forms.MultipleChoiceField(required = True, choices = choices)
+		Key = forms.ChoiceField(required = True, choices = choices)
 
 	if request:
 		return MiniForm(request)

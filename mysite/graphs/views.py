@@ -43,18 +43,23 @@ def home(request):
 def fieldForm(request, filePath):
 
 	form = loadFromFilePath(filePath)
-
+	msg=""
 	if request.method == 'POST':
 			data = {}
+			formValid = True
+				
 			for i in range (0, form['count']):
-				print("file path {x}".format(x = filePath))
-				print("key: {k} is {v}".format(k = request.POST.get('form-{n}-Name'.format(n = i)), v = request.POST.get('form-{n}-Key'.format(n = i))))
+				#print("key: {k} is {v}".format(k = request.POST.get('form-{n}-Name'.format(n = i)), v = request.POST.get('form-{n}-Key'.format(n = i))))
 				data[request.POST.get('form-{n}-Name'.format(n = i))] = request.POST.get('form-{n}-Key'.format(n = i))
-
-			refreshDataBase(data, filePath)
-
-			return redirect('loadGraph', "INITIAL")
-
+				for k in data:
+					if not data[k]:
+						msg = "Not all fields have been defined"
+						formValid=False
+			
+			if formValid:
+				refreshDataBase(data, filePath)
+				return redirect('loadGraph', "INITIAL")
+			
 	if filePath:
 		fname =  str(filePath)
 		tokens = fname.split('/')
@@ -62,15 +67,13 @@ def fieldForm(request, filePath):
 	else:
 		fname = None
 
-
-	return render(request, 'index.html', {'fields': form['form'], 'filename': fname})
+	return render(request, 'index.html', {'fields': form['form'], 'filename': fname, 'message': msg})
 
 def about(request):
 	return render(request, 'about.html')
 
 def loadGraph(request, filePath):
 
-	
 	upload_gexf_form = UploadFileForm()
 	
 	if request.method == 'POST' and request.FILES['myFile']:
