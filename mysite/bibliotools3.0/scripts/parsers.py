@@ -136,8 +136,8 @@ def parse_countries_and_institutions(id, article, f_institutions, f_countries, u
             f_countries.write(f'{id}\t{position}\t{country}\n')
 
 def all_txt_files(directory):
-    found = "%s/*.txt" % directory
-    return glob.glob(found)
+    reg_ex = "%s/*.txt" % directory
+    return glob.glob(reg_ex)
 
 def open_dat_files(out_dir):
     return { "articles": open(os.path.join(out_dir, "articles.dat"),'w'),
