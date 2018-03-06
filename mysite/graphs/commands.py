@@ -155,6 +155,7 @@ def dataProcess(key = None, weights = 0, minOccur = 0):
 	data must be in the form of a dictionary.
 '''
 def refreshDataBase(data, filePath):
+	print("file path from refresh method: {X}".format(X = filePath))
 	existing = Mappings.objects.filter(FILE_LINK = filePath)
 	if existing:
 		existing.delete()

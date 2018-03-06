@@ -36,26 +36,8 @@ def home(request):
 			print("Form not Valid")
 	else:
 		form = UploadFileForm()
-		'''
-	if request.method == 'POST':
-		Rform = UserRegForm(request.POST)
-		if Rform.is_valid():
-			formData = Rform.cleaned_data
-			username = formData['username']
-			password = formData['password']
-			email = formData['email']
-
-			if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
-				User.objects.create_user(username, email, password)
-				user = authenticate(username = username, password = password)
-				login(request,user)
-				return HttpResponseRedirect('/')
-			else:
-				raise forms.ValidationError('This user/pswd combination already exists')
-
-				'''
-
-	return render(request, 'index.html', {'upload': form,'reg_form' : Rform, 'fpath':"/userFiles/arctic.gexf"})
+	
+	return render(request, 'index.html', {'upload': form,'reg_form' : Rform, 'fpath':"/userFiles/arctic.gexf", 'filename': "Example"})
 
 
 def fieldForm(request, filePath):
@@ -65,6 +47,7 @@ def fieldForm(request, filePath):
 	if request.method == 'POST':
 			data = {}
 			for i in range (0, form['count']):
+				print("file path {x}".format(x = filePath))
 				print("key: {k} is {v}".format(k = request.POST.get('form-{n}-Name'.format(n = i)), v = request.POST.get('form-{n}-Key'.format(n = i))))
 				data[request.POST.get('form-{n}-Name'.format(n = i))] = request.POST.get('form-{n}-Key'.format(n = i))
 
@@ -87,7 +70,9 @@ def about(request):
 
 def loadGraph(request, filePath):
 
+	
 	upload_gexf_form = UploadFileForm()
+	
 	if request.method == 'POST' and request.FILES['myFile']:
 		upload_gexf_form = UploadFileForm(request.POST, request.FILES)
 		if upload_gexf_form.is_valid:
@@ -102,8 +87,13 @@ def loadGraph(request, filePath):
 			print("NOT VALID")
 	else:
 		fname="No file uploaded"
-		filePath="userFile/arctic.gexf"
-
+		filePath="/userFiles/arctic.gexf"
+	
+	if filePath == "INITIAL":
+		print("checkpoint")
+		filePath="/userFiles/arctic.gexf"
+		fname="No file uploaded"
+		
 	return render(request, 'index.html', {'fpath': filePath, 'upload_gexf': upload_gexf_form,'fname': fname})
 
 

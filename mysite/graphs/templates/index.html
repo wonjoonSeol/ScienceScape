@@ -10,11 +10,11 @@
 		<div class="col s8">
 			{%if upload%}
 				{% include "upload_form.html" %}
-			{% else %}
+			{% elif filename%}
 				{% include "file_preview.html" %}
 			{%endif%}
 			<br>
-			{% include "DEVTOOLS.html" %}
+		<!--	{% include "DEVTOOLS.html" %} -->
 		</div>
 
 		<div class="col s4">
@@ -46,16 +46,18 @@
 	</div>
 
 	<div class="row">
-		<div class="col-sm-2">
+		<div class="col s1">
 
 		</div>
-		<div class="col-sm-8">
+		<div class="col s10">
 			<div>
-				{% include "graph_template.html" %}
-
+				
+				{%if fpath%}
+				{% include "graph_template.html" %} 
+				{%endif%}
 			</div>
 		</div>
-		<div class="col-sm-2">
+		<div class="col s1">
 
 		</div>
 

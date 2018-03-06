@@ -23,7 +23,7 @@ class UserRegForm(forms.Form):
         label = 'Username',
         max_length = 32,
     )
-    email = forms.CharField(
+    email = forms.EmailField(
         required = True,
         label = 'Email',
         max_length = 32,
