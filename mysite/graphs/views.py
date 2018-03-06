@@ -48,7 +48,7 @@ def fieldForm(request, filePath):
 	if request.method == 'POST':
 			data = {}
 			formValid = True
-				
+
 			for i in range (0, form['count']):
 				#print("key: {k} is {v}".format(k = request.POST.get('form-{n}-Name'.format(n = i)), v = request.POST.get('form-{n}-Key'.format(n = i))))
 				data[request.POST.get('form-{n}-Name'.format(n = i))] = request.POST.get('form-{n}-Key'.format(n = i))
@@ -56,11 +56,11 @@ def fieldForm(request, filePath):
 					if not data[k]:
 						msg = "Not all fields have been defined"
 						formValid=False
-			
+
 			if formValid:
 				refreshDataBase(data, filePath)
 				return redirect('loadGraph', "INITIAL")
-			
+
 	if filePath:
 		fname =  str(filePath)
 		tokens = fname.split('/')
@@ -140,3 +140,6 @@ def loginProcess(request):
 				login(request, user)
 
 	return HttpResponseRedirect('/')
+
+def account(request):
+	return render(request, 'account.html')

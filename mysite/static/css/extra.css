@@ -365,3 +365,15 @@ label[for="id_myFile"] {
 .dropzone .dz-message {
   margin: 3em 0 !important;
 }
+
+/*******************
+  ACCOUNT PAGE
+********************/
+
+.accountButton {
+  border: 1px solid white !important;
+}
+
+.account-card {
+  color: black;
+}
