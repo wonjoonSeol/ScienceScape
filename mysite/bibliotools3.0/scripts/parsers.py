@@ -54,7 +54,6 @@ def parse_article(id, article, output):
             {getattr(article, document_title)}\t\
             {getattr(article, accession_number)}\n')
 
-
 def parse_authors(id, article, output):
     if getattr(article, authors) != '':
         article_authors = getattr(article, authors).split('; ')
@@ -186,7 +185,6 @@ def wos_parser(in_dir, out_dir, verbose):
 
     for src in all_txt_files(in_dir):
         utility.Utility.init_wos(src)
-
         if verbose:
             print("..processing %d articles in file %s" % (len(collection['woslines']), src))
         if (len(collection['woslines']) > 0):
@@ -197,12 +195,16 @@ def wos_parser(in_dir, out_dir, verbose):
                 id = id + 1
 
                 parse_all_criteria(id, article, dat_files)
-                
                 parsed_references_stats = parse_references(id, article, collection["references"], f_refs)
                 computed_refs = parsed_references_stats[0]
                 computed_corrupt_refs = parsed_references_stats[1]
 
                 parse_countries_and_institutions(id, article, f_institutions, f_countries, CONFIG["usa_country_codes"])
+
+        # Reset collection to avoid corrupted span files
+        collection["articles"] = []
+        collection["references"] = []
+        collection["woslines"] = []
 
     if verbose:
         print(("..%d parsed articles in total") % (id + 1))
