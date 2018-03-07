@@ -57,7 +57,7 @@ def add_reference_nodes(references_article_grouped, article_items, items_occs, g
                 add_edge_weight(graph, r, s, w)
         del items_filtered
 
-def add_annotations(span, items_name, references_article_grouped, graph):
+def add_annotations(span, items_name, references_article_grouped, graph, all_spans):
     nb_nodes_before = len(graph.nodes())
 
     articles_items = add_item_category(span, items_name, CONFIG["parsed_data"])
@@ -70,26 +70,21 @@ def add_annotations(span, items_name, references_article_grouped, graph):
     del item_articles_grouped
 
     article_items = group_by_article(article_items, items_name, span)
-
     add_reference_nodes(references_article_grouped, article_items, items_occs, graph, items_name, CONFIG["spans"][span][items_name]["weight"], CONFIG["network_colours"][items_name])
 
-    log("remove nodes with degree = 0", span)
+    log("Remove nodes with degree = 0", span)
     graph.remove_nodes_from(r for (r,d) in graph.degree() if d < 1)
     nb_items_added = len(graph.nodes()) - nb_nodes_before
-    log("added %s %s nodes in network" %(nb_items_added, items_name), span)
+    log("Added %s %s nodes in network" %(nb_items_added, items_name), span)
     return nb_items_added
 
-def print_references_article_grouped(span_info, span, references_article_grouped, graph):
-    log("imported, filtered and grouped references by articles", span)
-    span_info["subjects_occ_filtered"] = add_annotations(span,"subjects",references_article_grouped,graph)
-    span_info["authors_occ_filtered"] = add_annotations(span,"authors",references_article_grouped,graph)
-    span_info["institutions_occ_filtered"] = add_annotations(span,"institutions",references_article_grouped,graph)
-    span_info["article_keywords_occ_filtered"] = add_annotations(span,"article_keywords",references_article_grouped,graph)
-    span_info["title_keywords_occ_filtered"] = add_annotations(span,"title_keywords",references_article_grouped,graph)
-    span_info["isi_keywords_occ_filtered"] = add_annotations(span,"isi_keywords",references_article_grouped,graph)
-    span_info["countries_occ_filtered"] = add_annotations(span,"countries",references_article_grouped,graph)
+def print_references_article_grouped(span_info, span, references_article_grouped, graph, all_spans):
+    log("Imported, filtered and grouped references by articles", span)
+    items = ["subjects", "authors", "institutions", "article_keywords", "title_keywords", "isi_keywords", "countries"]
+    for item in items:
+        span_info[item + "_occ_filtered"] = add_annotations(span, item, references_article_grouped, graph, all_spans)
 
-def process_span(span, span_done):
+def process_span(span, span_done, all_spans):
     # Data to be reported after processing
     span_info = {"span":span}
     log("starting", span)
@@ -147,7 +142,7 @@ def process_span(span, span_done):
     del network_references
 
     # Print references_article_grouped
-    print_references_article_grouped(span_info, span, references_article_grouped, graph)
+    print_references_article_grouped(span_info, span, references_article_grouped, graph, all_spans)
     del references_article_grouped
 
     log("have now %s nodes"%len(graph.nodes()), span)
@@ -237,7 +232,7 @@ def run():
     span_procs = {}
     for _ in range(min(CONFIG["nb_processes"], len(spans_to_process))):
         span = spans_to_process.pop()
-        p = Process(target = process_span, args = (span,span_done))
+        p = Process(target = process_span, args = (span,span_done, CONFIG["spans"]))
         p.daemon = True
         p.start()
         span_procs[span] = p
@@ -256,7 +251,7 @@ def run():
         print("still %s spans to process" %len(spans_to_process))
         if len(spans_to_process) > 0:
             next_span = spans_to_process.pop()
-            span_procs[next_span] = Process(target = process_span, args = (next_span, span_done))
+            span_procs[next_span] = Process(target = process_span, args = (next_span, span_done, CONFIG["spans"]))
             span_procs[next_span].daemon = True
             span_procs[next_span].start()
             print("new process on %s" %next_span)
