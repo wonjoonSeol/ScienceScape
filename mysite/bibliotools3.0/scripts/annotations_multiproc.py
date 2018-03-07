@@ -19,95 +19,103 @@ def add_edge_weight(graph, node1, node2, weight = 1):
     else:
         graph.add_edge(node1, node2, weight = weight)
 
-def add_annotations(span, items_name, references_article_grouped, graph):
-    nb_nodes_before = len(graph.nodes())
-
-    # add item category
-    with codecs.open(os.path.join(CONFIG["parsed_data"], span, "%s.dat"%items_name), "r", encoding = "UTF-8") as items_file:
+def add_item_category(span, items_name, parsed_data_folder):
+    with codecs.open(os.path.join(parsed_data_folder, span, "%s.dat" % items_name), "r", encoding = "UTF-8") as items_file:
         articles_items = [(l.split("\t")[0], l.split("\t")[-1]) for l in items_file.read().split("\n")[:-1]]
         log("imported %s" %items_name, span)
+    return articles_items
 
-    # grouping by item
+def group_by_item(articles_items):
     articles_items.sort(key = lambda e:e[1])
-    item_articles_grouped=[(item,list(items_arts)) for item,items_arts in itertools.groupby(articles_items,key=lambda e:e[1])]
-    del articles_items
+    item_articles_grouped = [(item,list(items_arts)) for item, items_arts in itertools.groupby(articles_items, key=lambda e:e[1])]
+    return item_articles_grouped
 
-    # filtering by occ
-    items_occs=dict((item,len(items_arts)) for item,items_arts in item_articles_grouped if len(items_arts)>=CONFIG["spans"][span][items_name]["occ"])
-    article_items = [t for _ in (items_arts for item,items_arts in item_articles_grouped if len(items_arts)>=CONFIG["spans"][span][items_name]["occ"]) for t in _]
-    log("filtered %s by occ>=%s"%(items_name,CONFIG["spans"][span][items_name]["occ"]) , span)
-    del item_articles_grouped
+def filter_by_occurrence(item_articles_grouped, occurrence_threshold, span, items_name):
+    items_occs = dict((item, len(items_arts)) for item, items_arts in item_articles_grouped if len(items_arts) >= occurrence_threshold)
+    article_items = [t for _ in (items_arts for item,items_arts in item_articles_grouped if len(items_arts) >= occurrence_threshold) for t in _]
+    log("filtered %s by occ>=%s" %(items_name, occurrence_threshold), span)
+    return (items_occs, article_items)
 
-    # grouping by article
-    article_items.sort(key=lambda e:e[0])
+def group_by_article(article_items, items_name, span):
+    article_items.sort(key = lambda e:e[0])
     article_items = dict((a, list(s for _, s in a_s)) for (a, a_s) in itertools.groupby(article_items, key = lambda e:e[0]))
-    log("%s grouped by articles" %items_name , span)
+    log("%s grouped by articles" %items_name, span)
+    return article_items
 
+def add_reference_nodes(references_article_grouped, article_items, items_occs, graph, items_name, weight_for_items_name, network_colours_for_items_name):
     for r,r_as in references_article_grouped:
-        # print r_as
         items = [s for ss in (article_items[a] for a, _ in r_as if a in article_items) for s in ss]
         items.sort()
         items_grouped = ((s, len(list(vs))) for s, vs in itertools.groupby(items))
-        items_filtered = [(s, nb) for s, nb in items_grouped if nb >= CONFIG["spans"][span][items_name]["weight"]]
+        items_filtered = [(s, nb) for s, nb in items_grouped if nb >= weight_for_items_name]
         del items
         del items_grouped
 
         if len(items_filtered) > 0:
             for s, w in items_filtered:
-                graph.add_node(s, label = s,type = items_name, occurence_count = items_occs[s], r = CONFIG["network_colours"][items_name]["r"], graph = CONFIG["network_colours"][items_name]["g"], b = CONFIG["network_colours"][items_name]["b"])
+                graph.add_node(s, label = s, type = items_name, occurence_count = items_occs[s], r = network_colours_for_items_name["r"], graph = network_colours_for_items_name["g"], b = network_colours_for_items_name["b"])
                 add_edge_weight(graph, r, s, w)
-
         del items_filtered
 
-    log("remove nodes with degree = 0" , span)
+def add_annotations(span, items_name, references_article_grouped, graph):
+    nb_nodes_before = len(graph.nodes())
+
+    articles_items = add_item_category(span, items_name, CONFIG["parsed_data"])
+    item_articles_grouped = group_by_item(articles_items)
+    del articles_items
+
+    occurrence_filtered = filter_by_occurrence(item_articles_grouped, CONFIG["spans"][span][items_name]["occ"], span, items_name)
+    items_occs = occurrence_filtered[0]
+    article_items = occurrence_filtered[1]
+    del item_articles_grouped
+
+    article_items = group_by_article(article_items, items_name, span)
+
+    add_reference_nodes(references_article_grouped, article_items, items_occs, graph, items_name, CONFIG["spans"][span][items_name]["weight"], CONFIG["network_colours"][items_name])
+
+    log("remove nodes with degree = 0", span)
     graph.remove_nodes_from(r for (r,d) in graph.degree() if d < 1)
     nb_items_added = len(graph.nodes()) - nb_nodes_before
-    log("added %s %s nodes in network" %(nb_items_added, items_name) , span)
+    log("added %s %s nodes in network" %(nb_items_added, items_name), span)
     return nb_items_added
 
-def print_references_article_grouped(span_info, span, references_article_grouped, graph ):
-    log("imported, filtered and grouped references by articles" , span)
-    span_info["subjects_occ_filtered"] = add_annotations(span,"subjects",references_article_grouped,graph )
-    span_info["authors_occ_filtered"] = add_annotations(span,"authors",references_article_grouped,graph )
-    span_info["institutions_occ_filtered"] = add_annotations(span,"institutions",references_article_grouped,graph )
-    span_info["article_keywords_occ_filtered"] = add_annotations(span,"article_keywords",references_article_grouped,graph )
-    span_info["title_keywords_occ_filtered"] = add_annotations(span,"title_keywords",references_article_grouped,graph )
-    span_info["isi_keywords_occ_filtered"] = add_annotations(span,"isi_keywords",references_article_grouped,graph )
-    span_info["countries_occ_filtered"] = add_annotations(span,"countries",references_article_grouped,graph )
+def print_references_article_grouped(span_info, span, references_article_grouped, graph):
+    log("imported, filtered and grouped references by articles", span)
+    span_info["subjects_occ_filtered"] = add_annotations(span,"subjects",references_article_grouped,graph)
+    span_info["authors_occ_filtered"] = add_annotations(span,"authors",references_article_grouped,graph)
+    span_info["institutions_occ_filtered"] = add_annotations(span,"institutions",references_article_grouped,graph)
+    span_info["article_keywords_occ_filtered"] = add_annotations(span,"article_keywords",references_article_grouped,graph)
+    span_info["title_keywords_occ_filtered"] = add_annotations(span,"title_keywords",references_article_grouped,graph)
+    span_info["isi_keywords_occ_filtered"] = add_annotations(span,"isi_keywords",references_article_grouped,graph)
+    span_info["countries_occ_filtered"] = add_annotations(span,"countries",references_article_grouped,graph)
 
-def process_span(span, span_done ):
-
-    """
-    def log(m):
-        if CONFIG["process_verbose"] or CONFIG["report_verbose"]:
-            log_messages.put("%s: %s" %(span,m))
-    """
+def process_span(span, span_done):
     # Data to be reported after processing
     span_info = {"span":span}
-    log("starting" , span)
+    log("starting", span)
 
-    g = networkx.Graph()
+    graph = networkx.Graph()
     if CONFIG["export_ref_format"] == "gexf":
-        if CONFIG["process_verbose"]: log("read gexf" , span)
-        g = networkx.read_gexf(os.path.join(CONFIG["parsed_data"], span, "%s.gexf" %span), node_type = str)
+        if CONFIG["process_verbose"]: log("read gexf", span)
+        graph = networkx.read_gexf(os.path.join(CONFIG["parsed_data"], span, "%s.gexf" %span), node_type = str)
     elif CONFIG["export_ref_format"] == "edgelist":
-        if CONFIG["process_verbose"]: log("read csv export" , span)
-        g = networkx.read_weighted_edgelist(os.path.join(CONFIG["parsed_data"], span, "%s.csv" %span), delimiter = "\t")
+        if CONFIG["process_verbose"]: log("read csv export", span)
+        graph = networkx.read_weighted_edgelist(os.path.join(CONFIG["parsed_data"], span, "%s.csv" %span), delimiter = "\t")
     elif CONFIG["export_ref_format"] == "pajek":
-        if CONFIG["process_verbose"]: log("read pajek export" , span)
-        g = networkx.read_pajek(os.path.join(CONFIG["parsed_data"], span, "%s.csv" %span))
+        if CONFIG["process_verbose"]: log("read pajek export", span)
+        graph = networkx.read_pajek(os.path.join(CONFIG["parsed_data"], span, "%s.csv" %span))
     elif CONFIG["export_ref_format"] == "json":
-        if CONFIG["process_verbose"]: log("read pajek export" , span)
+        if CONFIG["process_verbose"]: log("read pajek export", span)
         data = json.load(open(os.path.join(CONFIG["parsed_data"], span, "%s.json" %span), "r"),encoding = "UTF-8")
-        g = json_graph.node_link_graph(data)
+        graph = json_graph.node_link_graph(data)
     else:
-        log("no export compatible export format specified" , span)
+        log("no export compatible export format specified", span)
         exit(1)
 
-    network_references = g.nodes()
+    network_references = graph.nodes()
     nb_network_references = len(network_references)
 
-    log("loaded %s ref from graph" %nb_network_references , span)
+    log("loaded %s ref from graph" %nb_network_references, span)
     span_info["references_occ_filtered"] = nb_network_references
 
     with codecs.open(os.path.join(CONFIG["parsed_data"], span, "references.dat"), "r", encoding = "UTF-8") as file:
@@ -131,7 +139,7 @@ def process_span(span, span_done ):
         s2 = set(network_references)
         to_remove = s1 - s2
         if len(to_remove) > 0:
-            log("filtering ref which are not in original network : removing %s ref" %len(to_remove) , span)
+            log("filtering ref which are not in original network : removing %s ref" %len(to_remove), span)
             references_article_grouped = [(r, ref_arts) for r, ref_arts in references_article_grouped if r not in to_remove]
         del s1
         del s2
@@ -139,34 +147,34 @@ def process_span(span, span_done ):
     del network_references
 
     # Print references_article_grouped
-    print_references_article_grouped(span_info, span, references_article_grouped, g )
+    print_references_article_grouped(span_info, span, references_article_grouped, graph)
     del references_article_grouped
 
-    log("have now %s nodes"%len(g.nodes()) , span)
+    log("have now %s nodes"%len(graph.nodes()), span)
     if not os.path.exists(CONFIG["output_directory"]):
         os.mkdir(CONFIG["output_directory"])
 
     if CONFIG["export_ref_annotated_format"] == "gexf":
-        log("write gexf export" , span)
-        networkx.write_gexf(g, os.path.join(CONFIG["output_directory"],"%s_annotated.gexf" %span))
+        log("write gexf export", span)
+        networkx.write_gexf(graph, os.path.join(CONFIG["output_directory"],"%s_annotated.gexf" %span))
     elif CONFIG["export_ref_annotated_format"] == "edgelist":
-        log("write csv export" , span)
-        networkx.write_weighted_edgelist(g,os.path.join(CONFIG["output_directory"],"%s_annotated.csv"%span),delimiter="\t")
+        log("write csv export", span)
+        networkx.write_weighted_edgelist(graph,os.path.join(CONFIG["output_directory"],"%s_annotated.csv"%span),delimiter="\t")
     elif CONFIG["export_ref_annotated_format"] == "pajek":
-        log("write pajek export" , span)
-        networkx.write_pajek(g,os.path.join(CONFIG["output_directory"],"%s_annotated.net"%span))
+        log("write pajek export", span)
+        networkx.write_pajek(graph,os.path.join(CONFIG["output_directory"],"%s_annotated.net"%span))
     elif CONFIG["export_ref_annotated_format"] == "graphml":
-        log("write pajek export" , span)
-        networkx.write_graphml(g,os.path.join(CONFIG["output_directory"],"%s_annotated.graphml"%span))
+        log("write pajek export", span)
+        networkx.write_graphml(graph,os.path.join(CONFIG["output_directory"],"%s_annotated.graphml"%span))
     else:
-        log("no compatible export format specified" , span)
+        log("no compatible export format specified", span)
 
     with codecs.open(os.path.join(CONFIG["parsed_data"], span, "articles.dat"), "r", encoding = "UTF-8") as articles_file:
         nb_articles = len(articles_file.read().split("\n")[:-1])
 
     span_info["nb_articles"] = nb_articles
     span_done.put(span_info)
-    del g
+    del graph
 
 def logger(filename,log_messages):
     while True:
