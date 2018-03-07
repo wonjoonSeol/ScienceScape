@@ -57,20 +57,20 @@ def add_reference_nodes(references_article_grouped, article_items, items_occs, g
                 add_edge_weight(graph, r, s, w)
         del items_filtered
 
-def add_annotations(span, items_name, references_article_grouped, graph, all_spans):
+def add_annotations(span, items_name, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours):
     nb_nodes_before = len(graph.nodes())
 
-    articles_items = add_item_category(span, items_name, CONFIG["parsed_data"])
+    articles_items = add_item_category(span, items_name, parsed_data_folder)
     item_articles_grouped = group_by_item(articles_items)
     del articles_items
 
-    occurrence_filtered = filter_by_occurrence(item_articles_grouped, CONFIG["spans"][span][items_name]["occ"], span, items_name)
+    occurrence_filtered = filter_by_occurrence(item_articles_grouped, all_spans[span][items_name]["occ"], span, items_name)
     items_occs = occurrence_filtered[0]
     article_items = occurrence_filtered[1]
     del item_articles_grouped
 
     article_items = group_by_article(article_items, items_name, span)
-    add_reference_nodes(references_article_grouped, article_items, items_occs, graph, items_name, CONFIG["spans"][span][items_name]["weight"], CONFIG["network_colours"][items_name])
+    add_reference_nodes(references_article_grouped, article_items, items_occs, graph, items_name, all_spans[span][items_name]["weight"], network_colours[items_name])
 
     log("Remove nodes with degree = 0", span)
     graph.remove_nodes_from(r for (r,d) in graph.degree() if d < 1)
@@ -78,34 +78,56 @@ def add_annotations(span, items_name, references_article_grouped, graph, all_spa
     log("Added %s %s nodes in network" %(nb_items_added, items_name), span)
     return nb_items_added
 
-def print_references_article_grouped(span_info, span, references_article_grouped, graph, all_spans):
+def print_references_article_grouped(span_info, span, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours):
     log("Imported, filtered and grouped references by articles", span)
     items = ["subjects", "authors", "institutions", "article_keywords", "title_keywords", "isi_keywords", "countries"]
     for item in items:
-        span_info[item + "_occ_filtered"] = add_annotations(span, item, references_article_grouped, graph, all_spans)
+        span_info[item + "_occ_filtered"] = add_annotations(span, item, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours)
 
-def process_span(span, span_done, all_spans):
-    # Data to be reported after processing
-    span_info = {"span":span}
-    log("starting", span)
-
+def read_export(export_ref_format, parsed_data_folder, span):
     graph = networkx.Graph()
-    if CONFIG["export_ref_format"] == "gexf":
-        if CONFIG["process_verbose"]: log("read gexf", span)
-        graph = networkx.read_gexf(os.path.join(CONFIG["parsed_data"], span, "%s.gexf" %span), node_type = str)
-    elif CONFIG["export_ref_format"] == "edgelist":
-        if CONFIG["process_verbose"]: log("read csv export", span)
-        graph = networkx.read_weighted_edgelist(os.path.join(CONFIG["parsed_data"], span, "%s.csv" %span), delimiter = "\t")
-    elif CONFIG["export_ref_format"] == "pajek":
-        if CONFIG["process_verbose"]: log("read pajek export", span)
-        graph = networkx.read_pajek(os.path.join(CONFIG["parsed_data"], span, "%s.csv" %span))
-    elif CONFIG["export_ref_format"] == "json":
-        if CONFIG["process_verbose"]: log("read pajek export", span)
-        data = json.load(open(os.path.join(CONFIG["parsed_data"], span, "%s.json" %span), "r"),encoding = "UTF-8")
+    if export_ref_format == "gexf":
+        if process_verbose: log("read gexf", span)
+        graph = networkx.read_gexf(os.path.join(parsed_data_folder, span, "%s.gexf" %span), node_type = str)
+    elif export_ref_format == "edgelist":
+        if process_verbose: log("read csv export", span)
+        graph = networkx.read_weighted_edgelist(os.path.join(parsed_data_folder, span, "%s.csv" %span), delimiter = "\t")
+    elif export_ref_format == "pajek":
+        if process_verbose: log("read pajek export", span)
+        graph = networkx.read_pajek(os.path.join(parsed_data_folder, span, "%s.csv" %span))
+    elif export_ref_format == "json":
+        if process_verbose: log("read pajek export", span)
+        data = json.load(open(os.path.join(parsed_data_folder, span, "%s.json" %span), "r"),encoding = "UTF-8")
         graph = json_graph.node_link_graph(data)
     else:
         log("no export compatible export format specified", span)
         exit(1)
+    return graph
+
+def write_export(output_directory, export_ref_annotated_format, span, graph):
+    if not os.path.exists(output_directory):
+        os.mkdir(output_directory)
+    if export_ref_annotated_format == "gexf":
+        log("write gexf export", span)
+        networkx.write_gexf(graph, os.path.join(output_directory,"%s_annotated.gexf" %span))
+    elif export_ref_annotated_format == "edgelist":
+        log("write csv export", span)
+        networkx.write_weighted_edgelist(graph,os.path.join(output_directory,"%s_annotated.csv"%span),delimiter="\t")
+    elif export_ref_annotated_format == "pajek":
+        log("write pajek export", span)
+        networkx.write_pajek(graph,os.path.join(output_directory,"%s_annotated.net"%span))
+    elif export_ref_annotated_format == "graphml":
+        log("write pajek export", span)
+        networkx.write_graphml(graph,os.path.join(output_directory,"%s_annotated.graphml"%span))
+    else:
+        log("no compatible export format specified", span)
+
+def process_span(span, span_done, all_spans, parsed_data_folder, network_colours, export_ref_format, export_ref_annotated_format, output_directory):
+    # Data to be reported after processing
+    span_info = {"span":span}
+    log("starting", span)
+
+    graph = read_export(export_ref_format, parsed_data_folder, span)
 
     network_references = graph.nodes()
     nb_network_references = len(network_references)
@@ -113,7 +135,7 @@ def process_span(span, span_done, all_spans):
     log("loaded %s ref from graph" %nb_network_references, span)
     span_info["references_occ_filtered"] = nb_network_references
 
-    with codecs.open(os.path.join(CONFIG["parsed_data"], span, "references.dat"), "r", encoding = "UTF-8") as file:
+    with codecs.open(os.path.join(parsed_data_folder, span, "references.dat"), "r", encoding = "UTF-8") as file:
         # .dat files have one trailing blank line
         data_lines = file.read().split("\n")[:-1]
 
@@ -122,7 +144,7 @@ def process_span(span, span_done, all_spans):
     references_by_articles.sort(key = lambda e:e[1])
     article_groupby_reference = [(reference, list(ref_arts)) for reference, ref_arts in itertools.groupby(references_by_articles, key = lambda e:e[1])]
     span_info["nb_reference_before_filtering"] = len(article_groupby_reference)
-    references_article_grouped = [t for t in article_groupby_reference if len(t[1]) >= CONFIG["spans"][span]["references"]["occ"]]
+    references_article_grouped = [t for t in article_groupby_reference if len(t[1]) >= all_spans[span]["references"]["occ"]]
     del article_groupby_reference
     del references_by_articles
 
@@ -142,29 +164,14 @@ def process_span(span, span_done, all_spans):
     del network_references
 
     # Print references_article_grouped
-    print_references_article_grouped(span_info, span, references_article_grouped, graph, all_spans)
+    print_references_article_grouped(span_info, span, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours)
     del references_article_grouped
 
     log("have now %s nodes"%len(graph.nodes()), span)
-    if not os.path.exists(CONFIG["output_directory"]):
-        os.mkdir(CONFIG["output_directory"])
 
-    if CONFIG["export_ref_annotated_format"] == "gexf":
-        log("write gexf export", span)
-        networkx.write_gexf(graph, os.path.join(CONFIG["output_directory"],"%s_annotated.gexf" %span))
-    elif CONFIG["export_ref_annotated_format"] == "edgelist":
-        log("write csv export", span)
-        networkx.write_weighted_edgelist(graph,os.path.join(CONFIG["output_directory"],"%s_annotated.csv"%span),delimiter="\t")
-    elif CONFIG["export_ref_annotated_format"] == "pajek":
-        log("write pajek export", span)
-        networkx.write_pajek(graph,os.path.join(CONFIG["output_directory"],"%s_annotated.net"%span))
-    elif CONFIG["export_ref_annotated_format"] == "graphml":
-        log("write pajek export", span)
-        networkx.write_graphml(graph,os.path.join(CONFIG["output_directory"],"%s_annotated.graphml"%span))
-    else:
-        log("no compatible export format specified", span)
+    write_export(output_directory, export_ref_annotated_format, span, graph)
 
-    with codecs.open(os.path.join(CONFIG["parsed_data"], span, "articles.dat"), "r", encoding = "UTF-8") as articles_file:
+    with codecs.open(os.path.join(parsed_data_folder, span, "articles.dat"), "r", encoding = "UTF-8") as articles_file:
         nb_articles = len(articles_file.read().split("\n")[:-1])
 
     span_info["nb_articles"] = nb_articles
@@ -179,33 +186,33 @@ def logger(filename,log_messages):
             logfile.flush()
         log_messages.task_done()
 
-def csv_writing(s):
+def csv_writing(s, reports_directory, all_spans):
     span = s["span"]
     csv_export = []
     line = [s["span"]]
     line.append(s["nb_articles"])
     nb_reference_before_filtering = s["nb_reference_before_filtering"]
     line.append(nb_reference_before_filtering)
-    line.append("%s | %s"%(CONFIG["spans"][span]["references"]["occ"], CONFIG["spans"][span]["references"]["weight"]))
+    line.append("%s | %s" %(all_spans[span]["references"]["occ"], all_spans[span]["references"]["weight"]))
     nb_ref_filtered = s["references_occ_filtered"]
     line.append(nb_ref_filtered)
     for items in ["subjects","authors","institutions","article_keywords","title_keywords","isi_keywords","countries"]:
-        f = "%s | %s"%(CONFIG["spans"][span][items]["occ"],CONFIG["spans"][span][items]["weight"])
+        f = "%s | %s"%(all_spans[span][items]["occ"], all_spans[span][items]["weight"])
         nb = s["%s_occ_filtered" %items]
         line += [f,nb]
     csv_export.append(",".join(str(_) for _ in line))
-    write_to_csv(csv_export)
+    write_to_csv(csv_export, reports_directory)
 
-def prepare_csv():
+def prepare_csv(reports_directory):
     line = ["span","nb articles","nb ref","f_ref occ|weight","nb_ref_filtered"]
     for items in ["subjects","authors","institutions","article_keywords","title_keywords","isi_keywords","countries"]:
             line += ["f %s"%items,"nb %s"%items]
     csv_export = []
     csv_export.append(",".join(line))
-    write_to_csv(csv_export)
+    write_to_csv(csv_export, reports_directory)
 
-def write_to_csv(lines):
-    with open(os.path.join(CONFIG["reports_directory"], "filtering_report.csv"), "a") as csvfile:
+def write_to_csv(lines, reports_directory):
+    with open(os.path.join(reports_directory, "filtering_report.csv"), "a") as csvfile:
         csvfile.write("\n" + "\n".join(lines))
         csvfile.flush()
 
@@ -213,6 +220,8 @@ def write_to_csv(lines):
 def run():
     global verbose
     verbose = CONFIG["process_verbose"] or CONFIG["report_verbose"]
+    global process_verbose
+    process_verbose = CONFIG["process_verbose"]
     span_done = JoinableQueue()
 
     global log_messages
@@ -232,13 +241,13 @@ def run():
     span_procs = {}
     for _ in range(min(CONFIG["nb_processes"], len(spans_to_process))):
         span = spans_to_process.pop()
-        p = Process(target = process_span, args = (span,span_done, CONFIG["spans"]))
+        p = Process(target = process_span, args = (span,span_done, CONFIG["spans"], CONFIG["parsed_data"], CONFIG["network_colours"], CONFIG["export_ref_format"], CONFIG["export_ref_annotated_format"], CONFIG["output_directory"]))
         p.daemon = True
         p.start()
         span_procs[span] = p
 
     if CONFIG["report_csv"]:
-        prepare_csv()
+        prepare_csv(CONFIG["reports_directory"])
 
     while len(spans_to_process) > 0 or len(span_procs) > 0:
         s = span_done.get()
@@ -251,13 +260,13 @@ def run():
         print("still %s spans to process" %len(spans_to_process))
         if len(spans_to_process) > 0:
             next_span = spans_to_process.pop()
-            span_procs[next_span] = Process(target = process_span, args = (next_span, span_done, CONFIG["spans"]))
+            span_procs[next_span] = Process(target = process_span, args = (next_span, span_done, CONFIG["spans"], CONFIG["parsed_data"], CONFIG["network_colours"], CONFIG["export_ref_format"], CONFIG["export_ref_annotated_format"], CONFIG["output_directory"]))
             span_procs[next_span].daemon = True
             span_procs[next_span].start()
             print("new process on %s" %next_span)
 
         if CONFIG["report_csv"]:
-            csv_writing(s)
+            csv_writing(s, CONFIG["reports_directory"], CONFIG["spans"])
             span_done.task_done()
 
     span_done.join()
