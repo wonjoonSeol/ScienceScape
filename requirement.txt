@@ -4,7 +4,6 @@ matplotlib=2.1.2
 networkx=2.1
 whitenoise=3.3.1
 gunicorn=19.7.1
-
 dj-database-url==0.3.0
 dj-static==0.0.6
 Unipath==1.0

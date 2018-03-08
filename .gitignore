@@ -1,5 +1,13 @@
 # Created by https://www.gitignore.io/api/vim,macos,python,eclipse,windows,intellij
 
+bibliotools3.0/Result
+
+#ENV & Heroku deployment
+venv
+*.pyc
+staticfiles
+.env
+
 ### Eclipse ###
 
 .metadata

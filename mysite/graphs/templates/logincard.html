@@ -1,0 +1,43 @@
+
+
+      {% if user.is_authenticated %}
+        <div class="card">
+            <div class="card-content">
+                <p>You are logged in as: <b>{{ user.username }}</b></p>
+                <p><a href="/logout">Logout</a></p>
+          </div> <!-- /card-content -->
+       </div>
+        {% else %}
+        <ul class="collapsible popout" data-collapsible="accordion">
+          <li>
+            <div class="collapsible-header"><i class="material-icons">person</i>Login</div>
+            <div class="collapsible-body" style="background: white;"><span>
+              <!-- <a href="/login" class="btn">Login</a> -->
+              <form method="POST" action ="{% url 'login_on_home' %}">
+                  {% csrf_token %}
+                  <p>
+                      <label>Username</label>
+                      <input type="text" name="username">
+                  </p>
+                  <p>
+                      <label>Password</label>
+                      <input type="password" name="password">
+                  </p>
+                  <input class="btn blue darken-4 waves-effect" type="submit" value="submit">
+              </form>
+            </span></div>
+          </li>
+          <li>
+            <div class="collapsible-header"><i class="material-icons">person_add</i>Register</div>
+            <div class="collapsible-body"style="background: white;"><span>
+          <!--  <a href="/register" class="btn">Register</a> -->
+            <form method="POST"  action ="{% url 'register' %}" >
+              {% csrf_token %}
+                {{reg_form}}
+                <input class="btn blue darken-4 waves-effect" type="submit" value="submit">
+              </form>
+            </span></div>
+          </li>
+
+        </ul>
+        {% endif %}
