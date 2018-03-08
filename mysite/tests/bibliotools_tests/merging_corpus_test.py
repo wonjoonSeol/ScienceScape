@@ -10,6 +10,9 @@ from merging_corpus import write_to_file
 from merging_corpus import number_columns
 from merging_corpus import parse_line
 from merging_corpus import write_report
+from merging_corpus import prepare_output_file
+from merging_corpus import prepare_report_directory
+from merging_corpus import prepare_error_file
 
 class TestMergingCorpus(unittest.TestCase):
 
@@ -148,6 +151,31 @@ class TestMergingCorpus(unittest.TestCase):
         os.remove(os.path.join(dir, "testFiles/dummy_errorsfile.txt"))
         self.assertEqual(True, result)
 
+    def test_prepare_output_file(self):
+        dir = os.path.dirname(os.path.dirname(__file__))
+        headers_to_write = "abcd"
+        prepare_output_file(os.path.join(dir, "testFiles/test_prepare_output_file.txt"), headers_to_write)
+
+        result = open(os.path.join(dir, "testFiles/test_prepare_output_file.txt"), "r")
+        lines = result.readlines()
+        result.close()
+        os.remove(os.path.join(dir, "testFiles/test_prepare_output_file.txt"))
+        self.assertEqual(lines, ['abcd\n'])
+
+    def test_prepare_report_directory(self):
+        dir = os.path.dirname(os.path.dirname(__file__))
+        prepare_report_directory(os.path.join(dir, "testFiles/test_prepare_report_directory"))
+        self.assertEqual(True, os.path.exists(os.path.join(dir, "testFiles/test_prepare_report_directory")))
+        if os.path.exists(os.path.join(dir, "testFiles/test_prepare_report_directory")):
+            os.rmdir(os.path.join(dir, "testFiles/test_prepare_report_directory"))
+
+    def test_prepare_error_file(self):
+        dir = os.path.dirname(os.path.dirname(__file__))
+        prepare_report_directory(os.path.join(dir, "testFiles/test_prepare_report_directory"))
+        prepare_error_file(os.path.join(dir, "testFiles/test_prepare_report_directory"), "abcd")
+        self.assertEqual(True, os.path.exists(os.path.join(dir, "testFiles/test_prepare_report_directory/wos_lines_with_errors.csv")))
+        os.remove(os.path.join(dir, "testFiles/test_prepare_report_directory/wos_lines_with_errors.csv"))
+        os.rmdir(os.path.join(dir, "testFiles/test_prepare_report_directory"))
 
 if __name__ == '__main__':
     unittest.main()
