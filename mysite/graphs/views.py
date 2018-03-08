@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+<<<<<<< HEAD
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -13,6 +14,14 @@ from django.contrib.auth import logout
 from django.contrib.auth import authenticate, login
 
 # BE CAREFUL OF REQUEST METHODS
+=======
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def index(request) :
+    return HttpResponse("The generated force-vector spatializations should appear here.")
+>>>>>>> master
 
 def home(request):
 
