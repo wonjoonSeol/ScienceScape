@@ -5,7 +5,11 @@
 #### By Team Codokans
 Building upon two existing tools developed by the Sciences Po Médialab (Paris), the Codokans (from **King's College London**) are working on integrating two scientometrics applications into one usable, large-scale website as part of a 2nd-year project.
 
-## Looking for instructions or information? <a href="https://github.com/wonjoonSeol/ScienceScape/wiki">Click here</a>
+</br>
+
+### Looking for documentation? <a href="https://github.com/wonjoonSeol/ScienceScape/wiki">Click here</a>
+
+</br>
 
 ## The project
 
