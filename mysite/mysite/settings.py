@@ -33,7 +33,7 @@ def get_env_variable(var_name):
         raise ImproperlyConfigured(error_msg)
 
 # Get ENV VARIABLES key
-ENV_ROLE = get_env_variable('ENV_ROLE')
+#ENV_ROLE = get_env_variable('ENV_ROLE')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -42,15 +42,15 @@ ENV_ROLE = get_env_variable('ENV_ROLE')
 SECRET_KEY = 'y)a!q*z!2+o4=rw(fft_hnh5nf*$2p*4)9r#ptozprji4ccm+x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-TEMPLATE_DEBUG = DEBUG
+#DEBUG = False
+#TEMPLATE_DEBUG = DEBUG
 ##SSCAPE_DB_PASS = False
-if ENV_ROLE == 'development':
-    DEBUG = True
-    TEMPLATE_DEBUG = DEBUG
-    #SSCAPE_DB_PASS = get_env_variable('SSCAPE_DB_PASS')
+#if ENV_ROLE == 'development':
+#    DEBUG = True
+#    TEMPLATE_DEBUG = DEBUG
+#    #SSCAPE_DB_PASS = get_env_variable('SSCAPE_DB_PASS')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
