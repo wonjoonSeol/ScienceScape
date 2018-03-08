@@ -1,27 +1,17 @@
 ## Welcome
 
-<img src="/images/sciencescapes-logo.png?raw=true" width="50%">
-
+<img src="/images/sciencescapes-logo.png?raw=true" width="45%" align="left">
 
 #### By Team Codokans
-
 Building upon two existing tools developed by the Sciences Po Médialab (Paris), the Codokans (from **King's College London**) are working on integrating two scientometrics applications into one usable, large-scale website as part of a 2nd-year project.
 
-<br/>
+## Looking for instructions or information? <a href="https://github.com/wonjoonSeol/ScienceScape/wiki">Click here</a>
+
+## The project
 
 #### Developed by:
-
-```bash
-Wonjoon Seol
-Shayne Ahchoon
-Saadman Sakib
-Jack Hinshelwood
-Nicolas Volken
-Britton Forsyth
-Alexander Jermstad
-Nathan Al Sibai
-Paul Muresan
-```
+Shayne Ahchoon, Nathan Al Sibai, Britton Forsyth, Jack Hinshelwood, Alexander Jermstad, </br>
+Paul Muresan, Saddman Sakib, Wonjoon Seol and Nicolas Volken
 
 #### Supervised by: 
 **Dr. Jeroen Keppens** and **Dr. Solon Pissis**, Department of Informatics, <a href="http://www.kcl.ac.uk">King's College London</a>
