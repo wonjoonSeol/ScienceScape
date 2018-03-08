@@ -1,0 +1,15 @@
+Django=2.0.2
+numpy=1.14.0
+matplotlib=2.1.2
+networkx=2.1
+whitenoise=3.3.1
+gunicorn=19.7.1
+
+dj-database-url==0.3.0
+dj-static==0.0.6
+Unipath==1.0
+python-decouple==3
+Pillow==3.3.0
+Markdown==2.6.6
+bleach==1.4.3
+psycopg2==2.6.1
