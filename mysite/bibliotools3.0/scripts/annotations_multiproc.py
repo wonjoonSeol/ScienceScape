@@ -9,39 +9,66 @@ from multiprocessing import JoinableQueue
 
 CONFIG = {}
 
+"""
+Logs a message to the .log file about a span.
+"""
 def log(message, span):
     if verbose:
         log_messages.put("%s: %s" %(span,message))
 
+"""
+Increments the weight of a given edge between two nodes in a graph.
+"""
 def add_edge_weight(graph, node1, node2, weight = 1):
     if graph.has_edge(node1, node2):
         graph[node1][node2]['weight'] += weight
     else:
         graph.add_edge(node1, node2, weight = weight)
 
+"""
+Imports all items of a certain category to the corresponding .dat file in a
+parsed_data_folder.
+Returns the articles.
+"""
 def add_item_category(span, items_name, parsed_data_folder):
     with codecs.open(os.path.join(parsed_data_folder, span, "%s.dat" % items_name), "r", encoding = "UTF-8") as items_file:
         articles_items = [(l.split("\t")[0], l.split("\t")[-1]) for l in items_file.read().split("\n")[:-1]]
         log("imported %s" %items_name, span)
     return articles_items
 
+"""
+Sorts articles with a lambda key and returns the sorted collection.
+Returns the grouped collection.
+"""
 def group_by_item(articles_items):
     articles_items.sort(key = lambda e:e[1])
     item_articles_grouped = [(item,list(items_arts)) for item, items_arts in itertools.groupby(articles_items, key=lambda e:e[1])]
     return item_articles_grouped
 
+"""
+Filters article items (sorted) according to a threshold for occurrences and given spans.
+Returns a pair of statistics: (The number of occurrences, The number of items).
+"""
 def filter_by_occurrence(item_articles_grouped, occurrence_threshold, span, items_name):
     items_occs = dict((item, len(items_arts)) for item, items_arts in item_articles_grouped if len(items_arts) >= occurrence_threshold)
     article_items = [t for _ in (items_arts for item,items_arts in item_articles_grouped if len(items_arts) >= occurrence_threshold) for t in _]
     log("filtered %s by occ>=%s" %(items_name, occurrence_threshold), span)
     return (items_occs, article_items)
 
+"""
+Groups items by article in a span.
+Returns the grouped collection.
+"""
 def group_by_article(article_items, items_name, span):
     article_items.sort(key = lambda e:e[0])
     article_items = dict((a, list(s for _, s in a_s)) for (a, a_s) in itertools.groupby(article_items, key = lambda e:e[0]))
     log("%s grouped by articles" %items_name, span)
     return article_items
 
+"""
+Adds nodes for references given articles, occurrences, a graph, the category name,
+the weighting value, and network colours.
+"""
 def add_reference_nodes(references_article_grouped, article_items, items_occs, graph, items_name, weight_for_items_name, network_colours_for_items_name):
     for r,r_as in references_article_grouped:
         items = [s for ss in (article_items[a] for a, _ in r_as if a in article_items) for s in ss]
@@ -57,6 +84,10 @@ def add_reference_nodes(references_article_grouped, article_items, items_occs, g
                 add_edge_weight(graph, r, s, w)
         del items_filtered
 
+"""
+Adds annotations to a parsed_data_folder for a graph and a given time span.
+Returns the number of items added.
+"""
 def add_annotations(span, items_name, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours):
     nb_nodes_before = len(graph.nodes())
 
@@ -78,12 +109,19 @@ def add_annotations(span, items_name, references_article_grouped, graph, all_spa
     log("Added %s %s nodes in network" %(nb_items_added, items_name), span)
     return nb_items_added
 
+"""
+For each citation category, add annotations for it and print statistics about it.
+"""
 def print_references_article_grouped(span_info, span, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours):
     log("Imported, filtered and grouped references by articles", span)
     items = ["subjects", "authors", "institutions", "article_keywords", "title_keywords", "isi_keywords", "countries"]
     for item in items:
         span_info[item + "_occ_filtered"] = add_annotations(span, item, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours)
 
+"""
+Creates an output graph given an export format (either gexf, edgelist, pajek or jason)
+and returns the newly created graph for a given data folder and span.
+"""
 def read_export(export_ref_format, parsed_data_folder, span):
     graph = networkx.Graph()
     if export_ref_format == "gexf":
@@ -104,6 +142,10 @@ def read_export(export_ref_format, parsed_data_folder, span):
         exit(1)
     return graph
 
+"""
+Writes the export data output to a previously created graph file given an output directory
+and a span.
+"""
 def write_export(output_directory, export_ref_annotated_format, span, graph):
     if not os.path.exists(output_directory):
         os.mkdir(output_directory)
@@ -122,6 +164,10 @@ def write_export(output_directory, export_ref_annotated_format, span, graph):
     else:
         log("no compatible export format specified", span)
 
+"""
+Processes a time span's worth of articles amongst all the available spans, given an output folder, and
+data processing/outputting information found from the config.py file.
+"""
 def process_span(span, span_done, all_spans, parsed_data_folder, network_colours, export_ref_format, export_ref_annotated_format, output_directory):
     # Data to be reported after processing
     span_info = {"span":span}
@@ -149,7 +195,6 @@ def process_span(span, span_done, all_spans, parsed_data_folder, network_colours
     del references_by_articles
 
     # Make sure we have same references as network
-
     ref_filtered = [r for r, _ in references_article_grouped]
     if(len(ref_filtered)) != nb_network_references:
         s1 = set(ref_filtered)
@@ -178,6 +223,9 @@ def process_span(span, span_done, all_spans, parsed_data_folder, network_colours
     span_done.put(span_info)
     del graph
 
+"""
+Logs messages to the log file.
+"""
 def logger(filename,log_messages):
     while True:
         m = log_messages.get()
@@ -186,6 +234,9 @@ def logger(filename,log_messages):
             logfile.flush()
         log_messages.task_done()
 
+"""
+Writes a .csv report (statistics) file given all files and the report directory.
+"""
 def csv_writing(s, reports_directory, all_spans):
     span = s["span"]
     csv_export = []
@@ -203,6 +254,9 @@ def csv_writing(s, reports_directory, all_spans):
     csv_export.append(",".join(str(_) for _ in line))
     write_to_csv(csv_export, reports_directory)
 
+"""
+Prepares a .csv file in a report directory.
+"""
 def prepare_csv(reports_directory):
     line = ["span","nb articles","nb ref","f_ref occ|weight","nb_ref_filtered"]
     for items in ["subjects","authors","institutions","article_keywords","title_keywords","isi_keywords","countries"]:
@@ -211,6 +265,9 @@ def prepare_csv(reports_directory):
     csv_export.append(",".join(line))
     write_to_csv(csv_export, reports_directory)
 
+"""
+Writes lines to a .csv file in a reports directory after creating it.
+"""
 def write_to_csv(lines, reports_directory):
     with open(os.path.join(reports_directory, "filtering_report.csv"), "a") as csvfile:
         csvfile.write("\n" + "\n".join(lines))
