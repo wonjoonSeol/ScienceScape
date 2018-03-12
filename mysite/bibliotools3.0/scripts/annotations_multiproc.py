@@ -25,10 +25,9 @@ def add_edge_weight(graph, node1, node2, weight = 1):
     else:
         graph.add_edge(node1, node2, weight = weight)
 
-"""
+""" Return articles.
 Imports all items of a certain category to the corresponding .dat file in a
 parsed_data_folder.
-Returns the articles.
 """
 def add_item_category(span, items_name, parsed_data_folder):
     with codecs.open(os.path.join(parsed_data_folder, span, "%s.dat" % items_name), "r", encoding = "UTF-8") as items_file:
@@ -36,18 +35,17 @@ def add_item_category(span, items_name, parsed_data_folder):
         log("imported %s" %items_name, span)
     return articles_items
 
-"""
+""" Return a grouped collection.
 Sorts articles with a lambda key and returns the sorted collection.
-Returns the grouped collection.
 """
 def group_by_item(articles_items):
     articles_items.sort(key = lambda e:e[1])
     item_articles_grouped = [(item,list(items_arts)) for item, items_arts in itertools.groupby(articles_items, key=lambda e:e[1])]
     return item_articles_grouped
 
-"""
+""" Return a pair of statistics: (The number of occurrences, The number of items).
 Filters article items (sorted) according to a threshold for occurrences and given spans.
-Returns a pair of statistics: (The number of occurrences, The number of items).
+
 """
 def filter_by_occurrence(item_articles_grouped, occurrence_threshold, span, items_name):
     items_occs = dict((item, len(items_arts)) for item, items_arts in item_articles_grouped if len(items_arts) >= occurrence_threshold)
@@ -55,9 +53,8 @@ def filter_by_occurrence(item_articles_grouped, occurrence_threshold, span, item
     log("filtered %s by occ>=%s" %(items_name, occurrence_threshold), span)
     return (items_occs, article_items)
 
-"""
+""" Return a grouped collection.
 Groups items by article in a span.
-Returns the grouped collection.
 """
 def group_by_article(article_items, items_name, span):
     article_items.sort(key = lambda e:e[0])
@@ -84,9 +81,8 @@ def add_reference_nodes(references_article_grouped, article_items, items_occs, g
                 add_edge_weight(graph, r, s, w)
         del items_filtered
 
-"""
+""" Return the number of items added.
 Adds annotations to a parsed_data_folder for a graph and a given time span.
-Returns the number of items added.
 """
 def add_annotations(span, items_name, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours):
     nb_nodes_before = len(graph.nodes())
@@ -118,9 +114,8 @@ def print_references_article_grouped(span_info, span, references_article_grouped
     for item in items:
         span_info[item + "_occ_filtered"] = add_annotations(span, item, references_article_grouped, graph, all_spans, parsed_data_folder, network_colours)
 
-"""
-Creates an output graph given an export format (either gexf, edgelist, pajek or jason)
-and returns the newly created graph for a given data folder and span.
+""" Return a newly created graph for a given data folder and span.
+Creates an output graph given an export format (either gexf, edgelist, pajek or jason).
 """
 def read_export(export_ref_format, parsed_data_folder, span):
     graph = networkx.Graph()
