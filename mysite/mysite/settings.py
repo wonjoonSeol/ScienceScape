@@ -12,15 +12,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
-# add this to the import section of the file
-import django_heroku
 import os
-from django.core.exceptions import ImproperlyConfigured
-os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+import django_heroku
+import dj_database_url
+import psycopg2
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Handling Key Import Errors
 def get_env_variable(var_name):
@@ -101,17 +99,11 @@ MEDIA_URL = '/media/'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME' : 'sciencescape',
-        'USER' : 'postgres',
-        'PASSWORD': 'qwerty', #get_env_variable(SSCAPE_DB_PASS),
-        'HOST' : '/tmp',
-        'PORT' : '5432',
-    }
-}
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

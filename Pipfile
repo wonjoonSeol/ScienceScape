@@ -2,19 +2,24 @@
 
 url = "https://pypi.python.org/simple"
 verify_ssl = true
+name = "pypi"
+
 
 [packages]
 
-django = "*"
 gunicorn = "*"
-django-heroku = "*"
-dj-database-url = "*"
-psycopg2 = "*"
-whitenoise = "*"
-
-networkx = "*"
 numpy = "*"
 matplotlib = "*"
+networkx = "*"
+"psycopg2-binary" = "*"
+django = "*"
+dj-database-url = "*"
+django-heroku = "*"
+
+
+[dev-packages]
+
+
 
 [requires]
 
