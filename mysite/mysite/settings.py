@@ -21,7 +21,8 @@ APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Config value hidden in heroku setting page
-SECRET_KEY = os.environ.get('SECRET_KEY')
+#SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'y)a!q*z!2+o4=rw(fft_hnh5nf*$2p*4)9r#ptozprji4ccm+x'
 
 # Application definition
 INSTALLED_APPS = [
@@ -69,7 +70,9 @@ MEDIA_URL = '/media/'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-DATABASE_URL = os.environ['DATABASE_URL']
+
+#DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = 'postgres://fymhuaixuttaky:bd01de5c5ba9a57c40bb3ee84793c7ba649b0bacb6d5d8b4d8c23559d6994495@ec2-54-197-254-189.compute-1.amazonaws.com:5432/d11cvaqi49gegm'
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 DATABASES = {}
