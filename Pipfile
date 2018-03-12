@@ -15,6 +15,7 @@ networkx = "*"
 django = "*"
 dj-database-url = "*"
 django-heroku = "*"
+whitenoise = "*"
 
 
 [dev-packages]
