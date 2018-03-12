@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 # add this to the import section of the file
+import django_heroku
 import os
 from django.core.exceptions import ImproperlyConfigured
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
@@ -151,13 +152,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
-
-# Whitenoise django setting
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
 # Login redirect information
 LOGIN_REDIRECT_URL = '/graphs'
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
