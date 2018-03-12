@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block Content %}
+
+	<br>
+
+	<div class="row text-center">
+
+
+		<div class="col s8">
+			{%if upload%}
+				{% include "upload_form.html" %}
+			{% elif filename%}
+				{% include "file_preview.html" %}
+			{%endif%}
+			<br>
+		<!--	{% include "DEVTOOLS.html" %} -->
+		</div>
+
+		<div class="col s4">
+
+{% include "logincard.html" %}
+		</div>
+
+
+	</div>
+
+	<br>
+
+	<div class="row">
+		<div class="col-sm-2">
+
+		</div>
+		<div class="col-sm-8">
+			<div>
+				{%if fields%}
+					{% include "fields.html" %}
+				{%endif%}
+			</div>
+		</div>
+		<div class="col-sm-2">
+
+		</div>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s1">
+
+		</div>
+		<div class="col s10">
+			<div>
+				
+				{%if fpath%}
+				{% include "graph_template.html" %} 
+				{%endif%}
+			</div>
+		</div>
+		<div class="col s1">
+
+		</div>
+
+		</div>
+	</div>
+
+
+
+
+{% endblock %}
