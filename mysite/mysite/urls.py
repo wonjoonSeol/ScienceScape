@@ -19,6 +19,8 @@ from django.contrib.auth import views as auth_views
 from graphs import views
 from . import converters
 
+#url('^$', views.index, name='index')
+# graphs index -> home
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^graphs/$', views.home, name='redirectToLoggedIn'),
