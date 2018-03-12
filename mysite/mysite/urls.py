@@ -20,8 +20,6 @@ from graphs import views
 from . import converters
 
 urlpatterns = [
-   # path('graphs/', include('graphs.urls')),
-   # path('admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
     url(r'^graphs/$', views.home, name='redirectToLoggedIn'),
     url(r'^addFields/(.*)', views.fieldForm, name='fields'),
