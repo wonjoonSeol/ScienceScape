@@ -73,20 +73,12 @@ MEDIA_URL = '/media/'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-#DATABASE_URL = os.environ['DATABASE_URL']
-DATABASE_URL = 'postgres://fymhuaixuttaky:bd01de5c5ba9a57c40bb3ee84793c7ba649b0bacb6d5d8b4d8c23559d6994495@ec2-54-197-254-189.compute-1.amazonaws.com:5432/d11cvaqi49gegm'
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd11cvaqi49gegm',
-        'USER': 'fymhuaixuttaky',
-        'PASSWORD': 'bd01de5c5ba9a57c40bb3ee84793c7ba649b0bacb6d5d8b4d8c23559d6994495',
-        'HOST': 'ec2-54-197-254-189.compute-1.amazonaws.com',
-        'PORT': '5432',
-    }
-}
-
+#DATABASE_URL = 'postgres://fymhuaixuttaky:bd01de5c5ba9a57c40bb3ee84793c7ba649b0bacb6d5d8b4d8c23559d6994495@ec2-54-197-254-189.compute-1.amazonaws.com:5432/d11cvaqi49gegm'
+DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
