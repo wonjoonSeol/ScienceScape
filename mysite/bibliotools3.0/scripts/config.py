@@ -1,10 +1,18 @@
 import os
 dir = os.path.dirname(os.path.dirname(__file__))
 
-year_index_position = 44
+"""
+This file contains all (changeable) information about directories, codes, header data and
+all the information needed to run the scripts and output files according to a user-defined
+tree directory and output structure.
+"""
 
+year_index_position = 44
 spanYears = []
 
+""" Return a CONFIG collection of time spans and directory information used by all scripts.
+Generates a collection of readable time spans, given a user input using argparse.
+"""
 def gen():
 	CONFIG={
 		# step one (merging_corpus.py) mandatory
