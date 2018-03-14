@@ -31,10 +31,12 @@ urlpatterns = [
     url(r'^addFields/(.*)', views.fieldForm, name='fields'),
     url(r'^processGraph/(.*)', views.loadGraph, name='loadGraph'),
     url(r'about/', views.about, name='about'),
- 	url(r'^login/$', auth_views.login, name='login'),
+    url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', views.logoutView, name='logout'),
     url(r'^register/$', views.register, name='register'),
     url(r'^admin/', admin.site.urls),
     url(r'^login_on_home/$', views.loginProcess, name='login_on_home'),
-    url(r'^account/$', views.account, name='account')
+    url(r'^account/$', views.account, name='account'),
+	 url(r'^edit/(.*)$', views.editFields, name='edit'),
+	 url(r'^delete/(.*)$', views.deleteFile, name='delete')
 ]

@@ -181,6 +181,10 @@ def retrieveFromDataBase(filePath):
 
 	print("dictionary from database is {x}".format(x = dictionary))
 	return dictionary
+	
+def initializeBiblioTools():
+	libraryPath = os.path.abspath(os.path.join(__file__, '..','..','bibliotools3.0','scripts'))
+	
 
 def generateUser():
 	return folderDirectory
@@ -189,7 +193,13 @@ def resetDatabase():
 	mappings = Mappings.objects.all()
 	mappings.delete()
 
-def getAllFilesForUser(filePath):
+def getAllFilesForUser(username):
+	APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	folder = "static/userFiles/{x}".format(x = username)
+	filePath = os.path.join(APP_DIR, folder)
+	
 	f = []
 	f = os.listdir(filePath)
 	return f
+
+

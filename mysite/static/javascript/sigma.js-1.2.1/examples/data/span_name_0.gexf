@@ -1,0 +1,809 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<gexf version="1.2" xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes class="node" mode="static">
+      <attribute id="0" title="type" type="string" />
+      <attribute id="1" title="occurence_count" type="long" />
+      <attribute id="2" title="reference" type="string" />
+    </attributes>
+    <meta>
+      <creator>NetworkX 2.1</creator>
+      <lastmodified>12/03/2018</lastmodified>
+    </meta>
+    <nodes>
+      <node id="Cortes C,1995,                               MACH LEARN,20,273" label="Cortes C,1995,                               MACH LEARN,20,273">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="7" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+        
+      </node>
+      <node id="Guyon I,2002,                               MACH LEARN,46,389" label="Guyon I,2002,                               MACH LEARN,46,389">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" label="Lichman M,2013,                               UCI MACHINE LEARNING,0,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Bishop C,2006,                               PATTERN RECOGNITION,0,0" label="Bishop C,2006,                               PATTERN RECOGNITION,0,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Haario H,2001,                               BERNOULLI,7,223" label="Haario H,2001,                               BERNOULLI,7,223">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" label="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Breiman L,2001,                               MACH LEARN,45,5" label="Breiman L,2001,                               MACH LEARN,45,5">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="4" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" label="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="4" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Huang G,2015,                               NEURAL NETWORKS,61,32" label="Huang G,2015,                               NEURAL NETWORKS,61,32">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" label="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Huang GB,2006,                               NEUROCOMPUTING,70,489" label="Huang GB,2006,                               NEUROCOMPUTING,70,489">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="4" />
+          <attvalue sfor="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" label="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" label="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" label="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Wang XL,2014,                               NEUROCOMPUTING,128,31" label="Wang XL,2014,                               NEUROCOMPUTING,128,31">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Wozniak M,2014,                               INFORM FUSION,16,3" label="Wozniak M,2014,                               INFORM FUSION,16,3">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" label="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187" label="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419" label="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Hoi S,2006,                               P IEEE COMP SOC C CO,0,2072" label="Hoi S,2006,                               P IEEE COMP SOC C CO,0,2072">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Hoi s C,2008,                               P IEEE C COMP VIS PA,0,1" label="Hoi s C,2008,                               P IEEE C COMP VIS PA,0,1">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Roweis ST,2000,                               SCIENCE,290,2323" label="Roweis ST,2000,                               SCIENCE,290,2323">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Vapnik V,1998,                               STAT LEARNING THEORY,0,0" label="Vapnik V,1998,                               STAT LEARNING THEORY,0,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Clarke B,2009,                               SPRINGER SER STAT,0,1" label="Clarke B,2009,                               SPRINGER SER STAT,0,1">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Friedman JH,2001,                               ANN STAT,29,1189" label="Friedman JH,2001,                               ANN STAT,29,1189">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0" label="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Wu XD,2008,                               KNOWL INF SYST,14,1" label="Wu XD,2008,                               KNOWL INF SYST,14,1">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Yao X,2008,                               GEOMORPHOLOGY,101,572" label="Yao X,2008,                               GEOMORPHOLOGY,101,572">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0" label="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Kohavi R,1995,                               IJCAI-95. Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence,0,1137" label="Kohavi R,1995,                               IJCAI-95. Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence,0,1137">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Valipour M,2013,                               J HYDROL,476,433" label="Valipour M,2013,                               J HYDROL,476,433">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115" label="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="4" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Gravina R,2017,                               INFORM FUSION,35,68" label="Gravina R,2017,                               INFORM FUSION,35,68">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="4" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Kolias C,2016,                               IEEE COMMUN SURV TUT,18,184" label="Kolias C,2016,                               IEEE COMMUN SURV TUT,18,184">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0" label="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Hinton GE,2006,                               SCIENCE,313,504" label="Hinton GE,2006,                               SCIENCE,313,504">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" label="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="3" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Lecun Y,2015,                               NATURE,521,436" label="Lecun Y,2015,                               NATURE,521,436">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Peng HC,2005,                               IEEE T PATTERN ANAL,27,1226" label="Peng HC,2005,                               IEEE T PATTERN ANAL,27,1226">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Bengio Y,2007,                               ADV NEURAL INFORM PR,19,153" label="Bengio Y,2007,                               ADV NEURAL INFORM PR,19,153">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10" label="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Kohavi R,1997,                               ARTIF INTELL,97,273" label="Kohavi R,1997,                               ARTIF INTELL,97,273">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Arandjelovic R,2012,                               PROC CVPR IEEE,0,2911" label="Arandjelovic R,2012,                               PROC CVPR IEEE,0,2911">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" label="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" label="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Szegedy C,2015,                               PROC CVPR IEEE,0,1" label="Szegedy C,2015,                               PROC CVPR IEEE,0,1">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Tan XY,2010,                               IEEE T IMAGE PROCESS,19,1635" label="Tan XY,2010,                               IEEE T IMAGE PROCESS,19,1635">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Dal pozzolo A,2015,                               P INT JOINT C NEUR N,0,1" label="Dal pozzolo A,2015,                               P INT JOINT C NEUR N,0,1">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Maceachren a M,2011,                               2011 IEEE Conference on Visual Analytics Science and Technology,0,181" label="Maceachren a M,2011,                               2011 IEEE Conference on Visual Analytics Science and Technology,0,181">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Blondel VD,2008,                               J STAT MECH-THEORY E,0,0" label="Blondel VD,2008,                               J STAT MECH-THEORY E,0,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Gravina R,2016,                               IEEE T AFFECT COMPUT,7,286" label="Gravina R,2016,                               IEEE T AFFECT COMPUT,7,286">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Hinton GE,2006,                               NEURAL COMPUT,18,1527" label="Hinton GE,2006,                               NEURAL COMPUT,18,1527">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" label="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" label="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Kao JC,2015,                               NAT COMMUN,6,0" label="Kao JC,2015,                               NAT COMMUN,6,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Masse NY,2015,                               J NEUROSCI METH,244,94" label="Masse NY,2015,                               J NEUROSCI METH,244,94">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" label="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" label="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" label="Wu W,2003,                               ADV NEURAL INFORMATI,15,133">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+      <node id="Wu W,2006,                               NEURAL COMPUT,18,80" label="Wu W,2006,                               NEURAL COMPUT,18,80">
+        <attvalues>
+          <attvalue for="0" value="references" />
+          <attvalue for="1" value="2" />
+          <attvalue for="2" value="type" />
+        </attvalues><viz:size value="5.0"/>
+<viz:color b="1" g="179" r="255"/>
+<viz:position x="-10.697842" y="1034.7998" z="0.0"/>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="Cortes C,1995,                               MACH LEARN,20,273" target="Guyon I,2002,                               MACH LEARN,46,389" weight="1" />
+      <edge id="1" source="Cortes C,1995,                               MACH LEARN,20,273" target="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" weight="1" />
+      <edge id="2" source="Cortes C,1995,                               MACH LEARN,20,273" target="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187" weight="1" />
+      <edge id="3" source="Cortes C,1995,                               MACH LEARN,20,273" target="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419" weight="1" />
+      <edge id="4" source="Cortes C,1995,                               MACH LEARN,20,273" target="Breiman L,2001,                               MACH LEARN,45,5" weight="1" />
+      <edge id="5" source="Cortes C,1995,                               MACH LEARN,20,273" target="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0" weight="2" />
+      <edge id="6" source="Cortes C,1995,                               MACH LEARN,20,273" target="Friedman JH,2001,                               ANN STAT,29,1189" weight="1" />
+      <edge id="7" source="Cortes C,1995,                               MACH LEARN,20,273" target="Kohavi R,1995,                               IJCAI-95. Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence,0,1137" weight="1" />
+      <edge id="8" source="Cortes C,1995,                               MACH LEARN,20,273" target="Wu XD,2008,                               KNOWL INF SYST,14,1" weight="1" />
+      <edge id="9" source="Cortes C,1995,                               MACH LEARN,20,273" target="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0" weight="1" />
+      <edge id="10" source="Cortes C,1995,                               MACH LEARN,20,273" target="Yao X,2008,                               GEOMORPHOLOGY,101,572" weight="1" />
+      <edge id="11" source="Cortes C,1995,                               MACH LEARN,20,273" target="Kolias C,2016,                               IEEE COMMUN SURV TUT,18,184" weight="1" />
+      <edge id="12" source="Cortes C,1995,                               MACH LEARN,20,273" target="Valipour M,2013,                               J HYDROL,476,433" weight="1" />
+      <edge id="13" source="Cortes C,1995,                               MACH LEARN,20,273" target="Blondel VD,2008,                               J STAT MECH-THEORY E,0,0" weight="1" />
+      <edge id="14" source="Guyon I,2002,                               MACH LEARN,46,389" target="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" weight="1" />
+      <edge id="15" source="Guyon I,2002,                               MACH LEARN,46,389" target="Peng HC,2005,                               IEEE T PATTERN ANAL,27,1226" weight="1" />
+      <edge id="16" source="Guyon I,2002,                               MACH LEARN,46,389" target="Bengio Y,2007,                               ADV NEURAL INFORM PR,19,153" weight="1" />
+      <edge id="17" source="Guyon I,2002,                               MACH LEARN,46,389" target="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10" weight="1" />
+      <edge id="18" source="Guyon I,2002,                               MACH LEARN,46,389" target="Kohavi R,1997,                               ARTIF INTELL,97,273" weight="1" />
+      <edge id="19" source="Guyon I,2002,                               MACH LEARN,46,389" target="Kolias C,2016,                               IEEE COMMUN SURV TUT,18,184" weight="1" />
+      <edge id="20" source="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" target="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115" weight="1" />
+      <edge id="21" source="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" target="Gravina R,2017,                               INFORM FUSION,35,68" weight="1" />
+      <edge id="22" source="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" target="Huang GB,2006,                               NEUROCOMPUTING,70,489" weight="1" />
+      <edge id="23" source="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" target="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" weight="1" />
+      <edge id="24" source="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="1" />
+      <edge id="25" source="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" target="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0" weight="1" />
+      <edge id="26" source="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" target="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" weight="1" />
+      <edge id="27" source="Lichman M,2013,                               UCI MACHINE LEARNING,0,0" target="Peng HC,2005,                               IEEE T PATTERN ANAL,27,1226" weight="1" />
+      <edge id="28" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Haario H,2001,                               BERNOULLI,7,223" weight="1" />
+      <edge id="29" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" weight="2" />
+      <edge id="30" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0" weight="1" />
+      <edge id="31" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Hinton GE,2006,                               SCIENCE,313,504" weight="1" />
+      <edge id="32" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" weight="1" />
+      <edge id="33" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Lecun Y,2015,                               NATURE,521,436" weight="1" />
+      <edge id="34" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" weight="1" />
+      <edge id="35" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" weight="1" />
+      <edge id="36" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Kao JC,2015,                               NAT COMMUN,6,0" weight="1" />
+      <edge id="37" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Masse NY,2015,                               J NEUROSCI METH,244,94" weight="1" />
+      <edge id="38" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" weight="1" />
+      <edge id="39" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" weight="1" />
+      <edge id="40" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="1" />
+      <edge id="41" source="Bishop C,2006,                               PATTERN RECOGNITION,0,0" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="1" />
+      <edge id="42" source="Haario H,2001,                               BERNOULLI,7,223" target="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" weight="1" />
+      <edge id="43" source="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" target="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" weight="1" />
+      <edge id="44" source="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" target="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" weight="1" />
+      <edge id="45" source="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" target="Kao JC,2015,                               NAT COMMUN,6,0" weight="1" />
+      <edge id="46" source="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" target="Masse NY,2015,                               J NEUROSCI METH,244,94" weight="1" />
+      <edge id="47" source="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" target="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" weight="1" />
+      <edge id="48" source="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" target="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" weight="1" />
+      <edge id="49" source="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="1" />
+      <edge id="50" source="Rasmussen CE,2005,                               ADAPT COMPUT MACH LE,0,1" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="1" />
+      <edge id="51" source="Breiman L,2001,                               MACH LEARN,45,5" target="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" weight="1" />
+      <edge id="52" source="Breiman L,2001,                               MACH LEARN,45,5" target="Huang G,2015,                               NEURAL NETWORKS,61,32" weight="1" />
+      <edge id="53" source="Breiman L,2001,                               MACH LEARN,45,5" target="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" weight="1" />
+      <edge id="54" source="Breiman L,2001,                               MACH LEARN,45,5" target="Huang GB,2006,                               NEUROCOMPUTING,70,489" weight="1" />
+      <edge id="55" source="Breiman L,2001,                               MACH LEARN,45,5" target="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" weight="1" />
+      <edge id="56" source="Breiman L,2001,                               MACH LEARN,45,5" target="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" weight="1" />
+      <edge id="57" source="Breiman L,2001,                               MACH LEARN,45,5" target="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" weight="1" />
+      <edge id="58" source="Breiman L,2001,                               MACH LEARN,45,5" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="1" />
+      <edge id="59" source="Breiman L,2001,                               MACH LEARN,45,5" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="2" />
+      <edge id="60" source="Breiman L,2001,                               MACH LEARN,45,5" target="Clarke B,2009,                               SPRINGER SER STAT,0,1" weight="1" />
+      <edge id="61" source="Breiman L,2001,                               MACH LEARN,45,5" target="Friedman JH,2001,                               ANN STAT,29,1189" weight="2" />
+      <edge id="62" source="Breiman L,2001,                               MACH LEARN,45,5" target="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0" weight="1" />
+      <edge id="63" source="Breiman L,2001,                               MACH LEARN,45,5" target="Wu XD,2008,                               KNOWL INF SYST,14,1" weight="2" />
+      <edge id="64" source="Breiman L,2001,                               MACH LEARN,45,5" target="Yao X,2008,                               GEOMORPHOLOGY,101,572" weight="1" />
+      <edge id="65" source="Breiman L,2001,                               MACH LEARN,45,5" target="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0" weight="1" />
+      <edge id="66" source="Breiman L,2001,                               MACH LEARN,45,5" target="Kohavi R,1995,                               IJCAI-95. Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence,0,1137" weight="1" />
+      <edge id="67" source="Breiman L,2001,                               MACH LEARN,45,5" target="Dal pozzolo A,2015,                               P INT JOINT C NEUR N,0,1" weight="1" />
+      <edge id="68" source="Breiman L,2001,                               MACH LEARN,45,5" target="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10" weight="1" />
+      <edge id="69" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Huang G,2015,                               NEURAL NETWORKS,61,32" weight="1" />
+      <edge id="70" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" weight="1" />
+      <edge id="71" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Huang GB,2006,                               NEUROCOMPUTING,70,489" weight="1" />
+      <edge id="72" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" weight="1" />
+      <edge id="73" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" weight="1" />
+      <edge id="74" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" weight="1" />
+      <edge id="75" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="1" />
+      <edge id="76" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="1" />
+      <edge id="77" source="Chang CC,2011,                               ACM T INTEL SYST TEC,2,0" target="Vapnik V,1998,                               STAT LEARNING THEORY,0,0" weight="1" />
+      <edge id="78" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" weight="3" />
+      <edge id="79" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Huang GB,2006,                               NEUROCOMPUTING,70,489" weight="2" />
+      <edge id="80" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" weight="3" />
+      <edge id="81" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" weight="1" />
+      <edge id="82" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" weight="1" />
+      <edge id="83" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="1" />
+      <edge id="84" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="1" />
+      <edge id="85" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Valipour M,2013,                               J HYDROL,476,433" weight="1" />
+      <edge id="86" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" weight="1" />
+      <edge id="87" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" weight="1" />
+      <edge id="88" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" weight="1" />
+      <edge id="89" source="Huang G,2015,                               NEURAL NETWORKS,61,32" target="Szegedy C,2015,                               PROC CVPR IEEE,0,1" weight="1" />
+      <edge id="90" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Huang GB,2006,                               NEUROCOMPUTING,70,489" weight="2" />
+      <edge id="91" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" weight="3" />
+      <edge id="92" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" weight="1" />
+      <edge id="93" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" weight="1" />
+      <edge id="94" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="1" />
+      <edge id="95" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="1" />
+      <edge id="96" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Valipour M,2013,                               J HYDROL,476,433" weight="1" />
+      <edge id="97" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" weight="1" />
+      <edge id="98" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" weight="1" />
+      <edge id="99" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" weight="1" />
+      <edge id="100" source="Huang GB,2006,                               IEEE T NEURAL NETWOR,17,879" target="Szegedy C,2015,                               PROC CVPR IEEE,0,1" weight="1" />
+      <edge id="101" source="Huang GB,2006,                               NEUROCOMPUTING,70,489" target="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" weight="2" />
+      <edge id="102" source="Huang GB,2006,                               NEUROCOMPUTING,70,489" target="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" weight="2" />
+      <edge id="103" source="Huang GB,2006,                               NEUROCOMPUTING,70,489" target="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" weight="1" />
+      <edge id="104" source="Huang GB,2006,                               NEUROCOMPUTING,70,489" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="2" />
+      <edge id="105" source="Huang GB,2006,                               NEUROCOMPUTING,70,489" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="1" />
+      <edge id="106" source="Huang GB,2006,                               NEUROCOMPUTING,70,489" target="Valipour M,2013,                               J HYDROL,476,433" weight="1" />
+      <edge id="107" source="Huang GB,2006,                               NEUROCOMPUTING,70,489" target="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115" weight="1" />
+      <edge id="108" source="Huang GB,2006,                               NEUROCOMPUTING,70,489" target="Gravina R,2017,                               INFORM FUSION,35,68" weight="1" />
+      <edge id="109" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" weight="1" />
+      <edge id="110" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" weight="1" />
+      <edge id="111" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="1" />
+      <edge id="112" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="1" />
+      <edge id="113" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Valipour M,2013,                               J HYDROL,476,433" weight="1" />
+      <edge id="114" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" weight="1" />
+      <edge id="115" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" weight="1" />
+      <edge id="116" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" weight="1" />
+      <edge id="117" source="Huang GB,2012,                               IEEE T SYST MAN CY B,42,513" target="Szegedy C,2015,                               PROC CVPR IEEE,0,1" weight="1" />
+      <edge id="118" source="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" target="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" weight="1" />
+      <edge id="119" source="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="2" />
+      <edge id="120" source="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="1" />
+      <edge id="121" source="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" target="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115" weight="1" />
+      <edge id="122" source="Liu N,2010,                               IEEE SIGNAL PROC LET,17,754" target="Gravina R,2017,                               INFORM FUSION,35,68" weight="1" />
+      <edge id="123" source="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" target="Wang XL,2014,                               NEUROCOMPUTING,128,31" weight="1" />
+      <edge id="124" source="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="1" />
+      <edge id="125" source="Ojala T,2002,                               IEEE T PATTERN ANAL,24,971" target="Tan XY,2010,                               IEEE T IMAGE PROCESS,19,1635" weight="1" />
+      <edge id="126" source="Wang XL,2014,                               NEUROCOMPUTING,128,31" target="Wozniak M,2014,                               INFORM FUSION,16,3" weight="1" />
+      <edge id="127" source="Wang XL,2014,                               NEUROCOMPUTING,128,31" target="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115" weight="1" />
+      <edge id="128" source="Wang XL,2014,                               NEUROCOMPUTING,128,31" target="Gravina R,2017,                               INFORM FUSION,35,68" weight="1" />
+      <edge id="129" source="Wozniak M,2014,                               INFORM FUSION,16,3" target="Dal pozzolo A,2015,                               P INT JOINT C NEUR N,0,1" weight="1" />
+      <edge id="130" source="Wozniak M,2014,                               INFORM FUSION,16,3" target="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10" weight="1" />
+      <edge id="131" source="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" target="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187" weight="1" />
+      <edge id="132" source="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" target="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419" weight="1" />
+      <edge id="133" source="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" target="Hoi S,2006,                               P IEEE COMP SOC C CO,0,2072" weight="1" />
+      <edge id="134" source="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" target="Hoi s C,2008,                               P IEEE C COMP VIS PA,0,1" weight="1" />
+      <edge id="135" source="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" target="Roweis ST,2000,                               SCIENCE,290,2323" weight="1" />
+      <edge id="136" source="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" target="Vapnik V,1998,                               STAT LEARNING THEORY,0,0" weight="1" />
+      <edge id="137" source="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" target="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0" weight="1" />
+      <edge id="138" source="Duda RO,2012,                               PATTERN CLASSIFICATI,0,0" target="Peng HC,2005,                               IEEE T PATTERN ANAL,27,1226" weight="1" />
+      <edge id="139" source="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187" target="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419" weight="2" />
+      <edge id="140" source="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187" target="Hoi S,2006,                               P IEEE COMP SOC C CO,0,2072" weight="1" />
+      <edge id="141" source="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187" target="Hoi s C,2008,                               P IEEE C COMP VIS PA,0,1" weight="1" />
+      <edge id="142" source="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187" target="Roweis ST,2000,                               SCIENCE,290,2323" weight="1" />
+      <edge id="143" source="Ghosh-dastidar S,2007,                               INTEGR COMPUT-AID E,14,187" target="Vapnik V,1998,                               STAT LEARNING THEORY,0,0" weight="1" />
+      <edge id="144" source="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419" target="Hoi S,2006,                               P IEEE COMP SOC C CO,0,2072" weight="1" />
+      <edge id="145" source="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419" target="Hoi s C,2008,                               P IEEE C COMP VIS PA,0,1" weight="1" />
+      <edge id="146" source="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419" target="Roweis ST,2000,                               SCIENCE,290,2323" weight="1" />
+      <edge id="147" source="Ghosh-dastidar S,2009,                               NEURAL NETWORKS,22,1419" target="Vapnik V,1998,                               STAT LEARNING THEORY,0,0" weight="1" />
+      <edge id="148" source="Hoi S,2006,                               P IEEE COMP SOC C CO,0,2072" target="Hoi s C,2008,                               P IEEE C COMP VIS PA,0,1" weight="2" />
+      <edge id="149" source="Hoi S,2006,                               P IEEE COMP SOC C CO,0,2072" target="Roweis ST,2000,                               SCIENCE,290,2323" weight="2" />
+      <edge id="150" source="Hoi S,2006,                               P IEEE COMP SOC C CO,0,2072" target="Vapnik V,1998,                               STAT LEARNING THEORY,0,0" weight="1" />
+      <edge id="151" source="Hoi s C,2008,                               P IEEE C COMP VIS PA,0,1" target="Roweis ST,2000,                               SCIENCE,290,2323" weight="2" />
+      <edge id="152" source="Hoi s C,2008,                               P IEEE C COMP VIS PA,0,1" target="Vapnik V,1998,                               STAT LEARNING THEORY,0,0" weight="1" />
+      <edge id="153" source="Roweis ST,2000,                               SCIENCE,290,2323" target="Vapnik V,1998,                               STAT LEARNING THEORY,0,0" weight="1" />
+      <edge id="154" source="Clarke B,2009,                               SPRINGER SER STAT,0,1" target="Friedman JH,2001,                               ANN STAT,29,1189" weight="1" />
+      <edge id="155" source="Clarke B,2009,                               SPRINGER SER STAT,0,1" target="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0" weight="1" />
+      <edge id="156" source="Clarke B,2009,                               SPRINGER SER STAT,0,1" target="Wu XD,2008,                               KNOWL INF SYST,14,1" weight="1" />
+      <edge id="157" source="Clarke B,2009,                               SPRINGER SER STAT,0,1" target="Yao X,2008,                               GEOMORPHOLOGY,101,572" weight="1" />
+      <edge id="158" source="Clarke B,2009,                               SPRINGER SER STAT,0,1" target="Kohavi R,1995,                               IJCAI-95. Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence,0,1137" weight="1" />
+      <edge id="159" source="Friedman JH,2001,                               ANN STAT,29,1189" target="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0" weight="1" />
+      <edge id="160" source="Friedman JH,2001,                               ANN STAT,29,1189" target="Wu XD,2008,                               KNOWL INF SYST,14,1" weight="2" />
+      <edge id="161" source="Friedman JH,2001,                               ANN STAT,29,1189" target="Yao X,2008,                               GEOMORPHOLOGY,101,572" weight="1" />
+      <edge id="162" source="Friedman JH,2001,                               ANN STAT,29,1189" target="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0" weight="1" />
+      <edge id="163" source="Friedman JH,2001,                               ANN STAT,29,1189" target="Kohavi R,1995,                               IJCAI-95. Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence,0,1137" weight="1" />
+      <edge id="164" source="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0" target="Wu XD,2008,                               KNOWL INF SYST,14,1" weight="1" />
+      <edge id="165" source="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0" target="Yao X,2008,                               GEOMORPHOLOGY,101,572" weight="2" />
+      <edge id="166" source="Hastie T,2009,                               ELEMENTS STAT LEARNI,0,0" target="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0" weight="1" />
+      <edge id="167" source="Wu XD,2008,                               KNOWL INF SYST,14,1" target="Yao X,2008,                               GEOMORPHOLOGY,101,572" weight="1" />
+      <edge id="168" source="Wu XD,2008,                               KNOWL INF SYST,14,1" target="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0" weight="1" />
+      <edge id="169" source="Wu XD,2008,                               KNOWL INF SYST,14,1" target="Kohavi R,1995,                               IJCAI-95. Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence,0,1137" weight="1" />
+      <edge id="170" source="Yao X,2008,                               GEOMORPHOLOGY,101,572" target="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0" weight="1" />
+      <edge id="171" source="Chou JS,2016,                               J COMPUT CIVIL ENG,30,0" target="Kohavi R,1995,                               IJCAI-95. Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence,0,1137" weight="1" />
+      <edge id="172" source="Valipour M,2013,                               J HYDROL,476,433" target="Kolias C,2016,                               IEEE COMMUN SURV TUT,18,184" weight="1" />
+      <edge id="173" source="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115" target="Gravina R,2017,                               INFORM FUSION,35,68" weight="4" />
+      <edge id="174" source="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115" target="Gravina R,2016,                               IEEE T AFFECT COMPUT,7,286" weight="2" />
+      <edge id="175" source="Fortino G,2013,                               IEEE T HUM-MACH SYST,43,115" target="Kohavi R,1997,                               ARTIF INTELL,97,273" weight="1" />
+      <edge id="176" source="Gravina R,2017,                               INFORM FUSION,35,68" target="Gravina R,2016,                               IEEE T AFFECT COMPUT,7,286" weight="2" />
+      <edge id="177" source="Gravina R,2017,                               INFORM FUSION,35,68" target="Kohavi R,1997,                               ARTIF INTELL,97,273" weight="1" />
+      <edge id="178" source="Kolias C,2016,                               IEEE COMMUN SURV TUT,18,184" target="Bengio Y,2007,                               ADV NEURAL INFORM PR,19,153" weight="1" />
+      <edge id="179" source="Kolias C,2016,                               IEEE COMMUN SURV TUT,18,184" target="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10" weight="1" />
+      <edge id="180" source="Kolias C,2016,                               IEEE COMMUN SURV TUT,18,184" target="Kohavi R,1997,                               ARTIF INTELL,97,273" weight="1" />
+      <edge id="181" source="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0" target="Hinton GE,2006,                               SCIENCE,313,504" weight="1" />
+      <edge id="182" source="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0" target="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" weight="1" />
+      <edge id="183" source="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0" target="Lecun Y,2015,                               NATURE,521,436" weight="1" />
+      <edge id="184" source="Cover t M,2012,                               ELEMENTS INFORM THEO,0,0" target="Peng HC,2005,                               IEEE T PATTERN ANAL,27,1226" weight="1" />
+      <edge id="185" source="Hinton GE,2006,                               SCIENCE,313,504" target="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" weight="1" />
+      <edge id="186" source="Hinton GE,2006,                               SCIENCE,313,504" target="Lecun Y,2015,                               NATURE,521,436" weight="1" />
+      <edge id="187" source="Hinton GE,2006,                               SCIENCE,313,504" target="Bengio Y,2007,                               ADV NEURAL INFORM PR,19,153" weight="1" />
+      <edge id="188" source="Hinton GE,2006,                               SCIENCE,313,504" target="Hinton GE,2006,                               NEURAL COMPUT,18,1527" weight="1" />
+      <edge id="189" source="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" target="Lecun Y,2015,                               NATURE,521,436" weight="1" />
+      <edge id="190" source="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" target="Arandjelovic R,2012,                               PROC CVPR IEEE,0,2911" weight="1" />
+      <edge id="191" source="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" target="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" weight="2" />
+      <edge id="192" source="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" target="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" weight="2" />
+      <edge id="193" source="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" target="Szegedy C,2015,                               PROC CVPR IEEE,0,1" weight="2" />
+      <edge id="194" source="Krizhevsky A,2012,                               ADV NEUR INFORM PROC,25,1097" target="Tan XY,2010,                               IEEE T IMAGE PROCESS,19,1635" weight="1" />
+      <edge id="195" source="Bengio Y,2007,                               ADV NEURAL INFORM PR,19,153" target="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10" weight="1" />
+      <edge id="196" source="Bengio Y,2007,                               ADV NEURAL INFORM PR,19,153" target="Kohavi R,1997,                               ARTIF INTELL,97,273" weight="1" />
+      <edge id="197" source="Bengio Y,2007,                               ADV NEURAL INFORM PR,19,153" target="Hinton GE,2006,                               NEURAL COMPUT,18,1527" weight="1" />
+      <edge id="198" source="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10" target="Kohavi R,1997,                               ARTIF INTELL,97,273" weight="1" />
+      <edge id="199" source="Hall M,2009,                               SIGKDD EXPLORATIONS,11,10" target="Dal pozzolo A,2015,                               P INT JOINT C NEUR N,0,1" weight="1" />
+      <edge id="200" source="Kohavi R,1997,                               ARTIF INTELL,97,273" target="Gravina R,2016,                               IEEE T AFFECT COMPUT,7,286" weight="1" />
+      <edge id="201" source="Arandjelovic R,2012,                               PROC CVPR IEEE,0,2911" target="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" weight="1" />
+      <edge id="202" source="Arandjelovic R,2012,                               PROC CVPR IEEE,0,2911" target="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" weight="1" />
+      <edge id="203" source="Arandjelovic R,2012,                               PROC CVPR IEEE,0,2911" target="Szegedy C,2015,                               PROC CVPR IEEE,0,1" weight="1" />
+      <edge id="204" source="Arandjelovic R,2012,                               PROC CVPR IEEE,0,2911" target="Tan XY,2010,                               IEEE T IMAGE PROCESS,19,1635" weight="1" />
+      <edge id="205" source="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" target="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" weight="2" />
+      <edge id="206" source="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" target="Szegedy C,2015,                               PROC CVPR IEEE,0,1" weight="2" />
+      <edge id="207" source="Eidinger E,2014,                               IEEE T INF FOREN SEC,9,2170" target="Tan XY,2010,                               IEEE T IMAGE PROCESS,19,1635" weight="1" />
+      <edge id="208" source="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" target="Szegedy C,2015,                               PROC CVPR IEEE,0,1" weight="2" />
+      <edge id="209" source="Levi GIL,2015,                               2015 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),0,34" target="Tan XY,2010,                               IEEE T IMAGE PROCESS,19,1635" weight="1" />
+      <edge id="210" source="Szegedy C,2015,                               PROC CVPR IEEE,0,1" target="Tan XY,2010,                               IEEE T IMAGE PROCESS,19,1635" weight="1" />
+      <edge id="211" source="Dal pozzolo A,2015,                               P INT JOINT C NEUR N,0,1" target="Maceachren a M,2011,                               2011 IEEE Conference on Visual Analytics Science and Technology,0,181" weight="1" />
+      <edge id="212" source="Hinton GE,2006,                               NEURAL COMPUT,18,1527" target="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" weight="1" />
+      <edge id="213" source="Hinton GE,2006,                               NEURAL COMPUT,18,1527" target="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" weight="1" />
+      <edge id="214" source="Hinton GE,2006,                               NEURAL COMPUT,18,1527" target="Kao JC,2015,                               NAT COMMUN,6,0" weight="1" />
+      <edge id="215" source="Hinton GE,2006,                               NEURAL COMPUT,18,1527" target="Masse NY,2015,                               J NEUROSCI METH,244,94" weight="1" />
+      <edge id="216" source="Hinton GE,2006,                               NEURAL COMPUT,18,1527" target="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" weight="1" />
+      <edge id="217" source="Hinton GE,2006,                               NEURAL COMPUT,18,1527" target="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" weight="1" />
+      <edge id="218" source="Hinton GE,2006,                               NEURAL COMPUT,18,1527" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="1" />
+      <edge id="219" source="Hinton GE,2006,                               NEURAL COMPUT,18,1527" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="1" />
+      <edge id="220" source="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" target="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" weight="2" />
+      <edge id="221" source="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" target="Kao JC,2015,                               NAT COMMUN,6,0" weight="2" />
+      <edge id="222" source="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" target="Masse NY,2015,                               J NEUROSCI METH,244,94" weight="2" />
+      <edge id="223" source="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" target="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" weight="2" />
+      <edge id="224" source="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" target="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" weight="2" />
+      <edge id="225" source="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="2" />
+      <edge id="226" source="Dangi S,2011,                               I IEEE EMBS C NEUR E,0,609" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="2" />
+      <edge id="227" source="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" target="Kao JC,2015,                               NAT COMMUN,6,0" weight="2" />
+      <edge id="228" source="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" target="Masse NY,2015,                               J NEUROSCI METH,244,94" weight="2" />
+      <edge id="229" source="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" target="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" weight="2" />
+      <edge id="230" source="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" target="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" weight="2" />
+      <edge id="231" source="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="2" />
+      <edge id="232" source="Jarosiewicz B,2015,                               SCI TRANSL MED,7,0" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="2" />
+      <edge id="233" source="Kao JC,2015,                               NAT COMMUN,6,0" target="Masse NY,2015,                               J NEUROSCI METH,244,94" weight="2" />
+      <edge id="234" source="Kao JC,2015,                               NAT COMMUN,6,0" target="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" weight="2" />
+      <edge id="235" source="Kao JC,2015,                               NAT COMMUN,6,0" target="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" weight="2" />
+      <edge id="236" source="Kao JC,2015,                               NAT COMMUN,6,0" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="2" />
+      <edge id="237" source="Kao JC,2015,                               NAT COMMUN,6,0" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="2" />
+      <edge id="238" source="Masse NY,2015,                               J NEUROSCI METH,244,94" target="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" weight="2" />
+      <edge id="239" source="Masse NY,2015,                               J NEUROSCI METH,244,94" target="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" weight="2" />
+      <edge id="240" source="Masse NY,2015,                               J NEUROSCI METH,244,94" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="2" />
+      <edge id="241" source="Masse NY,2015,                               J NEUROSCI METH,244,94" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="2" />
+      <edge id="242" source="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" target="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" weight="2" />
+      <edge id="243" source="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="2" />
+      <edge id="244" source="Nuyujukian P,2015,                               IEEE T BIO-MED ENG,62,21" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="2" />
+      <edge id="245" source="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" target="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" weight="2" />
+      <edge id="246" source="Shanechi MM,2016,                               PLOS COMPUT BIOL,12,0" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="2" />
+      <edge id="247" source="Wu W,2003,                               ADV NEURAL INFORMATI,15,133" target="Wu W,2006,                               NEURAL COMPUT,18,80" weight="2" />
+    </edges>
+  </graph>
+</gexf>

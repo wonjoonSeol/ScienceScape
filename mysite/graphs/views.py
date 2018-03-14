@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.conf import settings
 from django.contrib.auth import logout
+import os
 from django.contrib.auth import authenticate, login
 
 # BE CAREFUL OF REQUEST METHODS
@@ -37,10 +38,33 @@ def home(request):
 			print("Form not Valid")
 	else:
 		form = UploadFileForm()
+	
+	files = ""
+	if request.user.is_authenticated:
+		files = getAllFilesForUser(request.user.username)
+		
+	return render(request, 'index.html', {'upload': form,'reg_form' : Rform, 'fpath':"/userFiles/arctic.gexf", 'filename': "Example", 'usersFiles' : files })
 
-	return render(request, 'index.html', {'upload': form,'reg_form' : Rform, 'fpath':"/userFiles/arctic.gexf", 'filename': "Example"})
 
+def editFields(request, filename):
 
+	APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	folder = "static/userFiles/{x}/{y}".format(x = request.user.username, y = filename)
+	filePath = os.path.join(APP_DIR, folder)
+	
+	return redirect('fields', filePath)
+
+def deleteFile(request, filename):
+	APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	folder = "static/userFiles/{x}/{y}".format(x = request.user.username, y = filename)
+	filePath = os.path.join(APP_DIR, folder)
+	os.remove(filePath)
+	existing = Mappings.objects.filter(FILE_LINK = filePath)
+	if existing:
+		existing.delete()
+		
+	return redirect('/')
+	
 def fieldForm(request, filePath):
 
 	form = loadFromFilePath(filePath)
@@ -50,16 +74,16 @@ def fieldForm(request, filePath):
 			formValid = True
 
 			for i in range (0, form['count']):
-				#print("key: {k} is {v}".format(k = request.POST.get('form-{n}-Name'.format(n = i)), v = request.POST.get('form-{n}-Key'.format(n = i))))
+				print("key: {k} is {v}".format(k = request.POST.get('form-{n}-Name'.format(n = i)), v = request.POST.get('form-{n}-Key'.format(n = i))))
 				data[request.POST.get('form-{n}-Name'.format(n = i))] = request.POST.get('form-{n}-Key'.format(n = i))
 				for k in data:
-					if not data[k]:
+					if not k:
 						msg = "Not all fields have been defined"
 						formValid=False
 
 			if formValid:
 				refreshDataBase(data, filePath)
-				return redirect('loadGraph', "INITIAL")
+				return redirect('/')
 
 	if filePath:
 		fname =  str(filePath)
