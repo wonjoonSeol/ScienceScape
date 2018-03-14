@@ -109,6 +109,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATIC_USER_FILES_DIRECTORY = "static/userFiles"
+PUBLIC_USER_FILES_DIRECTORY = "static/userFiles/Public"
 
 # Login redirect information
 LOGIN_REDIRECT_URL = '/graphs'
