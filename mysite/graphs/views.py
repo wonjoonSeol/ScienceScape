@@ -143,3 +143,6 @@ def loginProcess(request):
 
 def account(request):
 	return render(request, 'account.html')
+
+def graphs2(request):
+	return render(request, 'graphs2.html')

@@ -2,6 +2,8 @@
   COLOR PALETTE
 ********************/
 
+
+
 /* TODO: Complete Color Palette and replace hard coded colours with variables
          Use Pigment: Find Colors to do so */
 
@@ -58,7 +60,7 @@ html h1 {
   font-weight:100 ;
   font-style: italic;
   text-shadow: 2px 2px 5px #780000;
-  font-size: 4em;
+  font-size: 3em;
 }
 /*
 h1, h2, h3, h4, h5, h6 {
@@ -100,7 +102,7 @@ a {
 }
 
 footer a {
-  color: blue;
+  color: white;
 }
 
 /* NAVIGATION & MENU */
@@ -308,21 +310,6 @@ nav .dropdown-content  a {
   background-color: #0D47A1;
 }
 
-/* UPLOAD BOX */
-
-label[for="id_myFile"] {
-  /* display: none !important; */
-}
-
-/*******************
-  Field Selctor Page
-********************/
-
-.field-selector-header,
-.field-selector-footer {
-      background: #ccccccb3;
-}
-
 /*******************
   About Page
 ********************/
@@ -376,4 +363,60 @@ label[for="id_myFile"] {
 
 .account-card {
   color: black;
+}
+
+
+/*******************
+  GRAPHS PAGE
+********************/
+
+.graphs-page .card {
+  /* background-color: transparent; */
+  color: black;
+}
+
+.graphs-page h5 {
+  font-weight: lighter;
+  font-style: italic;
+}
+
+.graph-container {
+  height: 500px;
+}
+
+.graphs-page .btn {
+  margin: 4px;
+  width: 275px;
+}
+
+#graph-node-search {
+  margin: 0 12%;
+}
+
+input[type=search]:focus {
+  border-bottom: 1px solid #0D47A1 !important;
+  -webkit-box-shadow: 0 1px 0 0 #0D47A1 !important;
+  box-shadow: 0 1px 0 0 #0D47A1 !important;
+}
+
+input[type=search]{
+  width: 82% !important;
+  padding-left: 50px !important;
+}
+
+.toggle-graph-edges {
+  text-transform: uppercase;
+  color: #0D47A1;
+  margin-top: 5px;
+}
+
+.toggle-graph-edges label {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.graph-edges-container{
+  border: 1px solid blue;
+  width: 275px;
+  padding: 0 2rem;
 }

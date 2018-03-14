@@ -36,5 +36,6 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
     url(r'^admin/', admin.site.urls),
     url(r'^login_on_home/$', views.loginProcess, name='login_on_home'),
-    url(r'^account/$', views.account, name='account')
+    url(r'^account/$', views.account, name='account'),
+    url(r'^graphs2/$', views.graphs2, name='graphs2')
 ]
