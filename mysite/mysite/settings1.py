@@ -11,11 +11,13 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import django_heroku
+import dj_database_url
+import psycopg2
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -24,10 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'y)a!q*z!2+o4=rw(fft_hnh5nf*$2p*4)9r#ptozprji4ccm+x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -80,14 +79,12 @@ MEDIA_URL = '/media/'
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
+#DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = 'postgres://fymhuaixuttaky:bd01de5c5ba9a57c40bb3ee84793c7ba649b0bacb6d5d8b4d8c23559d6994495@ec2-54-197-254-189.compute-1.amazonaws.com:5432/d11cvaqi49gegm'
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -129,5 +126,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static')]
 
-
-
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
