@@ -11,7 +11,10 @@ from corpus_parsed_overview import print_to_overview
 
 class TestCorpusParsedOverview(unittest.TestCase):
 
-
+    """
+    This test tests that when there are no resources to be parsed,
+    no output folder is created.
+    """
     def test_get_no_articles_for_empty_resource(self):
 
         dir = os.path.dirname(os.path.dirname(__file__))
@@ -19,6 +22,10 @@ class TestCorpusParsedOverview(unittest.TestCase):
 
         self.assertEqual(0, get_no_articles(parsed_data_folder, "span_name"))
 
+    """
+    This test tests that the get_no_articles statistics method
+    returns a correct value for fifty articles to be parsed.
+    """
     def test_get_no_articles_for_fifty_articles(self):
 
         dir = os.path.dirname(os.path.dirname(__file__))
@@ -26,6 +33,10 @@ class TestCorpusParsedOverview(unittest.TestCase):
 
         self.assertEqual(50, get_no_articles(parsed_data_folder, "span_name_2"))
 
+    """
+    This test tests that upon calling get_stats,
+    the statistics returned are right.
+    """
     def test_get_stats_for_articles_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         parsed_data_folder = os.path.join(dir, "testFiles/parsed_data")
@@ -34,6 +45,10 @@ class TestCorpusParsedOverview(unittest.TestCase):
         result = get_stats(parsed_data_folder, "span_name_2", "articles.dat")
         self.assertEqual(True, result[2] == 50 and result[3] == 50)
 
+    """
+    This test tests that calling statistics for a real references.dat file
+    yields a correct output.
+    """
     def test_get_stats_for_references_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         parsed_data_folder = os.path.join(dir, "testFiles/parsed_data")
@@ -43,6 +58,9 @@ class TestCorpusParsedOverview(unittest.TestCase):
         result = get_stats(parsed_data_folder, "span_name_2", "references.dat")
         self.assertEqual(True, result[2] == 2379 and result[3] == 2463)
 
+    """
+    This test tests that printing to overview works without data corruption.
+    """
     def test_print_to_overview(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         os.makedirs(os.path.join(dir, "testFiles/reports_for_overview"))
