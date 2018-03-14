@@ -29,10 +29,10 @@ def loadFromFilePath(file_path):
 		known = []
 		for header in in_database:
 			known.append(in_database[header])
-		formSet = produceFormSet(in_database, known)
+		formSet = produce_form_set(in_database, known)
 	else:
 		headers = detectHeadersFromAndRemove(dictionary)
-		formSet = produceFormSet(headers['headers'], headers['unknownValues'])
+		formSet = produce_form_set(headers['headers'], headers['unknownValues'])
 	return formSet
 
 """ Return True if a file is .csv.

@@ -19,7 +19,7 @@ def home(request):
 	attemptDatabaseTest()
 	testLoadFilesForUser()
 	print("Username is: {x}".format(x = request.user.username))
-	Rform = UserRegForm()
+	Rform = UserRegistrationForm()
 
 	if request.method == 'POST' and request.FILES['myFile']:
 		form = UploadFileForm(request.POST, request.FILES)
@@ -37,11 +37,11 @@ def home(request):
 			print("Form not Valid")
 	else:
 		form = UploadFileForm()
-	
+
 	files = ""
 	if request.user.is_authenticated:
 		files = getAllFilesForUser(request.user.username)
-		
+
 	return render(request, 'index.html', {'upload': form,'reg_form' : Rform, 'fpath':"/userFiles/arctic.gexf", 'filename': "Example", 'usersFiles' : files })
 
 
@@ -50,7 +50,7 @@ def editFields(request, filename):
 	APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 	folder = "static/userFiles/{x}/{y}".format(x = request.user.username, y = filename)
 	filePath = os.path.join(APP_DIR, folder)
-	
+
 	return redirect('fields', filePath)
 
 def deleteFile(request, filename):
@@ -61,9 +61,9 @@ def deleteFile(request, filename):
 	existing = Mappings.objects.filter(FILE_LINK = filePath)
 	if existing:
 		existing.delete()
-		
+
 	return redirect('/')
-	
+
 def fieldForm(request, filePath):
 
 	form = loadFromFilePath(filePath)
@@ -126,7 +126,7 @@ def loadGraph(request, filePath):
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
             formData = form.cleaned_data
             username = formData['username']
@@ -142,7 +142,7 @@ def register(request):
                 raise forms.ValidationError('This user/pswd combination already exists')
 
     else:
-        form = UserRegForm()
+        form = UserRegistrationForm()
 
     return render(request, 'mysite/register.html', {'form' : form})
 
