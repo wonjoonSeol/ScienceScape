@@ -8,12 +8,8 @@ sys.path.append(lib_path)
 from commands import *
 
 class DatabaseTestCase(TestCase):
-    def attemptDatabaseTest(self):
-    	if isFormDataStoredInDatabase():
-    		isDataRetrievable()
-    	#doesDatabaseReset()
 
-    def isFormDataStoredInDatabase(self):
+    def test_form_data_is_stored_in_database(self):
     	fPath = "TESTFILEPATH"
     	keyValuePair = dict(Key1 = "Value1", Key2 = "Value1", Key3 = "Value1", Key4 = "Value1", Key5 = "Value1")
 
@@ -21,56 +17,41 @@ class DatabaseTestCase(TestCase):
 
     	mapping = Mappings.objects.filter(FILE_LINK = fPath)
     	dictionary = dict()
+
+        result = False
+
     	if mapping:
     		for k in mapping:
     			dictionary[k.TRUE_NAME] = k.FILE_NAME
     		if dictionary == keyValuePair:
     			mapping.delete()
-    			print("Data store passed.")
-    			return True
+    			result = True
     		else:
-    			print("Data store failed. Data was stored but not in the correct format")
     			mapping.delete()
-    			return False
-    	else:
-    		print("Data store failed. Data was not stored at all")
-    		return False
 
+        assertEqual(True, result)
 
-    def isDataRetrievable(self):
+    def test_data_is_retrievable(self):
     	keyValuePair = dict(Key1="Value1", Key2="Value1", Key3="Value1", Key4="Value1", Key5="Value1")
     	fPath = "TESTPATH"
     	refresh_database(keyValuePair, fPath)
     	retrieval = retrieveFromDataBase(fPath)
+        result = False
+
     	if retrieval == keyValuePair:
-    		print("Data retrieval passed")
     		mapping = Mappings.objects.filter(FILE_LINK = fPath)
     		mapping.delete()
-    		return True
+    		result = True
     	else:
-    		print("Data retrieval failed")
     		mapping = Mappings.objects.filter(FILE_LINK = fPath)
     		mapping.delete()
-    		return False
+        assertEqual(True, result)
 
-
-    def doesDatabaseReset(self):
+    def test_database_resets(self):
     	mappings = Mappings.objects.all()
+        result = False
     	if mappings:
     		resetDatabase()
-    		if Mappings.objects.all():
-    			print("Database reset failed as there are still Mapping objects in the Database.")
-    			return False
-    		else:
-    			print("Database reset passed.")
-    			return True
-    	else:
-    		print("Cannot perform test on empty Database.")
-    		return None
-
-
-    def testLoadFilesForUser(self):
-        name = "saadman"
-    	files = get_all_user_files(name)
-    	for f in files:
-    		print(f)
+    		if not Mappings.objects.all():
+                result = True
+        assertEqual(True, result)
