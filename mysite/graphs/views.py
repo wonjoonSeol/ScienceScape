@@ -14,7 +14,6 @@ import os
 from django.contrib.auth import authenticate, login
 
 # BE CAREFUL OF REQUEST METHODS
-
 def home(request):
 
 	attemptDatabaseTest()
