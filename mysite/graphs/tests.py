@@ -65,8 +65,6 @@ def doesDatabaseReset():
 
 
 def testLoadFilesForUser(name = "saadman"):
-	APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-	folder = os.path.join(APP_DIR, "static/userFiles/{x}".format(x = name))
-	files = getAllFilesForUser(folder)
+	files = getAllFilesForUser(name)
 	for f in files:
 		print(f)

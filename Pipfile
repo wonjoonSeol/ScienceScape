@@ -1,0 +1,27 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+gunicorn = "*"
+numpy = "*"
+matplotlib = "*"
+networkx = "*"
+"psycopg2-binary" = "*"
+django = "*"
+dj-database-url = "*"
+django-heroku = "*"
+whitenoise = "*"
+
+
+[dev-packages]
+
+
+
+[requires]
+
+python_version = "3.6"

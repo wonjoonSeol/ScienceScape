@@ -46,20 +46,88 @@
 <script src="../src/misc/sigma.misc.bindDOMEvents.js"></script>
 <script src="../src/misc/sigma.misc.drawHovers.js"></script>
 <!-- END SIGMA IMPORTS -->
-<div id="container">
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   <style>
     #graph-container {
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
+       height: 100%;
+   	 width: 100%;
       position: absolute;
     }
+    
+        #graph-container2 {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+       height: 100%;
+   	 width: 100%;
+      position: absolute;
+    }
+    
+    .panel-body{
+    height: 100%;
+   	 width: 50%;
+    
+    }
   </style>
-  <div id="graph-container"></div>
-</div>
+  
+ <div class="row" >
+ 
+	<div class="col-sm-6">
+	
+		<div class="panel panel-danger "> 
+			<div class="panel-heading">
+				BEFORE SPATIALIZATION
+			</div>
+		
+			<div class="panel-body">
+					<div id="graph-container2"></div>
+			</div>
+			
+		</div>
+	
+	
+	</div>
+	
+	<div class="col-sm-6">
+	
+		<div class="panel panel-warning"> 
+			<div class="panel-heading">
+				AFTER SPATIALIZATION
+			</div>
+			
+			<div class="panel-body">
+					<div id="graph-container"></div>
+			</div>
+		
+		</div>
+	
+	
+	</div>
+	
+	
+</div> 
+  
+
 <script src="../plugins/sigma.layout.forceAtlas2/worker.js"></script>
 <script src="../plugins/sigma.layout.forceAtlas2/supervisor.js"></script>
+
+<script src="../plugins/sigma.parsers.gexf/gexf-parser.js"></script>
+<script src="../plugins/sigma.parsers.gexf/sigma.parsers.gexf.js"></script>
+
 <script>
 /**
  * Just a simple example to show how to use the sigma.layout.forceAtlas2
@@ -70,14 +138,21 @@
  * links is stronger inside the clusters. So, we expect the algorithm to
  * regroup the nodes of each cluster.
  */
+ 
+ /*
+	 N number of nodes
+	 d repulsive force (distance): how far apart clusters are from each other
+	 c is the number of clusters
+ */
 var i,
     s,
     o,
     N = 1000,
     E = 5000,
     C = 5,
-    d = 0.5,
+    d = .9,
     cs = [],
+    
     g = {
       nodes: [],
       edges: []
@@ -123,14 +198,166 @@ for (i = 0; i < E; i++) {
   }
 }
 
-s = new sigma({
-  graph: g,
+
+
+/*var s = new sigma(
+{ graph: g,
   container: 'graph-container',
   settings: {
     drawEdges: false
+    
   }
 });
 
-// Start the ForceAtlas2 algorithm:
-s.startForceAtlas2({worker: true, barnesHutOptimize: false});
+sigma.parsers.gexf('./data/arctic.gexf', s);
+
+*/
+sigma.classes.graph.addMethod('neighbors', function(nodeId) {
+    var k,
+        neighbors = {},
+        index = this.allNeighborsIndex[nodeId] || {};
+
+    for (k in index)
+      neighbors[k] = this.nodesIndex[k];
+
+    return neighbors;
+  });
+
+sigma.parsers.gexf(
+    './data/standard_graph.gexf',
+    {container: 'graph-container2'},
+    function(s) {
+      // We first need to save the original colors of our
+      // nodes and edges, like this:
+      s.graph.nodes().forEach(function(n) {
+        n.originalColor = n.color;
+      });
+      s.graph.edges().forEach(function(e) {
+        e.originalColor = e.color;
+      });
+
+      // When a node is clicked, we check for each node
+      // if it is a neighbor of the clicked one. If not,
+      // we set its color as grey, and else, it takes its
+      // original color.
+      // We do the same for the edges, and we only keep
+      // edges that have both extremities colored.
+      s.bind('clickNode', function(e) {
+        var nodeId = e.data.node.id,
+            toKeep = s.graph.neighbors(nodeId);
+        toKeep[nodeId] = e.data.node;
+
+        s.graph.nodes().forEach(function(n) {
+          if (toKeep[n.id])
+            n.color = n.originalColor;
+          else
+            n.color = '#eee';
+        });
+
+        s.graph.edges().forEach(function(e) {
+          if (toKeep[e.source] && toKeep[e.target])
+            e.color = e.originalColor;
+          else
+            e.color = '#eee';
+        });
+
+        // Since the data has been modified, we need to
+        // call the refresh method to make the colors
+        // update effective.
+        s.refresh();
+      });
+
+      // When the stage is clicked, we just color each
+      // node and edge with its original color.
+      s.bind('clickStage', function(e) {
+        s.graph.nodes().forEach(function(n) {
+          n.color = n.originalColor;
+        });
+
+        s.graph.edges().forEach(function(e) {
+          e.color = e.originalColor;
+        });
+
+        // Same as in the previous event:
+        s.refresh();
+      });
+    }
+);
+
+sigma.parsers.gexf(
+    './data/standard_graph.gexf',
+    {container: 'graph-container', 
+    
+      settings: {
+    drawEdges: false
+    
+  }
+  
+  },
+    function(s) {
+      // We first need to save the original colors of our
+      // nodes and edges, like this:
+      s.graph.nodes().forEach(function(n) {
+        n.originalColor = n.color;
+      });
+      s.graph.edges().forEach(function(e) {
+        e.originalColor = e.color;
+      });
+
+      // When a node is clicked, we check for each node
+      // if it is a neighbor of the clicked one. If not,
+      // we set its color as grey, and else, it takes its
+      // original color.
+      // We do the same for the edges, and we only keep
+      // edges that have both extremities colored.
+      s.bind('clickNode', function(e) {
+        var nodeId = e.data.node.id,
+            toKeep = s.graph.neighbors(nodeId);
+        toKeep[nodeId] = e.data.node;
+
+        s.graph.nodes().forEach(function(n) {
+          if (toKeep[n.id])
+            n.color = n.originalColor;
+          else
+            n.color = '#eee';
+        });
+
+        s.graph.edges().forEach(function(e) {
+          if (toKeep[e.source] && toKeep[e.target])
+            e.color = e.originalColor;
+          else
+            e.color = '#eee';
+        });
+
+        // Since the data has been modified, we need to
+        // call the refresh method to make the colors
+        // update effective.
+        s.refresh();
+      });
+
+      // When the stage is clicked, we just color each
+      // node and edge with its original color.
+      s.bind('clickStage', function(e) {
+        s.graph.nodes().forEach(function(n) {
+          n.color = n.originalColor;
+        });
+
+        s.graph.edges().forEach(function(e) {
+          e.color = e.originalColor;
+        });
+
+        // Same as in the previous event:
+        s.refresh();
+      
+      });
+     
+   //  s.startForceAtlas2({worker: true, barnesHutOptimize: false});
+  
+    }
+);
+
+
+  
+      
+
 </script>
