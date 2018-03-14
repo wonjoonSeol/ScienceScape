@@ -14,18 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-#from django.conf.urls import include
-#from django.conf.urls import path, register_converter
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from graphs import views
 from . import converters
 
-#register_converter(converters.FilePath, 'fPath')
-
+#url('^$', views.index, name='index')
+# graphs index -> home
 urlpatterns = [
-   # path('graphs/', include('graphs.urls')),
-   # path('admin/', admin.site.urls),
     url(r'^$', views.home, name='home'),
     url(r'^graphs/$', views.home, name='redirectToLoggedIn'),
     url(r'^addFields/(.*)', views.fieldForm, name='fields'),
