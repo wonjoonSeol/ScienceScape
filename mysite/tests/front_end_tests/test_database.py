@@ -1,0 +1,76 @@
+import os
+import sys
+from django.test import TestCase
+
+lib_path = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'graphs'))
+sys.path.append(lib_path)
+
+from commands import *
+
+class DatabaseTestCase(TestCase):
+    def attemptDatabaseTest(self):
+    	if isFormDataStoredInDatabase():
+    		isDataRetrievable()
+    	#doesDatabaseReset()
+
+    def isFormDataStoredInDatabase(self):
+    	fPath = "TESTFILEPATH"
+    	keyValuePair = dict(Key1 = "Value1", Key2 = "Value1", Key3 = "Value1", Key4 = "Value1", Key5 = "Value1")
+
+    	refresh_database(keyValuePair, fPath)
+
+    	mapping = Mappings.objects.filter(FILE_LINK = fPath)
+    	dictionary = dict()
+    	if mapping:
+    		for k in mapping:
+    			dictionary[k.TRUE_NAME] = k.FILE_NAME
+    		if dictionary == keyValuePair:
+    			mapping.delete()
+    			print("Data store passed.")
+    			return True
+    		else:
+    			print("Data store failed. Data was stored but not in the correct format")
+    			mapping.delete()
+    			return False
+    	else:
+    		print("Data store failed. Data was not stored at all")
+    		return False
+
+
+    def isDataRetrievable(self):
+    	keyValuePair = dict(Key1="Value1", Key2="Value1", Key3="Value1", Key4="Value1", Key5="Value1")
+    	fPath = "TESTPATH"
+    	refresh_database(keyValuePair, fPath)
+    	retrieval = retrieveFromDataBase(fPath)
+    	if retrieval == keyValuePair:
+    		print("Data retrieval passed")
+    		mapping = Mappings.objects.filter(FILE_LINK = fPath)
+    		mapping.delete()
+    		return True
+    	else:
+    		print("Data retrieval failed")
+    		mapping = Mappings.objects.filter(FILE_LINK = fPath)
+    		mapping.delete()
+    		return False
+
+
+    def doesDatabaseReset(self):
+    	mappings = Mappings.objects.all()
+    	if mappings:
+    		resetDatabase()
+    		if Mappings.objects.all():
+    			print("Database reset failed as there are still Mapping objects in the Database.")
+    			return False
+    		else:
+    			print("Database reset passed.")
+    			return True
+    	else:
+    		print("Cannot perform test on empty Database.")
+    		return None
+
+
+    def testLoadFilesForUser(self):
+        name = "saadman"
+    	files = get_all_user_files(name)
+    	for f in files:
+    		print(f)
