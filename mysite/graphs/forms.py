@@ -2,7 +2,7 @@ from django import forms
 from django.forms import formset_factory
 
 class UploadFileForm(forms.Form):
-    myFile = forms.FileField(label = '')
+    file = forms.FileField(label = '')
 
 class UserRegistrationForm(forms.Form):
     username = forms.CharField(

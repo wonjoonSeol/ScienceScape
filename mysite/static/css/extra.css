@@ -310,7 +310,7 @@ nav .dropdown-content  a {
 
 /* UPLOAD BOX */
 
-label[for="id_myFile"] {
+label[for="id_file"] {
   /* display: none !important; */
 }
 

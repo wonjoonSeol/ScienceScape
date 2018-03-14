@@ -1,6 +1,5 @@
 from django.test import TestCase
 from .commands import *
-# Create your tests here.
 
 def attemptDatabaseTest():
 	if isFormDataStoredInDatabase():
@@ -10,9 +9,9 @@ def attemptDatabaseTest():
 
 def isFormDataStoredInDatabase():
 	fPath = "TESTFILEPATH"
-	keyValuePair = dict(Key1="Value1", Key2="Value1", Key3="Value1", Key4="Value1", Key5="Value1")
+	keyValuePair = dict(Key1 = "Value1", Key2 = "Value1", Key3 = "Value1", Key4 = "Value1", Key5 = "Value1")
 
-	refreshDataBase(keyValuePair, fPath)
+	refresh_database(keyValuePair, fPath)
 
 	mapping = Mappings.objects.filter(FILE_LINK = fPath)
 	dictionary = dict()
@@ -35,7 +34,7 @@ def isFormDataStoredInDatabase():
 def isDataRetrievable():
 	keyValuePair = dict(Key1="Value1", Key2="Value1", Key3="Value1", Key4="Value1", Key5="Value1")
 	fPath = "TESTPATH"
-	refreshDataBase(keyValuePair, fPath)
+	refresh_database(keyValuePair, fPath)
 	retrieval = retrieveFromDataBase(fPath)
 	if retrieval == keyValuePair:
 		print("Data retrieval passed")
@@ -65,6 +64,6 @@ def doesDatabaseReset():
 
 
 def testLoadFilesForUser(name = "saadman"):
-	files = getAllFilesForUser(name)
+	files = get_all_user_files(name)
 	for f in files:
 		print(f)

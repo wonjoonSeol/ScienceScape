@@ -22,7 +22,7 @@ countries = ["United States of America","Afghanistan","Albania","Algeria","Andor
 Loads a file from a given file path and detects its headers.
 Produces a form from this set of headers and returns it.
 """
-def loadFromFilePath(file_path):
+def load_from_file_path(file_path):
 	dictionary = processCSVIntoDictionary(file_path)
 	in_database = retrieveFromDataBase(file_path)
 	if in_database:
@@ -126,7 +126,7 @@ def detectHeadersFromAndRemove(dictionary):
 """
 Refreshes the database, adding mappings of the file names to their true values (e.g. mapping SS to Author in file 'fileName')
 """
-def refreshDataBase(dictionary, file_path):
+def refresh_database(dictionary, file_path):
 	print("Refreshing database for file path: {path}".format(path = file_path))
 	record = Mappings.objects.filter(FILE_LINK = file_path)
 	if record:
@@ -172,7 +172,7 @@ def resetDatabase():
 """ Return a list of file paths.
 Gets all files for a user files folder, computed with the user's name.
 """
-def getAllFilesForUser(username):
+def get_all_user_files(username):
 	user_files_folder = "static/userFiles/{x}".format(x = username)
 	file_path = os.path.join(APP_DIR, user_files_folder)
 	return os.listdir(file_path)
