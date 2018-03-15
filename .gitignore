@@ -300,5 +300,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+/mysite/bibliotools3.0/scripts/**.log
 
 # End of https://www.gitignore.io/api/vim,macos,python,eclipse,windows,intellij

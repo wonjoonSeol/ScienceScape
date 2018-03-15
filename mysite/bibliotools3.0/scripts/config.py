@@ -1,11 +1,7 @@
 import os
 dir = os.path.dirname(os.path.dirname(__file__))
 
-"""
-This file contains all (changeable) information about directories, codes, header data and
-all the information needed to run the scripts and output files according to a user-defined
-tree directory and output structure.
-"""
+import config_headers
 
 year_index_position = 44
 spanYears = []
@@ -92,24 +88,6 @@ def gen():
 		"punctuation": ['!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '.', '/',
 		        ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~', ' - '],
 
-		#HEADER CODES
-		'accession_number' : 'UT',
-		'authors' : 'AU',
-		'author_keywords' : 'DE',
-		'keywords_plus' : 'ID',
-		'document_title' : 'TI',
-		'wos_categories' : 'WC',
-		'cited_references' : 'CR',
-		'author_address' : 'C1',
-		'year_published' : 'PY',
-		'twenty_nine_character_source_abbreviation' : 'J9',
-		'volume' : 'VL',
-		'beginning_page' : 'BP',
-		'doi' : 'DI',
-		'publication_type' : 'PT',
-		'document_type' : 'DT',
-		'wos_core_collection_times_cited' : 'TC',
-
 		'usa_country_codes' : ['USA',
 				'AL ', 'AK ', 'AZ ', 'AR ', 'CA ', 'NC ',
 				'SC ', 'CO ', 'CT ', 'ND ', 'SD ','DE ', 'FL ', 'GA ', 'HI ' , 'ID ',
@@ -118,4 +96,6 @@ def gen():
 				'UT ', 'VT ', 'VA ', 'WV ', 'WA ', 'WI ', 'WY ', 'DC ']
 
 	}
+	#HEADER CODES
+	CONFIG.update(config_headers.HEADERS)
 	return CONFIG
