@@ -73,16 +73,13 @@ MEDIA_URL = '/media/'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-#DATABASE_URL = os.environ['DATABASE_URL']
-DATABASE_URL = 'postgres://fymhuaixuttaky:bd01de5c5ba9a57c40bb3ee84793c7ba649b0bacb6d5d8b4d8c23559d6994495@ec2-54-197-254-189.compute-1.amazonaws.com:5432/d11cvaqi49gegm'
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sciencescape',
-    }
-}
-
+#DATABASE_URL = 'postgres://fymhuaixuttaky:bd01de5c5ba9a57c40bb3ee84793c7ba649b0bacb6d5d8b4d8c23559d6994495@ec2-54-197-254-189.compute-1.amazonaws.com:5432/d11cvaqi49gegm'
+DATABASE_URL = os.environ['DATABASE_URL']
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -114,6 +111,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, 'static')]
 STATIC_USER_FILES_DIRECTORY = "static/userFiles"
 PUBLIC_USER_FILES_DIRECTORY = "static/userFiles/Public"
 
@@ -122,37 +121,3 @@ LOGIN_REDIRECT_URL = '/graphs'
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
-
-# Logging
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'mysite.log',
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'MYAPP': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-    }
-}
