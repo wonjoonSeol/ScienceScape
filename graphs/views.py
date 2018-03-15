@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from .forms import *
 from .commands import *
 from django.forms import formset_factory
-from .tests import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.conf import settings
