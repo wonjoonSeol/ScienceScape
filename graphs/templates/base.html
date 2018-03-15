@@ -21,23 +21,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>ScienceScape</title>
-    
-    
+
+
    <style>
 		@keyframes fadeIn{
 			from{ opacity: 0; }
 			to{ opacity: 1;}
 		}
-		
-		
+
+
 		.userAuthorised {
-		   
+
 		   animation: fadeIn;
 		   animation-duration: 4s;
 		}
-    
+
     </style>
-    
+
   </head>
 
   <body> <!-- TODO Ensure HTML5 header, main and footer tags are used -->
@@ -49,8 +49,8 @@
       <nav>
         <div class="nav-wrapper">
           <!-- Activation link for mobile Nav - Needs extra side-nav HTML and JS initialiation within the page's $( document ).ready(function(){}) -->
+
           <a href="#" data-activates="nav-mobile-version" class="button-collapse"><i class="material-icons">menu</i></a>
-          <h1 id="nav-h1"><a href="/" class="brand-logo center">ScienceScape</a></h1>
 
             <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
               <li><a href="{% url 'home' %}" class="btn waves-effect waves-lighten" id="nav-login-btn">Home</a></li>
@@ -61,6 +61,11 @@
               <li><a href="#!" class="waves-effect waves-light">Help</a></li>
               <li><a href="{% url 'home' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
             </ul>
+
+            <div style="width:100%; text-align:center">
+              <img src="{% static 'images/no_background_logo.png' %}" style="height:100px"/>
+            </div>
+
 
               <!-- Dropdown content for About -->
               <ul id="dropdown-about" class="dropdown-content">
