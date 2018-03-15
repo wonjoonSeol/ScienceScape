@@ -8,9 +8,10 @@ import numpy
 import argparse
 import re
 
-
 #personal modules
 import utilities
+
+
 """
 This class contains logic for various utilities used thoughout the scripts.
 It has a collection of data parsed from the wos text files.
@@ -60,3 +61,11 @@ class Utility:
         elif(object_name == 'woslines'):
             from utilities import wosline
             return wosline.WosLine(line)
+
+    """
+    	Sets all the collection to empty lists.
+    """
+    def reset():
+        Utility.collection["articles"] = []
+        Utility.collection["references"] = []
+        Utility.collection["woslines"] = []
