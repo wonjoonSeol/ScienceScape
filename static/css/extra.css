@@ -133,6 +133,10 @@ nav .dropdown-content li {
   background-color: transparent;
 }
 
+.nav-wrapper {
+  background-color: #283593;
+}
+
 .side-nav .collapsible-header,
 .side-nav.fixed .collapsible-header {
   padding: 0 32px;
@@ -171,13 +175,13 @@ nav .dropdown-content  a {
 }
 
 #nav-login-btn {
-  color: #ffffff;
-  background-color: rgba(111, 0, 0, 0.5);
+  color: #E0F2F1;
+  background-color: #4DB6AC;
   border: 1px solid #ffffff;
 }
 
 #nav-login-btn:hover {
-  background-color: #0D47A1 !important;
+  background-color: #00897B !important;
   color: white;
 }
 
