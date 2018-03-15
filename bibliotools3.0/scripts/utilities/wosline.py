@@ -1,18 +1,18 @@
 #! /usr/bin/env python
 
-#TODO see what this does in the grand scheme of things. it's different from the
-# other objects in the utilities
-
 import os
 import sys
 import glob
 import numpy
 import argparse
 
+"""
+    A class that holds the parsed data of a WOS Line.
+"""
 class Wosline:
 
     """
-    parse a line(converted to list) of the WoS txt output file
+    Parse a line(converted to list) of the WOS .txt output file.
     """
     def parse_list(self, list_from_line, defCols, numCols):
         if len(list_from_line) == numCols :
@@ -48,8 +48,6 @@ class Wosline:
             print(("ARG %s != %s"%(len(list_from_line), numCols)))
 
     def __init__(self, list_from_line, def_cols, num_cols):
-        #TODO create a map which reads these values from an external file to
-        # improve decoupling, readability and efficiency
 
         self.PT = "" ## Publication Type (J=Journal; B=Book; S=Series)
         self.AU = "" ## Authors
@@ -111,17 +109,20 @@ class Wosline:
 
 ####################################################
 
+"""
+    Define the columns that will be used for parsing.
+"""
 def defColumns(parsed_line_list):
 
-  # initialize
-  cols = ['PT', 'AU', 'TI', 'SO', 'DT', 'DE', 'ID', 'C1', 'CR',
+    # initialize
+    cols = ['PT', 'AU', 'TI', 'SO', 'DT', 'DE', 'ID', 'C1', 'CR',
           'TC', 'J9', 'PD', 'PY', 'VL', 'IS', 'BP', 'WC', 'UT']
-  def_cols = dict()
+    def_cols = dict()
 
-  # match columns number in "line"
-  for i in range(len(parsed_line_list)):
-    if parsed_line_list[i] in cols:
-      def_cols[parsed_line_list[i]] = i
+    # match columns number in "line"
+    for i in range(len(parsed_line_list)):
+        if parsed_line_list[i] in cols:
+            def_cols[parsed_line_list[i]] = i
+    num_cols = len(parsed_line_list)
 
-  num_cols = len(parsed_line_list)
-  return (def_cols, num_cols)
+    return (def_cols, num_cols)

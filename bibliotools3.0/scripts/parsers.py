@@ -5,9 +5,13 @@ import argparse
 import utility
 import re
 import string
+from decimal import *
 
 CONFIG = {}
 
+"""
+Initialise all file headers to the data stored within the config file.
+"""
 def initHeaders():
     global accession_number
     accession_number = CONFIG['accession_number']
@@ -42,6 +46,9 @@ def initHeaders():
     global wos_core_collection_times_cited
     wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
 
+""" Write parsed data to given output path.
+Parse an entire ARTICLE.
+"""
 def parse_article(id, article, output):
     article_authors = getattr(article, authors).split('; ')
     firstAU = article_authors[0].replace(',','')
@@ -54,6 +61,10 @@ def parse_article(id, article, output):
             {getattr(article, document_title)}\t\
             {getattr(article, accession_number)}\n')
 
+
+""" Write parsed authors to given output path.
+Parse the AUTHORS of an article.
+"""
 def parse_authors(id, article, output):
     if getattr(article, authors) != '':
         article_authors = getattr(article, authors).split('; ')
@@ -65,6 +76,9 @@ def parse_authors(id, article, output):
             name = first_name + ' ' + last_name
             output.write(f'{id}\t{position}\t{name}\n')
 
+""" Write the author keywords to the given output path.
+Parse the AUTHOR KEYWORDS of an article.
+"""
 def parse_author_keywords(id, article, output):
     if getattr(article, author_keywords) != '':
         article_author_keywords = getattr(article, author_keywords).split('; ')
@@ -72,6 +86,9 @@ def parse_author_keywords(id, article, output):
             output_keyword = keyword.upper()
             output.write(f'{id}\tAK\t{output_keyword}\n')
 
+""" Write the isi keywords to the given output path.
+Parse the ISI KEYWORDS of an article.
+"""
 def parse_isi_keywords(id, article, output):
     if getattr(article, keywords_plus) != '':
         isi_keywords = getattr(article, keywords_plus).split('; ')
@@ -79,6 +96,9 @@ def parse_isi_keywords(id, article, output):
             output_keyword = keyword.upper()
             output.write(f'{id}\tIK\t{output_keyword}\n')
 
+""" Write the title keywords to the given output path.
+Parse the TITLE KEYWORDS of an article.
+"""
 def parse_title_keywords(id, article, output):
     if getattr(article, document_title) != '':
         title_keywords = getattr(article, document_title)
@@ -90,12 +110,18 @@ def parse_title_keywords(id, article, output):
             if keyword.lower() not in CONFIG['common_words'] and keyword != '':
                 output.write(f'{id}\tTK\t{output_keyword}\n')
 
+""" Write the subjects to the given output path.
+Parse the SUBJECTS of an article.
+"""
 def parse_subjects(id, article, output):
     if getattr(article, wos_categories) != '':
         article_subjects = getattr(article, wos_categories).split('; ')
         for subject in article_subjects:
             output.write(f'{id}\t{subject}\n')
 
+""" Write the references to the given output path.
+Parse the REFERENCES of an article.
+"""
 def parse_references(id, article, collection_references, output):
     computed_refs = 0
     computed_corrupt_refs = 0
@@ -112,6 +138,9 @@ def parse_references(id, article, collection_references, output):
                 computed_corrupt_refs += 1
     return (computed_refs, computed_corrupt_refs)
 
+"""  Write the contries/institutions to the given output path.
+Parse the COUNTRY/INSTITUTION information of an article.
+"""
 def parse_countries_and_institutions(id, article, f_institutions, f_countries, usa_country_codes_storage):
     if(getattr(article, author_address) != ""):
         addresses = getattr(article, author_address)
@@ -134,10 +163,16 @@ def parse_countries_and_institutions(id, article, f_institutions, f_countries, u
             f_institutions.write(f'{id}\t{position}\t{institution}\n')
             f_countries.write(f'{id}\t{position}\t{country}\n')
 
+"""
+Return directory regex.
+"""
 def all_txt_files(directory):
     reg_ex = "%s/*.txt" % directory
     return glob.glob(reg_ex)
 
+"""
+Return all parsed information within the .dat files.
+"""
 def open_dat_files(out_dir):
     return { "articles": open(os.path.join(out_dir, "articles.dat"),'w'),
     "authors": open(os.path.join(out_dir, "authors.dat"), 'w'),
@@ -150,10 +185,16 @@ def open_dat_files(out_dir):
     "institutions" : open(os.path.join(out_dir, "institutions.dat"), 'w'),
     }
 
+"""
+Close all .dat files that were opened for parsing.
+"""
 def close_dat_files(open_dat_files):
     for key in open_dat_files:
         open_dat_files[key].close()
 
+""" Write parsed data to output files.
+Parse every header type.
+"""
 def parse_all_criteria(id, article, dat_files):
     parse_article(id, article, dat_files["articles"])
     parse_authors(id, article, dat_files["authors"])
@@ -162,6 +203,10 @@ def parse_all_criteria(id, article, dat_files):
     parse_title_keywords(id, article, dat_files["title_keywords"])
     parse_subjects(id, article, dat_files["subjects"])
 
+
+"""
+Open and parse all files by articles, authors, etc.
+"""
 def wos_parser(in_dir, out_dir, verbose):
     id = int(-1)
 
@@ -180,7 +225,8 @@ def wos_parser(in_dir, out_dir, verbose):
     computed_refs = 0
     computed_corrupt_refs = 0
 
-    WOS_IDS = dict()  # list the articles' wos-ids
+    # Dictionary containing the IDs of the articles.
+    WOS_IDS = dict()
     collection = utility.Utility.collection
 
     for src in all_txt_files(in_dir):
@@ -201,14 +247,16 @@ def wos_parser(in_dir, out_dir, verbose):
 
                 parse_countries_and_institutions(id, article, f_institutions, f_countries, CONFIG["usa_country_codes"])
 
-        # Reset collection to avoid corrupted span files
-        collection["articles"] = []
-        collection["references"] = []
-        collection["woslines"] = []
+        # Reset collection to avoid corrupted span files.
+        utility.Utility.reset()
 
     if verbose:
-        print(("..%d parsed articles in total") % (id + 1))
-        print(("..%d inadequate refs out of %d (%f%%) have been rejected by this parsing process (no publication year, unpublished, ...) ") % (computed_corrupt_refs, computed_refs, (100.0 * computed_corrupt_refs) / computed_refs if computed_refs != 0 else 0))
+        # Set decimal precision to 3.
+        getcontext().prec = 3
 
+        percentage = Decimal(100.0 * computed_corrupt_refs) / computed_refs if computed_refs != 0 else 0
+        print(f'..{id + 1} parsed articles in total.')
+        print(f'..{computed_corrupt_refs} inadequate refs out of {computed_refs}.')
+        print(f'..{percentage}% have been rejected by this parsing process.(no publication year, unpublished etc) ')
     close_dat_files(dat_files)
     return

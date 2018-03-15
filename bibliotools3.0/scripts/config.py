@@ -4,9 +4,11 @@ dir = os.path.dirname(os.path.dirname(__file__))
 import config_headers
 
 year_index_position = 44
-
 spanYears = []
 
+""" Return a CONFIG collection of time spans and directory information used by all scripts.
+Generates a collection of readable time spans, given a user input using argparse.
+"""
 def gen():
 	CONFIG={
 		# step one (merging_corpus.py) mandatory

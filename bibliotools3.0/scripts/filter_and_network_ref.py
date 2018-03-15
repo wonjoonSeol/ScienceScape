@@ -8,12 +8,19 @@ import matplotlib.pyplot as plt
 
 CONFIG = {}
 
+"""
+Increments the weighting of an edge between two nodes in a graph by 1.
+"""
 def add_edge_weight(graph, node1, node2):
     if graph.has_edge(node1, node2):
         graph[node1][node2]['weight'] += 1
     else:
         graph.add_edge(node1, node2, weight = 1)
 
+"""
+Given an export format (gexf, edgelist, pajek, json) and a data folder/span,
+export a provided graph file to the parsed data folder.
+"""
 def export(graph, span, export_ref_format, parsed_data_folder):
     if export_ref_format == "gexf":
         print("Writing .gexf export")
@@ -31,6 +38,11 @@ def export(graph, span, export_ref_format, parsed_data_folder):
     else:
         print("No export compatible with the specified export format!")
 
+"""
+For each reference, this processes its edges and group them by article.
+It will also remove edges with a weight lower than the threshold value / a degree of 0.
+Exports the graph file.
+"""
 def group_by_article(references_by_articles_filtered, span, references_occs, export_ref_format, parsed_data_folder):
     print("Processing edges for references...")
     graph = networkx.Graph()
@@ -49,6 +61,9 @@ def group_by_article(references_by_articles_filtered, span, references_occs, exp
     # Write export file
     export(graph, span, export_ref_format, parsed_data_folder)
 
+""" Return a sorted collection of article cited references.
+For each reference occurring in an article, filter it given a threshold.
+"""
 def filter_references_by_article(references_article_grouped, occurences_config_item):
     return [t for _ in (ref_arts for ref, ref_arts in references_article_grouped if len(ref_arts) >= occurences_config_item) for t in _]
 
