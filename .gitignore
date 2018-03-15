@@ -301,4 +301,6 @@ $RECYCLE.BIN/
 
 /mysite/bibliotools3.0/scripts/**.log
 
+/static/userFiles/
+
 # End of https://www.gitignore.io/api/vim,macos,python,eclipse,windows,intellij
