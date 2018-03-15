@@ -21,23 +21,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>ScienceScape</title>
-    
-    
+
+
    <style>
 		@keyframes fadeIn{
 			from{ opacity: 0; }
 			to{ opacity: 1;}
 		}
-		
-		
+
+
 		.userAuthorised {
-		   
+
 		   animation: fadeIn;
 		   animation-duration: 4s;
 		}
-    
+
     </style>
-    
+
   </head>
 
   <body> <!-- TODO Ensure HTML5 header, main and footer tags are used -->
@@ -49,8 +49,8 @@
       <nav>
         <div class="nav-wrapper">
           <!-- Activation link for mobile Nav - Needs extra side-nav HTML and JS initialiation within the page's $( document ).ready(function(){}) -->
+
           <a href="#" data-activates="nav-mobile-version" class="button-collapse"><i class="material-icons">menu</i></a>
-          <h1 id="nav-h1"><a href="/" class="brand-logo center">ScienceScape</a></h1>
 
             <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
               <li><a href="{% url 'home' %}" class="btn waves-effect waves-lighten" id="nav-login-btn">Home</a></li>
@@ -61,6 +61,11 @@
               <li><a href="#!" class="waves-effect waves-light">Help</a></li>
               <li><a href="{% url 'home' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
             </ul>
+
+            <div style="width:100%; text-align:center">
+              <img src="{% static 'images/no_background_logo.png' %}" style="height:100px"/>
+            </div>
+
 
               <!-- Dropdown content for About -->
               <ul id="dropdown-about" class="dropdown-content">
@@ -153,44 +158,41 @@
       <div class="container">
 
         <div class="row">
+          <div class="col s12 m4 underline">
+            <h6>The Developers</h6>
+            <p>Shayne Ahchoon</p>
+            <p>Nathan Al Sibai</p>
+            <p>Britton Forsyth</p>
+            <p>Jack Hinshelwood</p>
+            <p>Alexander Jermstad</p>
+            <p>Paul Muresan</p>
+            <p>Saadman Sakib</p>
+            <p>Wonjoon Seol</p>
+            <p>Nicolas Volken</p>
+            </div>
           <div class="col s12 m4">
-            <h6>Built With:</h6>
-            <a href="#">Python</a><br>
-            <a href="#">Sigma.js</a><br>
-            <a href="#">Django</a><br>
-            <a href="#">Materialize CSS</a><br>
-            <a href="#">Particles.js</a><br>
-            <a href="#">jQuery</a><br>
-            <a href="#">FontAwesome</a><br>
-            <a href="#">GitHub</a><br>
-            <a href="#">Slack</a><br>
-            <a href="#">Heroku</a><br>
-            <!-- TODO Add modal with CC atrribution for The Noun Project Icons -->
-            <a href="https://thenounproject.com/">The Noun Project</a> - <a href="#">Attribution</a><br>
-            <a href="https://www.youtube.com/watch?v=Q5im0Ssyyus">Candy from Candy Mountain</a><br>
+            <h6>Tools and Frameworks include</h6>
+            <p>Python, Sigma.js, Django, Materialize CSS, Particles.js, jQuery, FontAwesome, GitHub, Slack, Heroku, The Noun Project and Candy from Candy Mountain.</p>
           </div>
           <div class="col s12 m4 underline">
-            <h6>Related Tools:</h6>
-            <a href="https://tools.medialab.sciences-po.fr/table2net/">Table2Net</a><br>
-            <p>If you want to get the citation network from the table with the DOI, you can use Table2Net in "citation" mode.</p>
-            <a href="http://www.sebastian-grauwin.com/?page_id=492">BiblioTools</a><br>
-            <p>BiblioTools was developed by Sebastian Grauwin for a similar purpose. It is dedicated to getting networks from Web of Science, and can deal a large mass of data.</p>
-            <a href="http://gephi.org/">Gephi</a><br>
-            <p>We recommand to use Gephi for spatializing networks. It is more efficient than this website. Check its <a href="http://gephi.org/users/">tutorials</a></p>
+            <h6>Scientometrics, reinvented</h6>
+            <p>ScienceScapeS builds upon scientometrics applications such as ScienceScape, developed by M.Jacomy at the <a href="http://medialab.sciences-po.fr/" style="color: #ffffff">Sciences Po Médialab</a>, Paris.</p>
+            <p>Our powerful data processing scripts are based on Sebastian Grauwin's work, <a href="http://www.sebastian-grauwin.com" style="color: #ffffff">Bibliotools3.0.</a></p>
+            <p>For detailed information about this project, visit our <a href="http://github.com/wonjoonSeol/ScienceScape"style="color: #ffffff">GitHub Repository</a>.</p>
           </div>
-          <div class="col s12 m4 underline">
-            <h6>Development:</h6>
-            <p>Originally developed by Mathieu Jacomy at the <a href="http://medialab.sciences-po.fr/">Sciences-Po Medialab</a>.</p>
-            <p>Refreshed, refactored and tuned up by <a href="#">The Codokans</a> in March 2018, a second year undergraduate computer science team from <a href="https://www.kcl.ac.uk/">King's College London</a>.</p>
-            <!-- TODO Add modal with more info about The Codokans and links to our respective sites -->
+
+          <div style="width:100%; text-align:right">
+            <img src="{% static 'images/kcl.png' %}" style="height:100px"/>
           </div>
+
+
         </div>
 
       </div>
 
       <div class="footer-copyright">
         <div class="container">
-        &copy; 2018 Sciences-Po Medialab & King's College London
+        &copy; 2018 The Codokans, King's College London
         </div>
       </div>
     </footer>

@@ -107,6 +107,8 @@ footer a {
 
 nav {
   background-color: rgba(184, 28, 28, 0.85) !important;
+  min-height: 80px;
+  height: 80px;
 }
 
 #nav-h1{
@@ -131,6 +133,11 @@ nav .dropdown-content li {
 /* Expanded accordian background */
 .side-nav li.active {
   background-color: transparent;
+}
+
+.nav-wrapper {
+  background-color: #fff;
+  /*background-color: #283593;*/
 }
 
 .side-nav .collapsible-header,
@@ -171,13 +178,13 @@ nav .dropdown-content  a {
 }
 
 #nav-login-btn {
-  color: #ffffff;
-  background-color: rgba(111, 0, 0, 0.5);
+  color: #E0F2F1;
+  background-color: #4DB6AC;
   border: 1px solid #ffffff;
 }
 
 #nav-login-btn:hover {
-  background-color: #0D47A1 !important;
+  background-color: #00897B !important;
   color: white;
 }
 
@@ -237,7 +244,7 @@ nav .dropdown-content  a {
 }
 
 .page-footer {
-  background-color: rgba(184, 28, 28, 0.7) !important;
+  background-color: rgba(0,0,0,0.7) !important;
 }
 
 .footer-copyright {
