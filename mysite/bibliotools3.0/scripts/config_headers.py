@@ -1,3 +1,5 @@
+# Headers in files exported from WOS are mapped to their meanings below:
+
 HEADERS = {
   'accession_number' : 'UT',
   'authors' : 'AU',
