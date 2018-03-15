@@ -1,6 +1,6 @@
 from django import forms
 
-class UserRegForm(forms.Form):
+class UserRegistrationForm(forms.Form):
     username = forms.CharField(
         required = True,
         label = 'Username',

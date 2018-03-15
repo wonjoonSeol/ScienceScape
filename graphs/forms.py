@@ -1,23 +1,10 @@
 from django import forms
 from django.forms import formset_factory
 
-def createMiniForm(choices = [("DEFAULT", "Select a value")], request = None):
-
-	class MiniForm(forms.Form):
-		choicesInField = choices
-		Name = forms.CharField()
-		Key = forms.ChoiceField(required = True, choices = choices)
-
-	if request:
-		return MiniForm(request)
-
-	return MiniForm
-
-
 class UploadFileForm(forms.Form):
-    myFile = forms.FileField(label='')
+    file = forms.FileField(label = '')
 
-class UserRegForm(forms.Form):
+class UserRegistrationForm(forms.Form):
     username = forms.CharField(
         required = True,
         label = 'Username',
@@ -35,21 +22,40 @@ class UserRegForm(forms.Form):
         widget = forms.PasswordInput(),
     )
 
-def produceFormSet(dictionary, unknownValues):
+""" Return a MiniForm.
+Creates a mini form from a list of choices (default or "select a value").
+"""
+def create_mini_form(choices = [("DEFAULT", "Select a value")], request = None):
+
+	class MiniForm(forms.Form):
+		choicesInField = choices
+		Name = forms.CharField()
+		Key = forms.ChoiceField(required = True, choices = choices)
+
+	if request:
+		return MiniForm(request)
+	else:
+		return MiniForm
+
+""" Return a dictionary containing the final form and the number
+of unknown values.
+Produces a set of forms from a dictionary and a list of unknown values.
+"""
+def produce_form_set(dictionary, unknown_values):
 	unknown = []
-	itial = []
-	count = 0
+	initial = []
+	entry_count = 0
 
-	for key in dictionary:
-		if dictionary[key]:
-			count = count + 1
-			itial.append({'Key': dictionary[key],'Name': key})
-			print(dictionary[key])
+	for entry in dictionary:
+		if dictionary[entry]:
+			entry_count = entry_count + 1
+			initial.append({'Key': dictionary[entry],'Name': entry})
+			print(dictionary[entry])
 
-	for i in unknownValues:
+	for i in unknown_values:
 		unknown.append((i,i))
 
-	form = formset_factory(createMiniForm(unknown), extra = (len(unknown) - count))
-	finalForm = form(initial = itial)
+	form = formset_factory(create_mini_form(unknown), extra = (len(unknown) - entry_count))
+	finalForm = form(initial = initial)
 
 	return {'form' : finalForm, 'count' : len(unknown)}
