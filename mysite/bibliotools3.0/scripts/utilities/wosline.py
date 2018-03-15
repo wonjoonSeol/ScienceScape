@@ -12,7 +12,7 @@ import argparse
 class Wosline:
 
     """
-    parse a line(converted to list) of the WoS txt output file
+    Parse a line(converted to list) of the WOS .txt output file.
     """
     def parse_list(self, list_from_line, defCols, numCols):
         if len(list_from_line) == numCols :

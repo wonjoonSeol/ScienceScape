@@ -1,7 +1,6 @@
 import argparse
 
-#parser = argparse.ArgumentParser(description='For each time span enter a range \"YYYY-YYYY\"',
-#usage='%(prog)s [-h] span span [span ...]')
+# Prompt the user for a time span.
 parser = argparse.ArgumentParser(description='For each time span enter a range \"YYYY-YYYY\"')
 parser.add_argument('-bound', nargs='+', metavar='bound', help='Year value', default={"1900-1999", "2000-2018"})
 args = parser.parse_args()
@@ -12,6 +11,7 @@ for range in vars(args)['bound']:
   intBoundPair = list(map(int, boundPair))
   spanYears.append(intBoundPair)
 
+# Run all scripts.
 import config
 config.spanYears = spanYears
 CONFIG = config.gen()

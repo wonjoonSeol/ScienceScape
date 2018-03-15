@@ -27,6 +27,10 @@ class TestParsers(unittest.TestCase):
     parsers.wos_parser(os.path.join(dir, "testFiles/parser_tests"), os.path.join(dir, "testFiles/parser_tests/test_output"), False)
     test_input_txt.close()
 
+    """
+    This test tests that after parsing articles, the output is correct with respects
+    to a known-correct base folder FOR ARTICLES.
+    """
     def test_parse_articles(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         with open(os.path.join(dir, "testFiles/parser_tests/test_output/articles.dat"), "r") as myfile:
@@ -37,6 +41,10 @@ class TestParsers(unittest.TestCase):
 
         self.assertEqual(output, desired_output)
 
+    """
+    This test tests that after parsing articles, the output is correct with respects
+    to a known-correct base folder FOR AUTHORS.
+    """
     def test_parse_authors(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         with open(os.path.join(dir, "testFiles/parser_tests/test_output/authors.dat"), "r") as myfile:
@@ -47,6 +55,10 @@ class TestParsers(unittest.TestCase):
 
         self.assertEqual(output, desired_output)
 
+    """
+    This test tests that after parsing articles, the output is correct with respects
+    to a known-correct base folder FOR COUNTRIES.
+    """
     def test_parse_countries(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         with open(os.path.join(dir, "testFiles/parser_tests/test_output/countries.dat"), "r") as myfile:
@@ -57,6 +69,10 @@ class TestParsers(unittest.TestCase):
 
         self.assertEqual(output, desired_output)
 
+    """
+    This test tests that after parsing articles, the output is correct with respects
+    to a known-correct base folder FOR ARTICLE KEYWORDS.
+    """
     def test_parse_article_keywords(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         with open(os.path.join(dir, "testFiles/parser_tests/test_output/article_keywords.dat"), "r") as myfile:
@@ -67,6 +83,10 @@ class TestParsers(unittest.TestCase):
 
         self.assertEqual(output, desired_output)
 
+    """
+    This test tests that after parsing articles, the output is correct with respects
+    to a known-correct base folder FOR INSTITUTIONS.
+    """
     def test_parse_institutions(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         with open(os.path.join(dir, "testFiles/parser_tests/test_output/institutions.dat"), "r") as myfile:
@@ -77,6 +97,9 @@ class TestParsers(unittest.TestCase):
 
         self.assertEqual(output, desired_output)
 
+    """
+    This test tests meticulously the output .dat files to ensure they are not corrupted.
+    """
     def test_open_dat_files(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         os.makedirs(os.path.join(dir, "testFiles/test_open_dat_files_folder"))
@@ -104,6 +127,9 @@ class TestParsers(unittest.TestCase):
 
         self.assertEqual(no_of_files_created, 9)
 
+    """
+    This is a test teardown that closes and removes any open/useless files.
+    """
     def test_teardown(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         if os.path.exists(os.path.dirname(os.path.join(dir, "testFiles/parser_tests/test_output/article_keywords.dat"))):
@@ -120,6 +146,10 @@ class TestParsers(unittest.TestCase):
         if os.path.exists(os.path.dirname(os.path.join(dir, "testFiles/parser_tests/test_output"))):
             os.rmdir(os.path.join(dir, "testFiles/parser_tests/test_output"))
 
+    """
+    This test tests that all_txt_files returns a correct number
+    when there is one .txt file in the given folder.
+    """
     def test_all_txt_files_for_at_least_one_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         directory = os.path.join(dir, "testFiles")

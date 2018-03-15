@@ -151,6 +151,10 @@ class TestMergingCorpus(unittest.TestCase):
         os.remove(os.path.join(dir, "testFiles/dummy_errorsfile.txt"))
         self.assertEqual(True, result)
 
+    """
+    This test tests that upon calling prepare_output_file with some headers and an output file,
+    the file is properly created and contains headers.
+    """
     def test_prepare_output_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         headers_to_write = "abcd"
@@ -162,6 +166,10 @@ class TestMergingCorpus(unittest.TestCase):
         os.remove(os.path.join(dir, "testFiles/test_prepare_output_file.txt"))
         self.assertEqual(lines, ['abcd\n'])
 
+    """
+    This test tests that upon calling prepare_report_directory,
+    a report directory is created at the given path.
+    """
     def test_prepare_report_directory(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         prepare_report_directory(os.path.join(dir, "testFiles/test_prepare_report_directory"))
@@ -169,6 +177,10 @@ class TestMergingCorpus(unittest.TestCase):
         if os.path.exists(os.path.join(dir, "testFiles/test_prepare_report_directory")):
             os.rmdir(os.path.join(dir, "testFiles/test_prepare_report_directory"))
 
+    """
+    This test tests that upon calling prepare_error_file, with a valid report directory, an error .csv
+    file is created.
+    """
     def test_prepare_error_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         prepare_report_directory(os.path.join(dir, "testFiles/test_prepare_report_directory"))

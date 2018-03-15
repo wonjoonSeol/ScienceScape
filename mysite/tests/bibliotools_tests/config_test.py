@@ -9,6 +9,9 @@ import config
 
 class TestConfig(unittest.TestCase):
 
+    """
+    This test tests that the config.py script file generates time spans properly.
+    """
     def test_config_gen(self):
         spanYears = [[100,500], [200,600]] #arbitrary values to retrieve from dict
         config.spanYears = spanYears

@@ -8,6 +8,9 @@ import string
 
 CONFIG = {}
 
+"""
+Initialise all file headers to the data stored within the config file.
+"""
 def initHeaders():
     global accession_number
     accession_number = CONFIG['accession_number']
@@ -42,6 +45,9 @@ def initHeaders():
     global wos_core_collection_times_cited
     wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
 
+"""
+Parse an entire article.
+"""
 def parse_article(id, article, output):
     article_authors = getattr(article, authors).split('; ')
     firstAU = article_authors[0].replace(',','')
@@ -54,6 +60,9 @@ def parse_article(id, article, output):
             {getattr(article, document_title)}\t\
             {getattr(article, accession_number)}\n')
 
+"""
+Parse the AUTHORS of an article.
+"""
 def parse_authors(id, article, output):
     if getattr(article, authors) != '':
         article_authors = getattr(article, authors).split('; ')
@@ -65,6 +74,9 @@ def parse_authors(id, article, output):
             name = first_name + ' ' + last_name
             output.write(f'{id}\t{position}\t{name}\n')
 
+"""
+Parse the AUTHOR KEYWORDS of an article.
+"""
 def parse_author_keywords(id, article, output):
     if getattr(article, author_keywords) != '':
         article_author_keywords = getattr(article, author_keywords).split('; ')
@@ -72,6 +84,9 @@ def parse_author_keywords(id, article, output):
             output_keyword = keyword.upper()
             output.write(f'{id}\tAK\t{output_keyword}\n')
 
+"""
+Parse the ISI KEYWORDS of an article.
+"""
 def parse_isi_keywords(id, article, output):
     if getattr(article, keywords_plus) != '':
         isi_keywords = getattr(article, keywords_plus).split('; ')
@@ -79,6 +94,9 @@ def parse_isi_keywords(id, article, output):
             output_keyword = keyword.upper()
             output.write(f'{id}\tIK\t{output_keyword}\n')
 
+"""
+Parse the TITLE KEYWORDS of an article.
+"""
 def parse_title_keywords(id, article, output):
     if getattr(article, document_title) != '':
         title_keywords = getattr(article, document_title)
@@ -90,12 +108,18 @@ def parse_title_keywords(id, article, output):
             if keyword.lower() not in CONFIG['common_words'] and keyword != '':
                 output.write(f'{id}\tTK\t{output_keyword}\n')
 
+"""
+Parse the SUBJECTS of an article.
+"""
 def parse_subjects(id, article, output):
     if getattr(article, wos_categories) != '':
         article_subjects = getattr(article, wos_categories).split('; ')
         for subject in article_subjects:
             output.write(f'{id}\t{subject}\n')
 
+"""
+Parse the REFERENCES of an article.
+"""
 def parse_references(id, article, collection_references, output):
     computed_refs = 0
     computed_corrupt_refs = 0
@@ -112,6 +136,9 @@ def parse_references(id, article, collection_references, output):
                 computed_corrupt_refs += 1
     return (computed_refs, computed_corrupt_refs)
 
+"""
+Parse the COUNTRY/INSTITUTION information of an article.
+"""
 def parse_countries_and_institutions(id, article, f_institutions, f_countries, usa_country_codes_storage):
     if(getattr(article, author_address) != ""):
         addresses = getattr(article, author_address)
@@ -133,11 +160,12 @@ def parse_countries_and_institutions(id, article, f_institutions, f_countries, u
 
             f_institutions.write(f'{id}\t{position}\t{institution}\n')
             f_countries.write(f'{id}\t{position}\t{country}\n')
-
+""" Return directory regex. """
 def all_txt_files(directory):
     reg_ex = "%s/*.txt" % directory
     return glob.glob(reg_ex)
 
+""" Return all parsed information within the .dat files. """
 def open_dat_files(out_dir):
     return { "articles": open(os.path.join(out_dir, "articles.dat"),'w'),
     "authors": open(os.path.join(out_dir, "authors.dat"), 'w'),
@@ -149,11 +177,15 @@ def open_dat_files(out_dir):
     "countries": open(os.path.join(out_dir, "countries.dat"), 'w'),
     "institutions" : open(os.path.join(out_dir, "institutions.dat"), 'w'),
     }
-
+"""
+Close all .dat files that were opened for parsing.
+"""
 def close_dat_files(open_dat_files):
     for key in open_dat_files:
         open_dat_files[key].close()
-
+"""
+Parse every header type.
+"""
 def parse_all_criteria(id, article, dat_files):
     parse_article(id, article, dat_files["articles"])
     parse_authors(id, article, dat_files["authors"])
@@ -162,6 +194,9 @@ def parse_all_criteria(id, article, dat_files):
     parse_title_keywords(id, article, dat_files["title_keywords"])
     parse_subjects(id, article, dat_files["subjects"])
 
+"""
+Open and parse all files by articles, authors, etc.
+"""
 def wos_parser(in_dir, out_dir, verbose):
     id = int(-1)
 

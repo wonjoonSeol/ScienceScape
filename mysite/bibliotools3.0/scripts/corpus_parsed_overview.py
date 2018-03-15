@@ -2,8 +2,7 @@ import os
 import itertools
 
 '''
-File: corpus_parsed_overview.py
-This file essentially prints statistics about the content of all span files
+This script essentially prints statistics about the content of all span files
 '''
 
 CONFIG = {}
@@ -13,12 +12,12 @@ def get_no_articles(parsed_data_folder, span):
         data_lines = file.read().split("\n")[:-1]
         return len(data_lines)
 
-"""
-This function returns a set of statistics:
+""" Return a set of statistics with the following structure:
 position 1: all the unique entities
 position 2: all the entities by articles
 position 3: the number of unique entities
 position 4: the number of entities by articles
+Gets statistics for a given time span and data folder, for a .dat category file (e.g. articles, authors).
 """
 def get_stats(parsed_data_folder, span, dat_file_name):
     with open(os.path.join(parsed_data_folder, span, dat_file_name), "r") as file:
@@ -30,11 +29,17 @@ def get_stats(parsed_data_folder, span, dat_file_name):
         unique_entities = set(entities_by_articles)
         return (unique_entities, entities_by_articles, len(unique_entities), len(entities_by_articles))
 
+"""
+Prints a message to a reports directory folder, creating a .txt file for that purpose.
+"""
 def print_to_overview(message, reports_directory):
     print(message)
     with open(os.path.join(reports_directory, "corpus_overview.txt"), "a") as f:
         f.write(message + "\n")
 
+"""
+For each occurrence in a data folder and span, prints statistics in a years distribution .csv file.
+"""
 def print_statistics_of(parsed_data_folder, reports_directory, filename, span):
     stats = get_stats(parsed_data_folder, span, filename)
     entity_name = filename.split(".")[0]
@@ -55,6 +60,9 @@ def print_statistics_of(parsed_data_folder, reports_directory, filename, span):
             to_write += "%02d,%02d,%04.1f%%\n" %(e)
         f.write(to_write)
 
+"""
+For each .dat file in a data folder for a span, prints statistics using the above methods.
+"""
 def print_statistics(parsed_data_folder, reports_directory, span):
     dat_files = ["authors.dat", "countries.dat", "institutions.dat", "isi_keywords.dat",
     "article_keywords.dat", "title_keywords.dat", "references.dat", "subjects.dat"]

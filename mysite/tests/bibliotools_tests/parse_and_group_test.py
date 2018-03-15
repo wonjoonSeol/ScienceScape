@@ -99,6 +99,10 @@ class TestParseGroup(unittest.TestCase):
 
         self.assertEqual(True, result)
 
+    """
+    This test tests that upon calling get_span_parameters,
+    correct uncorrupted parameters are returned (critical step).
+    """
     def test_get_span_parameters(self):
         mocked_spans = {
             "first_span":{
