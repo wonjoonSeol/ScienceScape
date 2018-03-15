@@ -12,12 +12,14 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import psycopg2
 import django_heroku
 import dj_database_url
-import psycopg2
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+DEBUG = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Config value hidden in heroku setting page
@@ -73,11 +75,14 @@ MEDIA_URL = '/media/'
 
 #DATABASE_URL = os.environ['DATABASE_URL']
 DATABASE_URL = 'postgres://fymhuaixuttaky:bd01de5c5ba9a57c40bb3ee84793c7ba649b0bacb6d5d8b4d8c23559d6994495@ec2-54-197-254-189.compute-1.amazonaws.com:5432/d11cvaqi49gegm'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'sciencescape',
+    }
+}
+
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -117,3 +122,37 @@ LOGIN_REDIRECT_URL = '/graphs'
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'mysite.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'MYAPP': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
