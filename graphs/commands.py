@@ -170,7 +170,12 @@ def resetDatabase():
 	mappings.delete()
 
 def create_user_folder(username):
+	static_user_files_directory = "static/userFiles"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
+	
+	if not os.path.exists(os.path.join(APP_DIR, static_user_files_directory)):
+		os.mkdir(os.path.join(APP_DIR, static_user_files_directory))
+
 	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
 		os.mkdir(os.path.join(APP_DIR, user_files_folder))
 	
@@ -179,5 +184,9 @@ Gets all files for a user files folder, computed with the user's name.
 """
 def get_all_user_files(username):
 	user_files_folder = "static/userFiles/{x}".format(x = username)
-	file_path = os.path.join(APP_DIR, user_files_folder)
-	return os.listdir(file_path)
+	
+	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
+		return []
+	else:
+		file_path = os.path.join(APP_DIR, user_files_folder)
+		return os.listdir(file_path)
