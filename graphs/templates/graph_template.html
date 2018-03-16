@@ -12,21 +12,19 @@
 
 <div class="card">
 	<div class="card-content">
-	<h5>Graph Controls</h5>
-	
-  				<button type="button" class="btn btn-danger" onclick="rearrageIntoCircle(this)" id="rearrangeToCircle">REARRANGE TO CIRCLE</button>
+	<h5>Graph Controls (functional)</h5>
+  			<button type="button" class="btn btn-danger" onclick="rearrageIntoCircle(this)" id="rearrangeToCircle">REARRANGE TO CIRCLE</button>
 				<button type="button" id="applyForce" onclick="startStopForceAtlas2(this)" class="btn btn-success">START FORCE ATLAS 2</button><br><br>
 				<button type="button" id="toggleEdges" onclick="turnOnOffEdges(this)" class="btn btn-info">TOGGLE EDGES</button>
-					
 	</div>
 </div>
 
 <div class="card">
 	<div class="card-content">
 	<h5>{{filename}}</h5>
-	
+
   	<div  id="graph-container"></div>
-  	
+
 	</div>
 </div>
 
@@ -92,33 +90,33 @@ var toggleEdges = true;
 sigma.parsers.gexf("{% static fpath%}", {container: 'graph-container'},
 
 	function (sigmaObject) {
-	
+
 		var numberOfNodes = sigmaObject.graph.nodes().length;
 		var counter = 0;
 
-		sigmaObject.graph.nodes().forEach(function(n) {  
-		 
+		sigmaObject.graph.nodes().forEach(function(n) {
+
 		 if(!n.x && !n.y){
 		  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
-    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes); 
+    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
     	 }
-    	  
+
     	  if (!n.label) {
     	  	n.label = n.id;
     	  }
-    	  
+
     	  if(!n.size){
     	  	n.size = Math.random();
     	  }
-      
+
         counter ++ ;
       });
-      
-    
-     
+
+
+
       sigmaObject.refresh();
       graphs.push(sigmaObject);
-      
+
 	}
 );
 
@@ -133,8 +131,8 @@ function startStopForceAtlas2(element){
 		element.innerHTML="STOP FORCE ATLAS 2";
 		element.classList.add("btn-danger");
 		element.classList.remove("btn-success");
-		
-	} else { 
+
+	} else {
 	//stop spacialsation
 	for (i = 0 ; i<graphs.length; i++) {
 		graphs[i].stopForceAtlas2();
@@ -143,7 +141,7 @@ function startStopForceAtlas2(element){
 	element.classList.add("btn-success");
 		element.classList.remove("btn-danger");
 	}
-	
+
 }
 
 function rearrageIntoCircle(element) {
@@ -151,11 +149,11 @@ function rearrageIntoCircle(element) {
 	for (i=0 ; i<graphs.length ; i++) {
 		var counter = 0;
 		var numberOfNodes = graphs[i].graph.nodes().length;
-		graphs[i].graph.nodes().forEach(function(n) {  
-		 
+		graphs[i].graph.nodes().forEach(function(n) {
+
 		  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
-    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes); 
-    	  
+    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
+
     	  n.size = Math.random();
 			counter++;
       });
@@ -172,20 +170,16 @@ function turnOnOffEdges(element) {
 			graphs[i].settings('drawEdges', false);
 			graphs[i].refresh();
 		}
-		
+
 		toggleEdges = false;
 	} else {
 		for (i=0 ; i<graphs.length ; i++) {
 			graphs[i].settings('drawEdges', true);
 			graphs[i].refresh();
 		}
-		
-		toggleEdges = true;	
+
+		toggleEdges = true;
 	}
 }
 
 </script>
-
-
-
-
