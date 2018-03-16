@@ -38,8 +38,8 @@ def load_from_file_path(file_path):
 """ Return True if a file is .csv.
 Checks a file to make sure it is a csv file.
 """
-def checkCSV(file):
-    if file.name[-4:] == ".csv":
+def checkTXT(file):
+    if file.name[-4:] == ".TXT":
         return True
     else:
         return False

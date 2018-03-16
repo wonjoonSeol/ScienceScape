@@ -14,20 +14,22 @@ from django.contrib.auth import authenticate, login
 
 APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-def home(request):
+def home(request, message = ""):
 	print("Username is: {x}".format(x = request.user.username))
 	registration_form = UserRegistrationForm()
-
+	
 	if request.method == 'POST' and request.FILES['file']:
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
 			uploaded_file = request.FILES['file']
-			if uploaded_file and checkCSV(uploaded_file):
+			if uploaded_file and checkTXT(uploaded_file):
 				if request.user.username:
 					fPath = saveFile(uploaded_file, request.user.username)['FULL_FILE_NAME']
 				else:
 					fPath = saveFile(uploaded_file)['FULL_FILE_NAME']
 				return redirect('fields', fPath)
+			else:
+				message = "Please upload a tab delimited file"
 		else:
 			print("Form not Valid")
 	else:
@@ -37,7 +39,7 @@ def home(request):
 	if request.user.is_authenticated:
 		files = get_all_user_files(request.user.username)
 
-	return render(request, 'index.html', {'upload': form, 'reg_form': registration_form, 'fpath': "/userFiles/arctic.gexf", 'filename': "Example", 'usersFiles': files })
+	return render(request, 'index.html', {'msg': message, 'upload': form, 'reg_form': registration_form, 'fpath': "/userFiles/arctic.gexf", 'filename': "Example", 'usersFiles': files })
 
 def edit_fields(request, filename):
 	folder = "static/userFiles/{user_name}/{file_name}".format(user_name = request.user.username, file_name = filename)
@@ -123,7 +125,7 @@ def register(request):
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:
-                raise forms.ValidationError('This user/pswd combination already exists')
+                return redirect('wrongUser', "User password combination already exists")
     else:
         form = UserRegistrationForm()
 
@@ -142,6 +144,11 @@ def login_process(request):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
+			else:
+				return redirect('wrongUser', "Incorrect credentials")
+		else:
+			 return redirect('wrongUser', "Incorrect credentials")
+				
 	return HttpResponseRedirect('/')
 
 def account(request):
