@@ -3,13 +3,13 @@
 	<div class="col s12">
 		<div class="card">
 			<div class="card-content">
-				<h5>Upload your file</h5>
-				<h6 style = "color: red">{{msg}}</h6>
+				<h6>Upload a tab-delimited file</h6>
+
 				<div class="row">
 						<form method="POST" action ="{% url 'home' %}" enctype="multipart/form-data">
 												{% csrf_token %}
 								<div class="file-field input-field">
-      							<div class="btn"> 
+      							<div class="btn blue darken-4">
       						 		<span>File</span>
       						  		<!--<input type="file">-->
       						  		{{upload}}
@@ -35,7 +35,7 @@
 		  	<div class="card userAuthorised" >
 				<div class="card-content">
 				 <h5>Uploaded Files</h2>
-				 
+
 	  <table>
         <thead>
           <tr>
@@ -48,24 +48,23 @@
         </thead>
         <tbody>
         {% for file in usersFiles %}
-        
+
           <tr>
             <td>{{forloop.counter}}</td>
             <td>{{ file }}</td>
-          
+
             <td><a href="{% url 'edit' file %}" class="btn waves-effect waves-lighten blue darken-4 accountButton">Edit Fields</a></td>
             <td><a href="#!" class="btn waves-effect waves-lighten red darken-4 accountButton">Show Graph</a></td>
             <td><a href="{% url 'delete' file %}" class="btn waves-effect waves-lighten blue darken-4 accountButton">Delete</a></td>
-           
+
           </tr>
-          
+
         {%endfor%}
         </tbody>
       </table>
-				
+
    		   </div>
    		 </div>
      </div>
    {% endif%}
 </div>
-
