@@ -1,0 +1,70 @@
+<!-- Standard file uploader -->
+<div class="row">
+	<div class="col s12">
+		<div class="card">
+			<div class="card-content">
+				<h6>Upload a tab-delimited file</h6>
+
+				<div class="row">
+						<form method="POST" action ="{% url 'home' %}" enctype="multipart/form-data">
+												{% csrf_token %}
+								<div class="file-field input-field">
+      							<div class="btn blue darken-4">
+      						 		<span>File</span>
+      						  		<!--<input type="file">-->
+      						  		{{upload}}
+     								 </div>
+   								 <div class="file-path-wrapper">
+       									 <input class="file-path validate" type="text">
+     								 </div>
+     								 <input class="btn blue darken-4 waves-effect" type="submit" value="submit">
+   							 </div>
+						</form>
+
+					<!-- TODO Add upload/submit button -->
+				</div>
+
+			</div> <!-- /card-content -->
+		</div>
+	</div>
+</div> <!-- /row -->
+
+<div class="row">
+	{% if user.is_authenticated %}
+     <div class="col s12">
+		  	<div class="card userAuthorised" >
+				<div class="card-content">
+				 <h5>Uploaded Files</h2>
+
+	  <table>
+        <thead>
+          <tr>
+              <th>File Number</th>
+              <th>File Name</th>
+              <th></th>
+              <th></th>
+              <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for file in usersFiles %}
+
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{ file }}</td>
+
+            <td><a href="{% url 'edit' file %}" class="btn waves-effect waves-lighten blue darken-4 accountButton">Edit Fields</a></td>
+            <td><a href="#!" class="btn waves-effect waves-lighten red darken-4 accountButton">Show Graph</a></td>
+            <td><a href="{% url 'delete' file %}" class="btn waves-effect waves-lighten blue darken-4 accountButton">Delete</a></td>
+
+          </tr>
+
+        {%endfor%}
+        </tbody>
+      </table>
+
+   		   </div>
+   		 </div>
+     </div>
+   {% endif%}
+</div>

@@ -1,0 +1,70 @@
+{% if user.is_authenticated %}
+
+<div class="card">
+  <div class="card-content">
+      <p>You are logged in as: <b>{{ user.username }}</b></p>
+      <p><a href="/logout">Logout</a></p>
+  </div> <!-- /card-content -->
+
+</div>
+
+{% else %}
+
+<ul class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">person</i>Log In</div>
+    <div class="collapsible-body white">
+
+      <!-- Login -->
+      <div class="row">
+        <form class="col s12" method="POST" action ="{% url 'login_on_home' %}">
+          {% csrf_token %}
+          <div class="input-field"</div>
+            <i class="material-icons prefix">person</i>
+            <input id="login-username" type="text" class="validate" name="username">
+            <label for="login-username">Username</label>
+          </div>
+
+          <div class="input-field"</div>
+            <i class="material-icons prefix">lock</i>
+            <input id="login-password" type="password" class="validate" name="password">
+            <label for="login-password">Password</label>
+          </div>
+
+          <button class="btn waves-effect waves-red blue darken-4" type="submit" name="login">Login</button>
+
+        </form>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <div class="collapsible-header"><i class="material-icons">person_add</i>Register</div>
+    <div class="collapsible-body white">
+
+    <!-- Register -->
+      <div class="row">
+        <form class="col s12" method="POST"  action ="{% url 'register' %}">
+
+          {% csrf_token %}
+            {{reg_form}}
+
+          <button class="btn waves-effect waves-red blue darken-4" type="submit" value="submit">Register</button>
+
+        </form>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <div class="collapsible-header"><i class="material-icons">person_outline</i>Proceed As Guest</div>
+    <div class="collapsible-body white">
+
+    <!-- Guest -->
+    <a class="waves-effect waves-red btn blue darken-4">Continue</a>
+
+    </div>
+  </li>
+</ul>
+
+{% endif %}

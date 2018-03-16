@@ -24,4 +24,4 @@ Paul Muresan, Saadman Sakib, Wonjoon Seol and Nicolas Volken.
 <a href="https://github.com/medialab/bibliotools3.0">Bibliotools 3.0</a>
 <br/>
 <a href="https://github.com/medialab/sciencescape">ScienceScape</a>
-
+<img src="static/images/kcl.png?raw=true" width="15%" align="right">

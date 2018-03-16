@@ -5,7 +5,6 @@ bibliotools3.0/Result
 #ENV & Heroku deployment
 venv
 *.pyc
-staticfiles
 .env
 
 ### Eclipse ###
@@ -170,7 +169,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 dist/
 downloads/
@@ -301,5 +299,6 @@ $RECYCLE.BIN/
 *.lnk
 
 /mysite/bibliotools3.0/scripts/**.log
+/static/userFiles/
 
 # End of https://www.gitignore.io/api/vim,macos,python,eclipse,windows,intellij

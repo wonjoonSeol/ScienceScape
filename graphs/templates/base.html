@@ -1,0 +1,291 @@
+<!-- Load static template tag for static assets -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Import Google Icon Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <!-- Import particlesJS style -->
+    <link rel="stylesheet" href="{% static 'css/particlesJS.css' %}">
+    <!-- Import noUiSliderJS style-->
+    <link rel="stylesheet" href="{% static 'css/nouislider.css' %}">
+    <!-- Import Materialize.css -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection"/>
+    <!-- Import Dropzone JS style-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.css">
+    <!-- Import custom styling CSS -->
+    <link rel="stylesheet" href="{% static 'css/extra.css' %}">
+
+    <!-- Let browser know website is optimised for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>ScienceScapeS</title>
+
+
+   <style>
+		@keyframes fadeIn{
+			from{ opacity: 0; }
+			to{ opacity: 1;}
+		}
+
+
+		.userAuthorised {
+
+		   animation: fadeIn;
+		   animation-duration: 4s;
+		}
+
+    </style>
+
+  </head>
+
+  <body> <!-- TODO Ensure HTML5 header, main and footer tags are used -->
+
+    <div id="particles-js"></div>
+
+    <!-- TODO NAVIGATION & MENU -->
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <!-- Activation link for mobile Nav - Needs extra side-nav HTML and JS initialiation within the page's $( document ).ready(function(){}) -->
+          <a href="#" data-activates="nav-mobile-version" class="button-collapse"><i class="material-icons">menu</i></a>
+
+            <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
+              <li><a href="#!" class="btn waves-effect waves-lighten" id="nav-login-btn">Button?</a></li>
+              <li><a href="#!" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-components">Components</a></li>
+            </ul>
+
+            <ul class="right hide-on-med-and-down"> <!-- Right Menu -->
+              <li><a href="#!" class="waves-effect waves-light">Demo</a></li>
+              <li><a href="#!" class="waves-effect waves-light">Help</a></li>
+              <li><a href="{% url 'about' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
+            </ul>
+
+
+          <div style="width:100%; text-align:center">
+          <img src="{% static 'images/logo_text.png' %}" style="height:60px"/>
+          </div>
+
+              <!-- Dropdown content for About -->
+              <ul id="dropdown-about" class="dropdown-content">
+                <li><a href="about/#built-with" id="nav-menu-built-with" class="waves-effect waves-light">Built With</a></li>
+                <li><a href="about.html#built-by" id="nav-menu-built-by" class="waves-effect waves-light">Built By</a></li>
+                <li><a href="about.html#acknowledgements" id="nav-menu-acknowledgements" class="waves-effect waves-light">Acknowledgements</a></li>
+                <li><a href="about.html#related-tools" id="nav-menu-related-tools" class="waves-effect waves-light">Related Tools</a></li>
+              </ul>
+              <!-- Dropdown content for Components -->
+              <ul id="dropdown-components" class="dropdown-content">
+                <li><a href="{% url 'account' %}" class="waves-effect waves-light">Account</a></li>
+                <li><a href="#!" class="waves-effect waves-light">Graphs</a></li>
+                <li><a href="#!" class="waves-effect waves-light">Navigation Only</a></li>
+              </ul>
+
+              {% block aboutTabbedNavigation %}
+              {% endblock aboutTabbedNavigation %}
+
+        </div><!-- /.nav-wrapper -->
+      </nav>
+    </div> <!-- /.navbar-fixed -->
+
+    <!-- TODO SIDE MENU - For small screens - Needs to be outside navbar-fixed -->
+    <div>
+      <ul class="side-nav" id="nav-mobile-version">
+        <li>
+          <div class="user-view" style="height:100px">
+            <div class="background valign-wrapper">
+              <img src="{% static 'images/vectorised-logo-outline-white.svg' %}" alt="ScienceScape Logo">
+            </div>
+          </div>
+        </li>
+        <li class="top-level"><a href="#!" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
+        <li>
+
+          <!-- Collapsible Side Nav Component -->
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <!-- Top Level Accordian Header -->
+              <a href="#!" class="collapsible-header waves-effect waves-light">Components<i class="material-icons">view_module</i><i class="material-icons right">keyboard_arrow_down</i></a>
+              <div class="collapsible-body">
+                <ul>
+                  <li><a href="#!" class="waves-effect waves-light">Component 1<i class="material-icons"></i></a></li>
+                  <li><a href="#!" class="waves-effect waves-light">Component 2<i class="material-icons"></i></a></li>
+                  <li><a href="#!" class="waves-effect waves-light">Component 3<i class="material-icons"></i></a></li>
+                  <li><a href="#!" class="waves-effect waves-light">Component 4<i class="material-icons"></i></a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+
+        <li class="top-level"><a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a></li>
+        <li class="top-level"><a href="#!" class="waves-effect waves-light">Help<i class="material-icons">help</i></a></li>
+        <li>
+
+          <!-- Collapsible Side Nav Component -->
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <!-- Top Level Accordian Header -->
+              <a href="{% url 'about' %}" class="collapsible-header waves-effect waves-light">About<i class="material-icons">info</i><i class="material-icons right">keyboard_arrow_down</i></a>
+              <div class="collapsible-body">
+                <ul>
+                  <li><a href="#!" class="waves-effect waves-light">Built With<i class="material-icons"></i></a></li>
+                  <li><a href="#!" class="waves-effect waves-light">Built By<i class="material-icons"></i></a></li>
+                  <li><a href="#!" class="waves-effect waves-light">Acknowledgements<i class="material-icons"></i></a></li>
+                  <li><a href="#!" class="waves-effect waves-light">Related Tools<i class="material-icons"></i></a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+
+        </li>
+
+        <!-- <li class="top-level"><a href="#!" class="waves-effect waves-light">About<i class="material-icons">info</i></a></li> -->
+      </ul>
+    </div>
+
+    {% block Content %}
+    {% endblock Content %}
+
+    <!-- FOOTER -->
+    <footer class="page-footer">
+      <div class="container">
+
+        <div class="row">
+          <div class="col s12 m4 underline">
+            <h6>The Developers</h6>
+            <p>Shayne Ahchoon</p>
+            <p>Nathan Al Sibai</p>
+            <p>Britton Forsyth</p>
+            <p>Jack Hinshelwood</p>
+            <p>Alexander Jermstad</p>
+            <p>Paul Muresan</p>
+            <p>Saadman Sakib</p>
+            <p>Wonjoon Seol</p>
+            <p>Nicolas Volken</p>
+            </div>
+          <div class="col s12 m4">
+            <h6>Tools and Frameworks include</h6>
+            <p>Python, Sigma.js, Django, Materialize CSS, Particles.js, jQuery, FontAwesome, GitHub, Slack, Heroku, The Noun Project and Candy from Candy Mountain.</p>
+          </div>
+          <div class="col s12 m4 underline">
+            <h6>Scientometrics, reinvented</h6>
+            <p>ScienceScapeS builds upon scientometrics applications such as ScienceScape, developed by M.Jacomy at the <a href="http://medialab.sciences-po.fr/" style="color: #ffffff">Sciences Po Médialab</a>, Paris.</p>
+            <p>Our powerful data processing scripts are based on Sebastian Grauwin's work, <a href="http://www.sebastian-grauwin.com" style="color: #ffffff">Bibliotools3.0.</a></p>
+            <p>For detailed information about this project, visit our <a href="http://github.com/wonjoonSeol/ScienceScape"style="color: #ffffff">GitHub Repository</a>.</p>
+          </div>
+
+          <div style="width:100%; text-align:right">
+            <img src="{% static 'images/kcl.png' %}" style="height:100px"/>
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <div class="footer-copyright">
+        <div class="container">
+        &copy; 2018 The Codokans, King's College London
+        </div>
+      </div>
+    </footer>
+
+
+<!-- ***************
+      JAVASCRIPT
+     ***************  -->
+
+    <!-- Import jQuery before materialize.js -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <!-- Local source for noUiSlider.js -->
+    <script type="text/javascript" src="{% static 'javascript/nouislider.js' %}"></script>
+
+    <!-- CDN source for Sigma JS -->
+    <script type="text/javascript" src="{% static 'javascript/sigma.js-1.2.1/build/sigma.min.js' %}"></script>
+    <!-- Local source for Sigma JS JSON Parser -->
+    <script type="text/javascript" src="{% static 'javascript/sigma.js-1.2.1/build/plugins/sigma.parsers.json.min.js' %}"></script>
+
+    <!-- CDN source for particles-js -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <!-- CDN source for Dropzone JS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.js"></script>
+
+  <!-- Particesl JS Initialisation -->
+    <script type="text/javascript">
+      particlesJS.load('particles-js',         // Param 1 - div ID
+                       '{% static 'json/particles.json' %}',  // Param 2 - JSON settings
+                       function () {            // Param 3 - Function to fire after loading JSON
+                        console.log('particles.json loaded');
+                      });
+    </script>
+
+    <!-- Code to execute onÒ page load -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('select').material_select();    //  Initialise form drop down select
+        $('.button-collapse').sideNav();  //  Initialise the side navigation on small screens
+      });
+    </script>
+
+    <!-- Sigma JS Test Data -->
+    <script>
+      sigma.parsers.json('{% static '/json/json-test-sigma.json' %}', {
+        container: 'json-test-sigma-container',
+        settings: {
+          defaultNodeColor: '#0D47A1',
+        },
+      });
+    </script>
+
+    <!-- Additional Dropown Navigation Initialisation Settings -->
+    <script>
+    $('.nav-dropdown').dropdown({
+      inDuration: 300,
+      outDuration: 600,
+      constrainWidth: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: true, // Displays dropdown below the button
+      alignment: 'left', // Displays dropdown with edge aligned to the left of button
+      stopPropagation: false, // Stops event propagation
+    });
+
+    </script>
+
+    <!-- Getting Sub Nav Tab Links to Work Outside Of Tab Menu -->
+    <script>
+      $(document).ready(function () {
+        $('ul.tabs').tabs();
+        $('#nav-menu-built-with').click(function () {
+          $('ul.tabs').tabs('select_tab', 'built-with');
+        });
+      });
+
+      $(document).ready(function () {
+        $('ul.tabs').tabs();
+        $('#nav-menu-built-by').click(function () {
+          $('ul.tabs').tabs('select_tab', 'built-by');
+        });
+      });
+
+      $(document).ready(function () {
+        $('ul.tabs').tabs();
+        $('#nav-menu-acknowledgements').click(function () {
+          $('ul.tabs').tabs('select_tab', 'acknowledgements');
+        });
+      });
+
+      $(document).ready(function () {
+        $('ul.tabs').tabs();
+        $('#nav-menu-related-tools').click(function () {
+          $('ul.tabs').tabs('select_tab', 'related-tools');
+        });
+      });
+    </script>
+
+  </body>
+
+</html>

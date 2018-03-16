@@ -1,0 +1,185 @@
+ {% load static %}
+
+<style>
+    #graph-container {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 500px;
+    }
+ </style>
+
+<div class="card">
+	<div class="card-content">
+	<h5>Graph Controls (functional)</h5>
+  			<button type="button" class="btn btn-danger" onclick="rearrageIntoCircle(this)" id="rearrangeToCircle">REARRANGE TO CIRCLE</button>
+				<button type="button" id="applyForce" onclick="startStopForceAtlas2(this)" class="btn btn-success">START FORCE ATLAS 2</button><br><br>
+				<button type="button" id="toggleEdges" onclick="turnOnOffEdges(this)" class="btn btn-info">TOGGLE EDGES</button>
+	</div>
+</div>
+
+<div class="card">
+	<div class="card-content">
+	<h5>{{filename}}</h5>
+
+  	<div  id="graph-container"></div>
+
+	</div>
+</div>
+
+<!-- START SIGMA IMPORTS -->
+<script src="{% static 'javascript/sigma.js-1.2.1/src/sigma.core.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/conrad.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/utils/sigma.utils.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/utils/sigma.polyfills.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/sigma.settings.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/classes/sigma.classes.dispatcher.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/classes/sigma.classes.configurable.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/classes/sigma.classes.graph.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/classes/sigma.classes.camera.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/classes/sigma.classes.quad.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/classes/sigma.classes.edgequad.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/captors/sigma.captors.mouse.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/captors/sigma.captors.touch.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/sigma.renderers.canvas.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/sigma.renderers.webgl.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/sigma.renderers.svg.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/sigma.renderers.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.nodes.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.nodes.fast.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.edges.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.edges.fast.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/webgl/sigma.webgl.edges.arrow.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.labels.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.hovers.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.nodes.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edges.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edges.curve.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edges.arrow.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edges.curvedArrow.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.curve.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.arrow.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.edgehovers.curvedArrow.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/canvas/sigma.canvas.extremities.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/svg/sigma.svg.utils.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/svg/sigma.svg.nodes.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/svg/sigma.svg.edges.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/svg/sigma.svg.edges.curve.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/svg/sigma.svg.labels.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/renderers/svg/sigma.svg.hovers.def.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/middlewares/sigma.middlewares.rescale.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/middlewares/sigma.middlewares.copy.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/misc/sigma.misc.animation.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/misc/sigma.misc.bindEvents.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/misc/sigma.misc.bindDOMEvents.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/src/misc/sigma.misc.drawHovers.js'%}"></script>
+<!-- END SIGMA IMPORTS -->
+<script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.parsers.gexf/gexf-parser.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.parsers.gexf/sigma.parsers.gexf.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.layout.forceAtlas2/worker.js'%}"></script>
+<script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.layout.forceAtlas2/supervisor.js'%}"></script>
+
+<script>
+
+
+var graphs = [];
+var toggleEdges = true;
+
+sigma.parsers.gexf("{% static fpath%}", {container: 'graph-container'},
+
+	function (sigmaObject) {
+
+		var numberOfNodes = sigmaObject.graph.nodes().length;
+		var counter = 0;
+
+		sigmaObject.graph.nodes().forEach(function(n) {
+
+		 if(!n.x && !n.y){
+		  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
+    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
+    	 }
+
+    	  if (!n.label) {
+    	  	n.label = n.id;
+    	  }
+
+    	  if(!n.size){
+    	  	n.size = Math.random();
+    	  }
+
+        counter ++ ;
+      });
+
+
+
+      sigmaObject.refresh();
+      graphs.push(sigmaObject);
+
+	}
+);
+
+
+function startStopForceAtlas2(element){
+	console.log("no. graphs: " + graphs.length)
+	if (!graphs[0].isForceAtlas2Running()){
+	//start spacialization
+		for (i=0 ; i<graphs.length; i++) {
+			graphs[i].startForceAtlas2({worker: true, barnesHutOptimize: false});
+		}
+		element.innerHTML="STOP FORCE ATLAS 2";
+		element.classList.add("btn-danger");
+		element.classList.remove("btn-success");
+
+	} else {
+	//stop spacialsation
+	for (i = 0 ; i<graphs.length; i++) {
+		graphs[i].stopForceAtlas2();
+	}
+	element.innerHTML="START FORCE ATLAS 2";
+	element.classList.add("btn-success");
+		element.classList.remove("btn-danger");
+	}
+
+}
+
+function rearrageIntoCircle(element) {
+	console.log("Rearrange circle pressed");
+	for (i=0 ; i<graphs.length ; i++) {
+		var counter = 0;
+		var numberOfNodes = graphs[i].graph.nodes().length;
+		graphs[i].graph.nodes().forEach(function(n) {
+
+		  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
+    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
+
+    	  n.size = Math.random();
+			counter++;
+      });
+      graphs[i].killForceAtlas2();
+           graphs[i].refresh();
+	}
+}
+
+function turnOnOffEdges(element) {
+	console.log("ToggleEdges pressed: " + toggleEdges);
+
+	if (toggleEdges) {
+		for (i=0 ; i<graphs.length ; i++) {
+			graphs[i].settings('drawEdges', false);
+			graphs[i].refresh();
+		}
+
+		toggleEdges = false;
+	} else {
+		for (i=0 ; i<graphs.length ; i++) {
+			graphs[i].settings('drawEdges', true);
+			graphs[i].refresh();
+		}
+
+		toggleEdges = true;
+	}
+}
+
+</script>
