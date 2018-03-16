@@ -12,6 +12,10 @@ p {
   --red-text-shadow: #780000;
 }
 
+.welcome-section {
+    height: 80px;
+}
+
 /* --nav-background-color: rgba(159, 0, 0, 0.92);
 --nav-dropdown-color: rgba(159, 0, 0, 0.92);
 
