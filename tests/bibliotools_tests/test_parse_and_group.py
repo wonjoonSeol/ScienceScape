@@ -1,4 +1,4 @@
-import unittest
+from django.test import TestCase
 import sys
 import os
 
@@ -10,7 +10,7 @@ from parse_and_group import create_span_files
 from parse_and_group import separate_years
 from parse_and_group import get_span_parameters
 
-class TestParseGroup(unittest.TestCase):
+class TestParseGroup(TestCase):
 
     """
     This test tests that the method is_year_within_span works correctly
@@ -114,6 +114,3 @@ class TestParseGroup(unittest.TestCase):
         }
         result = str(get_span_parameters(mocked_spans.items(), "years"))
         self.assertEqual(result, """{'first_span': [1789, 2010], 'second_span': [2011, 2018]}""")
-
-if __name__ == '__main__':
-    unittest.main()
