@@ -40,8 +40,12 @@ nav .dropdown-content li.top-level:hover,
   background-color: rgba(134, 0, 0, 0.91);
 }
 
+nav .dropdown-button {
+  color: #348ec1
+}
+
 nav .dropdown-content  a {
-  color: white!important;
+  color: white !important;
 }
 
 #nav-login-btn {
@@ -89,7 +93,7 @@ nav .dropdown-content  a {
 }
 
 .side-nav {
-  background-color: #a90404c7;
+  background-color: #348ec1;
 }
 
 .side-nav li>a,
@@ -106,6 +110,10 @@ nav .dropdown-content  a {
 
 .side-nav .user-view {
   margin-top: 20px;
+}
+
+.button-collapse {
+  color: #348ec1;
 }
 
 /* Page footer */
