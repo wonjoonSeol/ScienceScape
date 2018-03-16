@@ -106,9 +106,9 @@ footer a {
 /* NAVIGATION & MENU */
 
 nav {
-  background-color: rgba(184, 28, 28, 0.85) !important;
-  /* min-height: 80px;
-  height: 80px; */
+  /*background-color: rgba(184, 28, 28, 0.85) !important;*/
+  min-height: 70px;
+  height: 70px;
 }
 
 #nav-h1{
@@ -136,7 +136,7 @@ nav .dropdown-content li {
 }
 
 .nav-wrapper {
-  /* background-color: #fff; */
+  background-color: #fff;
   /*background-color: #283593;*/
 }
 
