@@ -1,57 +1,4 @@
-/*******************
-  COLOR PALETTE
-********************/
-
-/* TODO: Complete Color Palette and replace hard coded colours with variables
-         Use Pigment: Find Colors to do so */
-
-/*  SCSS Variable decaration:   $brandColor: #0D47A1; */
-/*  CSS Variable declarations - Need to go in class or element tags */
-
-p {
-  --red-text-shadow: #780000;
-}
-
-.welcome-section {
-    height: 80px;
-}
-
-/* --nav-background-color: rgba(159, 0, 0, 0.92);
---nav-dropdown-color: rgba(159, 0, 0, 0.92);
-
---side-nav-hover-color: background-color: rgba(134, 0, 0, 0.91); // Maybe use darken function?
-
---text-white: white;
---card-text: black;
-
---blue-btn-hover: #0D47A1;
---blue-btn-outline: #0D47A1;
---blue-btn-highlight: #81acee;
-
---color-one: rgb(230, 60, 75);
---color-two: rgb(208, 137, 0);
-
---some-color: #ffffff;
---some-color: #ffffff;
---some-color: #ffffff; */
-
-
-
-
-
-/*******************
-  SIGMA JS
-********************/
-
-#json-test-sigma-container {
-  /* max-width: 400px; */
-  height: 400px;
-  margin: auto;
-}
-
-/*******************
-  MATERIALIZE CSS
-********************/
+/* General */
 
 body,
 html {
@@ -64,21 +11,203 @@ html h1 {
   text-shadow: 2px 2px 5px #780000;
   font-size: 4em;
 }
-/*
-h1, h2, h3, h4, h5, h6 {
+
+/* Navigation bar */
+
+nav {
+  min-height: 70px;
+  height: 70px;
+}
+
+#nav-h1{
+  margin: 0;
+}
+
+nav .dropdown-content {
+  background-color: transparent;
+}
+
+nav .dropdown-content li {
+  background-color: rgba(159, 0, 0, 0.92) !important;
+}
+
+.nav-wrapper {
+  background-color: #fff;
+}
+
+nav .dropdown-content li.top-level:hover,
+.side-nav li.top-level:hover {
+  background-color: rgba(134, 0, 0, 0.91);
+}
+
+nav .dropdown-content  a {
+  color: white!important;
+}
+
+#nav-login-btn {
+  color: #E0F2F1;
+  background-color: #4DB6AC;
+  border: 1px solid #ffffff;
+}
+
+#nav-login-btn:hover {
+  background-color: #00897B !important;
   color: white;
-  text-shadow: 1px 1px 8px #000000;
+}
+
+/* Side navigation bar */
+
+.side-nav .collapsible-body,
+.side-nav.fixed .collapsible-body {
+  background-color: transparent;
+}
+
+.side-nav li.active {
+  background-color: transparent;
+}
+
+.side-nav .collapsible-header,
+.side-nav.fixed .collapsible-header {
+  padding: 0 32px;
+}
+
+.side-nav .collapsible-body li a,
+.side-nav.fixed .collapsible-body li a {
+  padding-left: 50px;
+}
+
+.side-nav li.active:hover,
+.side-nav.fixed li.active:hover {
+  background-color: transparent !important;
+}
+
+.side-nav .collapsible-header:hover,
+.side-nav.fixed .collapsible-header:hover,
+.side-nav .collapsible-body li:hover,
+.side-nav.fixed .collapsible-body li:hover {
+  background-color: rgba(134, 0, 0, 0.91) !important;
+}
+
+.side-nav {
+  background-color: #a90404c7;
+}
+
+.side-nav li>a,
+.side-nav li>a>i {
+  color: white !important;
+}
+
+.side-nav .user-view img {
+  height: 70px;
+  width: 70px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.side-nav .user-view {
+  margin-top: 20px;
+}
+
+/* Page footer */
+
+.page-footer {
+  background-color: rgba(0,0,0,0.7) !important;
+}
+
+.page-footer h6 {
+  text-shadow: 1px 1px 1px rgb(121, 0, 0);
+  font-weight: bold;
+  color: rgb(238, 238, 238);
+}
+
+.page-footer .underline a {
+  text-decoration: underline !important;
+}
+
+footer a {
+  color: blue;
+}
+
+/* Graphs module */
+
+.graphs-page .card {
+  color: black;
+}
+
+.graphs-page h5 {
   font-weight: lighter;
-} */
-
-p {
-  /* color: white; */
+  font-style: italic;
 }
 
-a {
- /* color: white; */
+.graph-container {
+  height: 500px;
 }
 
+.graphs-page .btn {
+  margin: 4px;
+  width: 275px;
+}
+
+#graph-node-search {
+  margin: 0 12%;
+}
+
+.toggle-graph-edges {
+  text-transform: uppercase;
+  color: #0D47A1;
+  margin-top: 5px;
+}
+
+.toggle-graph-edges label {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.graph-edges-container{
+  border: 1px solid blue;
+  width: 275px;
+  padding: 0 2rem;
+}
+
+.graph-select:hover {
+  background-color: #0D47A1 !important;
+  color: white;
+}
+
+.graph-select {
+  color: #0D47A1;
+  background-color: white !important;
+  border: 1px solid #0D47A1;
+}
+
+/* Tabs */
+
+.tabs {
+    display: -webkit-box !important;
+    display: -webkit-flex!important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+
+.tabs .tab {
+    -webkit-box-flex: 1 !important;
+    -webkit-flex-grow: 1 !important;
+    -ms-flex-positive: 1 !important;
+    flex-grow: 1 !important;
+}
+
+.tabs .tab a {
+    padding: 0 12px !important;
+}
+
+/* Sigma.js */
+
+#json-test-sigma-container {
+  height: 400px;
+  margin: auto;
+}
+
+/* About page */
 
 .about h1,
 .about h2,
@@ -103,128 +232,7 @@ a {
   text-decoration: underline;
 }
 
-footer a {
-  color: blue;
-}
-
-/* NAVIGATION & MENU */
-
-nav {
-  /*background-color: rgba(184, 28, 28, 0.85) !important;*/
-  min-height: 70px;
-  height: 70px;
-}
-
-#nav-h1{
-  margin: 0;
-}
-
-
-
-nav .dropdown-content {
-  background-color: transparent;
-}
-
-nav .dropdown-content li {
-  background-color: rgba(159, 0, 0, 0.92) !important;
-}
-
-.side-nav .collapsible-body,
-.side-nav.fixed .collapsible-body {
-  background-color: transparent;
-}
-
-/* Expanded accordian background */
-.side-nav li.active {
-  background-color: transparent;
-}
-
-.nav-wrapper {
-  background-color: #fff;
-  /*background-color: #283593;*/
-}
-
-.side-nav .collapsible-header,
-.side-nav.fixed .collapsible-header {
-  padding: 0 32px;
-}
-
-.side-nav .collapsible-body li a,
-.side-nav.fixed .collapsible-body li a {
-  padding-left: 50px;
-}
-
-
-.side-nav li:hover {
-  /* background-color: transparent; */
-}
-
-.side-nav li.active:hover,
-.side-nav.fixed li.active:hover {
-  background-color: transparent !important;
-}
-
-
-.side-nav .collapsible-header:hover,
-.side-nav.fixed .collapsible-header:hover,
-.side-nav .collapsible-body li:hover,
-.side-nav.fixed .collapsible-body li:hover {
-  background-color: rgba(134, 0, 0, 0.91) !important;
-}
-
-nav .dropdown-content li.top-level:hover,
-.side-nav li.top-level:hover {
-  background-color: rgba(134, 0, 0, 0.91);
-}
-
-nav .dropdown-content  a {
-  color: white!important;
-}
-
-#nav-login-btn {
-  color: #E0F2F1;
-  background-color: #4DB6AC;
-  border: 1px solid #ffffff;
-}
-
-#nav-login-btn:hover {
-  background-color: #00897B !important;
-  color: white;
-}
-
-/* SIDE NAV */
-
-.side-nav {
-  background-color: #a90404c7;
-}
-
-.side-nav li>a,
-.side-nav li>a>i {
-  color: white !important;
-}
-
-/* TABS NAV */
-
-/* Enable full screen width tabs menu */
-.tabs {
-    display:-webkit-box !important;
-    display: -webkit-flex!important;
-    display: -ms-flexbox !important;
-    display: flex ! important;
-}
-
-.tabs .tab {
-    -webkit-box-flex: 1 !important;
-    -webkit-flex-grow: 1 !important;
-    -ms-flex-positive: 1 !important;
-    flex-grow: 1 !important;
-}
-
-.tabs .tab a {
-    padding: 0 12px !important;
-}
-
-
+/* Miscellaneous */
 
 .tagline {
   text-shadow: 1px 1px 8px #000000;
@@ -247,69 +255,25 @@ nav .dropdown-content  a {
   font-weight: bold;
 }
 
-.page-footer {
-  background-color: rgba(0,0,0,0.7) !important;
-}
-
-.footer-copyright {
-  /* background: transparent !important; */
-}
-
-.page-footer h6 {
-  text-shadow: 1px 1px 1px rgb(121, 0, 0);
-  font-weight: bold;
-  color: rgb(238, 238, 238);
-}
-
-
-.page-footer .underline a {
-  text-decoration: underline !important;
-}
-
 #logo-home img {
   width: 150px;
   height: 150px;
   padding-bottom: 20px;
 }
 
-.side-nav .user-view img {
-  height: 70px;
-  width: 70px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.side-nav .user-view {
-  margin-top: 20px;
-}
-
 .tabbed-page-container {
   margin-top: 20px;
 }
 
-/* TODo Make more specific to cards, vs nav */
 .card .dropdown-content li>a,
 .card .dropdown-content li>span {
   color: #0D47A1;
 }
 
-.graph-select:hover {
-  background-color: #0D47A1 !important;
-  color: white;
-}
-
-.graph-select {
-  color: #0D47A1;
-  background-color: white !important;
-  border: 1px solid #0D47A1;
-}
-
-/* Buttons  */
 #dropdown-list-1 li a {
   color: darkblue;
 }
 
-/* Toggle checkbox */
 .switch label input[type=checkbox]:checked+.lever {
   background-color: #81acee;
 
@@ -319,26 +283,10 @@ nav .dropdown-content  a {
   background-color: #0D47A1;
 }
 
-/* UPLOAD BOX */
-
-label[for="id_file"] {
-  /* display: none !important; */
-}
-
-/*******************
-  Field Selctor Page
-********************/
-
 .field-selector-header,
 .field-selector-footer {
       background: #ccccccb3;
 }
-
-/*******************
-  About Page
-********************/
-
-/* Fontawesome */
 
 .fa,
 .fab {
@@ -349,13 +297,6 @@ label[for="id_file"] {
   font-size: 13pt;
 }
 
-.the-codokans li img {
-  margin-top: 10px;
-}
-
-/*******************
-  NO UI SLIDER
-********************/
 .noUi-tooltip {
   background-color: #0D47A1 !important;
 }
@@ -364,10 +305,6 @@ label[for="id_file"] {
   background-color: #81acee;
 }
 
-
-/*******************
-  DROPZONE JS
-********************/
 .dropzone {
   border: 2px dashed #0D47A1 !important;
   border-radius: 5px;
@@ -377,10 +314,6 @@ label[for="id_file"] {
   margin: 3em 0 !important;
 }
 
-/*******************
-  ACCOUNT PAGE
-********************/
-
 .accountButton {
   border: 1px solid white !important;
 }
@@ -389,58 +322,21 @@ label[for="id_file"] {
   color: black;
 }
 
-
-/*******************
-  GRAPHS PAGE
-********************/
-
-.graphs-page .card {
-  /* background-color: transparent; */
-  color: black;
-}
-
-.graphs-page h5 {
-  font-weight: lighter;
-  font-style: italic;
-}
-
-.graph-container {
-  height: 500px;
-}
-
-.graphs-page .btn {
-  margin: 4px;
-  width: 275px;
-}
-
-#graph-node-search {
-  margin: 0 12%;
-}
-
 input[type=search]:focus {
   border-bottom: 1px solid #0D47A1 !important;
   -webkit-box-shadow: 0 1px 0 0 #0D47A1 !important;
   box-shadow: 0 1px 0 0 #0D47A1 !important;
 }
 
-input[type=search]{
+input[type=search] {
   width: 82% !important;
   padding-left: 50px !important;
 }
 
-.toggle-graph-edges {
-  text-transform: uppercase;
-  color: #0D47A1;
-  margin-top: 5px;
+.welcome-section {
+    height: 80px;
 }
 
-.toggle-graph-edges label {
-  margin-right: 10px;
-  margin-left: 10px;
-}
-
-.graph-edges-container{
-  border: 1px solid blue;
-  width: 275px;
-  padding: 0 2rem;
+p {
+  --red-text-shadow: #780000;
 }
