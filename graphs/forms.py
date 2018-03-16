@@ -37,6 +37,7 @@ def create_mini_form(choices = [("DEFAULT", "Select a value")], request = None):
 	else:
 		return MiniForm
 
+		
 """ Return a dictionary containing the final form and the number
 of unknown values.
 Produces a set of forms from a dictionary and a list of unknown values.
@@ -55,7 +56,8 @@ def produce_form_set(dictionary, unknown_values):
 	for i in unknown_values:
 		unknown.append((i,i))
 
-	form = formset_factory(create_mini_form(unknown), extra = (len(unknown) - entry_count))
+	form = formset_factory(create_mini_form(unknown))
+	initial = [{'Name': "Subjects"},{'Name': "Authors"},{'Name': "Institutions"},{'Name': "Article_Keywords"},{'Name': "Title_Keywords"},{'Name': "ISI_Keywords"},{'Name': "Countries"}]
 	finalForm = form(initial = initial)
 
 	return {'form' : finalForm, 'count' : len(unknown)}
