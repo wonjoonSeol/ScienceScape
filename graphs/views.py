@@ -71,7 +71,7 @@ def field_form(request, file_path):
 					form_is_valid = False
 
 		if form_is_valid:
-			refreshDataBase(data, file_path)
+			refresh_database(data, file_path)
 			return redirect('/')
 
 	if file_path:
