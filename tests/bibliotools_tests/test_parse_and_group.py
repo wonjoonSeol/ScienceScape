@@ -43,11 +43,11 @@ class TestParseGroup(TestCase):
         # Set up test folders/files (will be removed at the end of test)
         wos_headers = "PT	AU	BA	BE	GP	AF	BF	CA	TI	SO	SE	BS	LA	DT	CT	CY	CL	SP	HO	DE	ID	AB	C1	RP	EM	RI	OI	FU	FX	CR	NR	TC	Z9	U1	U2	PU	PI	PA	SN	EI	BN	J9	JI	PD	PY	VL	IS	PN	SU	SI	MA	BP	EP	AR	DI	D2	EA	EY	PG	WC	SC	GA	UT	PM	OA	HC	HP	DA"
         dir = os.path.dirname(os.path.dirname(__file__))
-        os.makedirs(os.path.join(dir, "testFiles/foldersForSeparateYears"))
-        os.makedirs(os.path.join(dir, "testFiles/foldersForSeparateYears/firstSpan"))
-        os.makedirs(os.path.join(dir, "testFiles/foldersForSeparateYears/secondSpan"))
-        first_span_txt = open(os.path.join(dir, "testFiles/foldersForSeparateYears/firstSpan/firstSpan.txt"), "w")
-        second_span_txt = open(os.path.join(dir, "testFiles/foldersForSeparateYears/secondSpan/secondSpan.txt"), "w")
+        os.makedirs(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears"))
+        os.makedirs(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/firstSpan"))
+        os.makedirs(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/secondSpan"))
+        first_span_txt = open(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/firstSpan/firstSpan.txt"), "w")
+        second_span_txt = open(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/secondSpan/secondSpan.txt"), "w")
         first_span_txt.write(wos_headers + "\n")
         second_span_txt.write(wos_headers + "\n")
 
@@ -78,8 +78,8 @@ class TestParseGroup(TestCase):
 
         first_span_txt.close()
         second_span_txt.close()
-        first_span_read = open(os.path.join(dir, "testFiles/foldersForSeparateYears/firstSpan/firstSpan.txt"), "r")
-        second_span_read = open(os.path.join(dir, "testFiles/foldersForSeparateYears/secondSpan/secondSpan.txt"), "r")
+        first_span_read = open(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/firstSpan/firstSpan.txt"), "r")
+        second_span_read = open(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/secondSpan/secondSpan.txt"), "r")
         first_span_read.readline()
         second_span_read.readline()
 
@@ -91,11 +91,11 @@ class TestParseGroup(TestCase):
         # Tear down
         first_span_read.close()
         second_span_read.close()
-        os.remove(os.path.join(dir, "testFiles/foldersForSeparateYears/firstSpan/firstSpan.txt"))
-        os.remove(os.path.join(dir, "testFiles/foldersForSeparateYears/secondSpan/secondSpan.txt"))
-        os.rmdir(os.path.join(dir, "testFiles/foldersForSeparateYears/firstSpan"))
-        os.rmdir(os.path.join(dir, "testFiles/foldersForSeparateYears/secondSpan"))
-        os.rmdir(os.path.join(dir, "testFiles/foldersForSeparateYears"))
+        os.remove(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/firstSpan/firstSpan.txt"))
+        os.remove(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/secondSpan/secondSpan.txt"))
+        os.rmdir(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/firstSpan"))
+        os.rmdir(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears/secondSpan"))
+        os.rmdir(os.path.join(dir, "bibliotools_tests/testFiles/foldersForSeparateYears"))
 
         self.assertEqual(True, result)
 
