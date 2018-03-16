@@ -1,9 +1,115 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block Content %}
 
- 	
-    
+
+<div class="container"> <!-- Page content to go within container -->
+
+  <div class="section"></div>
+
+<div id="logo-home" class="center">
+  <img src="{% static 'images/vectorised-logo-outline-white.svg' %}" alt="ScienceScape Logo">
+</div>
+
+<h6 class="white-text center tagline">Helpers for scientometrics.
+  <br>Convert files, get networks and visualize stuff from Scopus or Web of Knowledge.</h6>
+<br>
+
+  <div class="section">
+
+{% include "logincard.html" %}
+
+  </div>
+
+
+    <!-- Standard file uploader -->
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+
+          <div class="row">
+            <div class="col s12">
+              <form action="#">
+                <div class="file-field">
+                  <p>Select .CSV file to upload</p>
+                  <br>
+                  <div class="btn blue darken-4">
+                    <span>File</span>
+                    <input type="file">
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!-- TODO Add upload/submit button -->
+          </div>
+
+        </div> <!-- /card-content -->
+      </div>
+    </div>
+  </div> <!-- /row -->
+
+  <div class="white-text center graphs-page">
+
+    <div class="card graphs-buttons-card">
+      <div class="card-content">
+
+        <h5>Graph Controls</h6>
+
+          <div class="row">
+            <div class="col s6">
+              <a class="waves-effect waves-light btn graph-select" id="start-force-atlas-2"><i class="material-icons left">play_arrow</i>Start Force Atlas 2</a>
+              <br>
+              <a class="waves-effect waves-light btn graph-select" id="stop-force-atlas-2"><i class="material-icons left">stop</i>Stop Force Atlas 2</a>
+            </div>
+            <div class="col s6">
+              <a class="waves-effect waves-light btn graph-select" id="reset"><i class="material-icons left">power_settings_new</i>Reset</a><br>
+
+              <a class="waves-effect waves-light btn graph-select" id="rearrange-to-circle"><i class="material-icons left">refresh</i>Rearrange to Circle</a>
+            </div>
+              <div class="col s6">
+                <!-- Switch -->
+                <br>
+                <div class="switch toggle-graph-edges">
+                  Graph Edges
+                  <label>
+                    Off
+                    <input type="checkbox" id="graph-edges">
+                    <span class="lever"></span>
+                    On
+                  </label>
+                </div>
+              </div>
+              <div class="col s6">
+                <!-- Search - TODO - Add Autocomplete? Forms -->
+                <form id="graph-node-search">
+                  <div class="input-field">
+                    <input id="search" type="search" placeholder="Node Search" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                  </div>
+                </form>
+              </div>
+          </div>
+
+
+
+
+          </div> <!-- End Card Content -->
+        </div> <!-- End Card -->
+
+
+
+
+
+
+  </div>
+
 	<br>
 
 	<div class="row text-center">
@@ -21,7 +127,7 @@
 
 		<div class="col s4">
 
-{% include "logincard.html" %}
+Where old login card was
 		</div>
 
 
@@ -47,15 +153,17 @@
 		</div>
 	</div>
 
+
+
 	<div class="row">
 		<div class="col s1">
 
 		</div>
 		<div class="col s10">
 			<div>
-				
+
 				{%if fpath%}
-				{% include "graph_template.html" %} 
+				{% include "graph_template.html" %}
 				{%endif%}
 			</div>
 		</div>
@@ -66,7 +174,7 @@
 		</div>
 	</div>
 
-
+</div> <!-- /body container -->
 
 
 {% endblock %}
