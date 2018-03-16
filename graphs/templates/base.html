@@ -1,9 +1,10 @@
-<!-- Load static template tag for static assets -->
 {% load static %}
 
 <!DOCTYPE html>
+
 <html>
   <head>
+
     <!-- Import Google Icon Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <!-- Import particlesJS style -->
@@ -22,38 +23,35 @@
 
     <title>ScienceScapeS</title>
 
+    <style>
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
 
-   <style>
-		@keyframes fadeIn{
-			from{ opacity: 0; }
-			to{ opacity: 1;}
-		}
-
-
-		.userAuthorised {
-
-		   animation: fadeIn;
-		   animation-duration: 4s;
-		}
-
+        .userAuthorised {
+            animation: fadeIn;
+            animation-duration: 4s;
+        }
     </style>
 
   </head>
 
-  <body> <!-- TODO Ensure HTML5 header, main and footer tags are used -->
+  <body>
 
+    <!-- Background image -->
     <div id="particles-js"></div>
 
-    <!-- TODO NAVIGATION & MENU -->
     <div class="navbar-fixed">
+
+      <!-- NAVIGATION BAR -->
       <nav>
         <div class="nav-wrapper">
-          <!-- Activation link for mobile Nav - Needs extra side-nav HTML and JS initialiation within the page's $( document ).ready(function(){}) -->
+          <!-- Activation link for mobile navigation bar -->
           <a href="#" data-activates="nav-mobile-version" class="button-collapse"><i class="material-icons">menu</i></a>
 
             <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
               <li><a href="#!" class="btn waves-effect waves-lighten" id="nav-login-btn">Button?</a></li>
-              <li><a href="#!" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-components">Components</a></li>
             </ul>
 
             <ul class="right hide-on-med-and-down"> <!-- Right Menu -->
@@ -62,33 +60,26 @@
               <li><a href="{% url 'about' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
             </ul>
 
+            <div style="width:100%; text-align:center">
+                <img src="{% static 'images/logo_text.png' %}" style="height:60px"/>
+            </div>
 
-          <div style="width:100%; text-align:center">
-          <img src="{% static 'images/logo_text.png' %}" style="height:60px"/>
-          </div>
+            <!-- Dropdown content for About -->
+            <ul id="dropdown-about" class="dropdown-content">
+              <li><a href="about/#built-with" id="nav-menu-built-with" class="waves-effect waves-light">Built With</a></li>
+              <li><a href="about.html#built-by" id="nav-menu-built-by" class="waves-effect waves-light">Built By</a></li>
+              <li><a href="about.html#acknowledgements" id="nav-menu-acknowledgements" class="waves-effect waves-light">Acknowledgements</a></li>
+              <li><a href="about.html#related-tools" id="nav-menu-related-tools" class="waves-effect waves-light">Related Tools</a></li>
+            </ul>
 
-              <!-- Dropdown content for About -->
-              <ul id="dropdown-about" class="dropdown-content">
-                <li><a href="about/#built-with" id="nav-menu-built-with" class="waves-effect waves-light">Built With</a></li>
-                <li><a href="about.html#built-by" id="nav-menu-built-by" class="waves-effect waves-light">Built By</a></li>
-                <li><a href="about.html#acknowledgements" id="nav-menu-acknowledgements" class="waves-effect waves-light">Acknowledgements</a></li>
-                <li><a href="about.html#related-tools" id="nav-menu-related-tools" class="waves-effect waves-light">Related Tools</a></li>
-              </ul>
-              <!-- Dropdown content for Components -->
-              <ul id="dropdown-components" class="dropdown-content">
-                <li><a href="{% url 'account' %}" class="waves-effect waves-light">Account</a></li>
-                <li><a href="#!" class="waves-effect waves-light">Graphs</a></li>
-                <li><a href="#!" class="waves-effect waves-light">Navigation Only</a></li>
-              </ul>
+            {% block aboutTabbedNavigation %}
+            {% endblock aboutTabbedNavigation %}
 
-              {% block aboutTabbedNavigation %}
-              {% endblock aboutTabbedNavigation %}
-
-        </div><!-- /.nav-wrapper -->
+        </div>
       </nav>
-    </div> <!-- /.navbar-fixed -->
+    </div>
 
-    <!-- TODO SIDE MENU - For small screens - Needs to be outside navbar-fixed -->
+    <!-- SIDE NAVIGATION BAR (for small screens) -->
     <div>
       <ul class="side-nav" id="nav-mobile-version">
         <li>
@@ -109,9 +100,6 @@
               <div class="collapsible-body">
                 <ul>
                   <li><a href="#!" class="waves-effect waves-light">Component 1<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Component 2<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Component 3<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Component 4<i class="material-icons"></i></a></li>
                 </ul>
               </div>
             </li>
@@ -139,7 +127,6 @@
 
         </li>
 
-        <!-- <li class="top-level"><a href="#!" class="waves-effect waves-light">About<i class="material-icons">info</i></a></li> -->
       </ul>
     </div>
 
@@ -178,7 +165,6 @@
             <img src="{% static 'images/kcl.png' %}" style="height:100px"/>
           </div>
 
-
         </div>
 
       </div>
@@ -189,7 +175,6 @@
         </div>
       </div>
     </footer>
-
 
 <!-- ***************
       JAVASCRIPT
