@@ -1,131 +1,70 @@
+{% if user.is_authenticated %}
 
+<div class="card">
+  <div class="card-content">
+      <p>You are logged in as: <b>{{ user.username }}</b></p>
+      <p><a href="/logout">Logout</a></p>
+  </div> <!-- /card-content -->
 
-      {% if user.is_authenticated %}
-        <div class="card">
-            <div class="card-content">
-                <p>You are logged in as: <b>{{ user.username }}</b></p>
-                <p><a href="/logout">Logout</a></p>
+</div>
 
-          </div> <!-- /card-content -->
+{% else %}
 
+<ul class="collapsible" data-collapsible="accordion">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">person</i>Log In</div>
+    <div class="collapsible-body white">
 
+      <!-- Login -->
+      <div class="row">
+        <form class="col s12" method="POST" action ="{% url 'login_on_home' %}">
+          {% csrf_token %}
+          <div class="input-field"</div>
+            <i class="material-icons prefix">person</i>
+            <input id="login-username" type="text" class="validate" name="username">
+            <label for="login-username">Username</label>
+          </div>
 
-       </div>
-        {% else %}
-        <ul class="collapsible popout" data-collapsible="accordion">
-          <li>
-            <div class="collapsible-header"><i class="material-icons">person</i>Login</div>
-            <div class="collapsible-body" style="background: white;"><span>
-              <!-- <a href="/login" class="btn">Login</a> -->
-              <form method="POST" action ="{% url 'login_on_home' %}">
-                  {% csrf_token %}
-                  <p>
-                      <label>Username</label>
-                      <input type="text" name="username">
-                  </p>
-                  <p>
-                      <label>Password</label>
-                      <input type="password" name="password">
-                  </p>
-                  <input class="btn blue darken-4 waves-effect" type="submit" value="submit">
-              </form>
-            </span></div>
-          </li>
-          <li>
-            <div class="collapsible-header"><i class="material-icons">person_add</i>Register</div>
-            <div class="collapsible-body"style="background: white;"><span>
-          <!--  <a href="/register" class="btn">Register</a> -->
-            <form method="POST"  action ="{% url 'register' %}" >
-              {% csrf_token %}
-                {{reg_form}}
-                <input class="btn blue darken-4 waves-effect" type="submit" value="submit">
-              </form>
-            </span></div>
-          </li>
+          <div class="input-field"</div>
+            <i class="material-icons prefix">lock</i>
+            <input id="login-password" type="password" class="validate" name="password">
+            <label for="login-password">Password</label>
+          </div>
 
-        </ul>
-        {% endif %}
+          <button class="btn waves-effect waves-red blue darken-4" type="submit" name="login">Login</button>
 
+        </form>
+      </div>
+    </div>
+  </li>
 
+  <li>
+    <div class="collapsible-header"><i class="material-icons">person_add</i>Register</div>
+    <div class="collapsible-body white">
 
+    <!-- Register -->
+      <div class="row">
+        <form class="col s12" method="POST"  action ="{% url 'register' %}">
 
+          {% csrf_token %}
+            {{reg_form}}
 
+          <button class="btn waves-effect waves-red blue darken-4" type="submit" value="submit">Register</button>
 
+        </form>
+      </div>
+    </div>
+  </li>
 
-        <ul class="collapsible" data-collapsible="accordion">
-          <li>
-            <div class="collapsible-header"><i class="material-icons">person</i>Log In</div>
-            <div class="collapsible-body white">
+  <li>
+    <div class="collapsible-header"><i class="material-icons">person_outline</i>Proceed As Guest</div>
+    <div class="collapsible-body white">
 
-              <!-- Login -->
-              <div class="row">
-                <form class="col s12">
+    <!-- Guest -->
+    <a class="waves-effect waves-red btn blue darken-4">Continue</a>
 
-                  <div class="input-field"</div>
-                    <i class="material-icons prefix">person</i>
-                    <input id="login-username" type="text" class="validate">
-                    <label for="login-username">Username</label>
-                  </div>
+    </div>
+  </li>
+</ul>
 
-                  <div class="input-field"</div>
-                    <i class="material-icons prefix">lock</i>
-                    <input id="login-password" type="password" class="validate">
-                    <label for="login-password">Password</label>
-                  </div>
-
-                  <button class="btn waves-effect waves-red blue darken-4" type="submit" name="login">Login</button>
-
-                </form>
-              </div>
-
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header"><i class="material-icons">person_add</i>Register</div>
-            <div class="collapsible-body white">
-
-            <!-- Register -->
-            <div class="row">
-              <form class="col s12">
-
-                <div class="input-field"</div>
-                  <i class="material-icons prefix">email</i>
-                  <input id="email" type="email" class="validate">
-                  <label for="email">Email Address</label>
-                </div>
-
-                <div class="input-field"</div>
-                  <i class="material-icons prefix">person</i>
-                  <input id="register-username" type="text" class="validate">
-                  <label for="register-username">Username</label>
-                </div>
-
-                <div class="input-field"</div>
-                  <i class="material-icons prefix">lock</i>
-                  <input id="password-register" type="password" class="validate">
-                  <label for="password-register">Password</label>
-                </div>
-
-                <div class="input-field"</div>
-                  <i class="material-icons prefix">lock</i>
-                  <input id="password-confirm" type="password" class="validate">
-                  <label for="password-confirm">Confirm Password</label>
-                </div>
-
-                <button class="btn waves-effect waves-red blue darken-4" type="register" name="login">Register</button>
-
-              </form>
-            </div>
-
-            </div>
-          </li>
-          <li>
-            <div class="collapsible-header"><i class="material-icons">person_outline</i>Proceed As Guest</div>
-            <div class="collapsible-body white">
-
-            <!-- Guest -->
-            <a class="waves-effect waves-red btn blue darken-4">Continue</a>
-
-            </div>
-          </li>
-        </ul>
+{% endif %}
