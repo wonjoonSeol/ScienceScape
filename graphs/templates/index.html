@@ -14,11 +14,17 @@
         <b>Scientometrics, made easy</b>
         <br>Visualising graphs, smoothly and conveniently. Get started <a href="https://github.com/wonjoonSeol/ScienceScape/wiki" target="_blank" style="color: #ffffff">here</a>.
     </h6>
-
+		<h5 style="text-align: center; color: red">{{msg}}</h5>
     <br>
 
     <div class="section">
-        {% include "logincard.html" %}
+       {% if upload %}
+       	{% if user.is_authenticated %}
+       		{% include "logincard.html" %}
+			{% endif %}
+       {% else %}
+         {% include "logincard.html" %}
+       {%endif%}
     </div>
 
     <div class="row text-center">
@@ -26,58 +32,13 @@
             {% if upload %}
                 {% include "upload_form.html" %}
             {% elif filename%}
-                {% include "file_preview.html" %}
+               <!-- {% include "file_preview.html" %} -->
             {% endif %}
             <br>
         </div>
     </div>
 
-    <div class="white-text center graphs-page">
 
-        <div class="card graphs-buttons-card">
-            <div class="card-content">
-
-                <h5>NEW Graph Controls (no functionality yet)</h5>
-
-                    <div class="row">
-                        <div class="col s6">
-                            <a class="waves-effect waves-light btn graph-select" id="start-force-atlas-2"><i class="material-icons left">play_arrow</i>Start Force Atlas 2</a>
-                            <br>
-                            <a class="waves-effect waves-light btn graph-select" id="stop-force-atlas-2"><i class="material-icons left">stop</i>Stop Force Atlas 2</a>
-                        </div>
-
-                        <div class="col s6">
-                            <a class="waves-effect waves-light btn graph-select" id="reset"><i class="material-icons left">power_settings_new</i>Reset</a><br>
-                            <a class="waves-effect waves-light btn graph-select" id="rearrange-to-circle"><i class="material-icons left">refresh</i>Rearrange to Circle</a>
-                        </div>
-
-                        <div class="col s6">
-                            <br>
-                            <div class="switch toggle-graph-edges">
-                                Graph Edges
-                                <label>
-                                  Off
-                                  <input type="checkbox" id="graph-edges">
-                                  <span class="lever"></span>
-                                  On
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col s6">
-                            <form id="graph-node-search">
-                                <div class="input-field">
-                                  <input id="search" type="search" placeholder="Node Search" required>
-                                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                  <i class="material-icons">close</i>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-            </div>
-        </div>
-
-    </div>
 
     <br>
     <br>
