@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^$', views.home, name = 'home'),
     url(r'^wrongUser/(.*)', views.home, name = 'wrongUser'),
     url(r'^graphs/$', views.home, name = 'redirectToLoggedIn'),
+    url(r'^upload/(.*)$', views.upload_file, name = 'upload'),
     url(r'^addFields/(.*)', views.field_form, name = 'fields'),
     url(r'^processGraph/(.*)', views.load_graph, name = 'load_graph'),
     url(r'about/', views.about, name = 'about'),
