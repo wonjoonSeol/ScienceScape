@@ -1,4 +1,4 @@
-import unittest
+from django.test import TestCase
 import sys
 import os
 
@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 from filter_and_network_ref import add_edge_weight
 
-class TestFilterNetworkRef(unittest.TestCase):
+class TestFilterNetworkRef(TestCase):
 
     """
     This test tests that upon calling add_edge_weight for two unconnected nodes,
@@ -37,7 +37,7 @@ class TestFilterNetworkRef(unittest.TestCase):
     """
 
     def test_add_two_edge_weight_not_connected(self):
-        
+
         # Mocking a reference graph
         graph = networkx.Graph()
         node1 = "first_node"
@@ -57,7 +57,7 @@ class TestFilterNetworkRef(unittest.TestCase):
     """
 
     def test_add_two_edge_adds_two_edges(self):
-        
+
         # Mocking a reference graph
         graph = networkx.Graph()
         node1 = "first_node"
@@ -96,7 +96,7 @@ class TestFilterNetworkRef(unittest.TestCase):
     extraneous edges are not created - the weighting for the edge is the sole variable to change.
     """
     def test_add_edge_num_edges_connected(self):
-        
+
         # Mocking a reference graph
         graph = networkx.Graph()
         node1 = "first_node"
@@ -105,13 +105,9 @@ class TestFilterNetworkRef(unittest.TestCase):
         graph.add_node(node2, type = "references", occurence_count = 15)
         # Manually creating an edge between these two nodes.
         graph.add_edge(node1, node2, weight = 1)
-        
+
         for i in range (1, 20):
             add_edge_weight(graph, node1, node2)
         # Total num of edges should still be 1.
         self.assertNotEqual(20, graph.number_of_edges())
         self.assertEqual(1, graph.number_of_edges())
-        
-
-if __name__ == '__main__':
-    unittest.main()
