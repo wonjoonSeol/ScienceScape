@@ -1,0 +1,56 @@
+ {% extends "base.html" %}
+{% load static %}
+{% block Content %}
+
+<div class="container">
+
+    <div class="welcome-section"></div>
+
+    <div id="logo-home" class="center">
+        <img src="{% static 'images/vectorised-logo-outline-white.svg' %}" alt="ScienceScape Logo">
+    </div>
+
+    <h6 class="white-text center tagline">
+        <b>Scientometrics, made easy</b>
+        <br>Visualising graphs, smoothly and conveniently. Get started <a href="https://github.com/wonjoonSeol/ScienceScape/wiki" target="_blank" style="color: #ffffff">here</a>.
+    </h6>
+		<h5 style="text-align: center; color: red">{{msg}}</h5>
+    <br>
+
+   
+
+   <div class="row">
+		<div class="col s4"></div>
+        <form class="col s4"  method="POST"enctype="multipart/form-data" >
+			<div class="card white"> 
+				<div class="card-content">
+				     {% csrf_token %}
+            		{{years}}
+
+         			 <button class="btn waves-effect waves-red blue darken-4" type="submit" value="submit">Next</button>
+
+				
+				</div>			
+			</div>
+     
+        </form>
+        <div class="col s4"></div>
+     
+  </div>
+
+
+
+    <br>
+    <br>
+
+    <div class="row">
+       
+    </div>
+</div>
+
+<div class="row">
+    
+</div>
+
+{% endblock %}
+
