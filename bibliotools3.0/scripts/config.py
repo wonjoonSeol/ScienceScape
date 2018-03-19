@@ -1,6 +1,8 @@
 import os
 dir = os.path.dirname(os.path.dirname(__file__))
 
+home_dir = os.path.abspath('../../static/userFiles/')
+
 import config_headers
 
 year_index_position = 44
@@ -9,16 +11,16 @@ spanYears = []
 """ Return a CONFIG collection of time spans and directory information used by all scripts.
 Generates a collection of readable time spans, given a user input using argparse.
 """
-def gen():
+def gen(user):
 	CONFIG={
 		# step one (merging_corpus.py) mandatory
-		"wos_data": os.path.join(dir, "data-wos/"),
-		"one_file_corpus": os.path.join(dir, "Result/one_file_corpus.txt"),
-		"reports_directory": os.path.join(dir, "Result/report"),
+		"wos_data": os.path.join(home_dir, str(user) + "/data-wos/"),
+		"one_file_corpus": os.path.join(home_dir, str(user) + "/Result/one_file_corpus.txt"),
+		"reports_directory": os.path.join(home_dir, str(user) + "/Result/report"),
 
 		# step two (parse_and_group.py) mandatory
-		"wos_data_grouped": os.path.join(dir, "Result/grouped_data"),
-		"parsed_data": os.path.join(dir, "Result/parsed_data"),
+		"wos_data_grouped": os.path.join(dir, str(user) + "Result/grouped_data"),
+		"parsed_data": os.path.join(dir, str(user) + "Result/parsed_data"),
 		# a span is a period of time defined by years
 		# large wos corpus are likely to be cutted into time-spans
 		# any data outside spans will be ignored
