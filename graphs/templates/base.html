@@ -183,11 +183,7 @@
     <!-- Local source for noUiSlider.js -->
     <script type="text/javascript" src="{% static 'javascript/nouislider.js' %}"></script>
 
-    <!-- CDN source for Sigma JS -->
-    <script type="text/javascript" src="{% static 'javascript/sigma.js-1.2.1/build/sigma.min.js' %}"></script>
-    <!-- Local source for Sigma JS JSON Parser -->
-    <script type="text/javascript" src="{% static 'javascript/sigma.js-1.2.1/build/plugins/sigma.parsers.json.min.js' %}"></script>
-
+  
     <!-- CDN source for particles-js -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
@@ -211,15 +207,7 @@
       });
     </script>
 
-    <!-- Sigma JS Test Data -->
-    <script>
-      sigma.parsers.json('{% static '/json/json-test-sigma.json' %}', {
-        container: 'json-test-sigma-container',
-        settings: {
-          defaultNodeColor: '#0D47A1',
-        },
-      });
-    </script>
+
 
     <!-- Additional Dropown Navigation Initialisation Settings -->
     <script>

@@ -52,7 +52,7 @@ def processCSVIntoDictionary(file_path, for_fields = False):
 
 	# Open file to make header keys
 	with open(file_path) as csv_file:
-		csv_reader = reader(csv_file)
+		csv_reader = reader(csv_file, delimiter='\t')
 		for headers in csv_reader:
 			for header in headers:
 				header_value_sets[header] = set()
@@ -60,7 +60,7 @@ def processCSVIntoDictionary(file_path, for_fields = False):
 
 	# Open a fresh copy to make a DictReader and populate dictionary
 	with open(file_path) as csv_file:
-		dict_reader = DictReader(csv_file)
+		dict_reader = DictReader(csv_file, delimiter='\t')
 		for row in dict_reader:
 			for key in header_value_sets:
 				if(for_fields):
