@@ -1,1 +1,1 @@
-python3 manage.py runserver
+python manage.py runserver --settings=appname.settings.local
