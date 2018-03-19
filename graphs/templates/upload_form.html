@@ -54,7 +54,7 @@
             <td>{{ file }}</td>
 
             <td><a href="{% url 'edit' file %}" class="btn waves-effect waves-lighten blue darken-4 accountButton">Edit Fields</a></td>
-            <td><a href="#!" class="btn waves-effect waves-lighten red darken-4 accountButton">Show Graph</a></td>
+            <td><a href="{% url 'select_year' file %}" class="btn waves-effect waves-lighten red darken-4 accountButton">Process Graph</a></td>
             <td><a href="{% url 'delete' file %}" class="btn waves-effect waves-lighten blue darken-4 accountButton">Delete</a></td>
 
           </tr>

@@ -18,42 +18,15 @@
     <br>
 
     <div class="section">
-       {% if upload %}
-       	{% if user.is_authenticated %}
-       		{% include "logincard.html" %}
-			{% endif %}
-       {% else %}
-         {% include "logincard.html" %}
-       {%endif%}
+     {% include "logincard.html" %}
     </div>
 
-    <div class="row text-center">
-        <div class="col s12">
-            {% if upload %}
-                {% include "upload_form.html" %}
-            {% elif filename%}
-               <!-- {% include "file_preview.html" %} -->
-            {% endif %}
-            <br>
-        </div>
-    </div>
-
-
+  
 
     <br>
     <br>
 
-    <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
-            <div>
-            {%if fields%}
-            {% include "fields.html" %}
-            {%endif%}
-            </div>
-        </div>
-        <div class="col-sm-2"></div>
-    </div>
+
 </div>
 
 <div class="row">

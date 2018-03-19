@@ -30,26 +30,20 @@
        {%endif%}
     </div>
 
-  
-
-    <br>
-    <br>
-
-
-</div>
-
-<div class="row">
-    <div class="col s1"></div>
-    <div class="col s10">
-        <div>
-            {% if years%}
-            {% include "select_years.html"%}
-            {%else%}
-            {% include "graph_view_template.html" %}
-            {% endif %}
+    <div class="row text-center">
+        <div class="col s12">
+                {% include "upload_form.html" %} 
+            <br>
         </div>
     </div>
-    <div class="col s1"></div>
+
+
+
+    <br>
+    <br>
+
+    
 </div>
+
 
 {% endblock %}

@@ -48,7 +48,7 @@ def upload_file(request, message = ""):
 	if request.user.is_authenticated:
 		files = get_all_user_files(request.user.username)
 
-	return render(request, 'index.html', {'msg': message,'upload': form, 'fpath': "/userFiles/arctic.gexf", 'usersFiles': files })
+	return render(request, 'logged_in.html', {'msg': message,'upload': form, 'fpath': "/userFiles/arctic.gexf", 'usersFiles': files })
 
 
 def edit_fields(request, filename):
@@ -98,7 +98,10 @@ def field_form(request, file_path):
 
 		if form_is_valid:
 			refresh_database(data, file_path)
-			return redirect(select_years, file_path)
+			if request.user.is_authenticated: 
+				return redirect('upload', ' ')
+			else:
+				return redirect(select_years, file_path)
 
 	if file_path:
 		file_name =  str(file_path)
@@ -107,7 +110,7 @@ def field_form(request, file_path):
 	else:
 		file_name = None
 
-	return render(request, 'index.html', {'fields': form['form'], 'filename': file_name, 'message': message})
+	return render(request, 'enter_fields_template.html', {'fields': form['form'], 'filename': file_name, 'message': message})
 
 def about(request):
 	return render(request, 'about.html')
