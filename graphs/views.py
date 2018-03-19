@@ -15,6 +15,7 @@ from django.contrib.auth import authenticate, login
 APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def home(request, message = ""):
+	start_bibliotools("","","","")
 	print("Username is: {x}".format(x = request.user.username))
 	registration_form = UserRegistrationForm()
 	
