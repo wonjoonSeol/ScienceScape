@@ -211,5 +211,8 @@ def start_bibliotools(output_directory, year_start, year_end, file_path, usernam
 		os.mkdir(os.path.join(user_files_folder, 'Result'))
 		
 	user_results_folder = os.path.join(user_files_folder, 'Result')
-		
+	#shutil.copy(file_path, user_wos_folder)
+			
+	print(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
+	os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
 	#shutil.copy(file_path, destination_folder)
