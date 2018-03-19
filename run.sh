@@ -1,1 +1,1 @@
-python manage.py runserver --settings=appname.settings.local
+python manage.py runserver --settings=mysite.settings.local
