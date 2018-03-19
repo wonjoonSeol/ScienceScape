@@ -243,9 +243,13 @@ footer a {
 
 .tagline {
   text-shadow: 1px 1px 8px #000000;
-  font-weight: lighter;
-  font-size: 1.2em;
+  font-weight: 300;
+  font-size: 1.4em;
   line-height: 1.7;
+}
+
+.tagline a {
+  text-decoration: underline;
 }
 
 .card-image {
