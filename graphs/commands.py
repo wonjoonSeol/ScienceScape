@@ -1,6 +1,7 @@
 from .forms import *
 from csv import DictReader
 from csv import reader
+import shutil
 import os
 import re
 from django.db import models
@@ -190,3 +191,25 @@ def get_all_user_files(username):
 	else:
 		file_path = os.path.join(APP_DIR, user_files_folder)
 		return os.listdir(file_path)
+
+def start_bibliotools(output_directory, year_start, year_end, file_path, username='Public'):
+	static_user_files_directory = "static/userFiles"
+	user_files_folder = "static/userFiles/{x}".format(x = username)
+	
+	if not os.path.exists(os.path.join(APP_DIR, static_user_files_directory)):
+		os.mkdir(os.path.join(APP_DIR, static_user_files_directory))
+
+	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
+		os.mkdir(os.path.join(APP_DIR, user_files_folder))
+	
+	if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
+		os.mkdir(os.path.join(user_files_folder, 'data-wos'))
+	
+	user_wos_folder = os.path.join(user_files_folder, 'data-wos')
+	
+	if not os.path.exists(os.path.join(user_files_folder, 'Result')):
+		os.mkdir(os.path.join(user_files_folder, 'Result'))
+		
+	user_results_folder = os.path.join(user_files_folder, 'Result')
+		
+	#shutil.copy(file_path, destination_folder)
