@@ -1,7 +1,7 @@
 import os
 dir = os.path.dirname(os.path.dirname(__file__))
 
-home_dir = os.path.abspath('../../static/userFiles/')
+home_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..", "static", "userFiles")
 
 import config_headers
 
