@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.css">
     <!-- Import custom styling CSS -->
     <link rel="stylesheet" href="{% static 'css/extra.css' %}">
-
+    <!-- Import Fontawesome CSS -->
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <!-- Let browser know website is optimised for mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -45,7 +46,7 @@
     <div class="navbar-fixed">
 
       <!-- NAVIGATION BAR -->
-      <nav>
+      <nav class="nav-extended">
         <div class="nav-wrapper">
           <!-- Activation link for mobile navigation bar -->
           <a href="#" data-activates="nav-mobile-version" class="button-collapse white-text"><i class="material-icons">menu</i></a>
@@ -60,14 +61,6 @@
               <li><a href="{% url 'about' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
               <li><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light"><i class="material-icons">help</i></a></li>
             </ul>
-
-            <!-- Dropdown content for About -->
-            <!-- <ul id="dropdown-about" class="dropdown-content">
-              <li><a href="about/#built-with" id="nav-menu-built-with" class="waves-effect waves-light">Built With</a></li>
-              <li><a href="about.html#built-by" id="nav-menu-built-by" class="waves-effect waves-light">Built By</a></li>
-              <li><a href="about.html#acknowledgements" id="nav-menu-acknowledgements" class="waves-effect waves-light">Acknowledgements</a></li>
-              <li><a href="about.html#related-tools" id="nav-menu-related-tools" class="waves-effect waves-light">Related Tools</a></li>
-            </ul> -->
 
             {% block aboutTabbedNavigation %}
             {% endblock aboutTabbedNavigation %}
@@ -175,7 +168,7 @@
       </div>
     </footer>
 
-<!-- ***************
+    <!-- ***************
       JAVASCRIPT
      ***************  -->
 
