@@ -21,6 +21,10 @@ class UserRegistrationForm(forms.Form):
         max_length = 32,
         widget = forms.PasswordInput(),
     )
+    
+class DefineYears(forms.Form):
+	From = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
+	To = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
 
 """ Return a MiniForm.
 Creates a mini form from a list of choices (default or "select a value").
@@ -36,7 +40,6 @@ def create_mini_form(choices = [("DEFAULT", "Select a value")], request = None):
 		return MiniForm(request)
 	else:
 		return MiniForm
-
 		
 """ Return a dictionary containing the final form and the number
 of unknown values.
@@ -61,3 +64,4 @@ def produce_form_set(dictionary, unknown_values):
 	finalForm = form(initial = initial)
 
 	return {'form' : finalForm, 'count' : len(unknown)}
+	

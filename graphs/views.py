@@ -65,6 +65,22 @@ def delete_file(request, filename):
 		mapping_exists.delete()
 	return redirect(upload_file, " ")
 
+def select_years(request, fpath):
+
+	if request.method == 'POST':
+		year_form = DefineYears(request.POST)
+		if year_form.is_valid():
+			from_date = request.POST.get('From')
+			to_date = request.POST.get('To')
+			print("From date {x}, and To date {y}".format(x=to_date,y=from_date))
+			#print("Checkpoint")
+			#file_path = command for getting file
+			file_path = ""
+			return redirect('load_graph', file_path)
+	else:
+		year_form = DefineYears()
+	return render(request, 'select_years.html', {'years': year_form,'fpath': fpath})
+	
 def field_form(request, file_path):
 	form = load_from_file_path(file_path)
 	message = ""
@@ -82,7 +98,7 @@ def field_form(request, file_path):
 
 		if form_is_valid:
 			refresh_database(data, file_path)
-			return redirect(upload_file, " ")
+			return redirect(select_years, file_path)
 
 	if file_path:
 		file_name =  str(file_path)
@@ -118,7 +134,7 @@ def load_graph(request, file_path):
 		file_path = "/userFiles/arctic.gexf"
 		file_name = "No file uploaded"
 
-	return render(request, 'index.html', {'fpath': file_path, 'upload_gexf': upload_gexf_form,'fname': file_name})
+	return render(request, 'graph_template.html', {'fpath': file_path, 'upload_gexf': upload_gexf_form,'fname': file_name})
 
 def register(request):
     if request.method == 'POST':
