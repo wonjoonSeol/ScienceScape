@@ -13,8 +13,9 @@ class TestConfig(TestCase):
     This test tests that the config.py script file generates time spans properly.
     """
     def test_config_gen(self):
+        test_user = 'test_user'
         spanYears = [[100,500], [200,600]] #arbitrary values to retrieve from dict
         config.spanYears = spanYears
-        CONFIG = config.gen()
+        CONFIG = config.gen(test_user)
         self.assertEqual([100,500], CONFIG['spans']['span_name_0']['years'])
         self.assertEqual([200,600], CONFIG['spans']['span_name_1']['years'])
