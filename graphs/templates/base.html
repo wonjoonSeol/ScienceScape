@@ -52,7 +52,7 @@
           <h1 id="nav-h1"><a href="{% url 'home' %}" class="brand-logo center">ScienceScape<sup>s</sup></a></h1>
 
             <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
-              <li><a href="{% url 'upload' up %}" class="btn waves-effect waves-lighten" id="nav-login-btn">Home</a></li>
+              <li><a href="{% url 'upload' up %}" class="btn waves-effect waves-lighten" id="nav-login-btn">Upload</a></li>
             </ul>
 
             <ul class="right hide-on-med-and-down"> <!-- Right Menu -->
@@ -62,12 +62,12 @@
             </ul>
 
             <!-- Dropdown content for About -->
-            <ul id="dropdown-about" class="dropdown-content">
+            <!-- <ul id="dropdown-about" class="dropdown-content">
               <li><a href="about/#built-with" id="nav-menu-built-with" class="waves-effect waves-light">Built With</a></li>
               <li><a href="about.html#built-by" id="nav-menu-built-by" class="waves-effect waves-light">Built By</a></li>
               <li><a href="about.html#acknowledgements" id="nav-menu-acknowledgements" class="waves-effect waves-light">Acknowledgements</a></li>
               <li><a href="about.html#related-tools" id="nav-menu-related-tools" class="waves-effect waves-light">Related Tools</a></li>
-            </ul>
+            </ul> -->
 
             {% block aboutTabbedNavigation %}
             {% endblock aboutTabbedNavigation %}
@@ -186,7 +186,7 @@
     <!-- Local source for noUiSlider.js -->
     <script type="text/javascript" src="{% static 'javascript/nouislider.js' %}"></script>
 
-  
+
     <!-- CDN source for particles-js -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 

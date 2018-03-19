@@ -20,5 +20,6 @@ urlpatterns = [
     url(r'^login_on_home/$', views.login_process, name = 'login_on_home'),
     url(r'^account/$', views.account, name = 'account'),
     url(r'^edit/(.*)$', views.edit_fields, name = 'edit'),
-    url(r'^delete/(.*)$', views.delete_file, name = 'delete')
+    url(r'^delete/(.*)$', views.delete_file, name = 'delete'),
+    url(r'^about/(.*)$', views.about, name = 'about')
 ]
