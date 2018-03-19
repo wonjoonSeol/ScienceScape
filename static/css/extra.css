@@ -7,16 +7,15 @@ html {
 
 html h1 {
   font-weight:100 ;
-  font-style: italic;
-  text-shadow: 2px 2px 5px #780000;
+  font-style: normal;
+  text-shadow: 2px 2px 4px #143e61;
   font-size: 4em;
 }
 
 /* Navigation bar */
 
 nav {
-  min-height: 70px;
-  height: 70px;
+  background-color: #1f638478;
 }
 
 #nav-h1{
@@ -28,21 +27,21 @@ nav .dropdown-content {
 }
 
 nav .dropdown-content li {
-  background-color: rgba(159, 0, 0, 0.92) !important;
+  background-color: rgba(22, 97, 139, 1) !important;
 }
 
 .nav-wrapper {
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
 nav .dropdown-content li.top-level:hover,
 .side-nav li.top-level:hover {
-  background-color: rgba(134, 0, 0, 0.91);
+  background-color: rgba(6, 80, 122, .91);
 }
 
-nav .dropdown-button {
+/* nav .dropdown-button {
   color: #348ec1
-}
+} */
 
 nav .dropdown-content  a {
   color: white !important;
@@ -50,12 +49,12 @@ nav .dropdown-content  a {
 
 #nav-login-btn {
   color: #E0F2F1;
-  background-color: #4DB6AC;
+  background-color: transparent;
   border: 1px solid #ffffff;
 }
 
 #nav-login-btn:hover {
-  background-color: #00897B !important;
+  background-color: #005e8c !important;
   color: white;
 }
 
@@ -89,11 +88,11 @@ nav .dropdown-content  a {
 .side-nav.fixed .collapsible-header:hover,
 .side-nav .collapsible-body li:hover,
 .side-nav.fixed .collapsible-body li:hover {
-  background-color: rgba(134, 0, 0, 0.91) !important;
+  background-color: rgba(6, 80, 122, .91) !important;
 }
 
 .side-nav {
-  background-color: #348ec1;
+  background-color: #348ec194;
 }
 
 .side-nav li>a,

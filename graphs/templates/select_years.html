@@ -1,6 +1,9 @@
- {% extends "base.html" %}
+{% extends "base.html" %}
+
 {% load static %}
+
 {% block Content %}
+
 
 <div class="container">
 
@@ -17,25 +20,25 @@
 		<h5 style="text-align: center; color: red">{{msg}}</h5>
     <br>
 
-   
+
 
    <div class="row">
 		<div class="col s4"></div>
         <form class="col s4"  method="POST"enctype="multipart/form-data" >
-			<div class="card white"> 
+			<div class="card white">
 				<div class="card-content">
 				     {% csrf_token %}
             		{{years}}
 
          			 <button class="btn waves-effect waves-red blue darken-4" type="submit" value="submit">Next</button>
 
-				
-				</div>			
+
+				</div>
 			</div>
-     
+
         </form>
         <div class="col s4"></div>
-     
+
   </div>
 
 
@@ -44,13 +47,12 @@
     <br>
 
     <div class="row">
-       
+
     </div>
 </div>
 
 <div class="row">
-    
+
 </div>
 
 {% endblock %}
-
