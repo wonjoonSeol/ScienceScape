@@ -48,19 +48,17 @@
       <nav>
         <div class="nav-wrapper">
           <!-- Activation link for mobile navigation bar -->
-          <a href="#" data-activates="nav-mobile-version" class="button-collapse"><i class="material-icons">menu</i></a>
+          <a href="#" data-activates="nav-mobile-version" class="button-collapse white-text"><i class="material-icons">menu</i></a>
+          <h1 id="nav-h1"><a href="/" class="brand-logo center">ScienceScape<sup>s</sup></a></h1>
 
             <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
               <li><a href="/" class="btn waves-effect waves-lighten" id="nav-login-btn">Home</a></li>
             </ul>
 
             <ul class="right hide-on-med-and-down"> <!-- Right Menu -->
+              <li><a href="#!" class="waves-effect waves-light" data-activates="dropdown-about">Demo</a></li> <!-- Dropdown Trigger -->
               <li><a href="{% url 'about' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
             </ul>
-
-            <div style="width:100%; text-align:center">
-                <img src="{% static 'images/logo_text.png' %}" style="height:60px"/>
-            </div>
 
             <!-- Dropdown content for About -->
             <ul id="dropdown-about" class="dropdown-content">
@@ -87,7 +85,6 @@
             </div>
           </div>
         </li>
-        <li class="top-level"><a class="waves-effect waves-light">ScienceScapeS</a></li>
         <li class="top-level"><a href="#!" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
         <li>
 
@@ -112,7 +109,7 @@
           <ul class="collapsible collapsible-accordion">
             <li>
               <!-- Top Level Accordian Header -->
-              <a href="{% url 'about' %}" class="collapsible-header waves-effect waves-light">About<i class="material-icons">info</i><i class="material-icons right">keyboard_arrow_down</i></a>
+              <a href="#!" class="collapsible-header waves-effect waves-light">About<i class="material-icons">info</i><i class="material-icons right">keyboard_arrow_down</i></a>
               <div class="collapsible-body">
                 <ul>
                   <li><a href="#!" class="waves-effect waves-light">Built With<i class="material-icons"></i></a></li>
