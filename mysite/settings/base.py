@@ -13,8 +13,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import psycopg2
-import django_heroku
-import dj_database_url
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 APP_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -23,8 +22,6 @@ DEBUG = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Config value hidden in heroku setting page
-#SECRET_KEY = os.environ.get('SECRET_KEY')
-SECRET_KEY = 'y)a!q*z!2+o4=rw(fft_hnh5nf*$2p*4)9r#ptozprji4ccm+x'
 
 # Application definition
 INSTALLED_APPS = [
