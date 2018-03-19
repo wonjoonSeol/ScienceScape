@@ -1,7 +1,7 @@
 import os
 dir = os.path.dirname(os.path.dirname(__file__))
 
-home_dir = os.path.abspath('../../static/userFiles/')
+home_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..", "static", "userFiles")
 
 import config_headers
 
@@ -19,8 +19,12 @@ def gen(user):
 		"reports_directory": os.path.join(home_dir, str(user) + "/Result/report"),
 
 		# step two (parse_and_group.py) mandatory
-		"wos_data_grouped": os.path.join(dir, str(user) + "Result/grouped_data"),
-		"parsed_data": os.path.join(dir, str(user) + "Result/parsed_data"),
+		"wos_data_grouped": os.path.join(home_dir, str(user) + "/Result/grouped_data"),
+		"parsed_data": os.path.join(home_dir, str(user) + "/Result/parsed_data"),
+		#output directory
+		"output_directory": os.path.join(home_dir, str(user) + "/Result/Output"),
+
+
 		# a span is a period of time defined by years
 		# large wos corpus are likely to be cutted into time-spans
 		# any data outside spans will be ignored
@@ -45,8 +49,6 @@ def gen(user):
                     "countries":{"occ":0,"weight":1},
                 } for i, span in enumerate(spanYears)
 		},
-		#output directory
-		"output_directory": os.path.join(dir, "Result/Output"),
 
 		#step three mandatory
 		# network formats should be choosen in networkx format list

@@ -14,6 +14,7 @@ CONFIG = {}
 Writes year distributions for all spans into a CSV file.
 """
 def write_year_distribution(reports_directory, years_spans):
+    print("reports dir: " + str(reports_directory))
     years_distribution = open(os.path.join(reports_directory, "years_distribution.csv"), "w")
     years_distribution.write("year,nb_articles\n")
 
@@ -136,6 +137,7 @@ def prepare_error_file(reports_directory, wos_headers):
 Parse and merge all output files in the WOS corpus into one.
 """
 def merge_corpus(one_file_corpus, wos_headers, reports_directory, wos_data):
+    print("wos data is " + str(wos_data))
     nb_values_in_wos = len(wos_headers.split("\t"))
 
     # Prepare output files/folders (write headers and have them ready for writing)
@@ -147,6 +149,7 @@ def merge_corpus(one_file_corpus, wos_headers, reports_directory, wos_data):
     nb_extra_trailing_tab = 0
     for root, _, files in os.walk(wos_data):
         for file in files:
+            print("file!")
             nb_extra_trailing_tab += parse_file(file, root, nb_values_in_wos, onefile_output, errorsfile_output)
 
     print("All files have been merged into %s \nRepaired %s lines with trailing extra tab \n" %(one_file_corpus, nb_extra_trailing_tab))
