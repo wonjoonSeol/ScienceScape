@@ -1,4 +1,6 @@
-/* General */
+/*******************
+ Base HTML Template
+ *******************/
 
 body,
 html {
@@ -115,7 +117,7 @@ nav .dropdown-content  a {
   color: #348ec1;
 }
 
-/* Page footer */
+/* Page Footer */
 
 .page-footer {
   background-color: rgba(0,0,0,0.7) !important;
@@ -133,6 +135,17 @@ nav .dropdown-content  a {
 
 footer a {
   color: blue;
+}
+
+
+/*******************
+ Index Template
+ *******************/
+
+#logo-home img {
+  width: 150px;
+  height: 150px;
+  padding-bottom: 20px;
 }
 
 /* Graphs module */
@@ -187,26 +200,6 @@ footer a {
   border: 1px solid #0D47A1;
 }
 
-/* Tabs */
-
-.tabs {
-    display: -webkit-box !important;
-    display: -webkit-flex!important;
-    display: -ms-flexbox !important;
-    display: flex !important;
-}
-
-.tabs .tab {
-    -webkit-box-flex: 1 !important;
-    -webkit-flex-grow: 1 !important;
-    -ms-flex-positive: 1 !important;
-    flex-grow: 1 !important;
-}
-
-.tabs .tab a {
-    padding: 0 12px !important;
-}
-
 /* Sigma.js */
 
 #json-test-sigma-container {
@@ -214,7 +207,29 @@ footer a {
   margin: auto;
 }
 
-/* About page */
+/**************
+ About page
+ **************/
+
+ /* About Page Tabs */
+
+ .tabs {
+     display: -webkit-box !important;
+     display: -webkit-flex!important;
+     display: -ms-flexbox !important;
+     display: flex !important;
+ }
+
+ .tabs .tab {
+     -webkit-box-flex: 1 !important;
+     -webkit-flex-grow: 1 !important;
+     -ms-flex-positive: 1 !important;
+     flex-grow: 1 !important;
+ }
+
+ .tabs .tab a {
+     padding: 0 12px !important;
+ }
 
 .about h1,
 .about h2,
@@ -234,14 +249,74 @@ footer a {
 .about-intro a,
 #built-with a,
 #related-tools a,
-#related-tools p  {
+#related-tools a {
   color: white;
   text-decoration: underline;
 }
 
+#related-tools p {
+  color: white;
+}
 
+.tabbed-page-container {
+  margin-top: 20px;
+}
 
-/* Miscellaneous */
+/* Font Awesome */
+.fa,
+.fab {
+  font-size: 14pt;
+}
+
+.fas {
+  font-size: 13pt;
+}
+
+/*******************
+ User Account Page
+ *******************/
+
+ .accountButton {
+   border: 1px solid white !important;
+ }
+
+ .account-card {
+   color: black;
+ }
+
+/*******************
+Graph Controls
+*******************/
+
+/* Toggle Graph Edges */
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: #81acee;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: #0D47A1;
+}
+
+.field-selector-header,
+.field-selector-footer {
+      background: #ccccccb3;
+}
+
+/* Search Box */
+input[type=search]:focus {
+  border-bottom: 1px solid #0D47A1 !important;
+  -webkit-box-shadow: 0 1px 0 0 #0D47A1 !important;
+  box-shadow: 0 1px 0 0 #0D47A1 !important;
+}
+
+input[type=search] {
+  width: 82% !important;
+  padding-left: 50px !important;
+}
+
+/*******************
+ Miscellaneous
+ *******************/
 
 .tagline {
   text-shadow: 1px 1px 8px #000000;
@@ -268,16 +343,6 @@ footer a {
   font-weight: bold;
 }
 
-#logo-home img {
-  width: 150px;
-  height: 150px;
-  padding-bottom: 20px;
-}
-
-.tabbed-page-container {
-  margin-top: 20px;
-}
-
 .card .dropdown-content li>a,
 .card .dropdown-content li>span {
   color: #0D47A1;
@@ -287,29 +352,8 @@ footer a {
   color: darkblue;
 }
 
-.switch label input[type=checkbox]:checked+.lever {
-  background-color: #81acee;
 
-}
-
-.switch label input[type=checkbox]:checked+.lever:after {
-  background-color: #0D47A1;
-}
-
-.field-selector-header,
-.field-selector-footer {
-      background: #ccccccb3;
-}
-
-.fa,
-.fab {
-  font-size: 14pt;
-}
-
-.fas {
-  font-size: 13pt;
-}
-
+/* Slider */
 .noUi-tooltip {
   background-color: #0D47A1 !important;
 }
@@ -318,38 +362,6 @@ footer a {
   background-color: #81acee;
 }
 
-.dropzone {
-  border: 2px dashed #0D47A1 !important;
-  border-radius: 5px;
-  background: white; }
-
-.dropzone .dz-message {
-  margin: 3em 0 !important;
-}
-
-.accountButton {
-  border: 1px solid white !important;
-}
-
-.account-card {
-  color: black;
-}
-
-input[type=search]:focus {
-  border-bottom: 1px solid #0D47A1 !important;
-  -webkit-box-shadow: 0 1px 0 0 #0D47A1 !important;
-  box-shadow: 0 1px 0 0 #0D47A1 !important;
-}
-
-input[type=search] {
-  width: 82% !important;
-  padding-left: 50px !important;
-}
-
 .welcome-section {
     height: 80px;
-}
-
-p {
-  --red-text-shadow: #780000;
 }
