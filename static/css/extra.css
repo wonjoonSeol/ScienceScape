@@ -122,7 +122,7 @@ nav .dropdown-content  a {
 }
 
 .page-footer h6 {
-  text-shadow: 1px 1px 1px rgb(121, 0, 0);
+  text-shadow: 1px 1px 1px #143e61;
   font-weight: bold;
   color: rgb(238, 238, 238);
 }
@@ -243,9 +243,13 @@ footer a {
 
 .tagline {
   text-shadow: 1px 1px 8px #000000;
-  font-weight: lighter;
-  font-size: 1.2em;
+  font-weight: 300;
+  font-size: 1.4em;
   line-height: 1.7;
+}
+
+.tagline a {
+  text-decoration: underline;
 }
 
 .card-image {
