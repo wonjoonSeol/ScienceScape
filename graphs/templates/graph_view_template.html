@@ -27,7 +27,7 @@
                          </div>
 
                         <div class="col s6">
-                            <a class="waves-effect waves-light btn graph-select" id="reset"><i class="material-icons left">power_settings_new</i>Reset</a><br>
+                            <a class="waves-effect waves-light btn graph-select" onclick="resetGraph()" id="reset"><i class="material-icons left">power_settings_new</i>Reset</a><br>
                             <a class="waves-effect waves-light btn graph-select"  onclick="rearrageIntoCircle(this)" id="rearrange-to-circle"><i class="material-icons left">refresh</i>Rearrange to Circle</a>
                         </div>
 
@@ -45,13 +45,14 @@
                         </div>
 
                         <div class="col s6">
-                            <form id="graph-node-search">
+                       <!--     <form id="graph-node-search">
                                 <div class="input-field">
                                   <input id="search" type="search" placeholder="Node Search" required>
                                   <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                                   <i class="material-icons">close</i>
-                                </div>
+                                </div> 
                             </form>
+                            -->
                         </div>
                     </div>
             </div>
@@ -130,39 +131,8 @@ var graphs = [];
 var toggleEdges = true;
 console.log("graph presented is: " + "{% static fpath%}");
 
-sigma.parsers.gexf("{% static fpath%}", {container: 'graph-container'},
 
-	function (sigmaObject) {
-
-		var numberOfNodes = sigmaObject.graph.nodes().length;
-		var counter = 0;
-
-		sigmaObject.graph.nodes().forEach(function(n) {
-
-		 if(!n.x && !n.y){
-		  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
-    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
-    	 }
-
-    	  if (!n.label) {
-    	  	n.label = n.id;
-    	  }
-
-    	  if(!n.size){
-    	  	n.size = Math.random();
-    	  }
-
-        counter ++ ;
-      });
-
-
-
-      sigmaObject.refresh();
-      graphs.push(sigmaObject);
-
-	}
-);
-
+resetGraph();
 
 function startStopForceAtlas2(element){
 	console.log("no. graphs: " + graphs.length)
@@ -172,8 +142,8 @@ function startStopForceAtlas2(element){
 			for (i=0 ; i<graphs.length; i++) {
 				graphs[i].startForceAtlas2({worker: true, barnesHutOptimize: false});
 			}
-			
-			element.innerHTML="<i class=\"material-icons left\">play_arrow</i>Start Force Atlas 2";
+		
+			element.innerHTML="<i class=\"material-icons left\">stop</i>Stop Force Atlas 2";
 			element.classList.add("btn-danger");
 			element.classList.remove("btn-success");
 	
@@ -182,8 +152,8 @@ function startStopForceAtlas2(element){
 		for (i = 0 ; i<graphs.length; i++) {
 			graphs[i].stopForceAtlas2();
 		}
-		element.innerHTML="<i class=\"material-icons left\">stop</i>Stop Force Atlas 2";
-		element.classList.add("btn-success");
+			element.innerHTML="<i class=\"material-icons left\">play_arrow</i>Start Force Atlas 2";
+			element.classList.add("btn-success");
 			element.classList.remove("btn-danger");
 		}
 	}
@@ -232,6 +202,46 @@ function turnOnOffEdges(element) {
 			toggleEdges = true;
 		}
 	}
+}
+
+function resetGraph(){
+	
+	graphs = []
+	
+	sigma.parsers.gexf("{% static fpath%}", {container: 'graph-container'},
+	
+		function (sigmaObject) {
+	
+			var numberOfNodes = sigmaObject.graph.nodes().length;
+			var counter = 0;
+			
+			sigmaObject.graph.nodes().forEach(function(n) {
+	
+			 if(!n.x && !n.y){
+			  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
+	    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
+	    	 }
+	
+	    	  if (!n.label) {
+	    	  	n.label = n.id;
+	    	  }
+	
+	    	  if(!n.size){
+	    	  	n.size = Math.random();
+	    	  }
+	
+	        counter ++ ;
+	      });
+	
+	
+	
+	      sigmaObject.refresh();
+	      graphs.push(sigmaObject);
+	
+		}
+	);
+
+
 }
 
 </script>
