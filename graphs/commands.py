@@ -39,7 +39,7 @@ def load_from_file_path(file_path):
 Checks a file to make sure it is a csv file.
 """
 def checkTXT(file):
-    if file.name[-4:] == ".TXT":
+    if file.name[-4:] == ".txt":
         return True
     else:
         return False
