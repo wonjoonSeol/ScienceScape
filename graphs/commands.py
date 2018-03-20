@@ -6,6 +6,7 @@ import os
 import re
 from django.db import models
 from .models import Mappings
+import glob
 
 """
 Takes an uploaded file and does the following:
@@ -192,15 +193,15 @@ def get_all_user_files(username):
 		file_path = os.path.join(APP_DIR, user_files_folder)
 		return os.listdir(file_path)
 
-def start_bibliotools(output_directory, year_start, year_end, file_path, username='Public'):
+def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	static_user_files_directory = "static/userFiles"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
 
-	if not os.path.exists(os.path.join(APP_DIR, static_user_files_directory)):
-		os.mkdir(os.path.join(APP_DIR, static_user_files_directory))
+	if os.path.exists(os.path.join(user_files_folder, "data-wos")):
+	    shutil.rmtree(os.path.join(user_files_folder, 'data-wos'))
 
-	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
-		os.mkdir(os.path.join(APP_DIR, user_files_folder))
+	if os.path.exists(os.path.join(user_files_folder, "Result")):
+	    shutil.rmtree(os.path.join(user_files_folder, 'Result'))
 
 	if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
 		os.mkdir(os.path.join(user_files_folder, 'data-wos'))
@@ -211,8 +212,18 @@ def start_bibliotools(output_directory, year_start, year_end, file_path, usernam
 		os.mkdir(os.path.join(user_files_folder, 'Result'))
 
 	user_results_folder = os.path.join(user_files_folder, 'Result')
-	#shutil.copy(file_path, user_wos_folder)
+	print("file path: " + str(file_path))
+	print("user wos folder: " + str(user_wos_folder))
+	shutil.copy(os.path.join(user_files_folder, file_path), user_wos_folder)
 
 	print(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
 	os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
-	#shutil.copy(file_path, destination_folder)
+
+	return collect_graph_file(os.path.join(user_results_folder, "parsed_data"))
+
+def collect_graph_file(directory, span_name = "span_name_0", format = "gexf"):
+	output_directory = os.path.join(directory, span_name)
+	file_to_collect = "%s/*" + format
+	reg_ex = file_to_collect % output_directory
+	print("reg ex: " + str(reg_ex))
+	return glob.glob(reg_ex)

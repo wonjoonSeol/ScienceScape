@@ -15,10 +15,9 @@ from django.contrib.auth import authenticate, login
 APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def home(request, message = ""):
-	start_bibliotools("","2000","2018","")
 	print("Username is: {x}".format(x = request.user.username))
 	registration_form = UserRegistrationForm()
-	
+
 	files = ""
 	if request.user.is_authenticated:
 		files = get_all_user_files(request.user.username)
@@ -27,7 +26,7 @@ def home(request, message = ""):
 
 def upload_file(request, message = ""):
 	print("Username is: {x}".format(x = request.user.username))
-	
+
 	if request.method == 'POST' and request.FILES['file']:
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
@@ -66,22 +65,22 @@ def delete_file(request, filename):
 		mapping_exists.delete()
 	return redirect(upload_file, " ")
 
-def select_years(request, fpath):
-
+def select_years(request, file_path):
 	if request.method == 'POST':
 		year_form = DefineYears(request.POST)
 		if year_form.is_valid():
 			from_date = request.POST.get('From')
 			to_date = request.POST.get('To')
 			print("From date {x}, and To date {y}".format(x=to_date,y=from_date))
-			#print("Checkpoint")
-			#file_path = command for getting file
-			file_path = ""
-			return redirect('load_graph', file_path)
+			if request.user.is_authenticated:
+				output_path = start_bibliotools(from_date, to_date, file_path, request.user.username)
+			else:
+				output_path = start_bibliotools(from_date, to_date, file_path)
+			return redirect('load_graph', output_path)
 	else:
 		year_form = DefineYears()
-	return render(request, 'select_years.html', {'years': year_form,'fpath': fpath})
-	
+	return render(request, 'select_years.html', {'years': year_form, 'fpath': file_path})
+
 def field_form(request, file_path):
 	form = load_from_file_path(file_path)
 	message = ""
@@ -99,7 +98,7 @@ def field_form(request, file_path):
 
 		if form_is_valid:
 			refresh_database(data, file_path)
-			if request.user.is_authenticated: 
+			if request.user.is_authenticated:
 				return redirect('upload', ' ')
 			else:
 				return redirect(select_years, file_path)
@@ -178,7 +177,7 @@ def login_process(request):
 				return redirect('wrongUser', "Incorrect credentials")
 		else:
 			 return redirect('wrongUser', "Incorrect credentials")
-				
+
 	return redirect('upload', " ")
 
 def account(request):
