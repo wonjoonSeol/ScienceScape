@@ -86,7 +86,7 @@
           <ul class="collapsible collapsible-accordion">
             <li>
               <!-- Top Level Accordian Header -->
-              <a href="#!" class="collapsible-header waves-effect waves-light">Acount<i class="material-icons">person</i><i class="material-icons right">keyboard_arrow_down</i></a>
+              <a href="#!" class="collapsible-header waves-effect waves-light">Account<i class="material-icons">person</i><i class="material-icons right">keyboard_arrow_down</i></a>
               <div class="collapsible-body">
                 <ul>
                   <li><a href="#!" class="waves-effect waves-light">Login<i class="material-icons"></i></a></li>
@@ -130,41 +130,28 @@
       <div class="container">
 
         <div class="row">
-          <div class="col s12 m4 underline">
-            <h6>The Developers</h6>
-            <p>Shayne Ahchoon</p>
-            <p>Nathan Al Sibai</p>
-            <p>Britton Forsyth</p>
-            <p>Jack Hinshelwood</p>
-            <p>Alexander Jermstad</p>
-            <p>Paul Muresan</p>
-            <p>Saadman Sakib</p>
-            <p>Wonjoon Seol</p>
-            <p>Nicolas Volken</p>
+          <div class="col s12 underline footer-description">
+            <h5 class="center">Scientometrics, Reinvented</h5>
+            <p>ScienceScape<sup>S</sup> builds upon scientometrics applications such as ScienceScape, developed by M.Jacomy at the <a href="http://medialab.sciences-po.fr/">Sciences Po Médialab</a>, Paris.</p>
+            <p>Our powerful data processing scripts are based on Sebastian Grauwin's work, <a href="http://www.sebastian-grauwin.com">Bibliotools 3.0</a></p>
+            <p>For detailed information about this project, visit our <a href="http://github.com/wonjoonSeol/ScienceScape">GitHub Repository</a> and the <a href="{% url 'about' %}">about</a> page.</p>
             </div>
-          <div class="col s12 m4">
-            <h6>Tools and Frameworks include</h6>
-            <p>Python, Sigma.js, Django, Materialize CSS, Particles.js, jQuery, FontAwesome, GitHub, Slack, Heroku, The Noun Project and Candy from Candy Mountain.</p>
-          </div>
-          <div class="col s12 m4 underline">
-            <h6>Scientometrics, reinvented</h6>
-            <p>ScienceScapeS builds upon scientometrics applications such as ScienceScape, developed by M.Jacomy at the <a href="http://medialab.sciences-po.fr/" style="color: #ffffff">Sciences Po Médialab</a>, Paris.</p>
-            <p>Our powerful data processing scripts are based on Sebastian Grauwin's work, <a href="http://www.sebastian-grauwin.com" style="color: #ffffff">Bibliotools3.0.</a></p>
-            <p>For detailed information about this project, visit our <a href="http://github.com/wonjoonSeol/ScienceScape"style="color: #ffffff">GitHub Repository</a>.</p>
-          </div>
 
-          <div style="width:100%; text-align:right">
-            <img src="{% static 'images/kcl.png' %}" style="height:100px"/>
-          </div>
 
         </div>
 
       </div>
 
       <div class="footer-copyright">
+
         <div class="container">
         &copy; 2018 The Codokans, King's College London
         </div>
+
+        <a href="https://www.kcl.ac.uk" class="">
+        <img id="kcl-footer" src="{% static 'images/kcl-white-transparent.png' %}"/>
+        </a>
+
       </div>
     </footer>
 
@@ -179,14 +166,10 @@
     <!-- Local source for noUiSlider.js -->
     <script type="text/javascript" src="{% static 'javascript/nouislider.js' %}"></script>
 
-
     <!-- CDN source for particles-js -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
-    <!-- CDN source for Dropzone JS -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.js"></script>
-
-  <!-- Particesl JS Initialisation -->
+  <!-- Particles JS Initialisation -->
     <script type="text/javascript">
       particlesJS.load('particles-js',         // Param 1 - div ID
                        '{% static 'json/particles.json' %}',  // Param 2 - JSON settings

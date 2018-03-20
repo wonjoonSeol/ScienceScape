@@ -17,7 +17,7 @@ html h1 {
 /* Navigation bar */
 
 nav {
-  background-color: #1f638478;
+  background-color: #1f6384e0;
 }
 
 #nav-h1{
@@ -94,7 +94,7 @@ nav .dropdown-content  a {
 }
 
 .side-nav {
-  background-color: #348ec194;
+  background-color: #22749ced;
 }
 
 .side-nav li>a,
@@ -120,7 +120,7 @@ nav .dropdown-content  a {
 /* Page Footer */
 
 .page-footer {
-  background-color: rgba(0,0,0,0.7) !important;
+  background-color: rgba(0, 64, 101, 0.67);
 }
 
 .page-footer h6 {
@@ -134,7 +134,27 @@ nav .dropdown-content  a {
 }
 
 footer a {
-  color: blue;
+  color: white;
+}
+
+.page-footer .footer-copyright {
+  background-color: rgba(0, 64, 101, 0.67);
+}
+
+#kcl-footer {
+  height: 60px;
+  margin-right: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.page-footer h5 {
+  font-weight: 200;
+  font-size: 1.3em;
+}
+
+.footer-description {
+  text-align: center;
 }
 
 
@@ -364,4 +384,9 @@ input[type=search] {
 
 .welcome-section {
     height: 80px;
+}
+
+
+.upload-btn {
+      background-color: #007baa
 }
