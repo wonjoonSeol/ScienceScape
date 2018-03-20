@@ -20,9 +20,9 @@ def home(request, message = ""):
 
 	files = ""
 	if request.user.is_authenticated:
-		files = get_all_user_files(request.user.username)
+		return redirect('upload', '')
 
-	return render(request, 'index.html', {'msg': message, 'reg_form': registration_form, 'fpath': "/javascript/sigma.js-1.2.1/examples/data/standard_graph.gexf", 'usersFiles': files })
+	return render(request, 'index.html', {'msg': message, 'reg_form': registration_form, 'fpath': "/javascript/sigma.js-1.2.1/examples/data/standard_graph.gexf" })
 
 def upload_file(request, message = ""):
 	print("Username is: {x}".format(x = request.user.username))

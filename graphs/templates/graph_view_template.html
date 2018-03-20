@@ -18,7 +18,7 @@
         <div class="card graphs-buttons-card">
             <div class="card-content">
 
-                <h5> Graph Controls (partial functionality)</h5>
+                <h5> Graph Controls</h5>
 
                     <div class="row">
                         <div class="col s6">
@@ -50,7 +50,7 @@
                                   <input id="search" type="search" placeholder="Node Search" required>
                                   <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                                   <i class="material-icons">close</i>
-                                </div> 
+                                </div>
                             </form>
                             -->
                         </div>
@@ -59,7 +59,7 @@
         </div>
 
     </div>
-    
+
 
 
 <div class="card">
@@ -141,11 +141,11 @@ function startStopForceAtlas2(element){
 			for (i=0 ; i<graphs.length; i++) {
 				graphs[i].startForceAtlas2({worker: true, barnesHutOptimize: false});
 			}
-		
+
 			element.innerHTML="<i class=\"material-icons left\">stop</i>Stop Force Atlas 2";
 			element.classList.add("btn-danger");
 			element.classList.remove("btn-success");
-	
+
 		} else {
 		//stop spacialsation
 		for (i = 0 ; i<graphs.length; i++) {
@@ -162,87 +162,87 @@ function startStopForceAtlas2(element){
 function rearrageIntoCircle(element) {
 	console.log("Rearrange circle pressed");
 	if(graphs.length > 0){
-	
+
 		for (i=0 ; i<graphs.length ; i++) {
 			var counter = 0;
 			var numberOfNodes = graphs[i].graph.nodes().length;
 			graphs[i].graph.nodes().forEach(function(n) {
-	
+
 			  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
 	    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
-	
+
 	    	  n.size = Math.random();
 				counter++;
 	      });
 	      graphs[i].killForceAtlas2();
 	           graphs[i].refresh();
 		}
-	
+
 	}
 }
 
 function turnOnOffEdges(checkBox) {
 	console.log("ToggleEdges pressed: " + checkBox.checked);
-	
+
 	if(graphs.length > 0){
-		
+
 		if (!checkBox.checked) {
 			for (i=0 ; i<graphs.length ; i++) {
 				graphs[i].settings('drawEdges', false);
 				graphs[i].refresh();
 			}
-	
-			
+
+
 		} else {
 			for (i=0 ; i<graphs.length ; i++) {
 				graphs[i].settings('drawEdges', true);
 				graphs[i].refresh();
 			}
-	
+
 		}
 	}
 }
 
 function resetGraph(){
 	document.getElementById("graph-container").innerHTML = "";
-	
+
 	graphs = []
-	
+
 	sigma.parsers.gexf("{% static fpath%}", {container: 'graph-container'},
-	
+
 		function (sigmaObject) {
-	
+
 			var numberOfNodes = sigmaObject.graph.nodes().length;
 			var counter = 0;
-			
+
 			sigmaObject.graph.nodes().forEach(function(n) {
-	
+
 			 if(!n.x && !n.y){
 			  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
 	    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
 	    	 }
-	
+
 	    	  if (!n.label) {
 	    	  	n.label = n.id;
 	    	  }
-	
+
 	    	  if(!n.size){
 	    	  	n.size = Math.random();
 	    	  }
-	
+
 	        counter ++ ;
 	      });
-	
-	
-		
+
+
+
 	      graphs.push(sigmaObject);
 			turnOnOffEdges(document.getElementById("graph-edges"));
-			sigmaObject.refresh();    
-	      
+			sigmaObject.refresh();
+
 		}
 	);
-	
-	
+
+
 
 
 }
