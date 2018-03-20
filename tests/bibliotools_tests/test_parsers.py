@@ -19,7 +19,7 @@ class TestParsers(TestCase):
     """
 
     dir = os.path.dirname(os.path.dirname(__file__))
-    CONFIG = config.gen()
+    CONFIG = config.gen('test_user')
     parsers.CONFIG = CONFIG
     parsers.initHeaders()
     os.mkdir(os.path.join(dir, "bibliotools_tests/testFiles/parser_tests/test_output"))

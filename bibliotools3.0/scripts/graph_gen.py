@@ -3,6 +3,7 @@ import argparse
 # Prompt the user for a time span.
 parser = argparse.ArgumentParser(description='For each time span enter a range \"YYYY-YYYY\"')
 parser.add_argument('-bound', nargs='+', metavar='bound', help='Year value', default={"1900-1999", "2000-2018"})
+parser.add_argument('-user')
 args = parser.parse_args()
 
 spanYears = []
@@ -11,10 +12,13 @@ for range in vars(args)['bound']:
   intBoundPair = list(map(int, boundPair))
   spanYears.append(intBoundPair)
 
+user = args.user
+print(user)
+
 # Run all scripts.
 import config
 config.spanYears = spanYears
-CONFIG = config.gen()
+CONFIG = config.gen(user)
 
 print("\nMERGING CORPUS\n")
 import merging_corpus
