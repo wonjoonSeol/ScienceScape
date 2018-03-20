@@ -191,7 +191,13 @@ def get_all_user_files(username):
 		return []
 	else:
 		file_path = os.path.join(APP_DIR, user_files_folder)
-		return os.listdir(file_path)
+		files_in_directory = os.listdir(file_path)
+		files_valid = []
+		for file in files_in_directory:
+			if file[-4:] == ".txt":
+				files_valid.append(file)
+
+		return files_valid
 
 def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	static_user_files_directory = "static/userFiles"
