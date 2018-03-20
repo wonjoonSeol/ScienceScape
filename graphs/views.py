@@ -115,7 +115,7 @@ def field_form(request, file_path):
 def about(request):
 	return render(request, 'about.html')
 
-def load_graph(request, file_path):
+def upload_single_gexf_file(request, file_path):
 	upload_gexf_form = UploadFileForm()
 
 	if request.method == 'POST' and request.FILES['file']:
@@ -132,12 +132,11 @@ def load_graph(request, file_path):
 		file_name = "No file uploaded"
 		file_path = "/userFiles/arctic.gexf"
 
-	if file_path == "INITIAL":
-		print("checkpoint")
-		file_path = "/userFiles/arctic.gexf"
-		file_name = "No file uploaded"
+def turn_path_into_string(path_with_brackets):
+	return path_with_brackets.replace("['", "").replace("']", "")
 
-	return render(request, 'graph_template.html', {'fpath': file_path, 'upload_gexf': upload_gexf_form,'fname': file_name})
+def load_graph(request, file_path):
+	return render(request, 'graph_template.html', {'fpath': turn_path_into_string(file_path), 'fname': "Your beautiful graph file"})
 
 def register(request):
     if request.method == 'POST':
