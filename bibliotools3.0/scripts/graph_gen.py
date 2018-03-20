@@ -4,7 +4,7 @@ import argparse
 parser = argparse.ArgumentParser(description='For each time span enter a range \"YYYY-YYYY\"')
 parser.add_argument('-bound', nargs='+', metavar='bound', help='Year value', default={"1900-1999", "2000-2018"})
 parser.add_argument('-user', default=' ')
-parser.add_argument('-headers', default='UT AU DE ID TI WC CR C1 PY J9 VL BP DI PT DT TC',\
+parser.add_argument('-headers', default='UT-AU-DE-ID-TI-WC-CR-C1-PY-J9-VL-BP-DI-PT-DT-TC',\
                         help='Accession Number, \n\
                                 Authors, \n\
                                 Author Keywords, \n\
@@ -37,7 +37,7 @@ print(user)
 # Run all scripts.
 import config
 config.spanYears = spanYears
-CONFIG = config.gen(user, str(args.headers).split(' '))
+CONFIG = config.gen(user, str(args.headers).split('-'))
 
 print("\nMERGING CORPUS\n")
 import merging_corpus

@@ -10,7 +10,6 @@ import argparse
     A class that holds the parsed data of a WOS Line.
 """
 class Wosline:
-
     """
     Parse a line(converted to list) of the WOS .txt output file.
     """
@@ -23,7 +22,7 @@ class Wosline:
                 self.PT = 'Book'
             if(list_from_line[defCols['PT']]=='S'):
                 self.PT = 'Series'
-
+            
             self.AU = list_from_line[defCols['AU']] ## Authors
             self.TI = list_from_line[defCols['TI']] ## Document Title
             self.SO = list_from_line[defCols['SO']] ## Publication Name

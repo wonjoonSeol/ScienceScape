@@ -59,8 +59,9 @@ def produce_form_set(dictionary, unknown_values):
 	for i in unknown_values:
 		unknown.append((i,i))
 
-	form = formset_factory(create_mini_form(unknown), extra=0)
-	initial = [{'Name': "Subjects"},{'Name': "Authors"},{'Name': "Institutions"},{'Name': "Article_Keywords"},{'Name': "Title_Keywords"},{'Name': "ISI_Keywords"},{'Name': "Countries"}]
+
+	form = formset_factory(create_mini_form(sorted(unknown)), extra=0)
+	initial = [{'Name': "accession_number"},{'Name': "authors"},{'Name': "author_keywords"},{'Name': "keywords_plus"},{'Name': "document_title"},{'Name': "wos_categories"},{'Name': "cited_references"},{'Name': "author_address"}, {'Name': "year_published"}, {'Name': "twenty_nine_character_source_abbreviation"}, {'Name': "volume"}, {'Name': "beginning_page"}, {'Name': "doi"},{'Name': "publication_type"},{'Name': "document_type"},{'Name': "wos_core_collection_times_cited"}]
 	finalForm = form(initial = initial)
 
-	return {'form' : finalForm, 'count' : 7}
+	return {'form' : finalForm, 'count' : 16}
