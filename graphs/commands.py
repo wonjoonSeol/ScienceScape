@@ -212,18 +212,16 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
 		os.mkdir(os.path.join(user_files_folder, 'Result'))
 
 	user_results_folder = os.path.join(user_files_folder, 'Result')
-	print("file path: " + str(file_path))
-	print("user wos folder: " + str(user_wos_folder))
 	shutil.copy(os.path.join(user_files_folder, file_path), user_wos_folder)
 
 	print(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
 	os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
 
-	return collect_graph_file(os.path.join(user_results_folder, "parsed_data"))
+	graph_file_path = str(collect_graph_file(os.path.join(user_results_folder, "parsed_data"))).replace("static/", "")
+	return graph_file_path
 
 def collect_graph_file(directory, span_name = "span_name_0", format = "gexf"):
 	output_directory = os.path.join(directory, span_name)
 	file_to_collect = "%s/*" + format
 	reg_ex = file_to_collect % output_directory
-	print("reg ex: " + str(reg_ex))
 	return glob.glob(reg_ex)
