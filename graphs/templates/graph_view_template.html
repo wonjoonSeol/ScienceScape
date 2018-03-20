@@ -128,7 +128,6 @@
 
 
 var graphs = [];
-var toggleEdges = true;
 console.log("graph presented is: " + "{% static fpath%}");
 
 
@@ -182,29 +181,30 @@ function rearrageIntoCircle(element) {
 	}
 }
 
-function turnOnOffEdges(element) {
-	console.log("ToggleEdges pressed: " + toggleEdges);
+function turnOnOffEdges(checkBox) {
+	console.log("ToggleEdges pressed: " + checkBox.checked);
+	
 	if(graphs.length > 0){
 		
-		if (toggleEdges) {
+		if (!checkBox.checked) {
 			for (i=0 ; i<graphs.length ; i++) {
 				graphs[i].settings('drawEdges', false);
 				graphs[i].refresh();
 			}
 	
-			toggleEdges = false;
+			
 		} else {
 			for (i=0 ; i<graphs.length ; i++) {
 				graphs[i].settings('drawEdges', true);
 				graphs[i].refresh();
 			}
 	
-			toggleEdges = true;
 		}
 	}
 }
 
 function resetGraph(){
+	document.getElementById("graph-container").innerHTML = "";
 	
 	graphs = []
 	
@@ -234,12 +234,15 @@ function resetGraph(){
 	      });
 	
 	
-	
-	      sigmaObject.refresh();
+		
 	      graphs.push(sigmaObject);
-	
+			turnOnOffEdges(document.getElementById("graph-edges"));
+			sigmaObject.refresh();    
+	      
 		}
 	);
+	
+	
 
 
 }
