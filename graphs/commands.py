@@ -27,14 +27,9 @@ Produces a form from this set of headers and returns it.
 def load_from_file_path(file_path):
 	dictionary = processCSVIntoDictionary(file_path)
 	in_database = retrieveFromDataBase(file_path)
-	if in_database:
-		known = []
-		for header in in_database:
-			known.append(in_database[header])
-		formSet = produce_form_set(in_database, known)
-	else:
-		headers = detectHeadersFromAndRemove(dictionary)
-		formSet = produce_form_set(headers['headers'], headers['unknownValues'])
+	headers = detectHeadersFromAndRemove(dictionary)
+
+	formSet = produce_form_set(headers['headers'], headers['unknownValues'])
 	return formSet
 
 """ Return True if a file is .csv.
@@ -69,6 +64,10 @@ def processCSVIntoDictionary(file_path, for_fields = False):
 					header_value_sets[key].add((row[key], row[key]))
 				else:
 					header_value_sets[key].add(row[key])
+
+	for key in header_value_sets:
+		header_value_sets[key].strip('\ufeff')
+
 	return header_value_sets
 
 """ Return a dictionary containing the full file name and the user file name.
@@ -155,6 +154,11 @@ def retrieveFromDataBase(file_path):
 		return None
 
 	print("Dictionary from database is {x}".format(x = dictionary))
+
+	for key in dictionary:
+		dictionary[key] = dictionary[key].strip('\ufeff')
+		
+
 	return dictionary
 
 """
@@ -202,6 +206,14 @@ def get_all_user_files(username):
 def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	static_user_files_directory = "static/userFiles"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
+	dictionary_of_fields = retrieveFromDataBase(file_path)
+	headers_as_string = ""
+	for header in dictionary_of_fields:
+		headers_as_string += "{x}-".format(x = dictionary_of_fields[header])
+
+	headers_as_string = headers_as_string[:len(headers_as_string) - 1]
+	headers_as_string = headers_as_string.rstrip()
+
 
 	if os.path.exists(os.path.join(user_files_folder, "data-wos")):
 	    shutil.rmtree(os.path.join(user_files_folder, 'data-wos'))
@@ -220,8 +232,9 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	user_results_folder = os.path.join(user_files_folder, 'Result')
 	shutil.copy(os.path.join(user_files_folder, file_path), user_wos_folder)
 
-	print(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
-	os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
+	print(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
+
+	os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
 
 	graph_file_path = str(collect_graph_file(os.path.join(user_results_folder, "parsed_data"))).replace("static/", "")
 	return graph_file_path

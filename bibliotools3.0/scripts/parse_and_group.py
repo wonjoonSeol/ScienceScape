@@ -74,7 +74,7 @@ def get_lines_to_separate(one_file_corpus):
 	return lines_to_write
 
 """
-Create text files for each year span, partition lines into the correct span files, 
+Create text files for each year span, partition lines into the correct span files,
 and parse the data of each span file.
 """
 def parse_and_group_data(one_file_corpus, output_dir, outdir_prefix, span_items, year_index_position, wos_headers):
