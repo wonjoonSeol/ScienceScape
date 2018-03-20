@@ -11,7 +11,8 @@ spanYears = []
 """ Return a CONFIG collection of time spans and directory information used by all scripts.
 Generates a collection of readable time spans, given a user input using argparse.
 """
-def gen(user):
+def gen(user, headers):
+	config_headers.gen(headers)
 	CONFIG={
 		# step one (merging_corpus.py) mandatory
 		"wos_data": os.path.join(home_dir, str(user) + "/data-wos/"),
@@ -73,8 +74,10 @@ def gen(user):
 		"nb_processes":2,
 
 
-		"export_ref_annotated_format":"graphml",#can't be gexf because of bug #1296 in networkx see https://github.com/networkx/networkx/issues/1296
-		# If your wos export file don't have this first line, it's not going to work!
+		"export_ref_annotated_format":"graphml",
+		#can't be gexf because of bug #1296 in networkx see https://github.com/networkx/networkx/issues/1296
+
+		# If your wos export file doesn't have this first line, it's not going to work!
 	    "wos_headers" : "PT	AU	BA	BE	GP	AF	BF	CA	TI	SO	SE	BS	LA	DT	CT	CY	CL	SP	HO	DE	ID	AB	C1	RP	EM	RI	OI	FU	FX	CR	NR	TC	Z9	U1	U2	PU	PI	PA	SN	EI	BN	J9	JI	PD	PY	VL	IS	PN	SU	SI	MA	BP	EP	AR	DI	D2	EA	EY	PG	WC	SC	GA	UT	PM	OA	HC	HP	DA",
 	    "year_index_position" : 44,
 
@@ -100,6 +103,7 @@ def gen(user):
 				'UT ', 'VT ', 'VA ', 'WV ', 'WA ', 'WI ', 'WY ', 'DC ']
 
 	}
+
 	#HEADER CODES
-	CONFIG.update(config_headers.HEADERS)
+	CONFIG.update(config_headers.gen(headers))
 	return CONFIG
