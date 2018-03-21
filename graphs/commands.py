@@ -182,16 +182,6 @@ def resetDatabase():
 	mappings = Mappings.objects.all()
 	mappings.delete()
 
-def create_user_folder(username):
-	static_user_files_directory = "static/userFiles"
-	user_files_folder = "static/userFiles/{x}".format(x = username)
-
-	if not os.path.exists(os.path.join(APP_DIR, static_user_files_directory)):
-		os.mkdir(os.path.join(APP_DIR, static_user_files_directory))
-
-	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
-		os.mkdir(os.path.join(APP_DIR, user_files_folder))
-
 """ Return a list of file paths.
 Gets all files for a user files folder, computed with the user's name.
 """
@@ -219,15 +209,15 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	print("FILE PATH! " + str(file_path))
 	dictionary_of_fields = retrieve_from_database(file_path)
 	headers_as_string = ""
-	
-	print("File Path: {f} -> Dictionary: {d}".format(f=file_path, d = str(dictionary_of_fields)))	
-	
-	if dictionary_of_fields: 
+
+	print("File Path: {f} -> Dictionary: {d}".format(f=file_path, d = str(dictionary_of_fields)))
+
+	if dictionary_of_fields:
 		for header in dictionary_of_fields:
 			headers_as_string += "{x}-".format(x = dictionary_of_fields[header])
-		
+
 		headers_as_string = headers_as_string[:len(headers_as_string) - 1]
-		headers_as_string = headers_as_string.rstrip()	
+		headers_as_string = headers_as_string.rstrip()
 
 
 

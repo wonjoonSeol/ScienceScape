@@ -146,7 +146,7 @@ def register(request):
             username = formData['username']
             password = formData['password']
             email = formData['email']
-            create_user_folder(username)
+            make_user_folders(username)
             if not (User.objects.filter(username = username).exists() or User.objects.filter(email = email).exists()):
                 User.objects.create_user(username, email, password)
                 user = authenticate(username = username, password = password)
