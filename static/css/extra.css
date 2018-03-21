@@ -305,6 +305,14 @@ footer a {
  }
 
 /*******************
+Field Selector Template
+*******************/
+
+#uploaded-file-fields {
+  color: #ec7c00;
+}
+
+/*******************
 Graph Controls
 *******************/
 
@@ -315,11 +323,6 @@ Graph Controls
 
 .switch label input[type=checkbox]:checked+.lever:after {
   background-color: #0D47A1;
-}
-
-.field-selector-header,
-.field-selector-footer {
-      background: #ccccccb3;
 }
 
 /* Search Box */

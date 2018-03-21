@@ -7,20 +7,8 @@
   {% include "welcome_logo_slogan.html" %}
 
 		<h5 style="text-align: center; color: red">{{msg}}</h5>
-    <br>
 
-    <div class="section">
-       {% if user.is_authenticated %}
-
-			<div class="card logged-in center">
-			  <div class="card-content">
-			      You are logged in as: <b>{{ user.username }}</b>
-            <a href="/logout" class="btn waves-effect waves-lighten upload-btn right">Logout</a>
-			  </div> <!-- /card-content -->
-
-			</div>
-       {%endif%}
-    </div>
+    {% include "logged_in_log_out_widget.html" %}
 
     <div class="row text-center">
         <div class="col s12">
@@ -29,13 +17,6 @@
         </div>
     </div>
 
-
-
-    <br>
-    <br>
-
-
 </div>
-
 
 {% endblock %}
