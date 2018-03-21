@@ -32,8 +32,8 @@ def load_from_file_path(file_path):
 	formSet = produce_form_set(headers['headers'], headers['unknownValues'])
 	return formSet
 
-""" Return True if a file is .csv.
-Checks a file to make sure it is a csv file.
+""" Return True if a file is .txt.
+Checks a file to make sure it is a txt file.
 """
 def checkTXT(file):
     if file.name[-4:] == ".txt":
