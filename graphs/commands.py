@@ -128,7 +128,6 @@ def detectHeadersFromAndRemove(dictionary):
 Refreshes the database, adding mappings of the file names to their true values (e.g. mapping SS to Author in file 'fileName')
 """
 def refresh_database(dictionary, file_path):
-	print("Refreshing database for file path: {path}".format(path = file_path))
 	record = Mappings.objects.filter(FILE_LINK = file_path)
 	if record:
 		record.delete()
@@ -153,11 +152,8 @@ def retrieveFromDataBase(file_path):
 	else:
 		return None
 
-	print("Dictionary from database is {x}".format(x = dictionary))
-
 	for key in dictionary:
 		dictionary[key] = dictionary[key].strip('\ufeff')
-		
 
 	return dictionary
 
