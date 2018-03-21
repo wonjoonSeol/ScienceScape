@@ -14,3 +14,8 @@ class TestCommands(TestCase):
         file_to_check.close()
         self.assertEqual(True, check_txt_file(file_to_check))
         os.remove(os.path.join(dir, "a_test_file.txt"))
+
+    def test_remove_zero_whitespace_characters(self):
+        string_with_zwc = u"\ufeff" + "abc"
+        result = remove_zero_whitespace_character(string_with_zwc)
+        self.assertEqual(result, "abc")

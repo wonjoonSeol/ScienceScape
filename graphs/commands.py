@@ -41,6 +41,9 @@ def check_txt_file(file):
     else:
         return False
 
+def remove_zero_whitespace_character(string_in):
+	return str(string_in).strip("\ufeff")
+
 """ Return a dictionary of header/value sets.
 Processes the csv file and returns a dictionary of headers mapped to a set of values.
 """
@@ -64,10 +67,6 @@ def process_txt_into_dictionary(file_path, for_fields = False):
 					header_value_sets[key].add((row[key], row[key]))
 				else:
 					header_value_sets[key].add(row[key])
-
-	# Remove zero space white character, found in many WOS headers.
-	for key in header_value_sets:
-		header_value_sets[key].strip('\ufeff')
 
 	return header_value_sets
 
@@ -154,7 +153,7 @@ def retrieve_from_database(file_path):
 		return None
 
 	for key in dictionary:
-		dictionary[key] = dictionary[key].strip('\ufeff')
+		dictionary[key] = remove_zero_whitespace_character(dictionary[key])
 
 	return dictionary
 
