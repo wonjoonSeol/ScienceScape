@@ -83,11 +83,7 @@ def process_txt_into_dictionary(file_path, for_fields = False):
 	header_value_sets = make_header_sets(file_path)
 	return populate_dictionary(header_value_sets, file_path, for_fields)
 
-""" Return a dictionary containing the full file name and the user file name.
-Saves the file to the userFiles folder in the project's root directory.
-"""
-def save_file(file, username = "Public"):
-	file_name = file.name
+def make_user_folders(username):
 	static_user_files_directory = "static/userFiles"
 	public_user_files_directory = "static/userFiles/Public"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
@@ -101,15 +97,23 @@ def save_file(file, username = "Public"):
 	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
 		os.mkdir(os.path.join(APP_DIR, user_files_folder))
 
+	return user_files_folder
+
+""" Return a dictionary containing the full file name and the user file name.
+Saves the file to the userFiles folder in the project's root directory.
+"""
+def save_file(file, username = "Public"):
+	file_name = file.name
+
 	# Save the uploaded file inside that folder.
-	full_file_name = os.path.join(APP_DIR, user_files_folder, file_name)
+	full_file_name = os.path.join(APP_DIR, make_user_folders(username), file_name)
 
 	file_to_save = open(full_file_name,'w')
 	file_to_save.write(file.read().decode("utf-8"))
 	file_to_save.close()
 
 	print("File saved at {s}".format(s = full_file_name))
-	return {'FULL_FILE_NAME': full_file_name, 'USER_FILE_NAME': file_name}
+	return {'FULL_FILE_NAME': full_file_name, 'USER_FILE_NAME': file_name }
 
 """ Return a dictionary of attributes mapped to Bibliotools representation.
 of those attributes (eg. Date: SS), and a list of unknown attributes that could not be detected.
@@ -157,6 +161,7 @@ def refresh_database(dictionary, file_path):
 Retrieves mappings of file names to their true values for the file of the file path passed in.
 """
 def retrieve_from_database(file_path):
+	print("retrieving for file path: " + str(file_path))
 	dictionary = dict()
 	files_in_database = Mappings.objects.filter(FILE_LINK = file_path)
 	if files_in_database:
@@ -211,6 +216,7 @@ Starts processing a graph file using the Bibliotools3.0 back-end source code.
 def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	static_user_files_directory = "static/userFiles"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
+	print("FILE PATH! " + str(file_path))
 	dictionary_of_fields = retrieve_from_database(file_path)
 	headers_as_string = ""
 	for header in dictionary_of_fields:

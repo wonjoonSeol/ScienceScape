@@ -51,3 +51,14 @@ class TestCommands(TestCase):
         returned_dictionary = populate_dictionary(sets, os.path.join(dir, "a_test_file.txt"))
         os.remove(os.path.join(dir, "a_test_file.txt"))
         self.assertEqual(True, 'Value1' in returned_dictionary['Header1'] and 'Value3' in returned_dictionary['Header3'])
+
+    def test_make_user_folders(self):
+        username = "test_user"
+        returned_user_file_folder = make_user_folders(username)
+        self.assertEqual(returned_user_file_folder, "static/userFiles/test_user")
+        dir = os.path.abspath(os.path.join(__file__, '..', '..', '..'))
+        result = False
+        if os.path.exists(os.path.join(dir, returned_user_file_folder)):
+            result = True
+            os.rmdir(os.path.join(dir, returned_user_file_folder))
+        self.assertEqual(True, result)
