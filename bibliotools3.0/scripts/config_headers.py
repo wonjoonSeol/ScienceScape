@@ -1,7 +1,6 @@
 # Headers in files exported from WOS are mapped to their meanings below:
 
 def gen(headers):
-
     HEADERS = {
       'accession_number' : headers[0], #'UT'
       'authors' : headers[1], #'AU'
@@ -20,8 +19,5 @@ def gen(headers):
       'document_type' : headers[14], #'DT'
       'wos_core_collection_times_cited' : headers[15], #'TC'
     }
-    print('header values')
-    for key, value in HEADERS.items():
-        print (key, ': ', value)
-        
+
     return HEADERS

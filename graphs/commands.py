@@ -25,56 +25,65 @@ Loads a file from a given file path and detects its headers.
 Produces a form from this set of headers and returns it.
 """
 def load_from_file_path(file_path):
-	dictionary = processCSVIntoDictionary(file_path)
-	in_database = retrieveFromDataBase(file_path)
-	headers = detectHeadersFromAndRemove(dictionary)
+	dictionary = process_txt_into_dictionary(file_path)
+	in_database = retrieve_from_database(file_path)
+	headers = detect_headers_from_and_remove(dictionary)
 
-	formSet = produce_form_set(headers['headers'], headers['unknownValues'])
-	return formSet
+	form_set = produce_form_set(headers['headers'], headers['unknownValues'])
+	return form_set
 
-""" Return True if a file is .csv.
-Checks a file to make sure it is a csv file.
+""" Return True if a file is .txt.
+Checks a file to make sure it is a txt file.
 """
-def checkTXT(file):
+def check_txt_file(file):
     if file.name[-4:] == ".txt":
         return True
     else:
         return False
 
-""" Return a dictionary of header/value sets.
-Processes the csv file and returns a dictionary of headers mapped to a set of values.
+"""Return a zero-whitespace free string
+Removes the UTF-8 whitespace character \ufeff from the input string.
 """
-def processCSVIntoDictionary(file_path, for_fields = False):
-	header_value_sets = dict()
+def remove_zero_whitespace_character(string_in):
+	return str(string_in).strip("\ufeff")
 
+"""Return a dictionary of sets.
+For each header in a dictionary, this function creates a set in a dictionary.
+"""
+def make_header_sets(file_path):
+	header_value_sets = dict()
 	# Open file to make header keys
-	with open(file_path) as csv_file:
-		csv_reader = reader(csv_file, delimiter='\t')
-		for headers in csv_reader:
+	with open(file_path) as txt_file:
+		txt_reader = reader(txt_file, delimiter = '\t')
+		for headers in txt_reader:
 			for header in headers:
 				header_value_sets[header] = set()
 			break
-
-	# Open a fresh copy to make a DictReader and populate dictionary
-	with open(file_path) as csv_file:
-		dict_reader = DictReader(csv_file, delimiter='\t')
-		for row in dict_reader:
-			for key in header_value_sets:
-				if(for_fields):
-					header_value_sets[key].add((row[key], row[key]))
-				else:
-					header_value_sets[key].add(row[key])
-
-	for key in header_value_sets:
-		header_value_sets[key].strip('\ufeff')
-
 	return header_value_sets
 
-""" Return a dictionary containing the full file name and the user file name.
-Saves the file to the userFiles folder in the project's root directory.
+"""Return a populated dictionary
+Populates a dictionary with actual data from a txt file.
 """
-def saveFile(file, username = "Public"):
-	file_name = file.name
+def populate_dictionary(header_value_sets, file_path, for_fields = False):
+	populated = header_value_sets
+	with open(file_path) as txt_file:
+		dict_reader = DictReader(txt_file, delimiter = '\t')
+		for row in dict_reader:
+			for key in populated:
+				if for_fields:
+					populated[key].add((row[key], row[key]))
+				else:
+					populated[key].add(row[key])
+	return populated
+
+""" Return a dictionary of header/value sets.
+Processes the txt file and returns a dictionary of headers mapped to a set of values.
+"""
+def process_txt_into_dictionary(file_path, for_fields = False):
+	header_value_sets = make_header_sets(file_path)
+	return populate_dictionary(header_value_sets, file_path, for_fields)
+
+def make_user_folders(username):
 	static_user_files_directory = "static/userFiles"
 	public_user_files_directory = "static/userFiles/Public"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
@@ -88,21 +97,29 @@ def saveFile(file, username = "Public"):
 	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
 		os.mkdir(os.path.join(APP_DIR, user_files_folder))
 
+	return user_files_folder
+
+""" Return a dictionary containing the full file name and the user file name.
+Saves the file to the userFiles folder in the project's root directory.
+"""
+def save_file(file, username = "Public"):
+	file_name = file.name
+
 	# Save the uploaded file inside that folder.
-	full_file_name = os.path.join(APP_DIR, user_files_folder, file_name)
+	full_file_name = os.path.join(APP_DIR, make_user_folders(username), file_name)
 
 	file_to_save = open(full_file_name,'w')
 	file_to_save.write(file.read().decode("utf-8"))
 	file_to_save.close()
 
 	print("File saved at {s}".format(s = full_file_name))
-	return {'FULL_FILE_NAME': full_file_name, 'USER_FILE_NAME': file_name}
+	return {'FULL_FILE_NAME': full_file_name, 'USER_FILE_NAME': file_name }
 
 """ Return a dictionary of attributes mapped to Bibliotools representation.
 of those attributes (eg. Date: SS), and a list of unknown attributes that could not be detected.
 Detects headers from a dictionary.
 """
-def detectHeadersFromAndRemove(dictionary):
+def detect_headers_from_and_remove(dictionary):
 	headers = dict(Author = None, Date = None, Country = None)
 	undetectable_values = []
 	date_pattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
@@ -128,7 +145,6 @@ def detectHeadersFromAndRemove(dictionary):
 Refreshes the database, adding mappings of the file names to their true values (e.g. mapping SS to Author in file 'fileName')
 """
 def refresh_database(dictionary, file_path):
-	print("Refreshing database for file path: {path}".format(path = file_path))
 	record = Mappings.objects.filter(FILE_LINK = file_path)
 	if record:
 		record.delete()
@@ -144,7 +160,8 @@ def refresh_database(dictionary, file_path):
     and the link to the file, for each entry.
 Retrieves mappings of file names to their true values for the file of the file path passed in.
 """
-def retrieveFromDataBase(file_path):
+def retrieve_from_database(file_path):
+	print("retrieving for file path: " + str(file_path))
 	dictionary = dict()
 	files_in_database = Mappings.objects.filter(FILE_LINK = file_path)
 	if files_in_database:
@@ -153,20 +170,10 @@ def retrieveFromDataBase(file_path):
 	else:
 		return None
 
-	print("Dictionary from database is {x}".format(x = dictionary))
-
 	for key in dictionary:
-		dictionary[key] = dictionary[key].strip('\ufeff')
-		
+		dictionary[key] = remove_zero_whitespace_character(dictionary[key])
 
 	return dictionary
-
-"""
-Launches the Bibliotools3.0 script with the data uploaded by the user.
-"""
-def initializeBiblioTools():
-	libraryPath = os.path.abspath(os.path.join(__file__, '..','..','bibliotools3.0','scripts'))
-	# To complete
 
 """
 Deletes all records in the Mappings database
@@ -203,10 +210,14 @@ def get_all_user_files(username):
 
 		return files_valid
 
+""" Return the path to the created graph file
+Starts processing a graph file using the Bibliotools3.0 back-end source code.
+"""
 def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	static_user_files_directory = "static/userFiles"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
-	dictionary_of_fields = retrieveFromDataBase(file_path)
+	print("FILE PATH! " + str(file_path))
+	dictionary_of_fields = retrieve_from_database(file_path)
 	headers_as_string = ""
 	for header in dictionary_of_fields:
 		headers_as_string += "{x}-".format(x = dictionary_of_fields[header])
