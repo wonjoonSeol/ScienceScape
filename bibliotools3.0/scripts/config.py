@@ -1,7 +1,5 @@
 import os
 default_dir = os.path.dirname(os.path.dirname(__file__))
-print(default_dir)
-
 users_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..", "static", "userFiles")
 
 import config_headers

@@ -9,7 +9,7 @@
 						<form method="POST" action ="{% url 'upload' up %}" enctype="multipart/form-data">
 												{% csrf_token %}
 								<div class="file-field input-field">
-      							<div class="btn blue darken-4">
+      							<div class="btn upload-btn">
       						 		<span>File</span>
       						  		<!--<input type="file">-->
       						  		{{upload}}
@@ -17,7 +17,7 @@
    								 <div class="file-path-wrapper">
        									 <input class="file-path validate" type="text">
      								 </div>
-     								 <input class="btn blue darken-4 waves-effect" type="submit" value="submit">
+     								 <input class="btn upload-btn waves-effect" type="submit" value="submit">
    							 </div>
 						</form>
 
@@ -53,9 +53,9 @@
             <td>{{forloop.counter}}</td>
             <td>{{ file }}</td>
 
-            <td><a href="{% url 'edit' file %}" class="btn waves-effect waves-lighten blue darken-4 accountButton">Edit Fields</a></td>
+            <td><a href="{% url 'edit' file %}" class="btn waves-effect waves-lighten upload-btn accountButton">Edit Fields</a></td>
             <td><a href="{% url 'select_year' file %}" class="btn waves-effect waves-lighten red darken-4 accountButton">Process Graph</a></td>
-            <td><a href="{% url 'delete' file %}" class="btn waves-effect waves-lighten blue darken-4 accountButton">Delete</a></td>
+            <td><a href="{% url 'delete' file %}" class="btn waves-effect waves-lighten upload-btn accountButton">Delete</a></td>
 
           </tr>
 

@@ -19,4 +19,5 @@ def gen(headers):
       'document_type' : headers[14], #'DT'
       'wos_core_collection_times_cited' : headers[15], #'TC'
     }
+
     return HEADERS

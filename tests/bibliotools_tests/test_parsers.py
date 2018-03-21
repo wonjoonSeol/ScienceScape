@@ -19,7 +19,9 @@ class TestParsers(TestCase):
     """
 
     dir = os.path.dirname(os.path.dirname(__file__))
-    CONFIG = config.gen('test_user')
+    default_headers = ['UT', 'AU', 'DE', 'ID', 'TI', 'WC', 'CR', 'C1', 'PY', 'J9', 'VL', 'BP', 'DI', 'PT', 'DT', 'TC']
+    test_user = 'test_user'
+    CONFIG = config.gen(test_user, default_headers)
     parsers.CONFIG = CONFIG
     parsers.initHeaders()
     os.mkdir(os.path.join(dir, "bibliotools_tests/testFiles/parser_tests/test_output"))

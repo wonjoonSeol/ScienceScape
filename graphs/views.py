@@ -20,9 +20,9 @@ def home(request, message = ""):
 
 	files = ""
 	if request.user.is_authenticated:
-		files = get_all_user_files(request.user.username)
+		return redirect('upload', '')
 
-	return render(request, 'index.html', {'msg': message, 'reg_form': registration_form, 'fpath': "/javascript/sigma.js-1.2.1/examples/data/standard_graph.gexf", 'usersFiles': files })
+	return render(request, 'index.html', {'msg': message, 'reg_form': registration_form, 'fpath': "/standard_graph.gexf", 'filename': "Example Graph {smiley_face}".format(smiley_face = "") })
 
 def upload_file(request, message = ""):
 	print("Username is: {x}".format(x = request.user.username))
@@ -31,11 +31,11 @@ def upload_file(request, message = ""):
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
 			uploaded_file = request.FILES['file']
-			if uploaded_file and checkTXT(uploaded_file):
+			if uploaded_file and check_txt_file(uploaded_file):
 				if request.user.username:
-					fPath = saveFile(uploaded_file, request.user.username)['FULL_FILE_NAME']
+					fPath = save_file(uploaded_file, request.user.username)['FULL_FILE_NAME']
 				else:
-					fPath = saveFile(uploaded_file)['FULL_FILE_NAME']
+					fPath = save_file(uploaded_file)['FULL_FILE_NAME']
 				return redirect('fields', fPath)
 			else:
 				message = "Please upload a tab delimited file"
@@ -115,7 +115,7 @@ def field_form(request, file_path):
 def about(request):
 	return render(request, 'about.html')
 
-def load_graph(request, file_path):
+def upload_single_gexf_file(request, file_path):
 	upload_gexf_form = UploadFileForm()
 
 	if request.method == 'POST' and request.FILES['file']:
@@ -124,7 +124,7 @@ def load_graph(request, file_path):
 			print("VALID")
 			uploaded_file = request.FILES['file']
 			file_name = uploaded_file.name
-			file_path = '/userFiles/' + saveFile(uploaded_file)['USER_FILE_NAME']
+			file_path = '/userFiles/' + save_file(uploaded_file)['USER_FILE_NAME']
 			print("file path: {x}".format(x = file_path))
 		else:
 			print("NOT VALID")
@@ -132,12 +132,17 @@ def load_graph(request, file_path):
 		file_name = "No file uploaded"
 		file_path = "/userFiles/arctic.gexf"
 
-	if file_path == "INITIAL":
-		print("checkpoint")
-		file_path = "/userFiles/arctic.gexf"
-		file_name = "No file uploaded"
+def turn_path_into_string(path_with_brackets):
+	return path_with_brackets.replace("['", "").replace("']", "")
 
-	return render(request, 'graph_template.html', {'fpath': file_path, 'upload_gexf': upload_gexf_form,'fname': file_name})
+def load_graph(request, path):
+	file_path = turn_path_into_string(path)
+	if len(file_path) > 2:
+		message = "Your graph"
+	else:
+		message = "No graph has been produced {sad_face} Please check your input file".format(sad_face = u'\U0001f62d')
+		
+	return render(request, 'graph_template.html', {'fpath': turn_path_into_string(file_path), 'filename': message})
 
 def register(request):
     if request.method == 'POST':
@@ -147,7 +152,7 @@ def register(request):
             username = formData['username']
             password = formData['password']
             email = formData['email']
-            create_user_folder(username)
+            make_user_folders(username)
             if not (User.objects.filter(username = username).exists() or User.objects.filter(email = email).exists()):
                 User.objects.create_user(username, email, password)
                 user = authenticate(username = username, password = password)

@@ -3,8 +3,10 @@ import argparse
 '''
 Prompt for time spans. This is used to split the data into several time spans.
 '''
-parser = argparse.ArgumentParser(description='For each time span enter a range \"YYYY-YYYY\"')
-parser.add_argument('-bound', nargs='+', metavar='bound', help='Year value (xxxx-xxxx, ...)', default={"1900-1999", "2000-2018"})
+parser = argparse.ArgumentParser(description='For each time span enter a range \"YYYY-YYYY\". \
+                                              For user add the user\'s name. \
+                                              For the headers add the headers from WOS only if they have changed value from the default.')
+parser.add_argument('-bound', nargs='+', metavar='bound', help='Year value (YYYY-YYYY, ...)', default={"1900-1999", "2000-2018"})
 
 '''
 Prompt for user name. This is for a web server setup.
@@ -39,6 +41,7 @@ parser.add_argument('-headers', default='UT-AU-DE-ID-TI-WC-CR-C1-PY-J9-VL-BP-DI-
                                 Document Type, \
                                 Wos Core Collection Times Cited.  \
                                 Default is: UT-AU-DE-ID-TI-WC-CR-C1-PY-J9-VL-BP-DI-PT-DT-TC')
+
 args = parser.parse_args()
 
 spanYears = []
