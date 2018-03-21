@@ -41,3 +41,13 @@ class TestCommands(TestCase):
             if not str(returned_sets[key]) == 'set()':
                 all_sets = False
         self.assertEqual(True, all_sets)
+
+    def test_populate_dictionary(self):
+        dir = os.path.dirname(os.path.dirname(__file__))
+        file_to_check = open(os.path.join(dir, "a_test_file.txt"), "w")
+        file_to_check.write("Header1\tHeader2\tHeader3\nValue1\tValue2\tValue3")
+        file_to_check.close()
+        sets = make_header_sets(os.path.join(dir, "a_test_file.txt"))
+        returned_dictionary = populate_dictionary(sets, os.path.join(dir, "a_test_file.txt"))
+        os.remove(os.path.join(dir, "a_test_file.txt"))
+        self.assertEqual(True, 'Value1' in returned_dictionary['Header1'] and 'Value3' in returned_dictionary['Header3'])

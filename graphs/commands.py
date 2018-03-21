@@ -64,7 +64,7 @@ def make_header_sets(file_path):
 """Return a populated dictionary
 Populates a dictionary with actual data from a txt file.
 """
-def populate_dictionary(header_value_sets, file_path, for_fields):
+def populate_dictionary(header_value_sets, file_path, for_fields = False):
 	populated = header_value_sets
 	with open(file_path) as txt_file:
 		dict_reader = DictReader(txt_file, delimiter = '\t')
