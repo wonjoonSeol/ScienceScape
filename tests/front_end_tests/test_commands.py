@@ -62,3 +62,33 @@ class TestCommands(TestCase):
             result = True
             os.rmdir(os.path.join(dir, returned_user_file_folder))
         self.assertEqual(True, result)
+
+    def test_get_all_user_files_for_no_folder(self):
+        returned_files = get_all_user_files("test_user_2")
+        self.assertEqual(returned_files, [])
+
+    def test_get_all_user_files_for_empty_folder(self):
+        make_user_folders("test_user_3")
+        dir = os.path.abspath(os.path.join(__file__, '..', '..', '..'))
+        if not os.path.exists(os.path.join(dir, "static/userFiles/test_user_3")):
+            os.mkdir(os.path.join(dir, "static/userFiles/test_user_3"))
+        returned_files = get_all_user_files("test_user_3")
+        self.assertEqual(returned_files, [])
+        if os.path.exists(os.path.join(dir, "static/userFiles/test_user_3")):
+            os.rmdir(os.path.join(dir, "static/userFiles/test_user_3"))
+
+
+    def test_get_all_user_files_for_folder_with_one_file(self):
+        make_user_folders("test_user_4")
+        dir = os.path.abspath(os.path.join(__file__, '..', '..', '..'))
+        if not os.path.exists(os.path.join(dir, "static/userFiles/test_user_4")):
+            os.mkdir(os.path.join(dir, "static/userFiles/test_user_4"))
+        file_to_check = open(os.path.join(dir, "static/userFiles/test_user_4", "a_test_file.txt"), "w")
+        file_to_check.write("Some text")
+        file_to_check.close()
+
+        returned_files = get_all_user_files("test_user_4")
+        print("DIRECTORY " + str(dir))
+        self.assertEqual(str(returned_files), "['a_test_file.txt']")
+        os.remove(os.path.join(dir, "static/userFiles/test_user_4", "a_test_file.txt"))
+        os.rmdir(os.path.join(dir, "static/userFiles/test_user_4"))

@@ -120,6 +120,7 @@ of those attributes (eg. Date: SS), and a list of unknown attributes that could 
 Detects headers from a dictionary.
 """
 def detect_headers_from_and_remove(dictionary):
+	print("dic: " + str(dictionary))
 	headers = dict(Author = None, Date = None, Country = None)
 	undetectable_values = []
 	date_pattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
@@ -181,16 +182,6 @@ Deletes all records in the Mappings database
 def resetDatabase():
 	mappings = Mappings.objects.all()
 	mappings.delete()
-
-def create_user_folder(username):
-	static_user_files_directory = "static/userFiles"
-	user_files_folder = "static/userFiles/{x}".format(x = username)
-
-	if not os.path.exists(os.path.join(APP_DIR, static_user_files_directory)):
-		os.mkdir(os.path.join(APP_DIR, static_user_files_directory))
-
-	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
-		os.mkdir(os.path.join(APP_DIR, user_files_folder))
 
 """ Return a list of file paths.
 Gets all files for a user files folder, computed with the user's name.
