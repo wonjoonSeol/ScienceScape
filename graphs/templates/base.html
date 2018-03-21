@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{% static 'css/nouislider.css' %}">
     <!-- Import Materialize.css -->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection"/>
+    <!-- Materialize.css Local Dev Backup for when CDN is down -->
+    <!-- <link type="text/css" rel="stylesheet" href="{% static 'fonts/materialize-css-icon-font.woff2' %}" media="screen,projection"/> -->
     <!-- Import Dropzone JS style-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.css">
     <!-- Import custom styling CSS -->
@@ -79,45 +81,28 @@
             </div>
           </div>
         </li>
-        <li class="top-level"><a href="#!" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
-        <li>
 
-          <!-- Collapsible Side Nav Component -->
-          <ul class="collapsible collapsible-accordion">
-            <li>
-              <!-- Top Level Accordian Header -->
-              <a href="#!" class="collapsible-header waves-effect waves-light">Account<i class="material-icons">person</i><i class="material-icons right">keyboard_arrow_down</i></a>
-              <div class="collapsible-body">
-                <ul>
-                  <li><a href="#!" class="waves-effect waves-light">Login<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Register<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Proceed As Guest<i class="material-icons"></i></a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+        {% if user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home & Login<i class="material-icons">home</i></a></li>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+        <li class="top-level"><a href="/logout" class="waves-effect waves-light">Logout<i class="material-icons">power_settings_new</i></a></li>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'upload' guest %}" class="waves-effect waves-light">Upload As Guest<i class="material-icons">file_upload</i></a></li>
+        {% endif %}
 
         <li class="top-level"><a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a></li>
 
-          <!-- Collapsible Side Nav Component -->
-          <ul class="collapsible collapsible-accordion">
-            <li>
-              <!-- Top Level Accordian Header -->
-              <a href="#!" class="collapsible-header waves-effect waves-light">About<i class="material-icons">info</i><i class="material-icons right">keyboard_arrow_down</i></a>
-              <div class="collapsible-body">
-                <ul>
-                  <li><a href="#!" class="waves-effect waves-light">Built With<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Built By<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Acknowledgements<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Related Tools<i class="material-icons"></i></a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+        <li class="top-level"><a href="{% url 'about' %}" class="waves-effect waves-light">About<i class="material-icons">info</i></a></li>
 
-        <li class="top-level"><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light">Help<i class="material-icons">help</i></a></li>
-
-        </li>
+        <li class="top-level"><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light">Help / Wiki<i class="material-icons">help</i></a></li>
 
       </ul>
     </div>
@@ -143,15 +128,13 @@
       </div>
 
       <div class="footer-copyright">
-
         <div class="container">
-        &copy; 2018 The Codokans, King's College London
-        </div>
 
-        <a href="https://www.kcl.ac.uk" class="">
-        <img id="kcl-footer" src="{% static 'images/kcl-white-transparent.png' %}"/>
+          <span id="copyright left-align">&copy; 2018 The Codokans, King's College London</span>
+          <a href="https://www.kcl.ac.uk" class="right">
+          <img id="kcl-footer-img" src="{% static 'images/kcl-white-transparent.png' %}"/>
         </a>
-
+        </div>
       </div>
     </footer>
 
