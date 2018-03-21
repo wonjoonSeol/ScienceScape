@@ -20,19 +20,25 @@
     <div class="section">
        {% if user.is_authenticated %}
 
-			<div class="card">
+			<div class="card logged-in center">
 			  <div class="card-content">
-			      <p>You are logged in as: <b>{{ user.username }}</b></p>
-			      <p><a href="/logout">Logout</a></p>
+			      You are logged in as:
+
+              <b>{{ user.username }}</b>
+
+
+
+              <a href="/logout" class="btn waves-effect waves-lighten upload-btn right">Logout</a>
+
 			  </div> <!-- /card-content -->
-			
+
 			</div>
        {%endif%}
     </div>
 
     <div class="row text-center">
         <div class="col s12">
-                {% include "upload_form.html" %} 
+                {% include "upload_form.html" %}
             <br>
         </div>
     </div>
@@ -42,7 +48,7 @@
     <br>
     <br>
 
-    
+
 </div>
 
 

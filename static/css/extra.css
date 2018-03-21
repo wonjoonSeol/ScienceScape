@@ -335,6 +335,18 @@ input[type=search] {
 }
 
 /*******************
+ Logged In Template
+ *******************/
+
+.logged-in {
+  font-size: 1.1em;
+}
+
+
+.logged-in .card-content {
+  line-height: 37px;
+}
+/*******************
  Upload Form
  *******************/
 
