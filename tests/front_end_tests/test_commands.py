@@ -12,5 +12,5 @@ class TestCommands(TestCase):
         dir = os.path.dirname(os.path.dirname(__file__))
         file_to_check = open(os.path.join(dir, "a_test_file.txt"), "w")
         file_to_check.close()
-        self.assertEqual(True, checkTXT(file_to_check))
+        self.assertEqual(True, check_txt_file(file_to_check))
         os.remove(os.path.join(dir, "a_test_file.txt"))

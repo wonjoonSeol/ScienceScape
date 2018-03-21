@@ -36,7 +36,7 @@ class DatabaseTestCase(TestCase):
         keyValuePair = dict(Key1="Value1", Key2="Value1", Key3="Value1", Key4="Value1", Key5="Value1")
         fPath = "TESTPATH"
         refresh_database(keyValuePair, fPath)
-        retrieval = retrieveFromDataBase(fPath)
+        retrieval = retrieve_from_database(fPath)
         result = False
 
         if retrieval == keyValuePair:

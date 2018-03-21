@@ -25,17 +25,17 @@ Loads a file from a given file path and detects its headers.
 Produces a form from this set of headers and returns it.
 """
 def load_from_file_path(file_path):
-	dictionary = processCSVIntoDictionary(file_path)
-	in_database = retrieveFromDataBase(file_path)
-	headers = detectHeadersFromAndRemove(dictionary)
+	dictionary = process_txt_into_dictionary(file_path)
+	in_database = retrieve_from_database(file_path)
+	headers = detect_headers_from_and_remove(dictionary)
 
-	formSet = produce_form_set(headers['headers'], headers['unknownValues'])
-	return formSet
+	form_set = produce_form_set(headers['headers'], headers['unknownValues'])
+	return form_set
 
 """ Return True if a file is .txt.
 Checks a file to make sure it is a txt file.
 """
-def checkTXT(file):
+def check_txt_file(file):
     if file.name[-4:] == ".txt":
         return True
     else:
@@ -44,7 +44,7 @@ def checkTXT(file):
 """ Return a dictionary of header/value sets.
 Processes the csv file and returns a dictionary of headers mapped to a set of values.
 """
-def processCSVIntoDictionary(file_path, for_fields = False):
+def process_txt_into_dictionary(file_path, for_fields = False):
 	header_value_sets = dict()
 
 	# Open file to make header keys
@@ -65,6 +65,7 @@ def processCSVIntoDictionary(file_path, for_fields = False):
 				else:
 					header_value_sets[key].add(row[key])
 
+	# Remove zero space white character, found in many WOS headers.
 	for key in header_value_sets:
 		header_value_sets[key].strip('\ufeff')
 
@@ -73,7 +74,7 @@ def processCSVIntoDictionary(file_path, for_fields = False):
 """ Return a dictionary containing the full file name and the user file name.
 Saves the file to the userFiles folder in the project's root directory.
 """
-def saveFile(file, username = "Public"):
+def save_file(file, username = "Public"):
 	file_name = file.name
 	static_user_files_directory = "static/userFiles"
 	public_user_files_directory = "static/userFiles/Public"
@@ -102,7 +103,7 @@ def saveFile(file, username = "Public"):
 of those attributes (eg. Date: SS), and a list of unknown attributes that could not be detected.
 Detects headers from a dictionary.
 """
-def detectHeadersFromAndRemove(dictionary):
+def detect_headers_from_and_remove(dictionary):
 	headers = dict(Author = None, Date = None, Country = None)
 	undetectable_values = []
 	date_pattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
@@ -143,7 +144,7 @@ def refresh_database(dictionary, file_path):
     and the link to the file, for each entry.
 Retrieves mappings of file names to their true values for the file of the file path passed in.
 """
-def retrieveFromDataBase(file_path):
+def retrieve_from_database(file_path):
 	dictionary = dict()
 	files_in_database = Mappings.objects.filter(FILE_LINK = file_path)
 	if files_in_database:
@@ -156,13 +157,6 @@ def retrieveFromDataBase(file_path):
 		dictionary[key] = dictionary[key].strip('\ufeff')
 
 	return dictionary
-
-"""
-Launches the Bibliotools3.0 script with the data uploaded by the user.
-"""
-def initializeBiblioTools():
-	libraryPath = os.path.abspath(os.path.join(__file__, '..','..','bibliotools3.0','scripts'))
-	# To complete
 
 """
 Deletes all records in the Mappings database
@@ -199,10 +193,13 @@ def get_all_user_files(username):
 
 		return files_valid
 
+""" Return the path to the created graph file
+Starts processing a graph file using the Bibliotools3.0 back-end source code.
+"""
 def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	static_user_files_directory = "static/userFiles"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
-	dictionary_of_fields = retrieveFromDataBase(file_path)
+	dictionary_of_fields = retrieve_from_database(file_path)
 	headers_as_string = ""
 	for header in dictionary_of_fields:
 		headers_as_string += "{x}-".format(x = dictionary_of_fields[header])

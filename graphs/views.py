@@ -31,11 +31,11 @@ def upload_file(request, message = ""):
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
 			uploaded_file = request.FILES['file']
-			if uploaded_file and checkTXT(uploaded_file):
+			if uploaded_file and check_txt_file(uploaded_file):
 				if request.user.username:
-					fPath = saveFile(uploaded_file, request.user.username)['FULL_FILE_NAME']
+					fPath = save_file(uploaded_file, request.user.username)['FULL_FILE_NAME']
 				else:
-					fPath = saveFile(uploaded_file)['FULL_FILE_NAME']
+					fPath = save_file(uploaded_file)['FULL_FILE_NAME']
 				return redirect('fields', fPath)
 			else:
 				message = "Please upload a tab delimited file"
@@ -124,7 +124,7 @@ def upload_single_gexf_file(request, file_path):
 			print("VALID")
 			uploaded_file = request.FILES['file']
 			file_name = uploaded_file.name
-			file_path = '/userFiles/' + saveFile(uploaded_file)['USER_FILE_NAME']
+			file_path = '/userFiles/' + save_file(uploaded_file)['USER_FILE_NAME']
 			print("file path: {x}".format(x = file_path))
 		else:
 			print("NOT VALID")
