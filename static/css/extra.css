@@ -1,53 +1,6 @@
 /*******************
-  COLOR PALETTE
-********************/
-
-/* TODO: Complete Color Palette and replace hard coded colours with variables
-         Use Pigment: Find Colors to do so */
-
-/*  SCSS Variable decaration:   $brandColor: #0D47A1; */
-/*  CSS Variable declarations - Need to go in class or element tags */
-
-p {
-  --red-text-shadow: #780000;
-}
-
-/* --nav-background-color: rgba(159, 0, 0, 0.92);
---nav-dropdown-color: rgba(159, 0, 0, 0.92);
-
---side-nav-hover-color: background-color: rgba(134, 0, 0, 0.91); // Maybe use darken function?
-
---text-white: white;
---card-text: black;
-
---blue-btn-hover: #0D47A1;
---blue-btn-outline: #0D47A1;
---blue-btn-highlight: #81acee;
-
---color-one: rgb(230, 60, 75);
---color-two: rgb(208, 137, 0);
-
---some-color: #ffffff;
---some-color: #ffffff;
---some-color: #ffffff; */
-
-
-
-
-
-/*******************
-  SIGMA JS
-********************/
-
-#json-test-sigma-container {
-  /* max-width: 400px; */
-  height: 400px;
-  margin: auto;
-}
-
-/*******************
-  MATERIALIZE CSS
-********************/
+ Base HTML Template
+ *******************/
 
 body,
 html {
@@ -56,25 +9,247 @@ html {
 
 html h1 {
   font-weight:100 ;
-  font-style: italic;
-  text-shadow: 2px 2px 5px #780000;
+  font-style: normal;
+  text-shadow: 2px 2px 4px #143e61;
   font-size: 4em;
 }
-/*
-h1, h2, h3, h4, h5, h6 {
-  color: white;
-  text-shadow: 1px 1px 8px #000000;
-  font-weight: lighter;
+
+/* Navigation bar */
+
+nav {
+  background-color: #1f6384e0;
+}
+
+#nav-h1{
+  margin: 0;
+}
+
+nav .dropdown-content {
+  background-color: transparent;
+}
+
+nav .dropdown-content li {
+  background-color: rgba(22, 97, 139, 1) !important;
+}
+
+.nav-wrapper {
+  /* background-color: #fff; */
+}
+
+nav .dropdown-content li.top-level:hover,
+.side-nav li.top-level:hover {
+  background-color: rgba(6, 80, 122, .91);
+}
+
+/* nav .dropdown-button {
+  color: #348ec1
 } */
 
-p {
-  /* color: white; */
+nav .dropdown-content  a {
+  color: white !important;
 }
 
-a {
- /* color: white; */
+#nav-login-btn {
+  color: #E0F2F1;
+  background-color: transparent;
+  border: 1px solid #ffffff;
 }
 
+#nav-login-btn:hover {
+  background-color: #005e8c !important;
+  color: white;
+}
+
+/* Side navigation bar */
+
+.side-nav .collapsible-body,
+.side-nav.fixed .collapsible-body {
+  background-color: transparent;
+}
+
+.side-nav li.active {
+  background-color: transparent;
+}
+
+.side-nav .collapsible-header,
+.side-nav.fixed .collapsible-header {
+  padding: 0 32px;
+}
+
+.side-nav .collapsible-body li a,
+.side-nav.fixed .collapsible-body li a {
+  padding-left: 50px;
+}
+
+.side-nav li.active:hover,
+.side-nav.fixed li.active:hover {
+  background-color: transparent !important;
+}
+
+.side-nav .collapsible-header:hover,
+.side-nav.fixed .collapsible-header:hover,
+.side-nav .collapsible-body li:hover,
+.side-nav.fixed .collapsible-body li:hover {
+  background-color: rgba(6, 80, 122, .91) !important;
+}
+
+.side-nav {
+  background-color: #22749ced;
+}
+
+.side-nav li>a,
+.side-nav li>a>i {
+  color: white !important;
+}
+
+.side-nav .user-view img {
+  height: 70px;
+  width: 70px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.side-nav .user-view {
+  margin-top: 20px;
+}
+
+.button-collapse {
+  color: #348ec1;
+}
+
+/* Page Footer */
+
+.page-footer {
+  background-color: rgba(0, 64, 101, 0.67);
+}
+
+.page-footer h6 {
+  text-shadow: 1px 1px 1px #143e61;
+  font-weight: bold;
+  color: rgb(238, 238, 238);
+}
+
+.page-footer .underline a {
+  text-decoration: underline !important;
+}
+
+footer a {
+  color: white;
+}
+
+.page-footer .footer-copyright {
+  background-color: rgba(0, 64, 101, 0.67);
+}
+
+#kcl-footer {
+  height: 60px;
+  margin-right: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.page-footer h5 {
+  font-weight: 200;
+  font-size: 1.3em;
+}
+
+.footer-description {
+  text-align: center;
+}
+
+
+/*******************
+ Index Template
+ *******************/
+
+#logo-home img {
+  width: 150px;
+  height: 150px;
+  padding-bottom: 20px;
+}
+
+/* Graphs module */
+
+.graphs-page .card {
+  color: black;
+}
+
+.graphs-page h5 {
+  font-weight: lighter;
+  font-style: italic;
+}
+
+.graph-container {
+  height: 500px;
+}
+
+.graphs-page .btn {
+  margin: 4px;
+  width: 275px;
+}
+
+#graph-node-search {
+  margin: 0 12%;
+}
+
+.toggle-graph-edges {
+  text-transform: uppercase;
+  color: #0D47A1;
+  margin-top: 5px;
+}
+
+.toggle-graph-edges label {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.graph-edges-container{
+  border: 1px solid blue;
+  width: 275px;
+  padding: 0 2rem;
+}
+
+.graph-select:hover {
+  background-color: #0D47A1 !important;
+  color: white;
+}
+
+.graph-select {
+  color: #0D47A1;
+  background-color: white !important;
+  border: 1px solid #0D47A1;
+}
+
+/* Sigma.js */
+
+#json-test-sigma-container {
+  height: 400px;
+  margin: auto;
+}
+
+/**************
+ About page
+ **************/
+
+ /* About Page Tabs */
+
+ .tabs {
+     display: -webkit-box !important;
+     display: -webkit-flex!important;
+     display: -ms-flexbox !important;
+     display: flex !important;
+ }
+
+ .tabs .tab {
+     -webkit-box-flex: 1 !important;
+     -webkit-flex-grow: 1 !important;
+     -ms-flex-positive: 1 !important;
+     flex-grow: 1 !important;
+ }
+
+ .tabs .tab a {
+     padding: 0 12px !important;
+ }
 
 .about h1,
 .about h2,
@@ -94,139 +269,84 @@ a {
 .about-intro a,
 #built-with a,
 #related-tools a,
-#related-tools p  {
+#related-tools a {
   color: white;
   text-decoration: underline;
 }
 
-footer a {
-  color: blue;
-}
-
-/* NAVIGATION & MENU */
-
-nav {
-  background-color: rgba(184, 28, 28, 0.85) !important;
-  min-height: 80px;
-  height: 80px;
-}
-
-#nav-h1{
-  margin: 0;
-}
-
-
-
-nav .dropdown-content {
-  background-color: transparent;
-}
-
-nav .dropdown-content li {
-  background-color: rgba(159, 0, 0, 0.92) !important;
-}
-
-.side-nav .collapsible-body,
-.side-nav.fixed .collapsible-body {
-  background-color: transparent;
-}
-
-/* Expanded accordian background */
-.side-nav li.active {
-  background-color: transparent;
-}
-
-.nav-wrapper {
-  background-color: #fff;
-  /*background-color: #283593;*/
-}
-
-.side-nav .collapsible-header,
-.side-nav.fixed .collapsible-header {
-  padding: 0 32px;
-}
-
-.side-nav .collapsible-body li a,
-.side-nav.fixed .collapsible-body li a {
-  padding-left: 50px;
-}
-
-
-.side-nav li:hover {
-  /* background-color: transparent; */
-}
-
-.side-nav li.active:hover,
-.side-nav.fixed li.active:hover {
-  background-color: transparent !important;
-}
-
-
-.side-nav .collapsible-header:hover,
-.side-nav.fixed .collapsible-header:hover,
-.side-nav .collapsible-body li:hover,
-.side-nav.fixed .collapsible-body li:hover {
-  background-color: rgba(134, 0, 0, 0.91) !important;
-}
-
-nav .dropdown-content li.top-level:hover,
-.side-nav li.top-level:hover {
-  background-color: rgba(134, 0, 0, 0.91);
-}
-
-nav .dropdown-content  a {
-  color: white!important;
-}
-
-#nav-login-btn {
-  color: #E0F2F1;
-  background-color: #4DB6AC;
-  border: 1px solid #ffffff;
-}
-
-#nav-login-btn:hover {
-  background-color: #00897B !important;
+#related-tools p {
   color: white;
 }
 
-/* SIDE NAV */
-
-.side-nav {
-  background-color: #a90404c7;
+.tabbed-page-container {
+  margin-top: 20px;
 }
 
-.side-nav li>a,
-.side-nav li>a>i {
-  color: white !important;
+/* Font Awesome */
+.fa,
+.fab {
+  font-size: 14pt;
 }
 
-/* TABS NAV */
-
-/* Enable full screen width tabs menu */
-.tabs {
-    display:-webkit-box !important;
-    display: -webkit-flex!important;
-    display: -ms-flexbox !important;
-    display: flex ! important;
+.fas {
+  font-size: 13pt;
 }
 
-.tabs .tab {
-    -webkit-box-flex: 1 !important;
-    -webkit-flex-grow: 1 !important;
-    -ms-flex-positive: 1 !important;
-    flex-grow: 1 !important;
+/*******************
+ User Account Page
+ *******************/
+
+ .accountButton {
+   border: 1px solid white !important;
+ }
+
+ .account-card {
+   color: black;
+ }
+
+/*******************
+Graph Controls
+*******************/
+
+/* Toggle Graph Edges */
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: #81acee;
 }
 
-.tabs .tab a {
-    padding: 0 12px !important;
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: #0D47A1;
 }
 
+.field-selector-header,
+.field-selector-footer {
+      background: #ccccccb3;
+}
 
+/* Search Box */
+input[type=search]:focus {
+  border-bottom: 1px solid #0D47A1 !important;
+  -webkit-box-shadow: 0 1px 0 0 #0D47A1 !important;
+  box-shadow: 0 1px 0 0 #0D47A1 !important;
+}
+
+input[type=search] {
+  width: 82% !important;
+  padding-left: 50px !important;
+}
+
+/*******************
+ Miscellaneous
+ *******************/
 
 .tagline {
   text-shadow: 1px 1px 8px #000000;
-  font-weight: lighter;
-  font-size: 1.2em;
+  font-weight: 300;
+  font-size: 1.4em;
   line-height: 1.7;
+}
+
+.tagline a {
+  text-decoration: underline;
 }
 
 .card-image {
@@ -243,115 +363,17 @@ nav .dropdown-content  a {
   font-weight: bold;
 }
 
-.page-footer {
-  background-color: rgba(0,0,0,0.7) !important;
-}
-
-.footer-copyright {
-  /* background: transparent !important; */
-}
-
-.page-footer h6 {
-  text-shadow: 1px 1px 1px rgb(121, 0, 0);
-  font-weight: bold;
-  color: rgb(238, 238, 238);
-}
-
-
-.page-footer .underline a {
-  text-decoration: underline !important;
-}
-
-#logo-home img {
-  width: 150px;
-  height: 150px;
-  padding-bottom: 20px;
-}
-
-.side-nav .user-view img {
-  height: 70px;
-  width: 70px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.side-nav .user-view {
-  margin-top: 20px;
-}
-
-.tabbed-page-container {
-  margin-top: 20px;
-}
-
-/* TODo Make more specific to cards, vs nav */
 .card .dropdown-content li>a,
 .card .dropdown-content li>span {
   color: #0D47A1;
 }
 
-.graph-select:hover {
-  background-color: #0D47A1 !important;
-  color: white;
-}
-
-.graph-select {
-  color: #0D47A1;
-  background-color: white !important;
-  border: 1px solid #0D47A1;
-}
-
-/* Buttons  */
 #dropdown-list-1 li a {
   color: darkblue;
 }
 
-/* Toggle checkbox */
-.switch label input[type=checkbox]:checked+.lever {
-  background-color: #81acee;
 
-}
-
-.switch label input[type=checkbox]:checked+.lever:after {
-  background-color: #0D47A1;
-}
-
-/* UPLOAD BOX */
-
-label[for="id_file"] {
-  /* display: none !important; */
-}
-
-/*******************
-  Field Selctor Page
-********************/
-
-.field-selector-header,
-.field-selector-footer {
-      background: #ccccccb3;
-}
-
-/*******************
-  About Page
-********************/
-
-/* Fontawesome */
-
-.fa,
-.fab {
-  font-size: 14pt;
-}
-
-.fas {
-  font-size: 13pt;
-}
-
-.the-codokans li img {
-  margin-top: 10px;
-}
-
-/*******************
-  NO UI SLIDER
-********************/
+/* Slider */
 .noUi-tooltip {
   background-color: #0D47A1 !important;
 }
@@ -360,27 +382,11 @@ label[for="id_file"] {
   background-color: #81acee;
 }
 
-
-/*******************
-  DROPZONE JS
-********************/
-.dropzone {
-  border: 2px dashed #0D47A1 !important;
-  border-radius: 5px;
-  background: white; }
-
-.dropzone .dz-message {
-  margin: 3em 0 !important;
+.welcome-section {
+    height: 80px;
 }
 
-/*******************
-  ACCOUNT PAGE
-********************/
 
-.accountButton {
-  border: 1px solid white !important;
-}
-
-.account-card {
-  color: black;
+.upload-btn {
+      background-color: #007baa
 }

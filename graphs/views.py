@@ -14,20 +14,31 @@ from django.contrib.auth import authenticate, login
 
 APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-def home(request):
+def home(request, message = ""):
 	print("Username is: {x}".format(x = request.user.username))
 	registration_form = UserRegistrationForm()
+
+	files = ""
+	if request.user.is_authenticated:
+		return redirect('upload', '')
+
+	return render(request, 'index.html', {'msg': message, 'reg_form': registration_form, 'fpath': "/javascript/sigma.js-1.2.1/examples/data/standard_graph.gexf" })
+
+def upload_file(request, message = ""):
+	print("Username is: {x}".format(x = request.user.username))
 
 	if request.method == 'POST' and request.FILES['file']:
 		form = UploadFileForm(request.POST, request.FILES)
 		if form.is_valid:
 			uploaded_file = request.FILES['file']
-			if uploaded_file and checkCSV(uploaded_file):
+			if uploaded_file and checkTXT(uploaded_file):
 				if request.user.username:
 					fPath = saveFile(uploaded_file, request.user.username)['FULL_FILE_NAME']
 				else:
 					fPath = saveFile(uploaded_file)['FULL_FILE_NAME']
 				return redirect('fields', fPath)
+			else:
+				message = "Please upload a tab delimited file"
 		else:
 			print("Form not Valid")
 	else:
@@ -37,7 +48,8 @@ def home(request):
 	if request.user.is_authenticated:
 		files = get_all_user_files(request.user.username)
 
-	return render(request, 'index.html', {'upload': form, 'reg_form': registration_form, 'fpath': "/userFiles/arctic.gexf", 'filename': "Example", 'usersFiles': files })
+	return render(request, 'logged_in.html', {'msg': message,'upload': form,  'usersFiles': files })
+
 
 def edit_fields(request, filename):
 	folder = "static/userFiles/{user_name}/{file_name}".format(user_name = request.user.username, file_name = filename)
@@ -51,7 +63,23 @@ def delete_file(request, filename):
 	mapping_exists = Mappings.objects.filter(FILE_LINK = file_path)
 	if mapping_exists:
 		mapping_exists.delete()
-	return redirect('/')
+	return redirect(upload_file, " ")
+
+def select_years(request, file_path):
+	if request.method == 'POST':
+		year_form = DefineYears(request.POST)
+		if year_form.is_valid():
+			from_date = request.POST.get('From')
+			to_date = request.POST.get('To')
+			print("From date {x}, and To date {y}".format(x=to_date,y=from_date))
+			if request.user.is_authenticated:
+				output_path = start_bibliotools(from_date, to_date, file_path, request.user.username)
+			else:
+				output_path = start_bibliotools(from_date, to_date, file_path)
+			return redirect('load_graph', output_path)
+	else:
+		year_form = DefineYears()
+	return render(request, 'select_years.html', {'years': year_form, 'fpath': file_path})
 
 def field_form(request, file_path):
 	form = load_from_file_path(file_path)
@@ -69,8 +97,11 @@ def field_form(request, file_path):
 					form_is_valid = False
 
 		if form_is_valid:
-			refreshDataBase(data, file_path)
-			return redirect('/')
+			refresh_database(data, file_path)
+			if request.user.is_authenticated:
+				return redirect('upload', ' ')
+			else:
+				return redirect(select_years, file_path)
 
 	if file_path:
 		file_name =  str(file_path)
@@ -79,12 +110,12 @@ def field_form(request, file_path):
 	else:
 		file_name = None
 
-	return render(request, 'index.html', {'fields': form['form'], 'filename': file_name, 'message': message})
+	return render(request, 'enter_fields_template.html', {'fields': form['form'], 'filename': file_name, 'message': message})
 
 def about(request):
 	return render(request, 'about.html')
 
-def load_graph(request, file_path):
+def upload_single_gexf_file(request, file_path):
 	upload_gexf_form = UploadFileForm()
 
 	if request.method == 'POST' and request.FILES['file']:
@@ -101,12 +132,11 @@ def load_graph(request, file_path):
 		file_name = "No file uploaded"
 		file_path = "/userFiles/arctic.gexf"
 
-	if file_path == "INITIAL":
-		print("checkpoint")
-		file_path = "/userFiles/arctic.gexf"
-		file_name = "No file uploaded"
+def turn_path_into_string(path_with_brackets):
+	return path_with_brackets.replace("['", "").replace("']", "")
 
-	return render(request, 'index.html', {'fpath': file_path, 'upload_gexf': upload_gexf_form,'fname': file_name})
+def load_graph(request, file_path):
+	return render(request, 'graph_template.html', {'fpath': turn_path_into_string(file_path), 'fname': "Your beautiful graph file"})
 
 def register(request):
     if request.method == 'POST':
@@ -121,9 +151,9 @@ def register(request):
                 User.objects.create_user(username, email, password)
                 user = authenticate(username = username, password = password)
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return redirect('upload',  " ")
             else:
-                raise forms.ValidationError('This user/pswd combination already exists')
+                return redirect('wrongUser', "User password combination already exists")
     else:
         form = UserRegistrationForm()
 
@@ -142,7 +172,12 @@ def login_process(request):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-	return HttpResponseRedirect('/')
+			else:
+				return redirect('wrongUser', "Incorrect credentials")
+		else:
+			 return redirect('wrongUser', "Incorrect credentials")
+
+	return redirect('upload', " ")
 
 def account(request):
 	return render(request, 'account.html')

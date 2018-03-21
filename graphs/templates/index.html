@@ -1,72 +1,45 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block Content %}
 
- 	
-    
-	<br>
+<div class="container">
 
-	<div class="row text-center">
+    <div class="welcome-section"></div>
 
+    <div id="logo-home" class="center">
+        <img src="{% static 'images/vectorised-logo-outline-white.svg' %}" alt="ScienceScape Logo">
+    </div>
 
-		<div class="col s8">
-			{%if upload%}
-				{% include "upload_form.html" %}
-			{% elif filename%}
-				{% include "file_preview.html" %}
-			{%endif%}
-			<br>
-		<!--	{% include "DEVTOOLS.html" %} -->
-		</div>
+    <h6 class="white-text center tagline">
+        Scientometrics, made easy
+        <br>Visualising graphs, smoothly and conveniently.
+        Get started <a href="https://github.com/wonjoonSeol/ScienceScape/wiki" target="_blank" style="color: #ffffff">here</a>.
+    </h6>
+		<h5 style="text-align: center; color: red">{{msg}}</h5>
+    <br>
 
-		<div class="col s4">
-
-{% include "logincard.html" %}
-		</div>
-
-
-	</div>
-
-	<br>
-
-	<div class="row">
-		<div class="col-sm-2">
-
-		</div>
-		<div class="col-sm-8">
-			<div>
-				{%if fields%}
-					{% include "fields.html" %}
-				{%endif%}
-			</div>
-		</div>
-		<div class="col-sm-2">
-
-		</div>
-
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col s1">
-
-		</div>
-		<div class="col s10">
-			<div>
-				
-				{%if fpath%}
-				{% include "graph_template.html" %} 
-				{%endif%}
-			</div>
-		</div>
-		<div class="col s1">
-
-		</div>
-
-		</div>
-	</div>
+    <div class="section">
+     {% include "logincard.html" %}
+    </div>
 
 
 
+    <br>
+    <br>
+
+
+</div>
+
+<div class="row">
+    <div class="col s1"></div>
+    <div class="col s10">
+        <div>
+          
+            {% include "graph_view_template.html" %}
+          
+        </div>
+    </div>
+    <div class="col s1"></div>
+</div>
 
 {% endblock %}

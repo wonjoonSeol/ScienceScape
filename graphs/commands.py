@@ -1,10 +1,12 @@
 from .forms import *
 from csv import DictReader
 from csv import reader
+import shutil
 import os
 import re
 from django.db import models
 from .models import Mappings
+import glob
 
 """
 Takes an uploaded file and does the following:
@@ -25,21 +27,16 @@ Produces a form from this set of headers and returns it.
 def load_from_file_path(file_path):
 	dictionary = processCSVIntoDictionary(file_path)
 	in_database = retrieveFromDataBase(file_path)
-	if in_database:
-		known = []
-		for header in in_database:
-			known.append(in_database[header])
-		formSet = produce_form_set(in_database, known)
-	else:
-		headers = detectHeadersFromAndRemove(dictionary)
-		formSet = produce_form_set(headers['headers'], headers['unknownValues'])
+	headers = detectHeadersFromAndRemove(dictionary)
+
+	formSet = produce_form_set(headers['headers'], headers['unknownValues'])
 	return formSet
 
 """ Return True if a file is .csv.
 Checks a file to make sure it is a csv file.
 """
-def checkCSV(file):
-    if file.name[-4:] == ".csv":
+def checkTXT(file):
+    if file.name[-4:] == ".txt":
         return True
     else:
         return False
@@ -52,7 +49,7 @@ def processCSVIntoDictionary(file_path, for_fields = False):
 
 	# Open file to make header keys
 	with open(file_path) as csv_file:
-		csv_reader = reader(csv_file)
+		csv_reader = reader(csv_file, delimiter='\t')
 		for headers in csv_reader:
 			for header in headers:
 				header_value_sets[header] = set()
@@ -60,13 +57,17 @@ def processCSVIntoDictionary(file_path, for_fields = False):
 
 	# Open a fresh copy to make a DictReader and populate dictionary
 	with open(file_path) as csv_file:
-		dict_reader = DictReader(csv_file)
+		dict_reader = DictReader(csv_file, delimiter='\t')
 		for row in dict_reader:
 			for key in header_value_sets:
 				if(for_fields):
 					header_value_sets[key].add((row[key], row[key]))
 				else:
 					header_value_sets[key].add(row[key])
+
+	for key in header_value_sets:
+		header_value_sets[key].strip('\ufeff')
+
 	return header_value_sets
 
 """ Return a dictionary containing the full file name and the user file name.
@@ -153,6 +154,11 @@ def retrieveFromDataBase(file_path):
 		return None
 
 	print("Dictionary from database is {x}".format(x = dictionary))
+
+	for key in dictionary:
+		dictionary[key] = dictionary[key].strip('\ufeff')
+		
+
 	return dictionary
 
 """
@@ -172,21 +178,69 @@ def resetDatabase():
 def create_user_folder(username):
 	static_user_files_directory = "static/userFiles"
 	user_files_folder = "static/userFiles/{x}".format(x = username)
-	
+
 	if not os.path.exists(os.path.join(APP_DIR, static_user_files_directory)):
 		os.mkdir(os.path.join(APP_DIR, static_user_files_directory))
 
 	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
 		os.mkdir(os.path.join(APP_DIR, user_files_folder))
-	
+
 """ Return a list of file paths.
 Gets all files for a user files folder, computed with the user's name.
 """
 def get_all_user_files(username):
 	user_files_folder = "static/userFiles/{x}".format(x = username)
-	
+
 	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
 		return []
 	else:
 		file_path = os.path.join(APP_DIR, user_files_folder)
-		return os.listdir(file_path)
+		files_in_directory = os.listdir(file_path)
+		files_valid = []
+		for file in files_in_directory:
+			if file[-4:] == ".txt":
+				files_valid.append(file)
+
+		return files_valid
+
+def start_bibliotools(year_start, year_end, file_path, username='Public'):
+	static_user_files_directory = "static/userFiles"
+	user_files_folder = "static/userFiles/{x}".format(x = username)
+	dictionary_of_fields = retrieveFromDataBase(file_path)
+	headers_as_string = ""
+	for header in dictionary_of_fields:
+		headers_as_string += "{x}-".format(x = dictionary_of_fields[header])
+
+	headers_as_string = headers_as_string[:len(headers_as_string) - 1]
+	headers_as_string = headers_as_string.rstrip()
+
+
+	if os.path.exists(os.path.join(user_files_folder, "data-wos")):
+	    shutil.rmtree(os.path.join(user_files_folder, 'data-wos'))
+
+	if os.path.exists(os.path.join(user_files_folder, "Result")):
+	    shutil.rmtree(os.path.join(user_files_folder, 'Result'))
+
+	if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
+		os.mkdir(os.path.join(user_files_folder, 'data-wos'))
+
+	user_wos_folder = os.path.join(user_files_folder, 'data-wos')
+
+	if not os.path.exists(os.path.join(user_files_folder, 'Result')):
+		os.mkdir(os.path.join(user_files_folder, 'Result'))
+
+	user_results_folder = os.path.join(user_files_folder, 'Result')
+	shutil.copy(os.path.join(user_files_folder, file_path), user_wos_folder)
+
+	print(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
+
+	os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
+
+	graph_file_path = str(collect_graph_file(os.path.join(user_results_folder, "parsed_data"))).replace("static/", "")
+	return graph_file_path
+
+def collect_graph_file(directory, span_name = "span_name_0", format = "gexf"):
+	output_directory = os.path.join(directory, span_name)
+	file_to_collect = "%s/*" + format
+	reg_ex = file_to_collect % output_directory
+	return glob.glob(reg_ex)

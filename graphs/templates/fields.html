@@ -1,28 +1,28 @@
-  <div class="field">
-   
+
+
    <div class="row">
 
     <div class="card field-selector-header">
       <div class="card-content">
 
-        <h5>Choose Fields</h5>
+        <h5>Choose Fields for <b>{{filename}}</b></h5>
 				<p>Match your CSV headers to a meaningful name.</p>
 				<p style="color: red">{{message}}</p>
       </div> <!-- /card-content -->
     </div>
-	
+
 	</div> <!-- /row  -->
-		
+
 	<form action="" method="POST">
 			<div class="row">
-	
+
 					{%csrf_token%}
 
 					{{ fields.management_form }}
 					{% for f in fields%}
-					
+
 					<!--{{ forloop.counter0 }} -->
-					
+
 					{% if forloop.counter|divisibleby:3%}
 					<div class="col s4">
 						<div class="card field-card">
@@ -34,7 +34,7 @@
 				      	</div>
 						</div>
 					</div>
-					
+
 					{% elif forloop.counter|divisibleby:2%}
 					<div class="col s4">
 						<div class="card field-card">
@@ -46,7 +46,7 @@
 				      	</div>
 						</div>
 					</div>
-					
+
 					{% else %}
 					<div class="col s4">
 						<div class="card field-card">
@@ -63,20 +63,14 @@
 					{%endfor%}
 
  				</div> <!-- /row  -->
- 					
+
  				<div class="row">
 					<div class="card field-selector-footer">
 						<div class="card-content">
-							<input type="submit" value="submit" class="btn blue darken-4 waves-effect"></input>
+							<input type="submit" value="submit" class="btn upload-btn waves-effect"></input>
 						</div>
 					</div>
 				</div> <!-- /row  -->
- 				
+
 
 	</form>
-				
-				
-		
-
- 
-
