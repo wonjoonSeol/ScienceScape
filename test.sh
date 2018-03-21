@@ -14,9 +14,9 @@ python_v="python3"
 if [ ! -z "$1" -a "$1" == "help" ]
 then
 	echo "HOW TO USE:\n
-	First parameter is your python alias: python or python3\n
-	Second parameter is what you want to test: frontend, backend or both\n
-	\n\n
+	First parameter is your python alias: python or python3
+	Second parameter is what you want to test: frontend, backend or both
+	\n
 	eg: ./test.sh python3 backend"
 
 else
