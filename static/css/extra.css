@@ -335,6 +335,27 @@ input[type=search] {
 }
 
 /*******************
+ Upload Form
+ *******************/
+
+#upload-tab-delimited {
+  margin-top: 25px;
+}
+
+.upload-submit {
+  padding: 0;
+}
+
+.upload-submit input {
+  padding: 12px 45px;
+}
+
+.uploader .file-field .btn,
+.uploader .file-field .btn-large {
+  width: 140px;
+}
+
+/*******************
  Miscellaneous
  *******************/
 
