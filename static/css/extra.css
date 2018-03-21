@@ -141,9 +141,9 @@ footer a {
   background-color: rgba(0, 64, 101, 0.67);
 }
 
-#kcl-footer {
+#kcl-footer-img {
+  float: right;
   height: 60px;
-  margin-right: 80px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
