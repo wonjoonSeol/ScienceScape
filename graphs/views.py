@@ -22,7 +22,7 @@ def home(request, message = ""):
 	if request.user.is_authenticated:
 		return redirect('upload', '')
 
-	return render(request, 'index.html', {'msg': message, 'reg_form': registration_form, 'fpath': "/javascript/sigma.js-1.2.1/examples/data/standard_graph.gexf" })
+	return render(request, 'index.html', {'msg': message, 'reg_form': registration_form, 'fpath': "/standard_graph.gexf", 'filename': "Example Graph {smiley_face}".format(smiley_face = "") })
 
 def upload_file(request, message = ""):
 	print("Username is: {x}".format(x = request.user.username))
@@ -135,8 +135,14 @@ def upload_single_gexf_file(request, file_path):
 def turn_path_into_string(path_with_brackets):
 	return path_with_brackets.replace("['", "").replace("']", "")
 
-def load_graph(request, file_path):
-	return render(request, 'graph_template.html', {'fpath': turn_path_into_string(file_path), 'fname': "Your beautiful graph file"})
+def load_graph(request, path):
+	file_path = turn_path_into_string(path)
+	if len(file_path) > 2:
+		message = "Your graph"
+	else:
+		message = "No graph has been produced {sad_face} Please check your input file".format(sad_face = u'\U0001f62d')
+		
+	return render(request, 'graph_template.html', {'fpath': turn_path_into_string(file_path), 'filename': message})
 
 def register(request):
     if request.method == 'POST':
