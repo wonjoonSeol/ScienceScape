@@ -120,7 +120,6 @@ of those attributes (eg. Date: SS), and a list of unknown attributes that could 
 Detects headers from a dictionary.
 """
 def detect_headers_from_and_remove(dictionary):
-	print("dic: " + str(dictionary))
 	headers = dict(Author = None, Date = None, Country = None)
 	undetectable_values = []
 	date_pattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
@@ -210,15 +209,15 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
 	print("FILE PATH! " + str(file_path))
 	dictionary_of_fields = retrieve_from_database(file_path)
 	headers_as_string = ""
-	
-	print("File Path: {f} -> Dictionary: {d}".format(f=file_path, d = str(dictionary_of_fields)))	
-	
-	if dictionary_of_fields: 
+
+	print("File Path: {f} -> Dictionary: {d}".format(f=file_path, d = str(dictionary_of_fields)))
+
+	if dictionary_of_fields:
 		for header in dictionary_of_fields:
 			headers_as_string += "{x}-".format(x = dictionary_of_fields[header])
-		
+
 		headers_as_string = headers_as_string[:len(headers_as_string) - 1]
-		headers_as_string = headers_as_string.rstrip()	
+		headers_as_string = headers_as_string.rstrip()
 
 
 
