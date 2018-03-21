@@ -41,34 +41,47 @@ def check_txt_file(file):
     else:
         return False
 
+"""Return a zero-whitespace free string
+Removes the UTF-8 whitespace character \ufeff from the input string.
+"""
 def remove_zero_whitespace_character(string_in):
 	return str(string_in).strip("\ufeff")
 
-""" Return a dictionary of header/value sets.
-Processes the csv file and returns a dictionary of headers mapped to a set of values.
+"""Return a dictionary of sets.
+For each header in a dictionary, this function creates a set in a dictionary.
 """
-def process_txt_into_dictionary(file_path, for_fields = False):
+def make_header_sets(file_path):
 	header_value_sets = dict()
-
 	# Open file to make header keys
-	with open(file_path) as csv_file:
-		csv_reader = reader(csv_file, delimiter='\t')
-		for headers in csv_reader:
+	with open(file_path) as txt_file:
+		txt_reader = reader(txt_file, delimiter = '\t')
+		for headers in txt_reader:
 			for header in headers:
 				header_value_sets[header] = set()
 			break
-
-	# Open a fresh copy to make a DictReader and populate dictionary
-	with open(file_path) as csv_file:
-		dict_reader = DictReader(csv_file, delimiter='\t')
-		for row in dict_reader:
-			for key in header_value_sets:
-				if(for_fields):
-					header_value_sets[key].add((row[key], row[key]))
-				else:
-					header_value_sets[key].add(row[key])
-
 	return header_value_sets
+
+"""Return a populated dictionary
+Populates a dictionary with actual data from a txt file.
+"""
+def populate_dictionary(header_value_sets, file_path, for_fields):
+	populated = header_value_sets
+	with open(file_path) as txt_file:
+		dict_reader = DictReader(txt_file, delimiter = '\t')
+		for row in dict_reader:
+			for key in populated:
+				if for_fields:
+					populated[key].add((row[key], row[key]))
+				else:
+					populated[key].add(row[key])
+	return populated
+
+""" Return a dictionary of header/value sets.
+Processes the txt file and returns a dictionary of headers mapped to a set of values.
+"""
+def process_txt_into_dictionary(file_path, for_fields = False):
+	header_value_sets = make_header_sets(file_path)
+	return populate_dictionary(header_value_sets, file_path, for_fields)
 
 """ Return a dictionary containing the full file name and the user file name.
 Saves the file to the userFiles folder in the project's root directory.
