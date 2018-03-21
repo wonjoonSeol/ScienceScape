@@ -14,8 +14,9 @@ class TestConfig(TestCase):
     """
     def test_config_gen(self):
         test_user = 'test_user'
+        default_headers = ['UT', 'AU', 'DE', 'ID', 'TI', 'WC', 'CR', 'C1', 'PY', 'J9', 'VL', 'BP', 'DI', 'PT', 'DT', 'TC']
         spanYears = [[100,500], [200,600]] #arbitrary values to retrieve from dict
         config.spanYears = spanYears
-        CONFIG = config.gen(test_user)
+        CONFIG = config.gen(test_user, default_headers)
         self.assertEqual([100,500], CONFIG['spans']['span_name_0']['years'])
         self.assertEqual([200,600], CONFIG['spans']['span_name_1']['years'])

@@ -45,7 +45,7 @@ def initHeaders():
     document_type = CONFIG['document_type']
     global wos_core_collection_times_cited
     wos_core_collection_times_cited = CONFIG['wos_core_collection_times_cited']
-    print("The title for PT: " + publication_type)
+
 """ Write parsed data to given output path.
 Parse an entire ARTICLE.
 """
