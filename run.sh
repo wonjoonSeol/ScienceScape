@@ -2,15 +2,16 @@
 
 #default
 python_v="python3"
-if [ -z "$!" ]
+if [ -z "$1" ]
 then
 	echo "HOW TO USE:
 	First parameter is your python alias: python or python3
 	Second parameter is what you want to run: website, server or heroku
 	\n
 	eg: ./run.sh python3 website"
+fi
 
-else if [ ! -z "$1" -a "$1" == "help" ] -o [ -z "$1" ]
+if [ ! -z "$1" -a "$1" == "help" ]
 then
 	echo "HOW TO USE:
 	First parameter is your python alias: python or python3
