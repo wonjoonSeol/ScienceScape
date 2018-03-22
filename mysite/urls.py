@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 from graphs import views
 from . import converters
 
+# All URL linkings for the ScienceScape site.
 urlpatterns = [
     url(r'^$', views.home, name = 'home'),
     url(r'^wrongUser/(.*)', views.home, name = 'wrongUser'),
