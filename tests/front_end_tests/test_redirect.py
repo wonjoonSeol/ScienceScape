@@ -12,7 +12,7 @@ class TestCommands(TestCase):
     def test_home_page_redirection(self):
         client = Client()
         response = client.get('/', follow = True)
-        print("Redirect for homepage: " + str(response.redirect_chain))
+        #print("Redirect for homepage: " + str(response.redirect_chain))
         self.assertEqual(str(response.redirect_chain), "[]")
     
     """
@@ -21,15 +21,14 @@ class TestCommands(TestCase):
     def test_valid_login_redirection(self):
         client = Client()
         response = client.get('/login_on_home/', {'username': '', 'password':''}, follow = True)
-        print("Redirect for upload: " + str(response.redirect_chain))
+        #print("Redirect for upload: " + str(response.redirect_chain))
         self.assertEqual(response.redirect_chain, [('/upload/%20', 302)])
-       
-    '''
-    Test that a logged in user can see there previously uploaded files
-    '''
-    def test_logged_in_user_views_uploaded_table(self):
+
+    def test_valid_graph_redirection(self):
         client = Client()
-        User.objects.create_user('temp', 'temp@temp.com','temp')
-        client.login(username='temp', password='temp')
-        response = client.get('/upload', follow = True)
-        self.assertEqual(True, str(response.content).find('Uploaded Files') > 1 )
+        response = client.get('/graph/', {'username': '', 'password':''}, follow = True)
+        print("Redirect for graphs: " + str(response.redirect_chain))
+        self.assertEqual(str(response.redirect_chain), "[]")
+                
+          
+ 	

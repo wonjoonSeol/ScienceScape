@@ -64,7 +64,15 @@
 
 <div class="card">
 	<div class="card-content">
-	<h5>{{filename}}</h5>
+	
+	<h5>
+		{%if filename%}
+		{{filename}}
+		{% else %}
+		No graph has been produced
+		{%endif%}
+		
+	</h5>
 
   	<div  id="graph-container"></div>
 

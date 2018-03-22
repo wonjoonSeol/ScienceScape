@@ -61,6 +61,21 @@ class TestCommands(TestCase):
             response = client.post('/upload/', {'file': file_path}, follow = True)
             submission_response = client.post("/addFields/{directory}".format(directory = str(os.path.join(APP_DIR ,'static','userFiles','temp','savedrecs.txt')).replace(" ",'%20')), {'form-1-Name' : ''})
             self.assertEqual(True, str(submission_response.content).find('Not all fields have been defined') > 0)   
-
-
+ 
+    '''
+    Tests that a blank gexf file produces an error message
+    '''
+    def test_blank_gexf_file(self):
+       client = Client()
+       response = client.get('/processGraph/', follow = True)
+       
+       self.assertEqual(True, str(response.content).find('No graph has been produced') > 0)   
+ 
+ 
+    def test_logged_in_user_views_uploaded_table(self):
+        client = Client()
+        User.objects.create_user('temp', 'temp@temp.com','temp')
+        client.login(username='temp', password='temp')
+        response = client.get('/upload', follow = True)
+        self.assertEqual(True, str(response.content).find('Uploaded Files') > 1 )
         
