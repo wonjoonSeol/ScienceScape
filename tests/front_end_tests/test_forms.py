@@ -44,8 +44,23 @@ class TestCommands(TestCase):
             headers_in_content = []
             
             for header in default_headers:
-            	if str(response.content).find(str(header)) > 0:
-            		headers_in_content.append(header)
-            		
-            self.assertEqual(default_headers, headers_in_content)  
+                if str(response.content).find(str(header)) > 0:
+                    headers_in_content.append(header)
+                    
+            self.assertEqual(default_headers, headers_in_content)
+   
+    '''
+    Tests that a blank field name in the field forms produces an error message to the user
+    '''
+    def test_incomplete_field_definitions_display_error_message(self):
+        client = Client()
+        User.objects.create_user('temp', 'temp@temp.com','temp')
+        client.login(username='temp', password='temp')
+       
+        with open(os.path.join(APP_DIR ,'tests','front_end_tests','savedrecs.txt')) as file_path:
+            response = client.post('/upload/', {'file': file_path}, follow = True)
+            submission_response = client.post("/addFields/{directory}".format(directory = str(os.path.join(APP_DIR ,'static','userFiles','temp','savedrecs.txt')).replace(" ",'%20')), {'form-1-Name' : ''})
+            self.assertEqual(True, str(submission_response.content).find('Not all fields have been defined') > 0)   
 
+
+        
