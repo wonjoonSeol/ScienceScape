@@ -262,8 +262,13 @@ footer a {
   font-weight: lighter;
 }
 
-.about-intro {
+.about-intro, #acknowledgements {
   color: white;
+}
+
+#acknowledgements li {
+  line-height: 2;
+  list-style-type: circle;
 }
 
 .about-intro a,
