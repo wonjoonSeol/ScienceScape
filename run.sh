@@ -33,17 +33,20 @@ else
 
 	if ! [ -z "$2" ]; then
 		if [ "$2" == "website" ]; then
-			echo "\n ---- Running website locally. ----- | using $python_v alias \n"
+			clear
+			echo "\n\n\n ---- Running website locally. ----- | using $python_v alias \n"
 			"$python_v" manage.py migrate --settings=mysite.settings.localNoBase;
 			"$python_v" manage.py runserver --settings=mysite.settings.localNoBase;
 
 		fi
 		if [ "$2" == "scripts" ]; then
-			echo "\n ---- Runnings scripts without website. ----- | using $python_v alias \n"
+			clear
+			echo "\n\n\n ---- Runnings scripts without website. ----- | using $python_v alias \n"
 			"$python_v" bibliotools3.0/scripts/graph_gen.py
 		fi
 		if [ "$2" == "heroku" ]; then
-			 echo "\n ---- Not a feature yet. ----- | using $python_v alias \n"
+			 clear
+			 echo "\n\n\n ---- Not a feature yet. ----- | using $python_v alias \n"
 
 		fi
 	fi
