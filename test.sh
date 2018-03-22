@@ -42,7 +42,7 @@ else
 	if ! [ -z "$2" ]; then
 		if [ "$2" == "frontend" ]; then
 			echo "\n ---- Front end test ----- | using $python_v alias \n"
-			"$python_v" manage.py test tests/frontend_tests --settings=mysite.settings.local
+			"$python_v" manage.py test tests/front_end_tests --settings=mysite.settings.local
 		fi
 		if [ "$2" == "backend" ]; then
 			echo "\n ---- Back end test ----- | using $python_v alias \n"
@@ -50,7 +50,7 @@ else
 		fi
 		if [ "$2" == "both" ]; then
 			 echo "\n ---- Front end test ----- | using $python_v alias \n"
-			 "$python_v" manage.py test tests/frontend_tests --settings=mysite.settings.local
+			 "$python_v" manage.py test tests/front_end_tests --settings=mysite.settings.local
 			 echo "\n ---- Back end test ----- | using $python_v alias \n"
 			 "$python_v" manage.py test tests/bibliotools_tests --settings=mysite.settings.local
 	    fi
