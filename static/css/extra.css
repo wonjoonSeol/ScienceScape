@@ -179,8 +179,12 @@ footer a {
   font-style: italic;
 }
 
-.graph-container {
+#graph-container {
   height: 500px;
+  border: 1px solid #cbdce6f7;
+  box-shadow: inset -2px -2px 15px -5px #3b7a9e4f, inset 1px 1px 15px -5px #3b7a9e4f;
+  border-radius: 2px;
+  background: #f9f9f9f7;
 }
 
 .graphs-page .btn {
@@ -195,7 +199,7 @@ footer a {
 .toggle-graph-edges {
   text-transform: uppercase;
   color: #0D47A1;
-  margin-top: 5px;
+  margin-top: -3px;
 }
 
 .toggle-graph-edges label {

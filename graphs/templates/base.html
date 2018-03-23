@@ -4,7 +4,7 @@
 
 <html>
   <head>
-
+    
     <!-- Import Google Icon Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <!-- Import particlesJS style -->
@@ -25,18 +25,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <title>ScienceScapeS - Scientometrics, made easy</title>
-
-    <style>
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        .userAuthorised {
-            animation: fadeIn;
-            animation-duration: 4s;
-        }
-    </style>
 
   </head>
 
@@ -121,8 +109,6 @@
             <p>Our powerful data processing scripts are based on Sebastian Grauwin's work, <a href="http://www.sebastian-grauwin.com">Bibliotools 3.0</a></p>
             <p>For detailed information about this project, visit our <a href="http://github.com/wonjoonSeol/ScienceScape">GitHub Repository</a> and the <a href="{% url 'about' %}">about</a> page.</p>
             </div>
-
-
         </div>
 
       </div>
@@ -147,13 +133,10 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-    <!-- Local source for noUiSlider.js -->
-    <script type="text/javascript" src="{% static 'javascript/nouislider.js' %}"></script>
-
     <!-- CDN source for particles-js -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
-  <!-- Particles JS Initialisation -->
+    <!-- Particles JS Initialisation -->
     <script type="text/javascript">
       particlesJS.load('particles-js',         // Param 1 - div ID
                        '{% static 'json/particles.json' %}',  // Param 2 - JSON settings
@@ -170,8 +153,6 @@
       });
     </script>
 
-
-
     <!-- Additional Dropown Navigation Initialisation Settings -->
     <script>
     $('.nav-dropdown').dropdown({
@@ -187,38 +168,5 @@
 
     </script>
 
-    <!-- Getting Sub Nav Tab Links to Work Outside Of Tab Menu -->
-    <script>
-      $(document).ready(function () {
-        $('ul.tabs').tabs();
-        $('#nav-menu-built-with').click(function () {
-          $('ul.tabs').tabs('select_tab', 'built-with');
-        });
-      });
-
-      $(document).ready(function () {
-        $('ul.tabs').tabs();
-        $('#nav-menu-built-by').click(function () {
-          $('ul.tabs').tabs('select_tab', 'built-by');
-        });
-      });
-
-      $(document).ready(function () {
-        $('ul.tabs').tabs();
-        $('#nav-menu-acknowledgements').click(function () {
-          $('ul.tabs').tabs('select_tab', 'acknowledgements');
-        });
-      });
-
-      $(document).ready(function () {
-        $('ul.tabs').tabs();
-        $('#nav-menu-related-tools').click(function () {
-          $('ul.tabs').tabs('select_tab', 'related-tools');
-        });
-      });
-    </script>
-
-
   </body>
-
 </html>
