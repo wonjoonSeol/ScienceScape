@@ -27,9 +27,11 @@ Produces a form from this set of headers and returns it.
 def load_from_file_path(file_path):
 	dictionary = process_txt_into_dictionary(file_path)
 	in_database = retrieve_from_database(file_path)
-	headers = detect_headers_from_and_remove(dictionary)
+	headers = []
+	for entry in dictionary:
+		headers.append(entry)
 
-	form_set = produce_form_set(headers['headers'], headers['unknownValues'])
+	form_set = produce_form_set(headers)
 	return form_set
 
 """ Return True if a file is .txt.
@@ -64,24 +66,21 @@ def make_header_sets(file_path):
 """Return a populated dictionary
 Populates a dictionary with actual data from a txt file.
 """
-def populate_dictionary(header_value_sets, file_path, for_fields = False):
+def populate_dictionary(header_value_sets, file_path):
 	populated = header_value_sets
 	with open(file_path) as txt_file:
 		dict_reader = DictReader(txt_file, delimiter = '\t')
 		for row in dict_reader:
 			for key in populated:
-				if for_fields:
-					populated[key].add((row[key], row[key]))
-				else:
-					populated[key].add(row[key])
+				populated[key].add(row[key])
 	return populated
 
 """ Return a dictionary of header/value sets.
 Processes the txt file and returns a dictionary of headers mapped to a set of values.
 """
-def process_txt_into_dictionary(file_path, for_fields = False):
+def process_txt_into_dictionary(file_path):
 	header_value_sets = make_header_sets(file_path)
-	return populate_dictionary(header_value_sets, file_path, for_fields)
+	return populate_dictionary(header_value_sets, file_path)
 
 def make_user_folders(username):
 	static_user_files_directory = "static/userFiles"
@@ -89,12 +88,15 @@ def make_user_folders(username):
 	user_files_folder = "static/userFiles/{x}".format(x = username)
 
 	if not os.path.exists(os.path.join(APP_DIR, static_user_files_directory)):
+		print("1")
 		os.mkdir(os.path.join(APP_DIR, static_user_files_directory))
 
 	if not os.path.exists(os.path.join(APP_DIR, public_user_files_directory)):
+		print("2")
 		os.mkdir(os.path.join(APP_DIR, public_user_files_directory))
 
 	if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
+		print("3")
 		os.mkdir(os.path.join(APP_DIR, user_files_folder))
 
 	return user_files_folder
@@ -114,32 +116,6 @@ def save_file(file, username = "Public"):
 
 	print("File saved at {s}".format(s = full_file_name))
 	return {'FULL_FILE_NAME': full_file_name, 'USER_FILE_NAME': file_name }
-
-""" Return a dictionary of attributes mapped to Bibliotools representation.
-of those attributes (eg. Date: SS), and a list of unknown attributes that could not be detected.
-Detects headers from a dictionary.
-"""
-def detect_headers_from_and_remove(dictionary):
-	headers = dict(Author = None, Date = None, Country = None)
-	undetectable_values = []
-	date_pattern = re.compile('(((\d(\d)?))/){2}((\d\d)(\d\d)?)', re.IGNORECASE)
-
-	# All values are undetectable until they can be detected
-	for entry in dictionary:
-		undetectable_values.append(entry)
-
-	for entry in dictionary:
-		if date_pattern.match(dictionary[entry].pop()):
-			headers['Date'] = entry
-			undetectable_values.remove(entry)
-			print(headers['Date'])
-			print("Matched date header")
-		elif dictionary[entry] in countries:
-			headers['Country'] = entry
-			undetectable_values.remove(entry)
-			print("Matched country header")
-
-	return {'headers': headers, 'unknownValues': undetectable_values}
 
 """
 Refreshes the database, adding mappings of the file names to their true values (e.g. mapping SS to Author in file 'fileName')

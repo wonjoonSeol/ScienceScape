@@ -38,7 +38,7 @@ class FormModelTest(TestCase):
         finalForm = form(initial = initial)
         result = {'form' : finalForm, 'count' : 16}
 
-        self.assertEqual(result['count'], produce_form_set(dict(), headers)['count'])
+        self.assertEqual(result['count'], produce_form_set(headers)['count'])
 
     def test_create_mini_form_no_choice(self):
         choicesInField = [("DEFAULT", "Select a value")]
