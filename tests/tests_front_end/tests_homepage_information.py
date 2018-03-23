@@ -1,4 +1,4 @@
-from selenium import webdriver
+"""from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from django.test import TestCase
 
@@ -17,4 +17,4 @@ class TestHomepageInformation(TestCase):
         browser_driver2.get("http://127.0.0.1:8000/")
         page_source = browser_driver2.page_source
         self.assertIn("Log In", page_source)
-        browser_driver2.quit()
+        browser_driver2.quit()"""

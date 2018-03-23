@@ -1,4 +1,4 @@
-from selenium import webdriver
+"""from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from django.test import TestCase
 from django.contrib.auth.models import User
@@ -63,4 +63,4 @@ class TestUI(TestCase):
         submit_button = browser_driver.find_element_by_xpath('/html/body/div[4]/div[3]/ul/li[2]/div[2]/div/form/button')
         submit_button.click()
         self.assertIn("are logged in as", browser_driver.page_source)
-        browser_driver.quit()
+        browser_driver.quit()"""
