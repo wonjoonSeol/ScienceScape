@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class TestCommands(TestCase):
 
     """
-    Test that the domain name with no extension redirects to the home page
+    Tests that the domain name with no extension redirects to the home page
     """
     def test_home_page_redirection(self):
         client = Client()
@@ -16,7 +16,7 @@ class TestCommands(TestCase):
         self.assertEqual(str(response.redirect_chain), "[]")
 
     """
-    Test that a wrong user redirects to the wrong user domain
+    Tests that a wrong user redirects to the wrong user domain
     """
     def test_valid_login_redirection(self):
         client = Client()
