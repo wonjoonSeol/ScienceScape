@@ -245,6 +245,7 @@ footer a {
      -webkit-flex-grow: 1 !important;
      -ms-flex-positive: 1 !important;
      flex-grow: 1 !important;
+     width: 33%;
  }
 
  .tabs .tab a {
