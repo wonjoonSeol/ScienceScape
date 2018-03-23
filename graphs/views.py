@@ -227,4 +227,4 @@ def login_process(request):
 Renders the account page.
 """
 def account(request):
-	return render(request, 'account.html')
+	return redirect('upload', " ")

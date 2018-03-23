@@ -72,6 +72,7 @@ class TestCommands(TestCase):
     
     """
     This test checks that calling make_user_folders for a particular input username 
+
     executes correctly and creates the specified directory, tearing it down afterwards.
     """
     def test_make_user_folders(self):
