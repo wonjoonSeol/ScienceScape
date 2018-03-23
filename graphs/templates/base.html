@@ -79,44 +79,33 @@
             </div>
           </div>
         </li>
-        <li class="top-level"><a href="#!" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
-        <li>
 
-          <!-- Collapsible Side Nav Component -->
-          <ul class="collapsible collapsible-accordion">
-            <li>
-              <!-- Top Level Accordian Header -->
-              <a href="#!" class="collapsible-header waves-effect waves-light">Account<i class="material-icons">person</i><i class="material-icons right">keyboard_arrow_down</i></a>
-              <div class="collapsible-body">
-                <ul>
-                  <li><a href="#!" class="waves-effect waves-light">Login<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Register<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Proceed As Guest<i class="material-icons"></i></a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+        {% if user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
+        {% endif %}
 
-        <li class="top-level"><a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a></li>
+        {% if not user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home & Login<i class="material-icons">home</i></a></li>
+        {% endif %}
 
-          <!-- Collapsible Side Nav Component -->
-          <ul class="collapsible collapsible-accordion">
-            <li>
-              <!-- Top Level Accordian Header -->
-              <a href="#!" class="collapsible-header waves-effect waves-light">About<i class="material-icons">info</i><i class="material-icons right">keyboard_arrow_down</i></a>
-              <div class="collapsible-body">
-                <ul>
-                  <li><a href="#!" class="waves-effect waves-light">Built With<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Built By<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Acknowledgements<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Related Tools<i class="material-icons"></i></a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+        {% if user.is_authenticated %}
+        <li class="top-level"><a href="/logout" class="waves-effect waves-light">Logout<i class="material-icons">power_settings_new</i></a></li>
+        {% endif %}
 
-        <li class="top-level"><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light">Help<i class="material-icons">help</i></a></li>
+        {% if not user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'upload' guest %}" class="waves-effect waves-light">Upload As Guest<i class="material-icons">file_upload</i></a></li>
+        {% endif %}
 
+        <li class="top-level">
+          <a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a>
+        </li>
+
+        <li class="top-level">
+          <a href="{% url 'about' guest %}" class="waves-effect waves-light">About<i class="material-icons">info</i></a>
+        </li>
+
+        <li class="top-level">
+          <a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light">Help / Wiki<i class="material-icons">help</i></a>
         </li>
 
       </ul>
