@@ -141,9 +141,9 @@ footer a {
   background-color: rgba(0, 64, 101, 0.67);
 }
 
-#kcl-footer {
+#kcl-footer-img {
+  float: right;
   height: 60px;
-  margin-right: 80px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -245,6 +245,7 @@ footer a {
      -webkit-flex-grow: 1 !important;
      -ms-flex-positive: 1 !important;
      flex-grow: 1 !important;
+     width: 33%;
  }
 
  .tabs .tab a {
@@ -262,8 +263,13 @@ footer a {
   font-weight: lighter;
 }
 
-.about-intro {
+.about-intro, #acknowledgements {
   color: white;
+}
+
+#acknowledgements li {
+  line-height: 2;
+  list-style-type: circle;
 }
 
 .about-intro a,
@@ -292,6 +298,10 @@ footer a {
   font-size: 13pt;
 }
 
+.greyed {
+    color: #DADADA;
+}
+
 /*******************
  User Account Page
  *******************/
@@ -303,6 +313,14 @@ footer a {
  .account-card {
    color: black;
  }
+
+/*******************
+Field Selector Template
+*******************/
+
+#uploaded-file-fields {
+  color: #ec7c00;
+}
 
 /*******************
 Graph Controls
@@ -317,11 +335,6 @@ Graph Controls
   background-color: #0D47A1;
 }
 
-.field-selector-header,
-.field-selector-footer {
-      background: #ccccccb3;
-}
-
 /* Search Box */
 input[type=search]:focus {
   border-bottom: 1px solid #0D47A1 !important;
@@ -332,6 +345,39 @@ input[type=search]:focus {
 input[type=search] {
   width: 82% !important;
   padding-left: 50px !important;
+}
+
+/*******************
+ Logged In Template
+ *******************/
+
+.logged-in {
+  font-size: 1.1em;
+}
+
+
+.logged-in .card-content {
+  line-height: 37px;
+}
+/*******************
+ Upload Form
+ *******************/
+
+#upload-tab-delimited {
+  margin-top: 25px;
+}
+
+.upload-submit {
+  padding: 0;
+}
+
+.upload-submit input {
+  padding: 12px 45px;
+}
+
+.uploader .file-field .btn,
+.uploader .file-field .btn-large {
+  width: 140px;
 }
 
 /*******************

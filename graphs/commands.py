@@ -219,8 +219,6 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
 		headers_as_string = headers_as_string[:len(headers_as_string) - 1]
 		headers_as_string = headers_as_string.rstrip()
 
-
-
 	if os.path.exists(os.path.join(user_files_folder, "data-wos")):
 	    shutil.rmtree(os.path.join(user_files_folder, 'data-wos'))
 
@@ -240,7 +238,10 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
 
 	print(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
 
-	os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
+	if headers_as_string == "":
+		os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
+	else:
+		os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
 
 	graph_file_path = str(collect_graph_file(os.path.join(user_results_folder, "parsed_data"))).replace("static/", "")
 	return graph_file_path

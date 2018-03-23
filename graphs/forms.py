@@ -4,6 +4,9 @@ from django.forms import formset_factory
 class UploadFileForm(forms.Form):
     file = forms.FileField(label = '')
 
+"""
+This class defines the structure for the basic Django user reg form.
+"""
 class UserRegistrationForm(forms.Form):
     username = forms.CharField(
         required = True,

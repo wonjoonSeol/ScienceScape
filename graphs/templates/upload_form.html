@@ -1,11 +1,11 @@
 <!-- Standard file uploader -->
 <div class="row">
 	<div class="col s12">
-		<div class="card">
+		<div class="card uploader">
 			<div class="card-content">
-				<h6>Upload a tab-delimited file</h6>
+				<h5>Upload a tab-delimited file</h5>
 
-				<div class="row">
+				<div class="row" id="upload-tab-delimited">
 						<form method="POST" action ="{% url 'upload' up %}" enctype="multipart/form-data">
 												{% csrf_token %}
 								<div class="file-field input-field">
@@ -17,7 +17,7 @@
    								 <div class="file-path-wrapper">
        									 <input class="file-path validate" type="text">
      								 </div>
-     								 <input class="btn upload-btn waves-effect" type="submit" value="submit">
+     								 <input class="btn upload-btn waves-effect upload-submit" type="submit" value="submit">
    							 </div>
 						</form>
 

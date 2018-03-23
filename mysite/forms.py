@@ -1,5 +1,8 @@
 from django import forms
 
+"""
+Defines the standard format for a user registration form submitted by POST.
+"""
 class UserRegistrationForm(forms.Form):
     username = forms.CharField(
         required = True,

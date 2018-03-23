@@ -1,0 +1,12 @@
+<div class="section logged-in-log-out">
+   {% if user.is_authenticated %}
+
+  <div class="card logged-in center">
+    <div class="card-content">
+        You are logged in as: <b>{{ user.username }}</b>
+        <a href="/logout" class="btn waves-effect waves-lighten upload-btn right">Logout</a>
+    </div> <!-- /card-content -->
+
+  </div>
+   {%endif%}
+</div>
