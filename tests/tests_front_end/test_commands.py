@@ -17,14 +17,14 @@ class TestCommands(TestCase):
         file_to_check.close()
         self.assertEqual(True, check_txt_file(file_to_check))
         os.remove(os.path.join(dir, "a_test_file.txt"))
-    
+
     def test_check_none_txt(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         file_to_check = open(os.path.join(dir, "a_test_file.csv"), "w")
         file_to_check.close()
         self.assertEqual(False, check_txt_file(file_to_check))
         os.remove(os.path.join(dir, "a_test_file.csv"))
-    
+
 
     """
     This test checks that calling remove_zero_whitespace_character correctly removes
@@ -77,9 +77,9 @@ class TestCommands(TestCase):
         returned_dictionary = populate_dictionary(sets, os.path.join(dir, "a_test_file.txt"))
         os.remove(os.path.join(dir, "a_test_file.txt"))
         self.assertEqual(True, 'Value1' in returned_dictionary['Header1'] and 'Value3' in returned_dictionary['Header3'])
-    
+
     """
-    This test checks that calling make_user_folders for a particular input username 
+    This test checks that calling make_user_folders for a particular input username
 
     executes correctly and creates the specified directory, tearing it down afterwards.
     """
@@ -115,7 +115,7 @@ class TestCommands(TestCase):
         self.assertEqual(returned_files, [])
         if os.path.exists(os.path.join(dir, "static/userFiles/test_user_3")):
             os.rmdir(os.path.join(dir, "static/userFiles/test_user_3"))
-	
+
     """
     This test checks that the returned files for a get_all_user_files call for a folder
     with one file returns just one, specific file.
