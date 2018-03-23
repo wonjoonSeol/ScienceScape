@@ -1,7 +1,4 @@
-
 {% load static %}
-
-
 <style>
     #graph-container {
       top: 0;
@@ -11,18 +8,11 @@
       height: 500px;
     }
  </style>
-
-
-  	
-		 <div class="row">
-                   
+		<div class="row">
         <div class="col s4"> 
         <div class="card graphs-buttons-card">
             <div class="card-content">
-
                 <h5> Graph Controls</h5>
-
-                    
                             <a class="waves-effect waves-light btn graph-select" onclick="startStopForceAtlas2(this)" id="start-force-atlas-2"><i class="material-icons left">play_arrow</i>Start Force Atlas 2</a>
                             <br>
                             <a class="waves-effect waves-light btn graph-select" onclick="resetGraph()" id="reset"><i class="material-icons left">power_settings_new</i>Reset</a><br>
@@ -37,18 +27,7 @@
                                   On
                                 </label>
                             </div>
-                        
-                         
-                 
-                       <!--     <form id="graph-node-search">
-                                <div class="input-field">
-                                  <input id="search" type="search" placeholder="Node Search" required>
-                                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                  <i class="material-icons">close</i>
-                                </div>
-                            </form>
-                            -->
-                        </div>
+                       </div>
                     </div>
             </div>
             
@@ -62,15 +41,9 @@
 							
 								</div>
 							</div>	
-							
-							
 				 </div>
         </div>
       
-    
-
-
-
 <!-- START SIGMA IMPORTS -->
 <script src="{% static 'javascript/sigma.js-1.2.1/src/sigma.core.js'%}"></script>
 <script src="{% static 'javascript/sigma.js-1.2.1/src/conrad.js'%}"></script>
@@ -123,98 +96,17 @@
 <script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.parsers.gexf/sigma.parsers.gexf.js'%}"></script>
 <script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.layout.forceAtlas2/worker.js'%}"></script>
 <script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.layout.forceAtlas2/supervisor.js'%}"></script>
-
+<script src="{% static 'javascript/buttonControl.js'%}"></script>
 <script>
-
-
-var graphs = [];
-console.log("graph presented is: " + "{% static fpath%}");
-
-
 resetGraph();
-
-function startStopForceAtlas2(element){
-	console.log("no. graphs: " + graphs.length)
-	if(graphs.length > 0){
-		if (!graphs[0].isForceAtlas2Running()){
-		//start spacialization
-			for (i=0 ; i<graphs.length; i++) {
-				graphs[i].startForceAtlas2({worker: true, barnesHutOptimize: false});
-			}
-
-			element.innerHTML="<i class=\"material-icons left\">stop</i>Stop Force Atlas 2";
-			element.classList.add("btn-danger");
-			element.classList.remove("btn-success");
-
-		} else {
-		//stop spacialsation
-		for (i = 0 ; i<graphs.length; i++) {
-			graphs[i].stopForceAtlas2();
-		}
-			element.innerHTML="<i class=\"material-icons left\">play_arrow</i>Start Force Atlas 2";
-			element.classList.add("btn-success");
-			element.classList.remove("btn-danger");
-		}
-	}
-
-}
-
-function rearrageIntoCircle(element) {
-	console.log("Rearrange circle pressed");
-	if(graphs.length > 0){
-
-		for (i=0 ; i<graphs.length ; i++) {
-			var counter = 0;
-			var numberOfNodes = graphs[i].graph.nodes().length;
-			graphs[i].graph.nodes().forEach(function(n) {
-
-			  n.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
-	    	  n.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
-
-	    	  n.size = Math.random();
-				counter++;
-	      });
-	      graphs[i].killForceAtlas2();
-	           graphs[i].refresh();
-		}
-
-	}
-}
-
-function turnOnOffEdges(checkBox) {
-	console.log("ToggleEdges pressed: " + checkBox.checked);
-
-	if(graphs.length > 0){
-
-		if (!checkBox.checked) {
-			for (i=0 ; i<graphs.length ; i++) {
-				graphs[i].settings('drawEdges', false);
-				graphs[i].refresh();
-			}
-
-
-		} else {
-			for (i=0 ; i<graphs.length ; i++) {
-				graphs[i].settings('drawEdges', true);
-				graphs[i].refresh();
-			}
-
-		}
-	}
-}
 
 function resetGraph(){
 	document.getElementById("graph-container").innerHTML = "";
-
 	graphs = []
-
 	sigma.parsers.gexf("{% static fpath%}", {container: 'graph-container'},
-
 		function (sigmaObject) {
-
 			var numberOfNodes = sigmaObject.graph.nodes().length;
 			var counter = 0;
-
 			sigmaObject.graph.nodes().forEach(function(n) {
 
 			 if(!n.x && !n.y){
@@ -227,24 +119,14 @@ function resetGraph(){
 	    	  }
 
 	    	  if(!n.size){
-	    	  	n.size = Math.random();
+	    	  	n.size = 1;
 	    	  }
-
 	        counter ++ ;
 	      });
-
-
-
-	      graphs.push(sigmaObject);
+	        graphs.push(sigmaObject);
 			turnOnOffEdges(document.getElementById("graph-edges"));
 			sigmaObject.refresh();
-
 		}
 	);
-
-
-
-
 }
-
 </script>

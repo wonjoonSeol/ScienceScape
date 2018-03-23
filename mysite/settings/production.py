@@ -14,6 +14,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 from .base import *
 import django_heroku
 import dj_database_url
+import psycopg2
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
