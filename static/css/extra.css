@@ -143,14 +143,23 @@ footer a {
 
 #kcl-footer {
   height: 80px;
-  margin-right: 80px;
+  size:80px;
+
   margin-top: 10px;
+  margin-bottom:20px;
 }
 
 .page-footer h5 {
   font-weight: 200;
   font-size: 1.3em;
 }
+
+.page-footer h4 {
+  font-weight: 200;
+  font-size: 2.0em;
+  margin-bottom: 20px;
+}
+
 
 .footer-description {
   text-align: center;
@@ -169,6 +178,7 @@ footer a {
 
 /* Graphs module */
 
+
 .graphs-page .card {
   color: black;
 }
@@ -178,8 +188,12 @@ footer a {
   font-style: italic;
 }
 
-.graph-container {
+#graph-container {
   height: 500px;
+  border: 1px solid #cbdce6f7;
+  box-shadow: inset -2px -2px 15px -5px #3b7a9e4f, inset 1px 1px 15px -5px #3b7a9e4f;
+  border-radius: 2px;
+  background: #f9f9f9f7;
 }
 
 .graphs-page .btn {
@@ -194,7 +208,7 @@ footer a {
 .toggle-graph-edges {
   text-transform: uppercase;
   color: #0D47A1;
-  margin-top: 5px;
+  margin-top: -3px;
 }
 
 .toggle-graph-edges label {
@@ -217,7 +231,19 @@ footer a {
   color: #0D47A1;
   background-color: white !important;
   border: 1px solid #0D47A1;
+  width: 100%
+  /* padding: 0 1rem; */
 }
+
+.graph-control-button {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.graphs-buttons-card .card-content {
+  padding-bottom: 1px;
+}
+
 
 /* Sigma.js */
 
@@ -244,7 +270,6 @@ footer a {
      -webkit-flex-grow: 1 !important;
      -ms-flex-positive: 1 !important;
      flex-grow: 1 !important;
-     width: 33%;
  }
 
  .tabs .tab a {
@@ -262,13 +287,8 @@ footer a {
   font-weight: lighter;
 }
 
-.about-intro, #acknowledgements {
+.about-intro {
   color: white;
-}
-
-#acknowledgements li {
-  line-height: 2;
-  list-style-type: circle;
 }
 
 .about-intro a,
@@ -297,10 +317,6 @@ footer a {
   font-size: 13pt;
 }
 
-.greyed {
-    color: #DADADA;
-}
-
 /*******************
  User Account Page
  *******************/
@@ -312,14 +328,6 @@ footer a {
  .account-card {
    color: black;
  }
-
-/*******************
-Field Selector Template
-*******************/
-
-#uploaded-file-fields {
-  color: #ec7c00;
-}
 
 /*******************
 Graph Controls
@@ -334,6 +342,11 @@ Graph Controls
   background-color: #0D47A1;
 }
 
+.field-selector-header,
+.field-selector-footer {
+      background: #ccccccb3;
+}
+
 /* Search Box */
 input[type=search]:focus {
   border-bottom: 1px solid #0D47A1 !important;
@@ -344,39 +357,6 @@ input[type=search]:focus {
 input[type=search] {
   width: 82% !important;
   padding-left: 50px !important;
-}
-
-/*******************
- Logged In Template
- *******************/
-
-.logged-in {
-  font-size: 1.1em;
-}
-
-
-.logged-in .card-content {
-  line-height: 37px;
-}
-/*******************
- Upload Form
- *******************/
-
-#upload-tab-delimited {
-  margin-top: 25px;
-}
-
-.upload-submit {
-  padding: 0;
-}
-
-.upload-submit input {
-  padding: 12px 45px;
-}
-
-.uploader .file-field .btn,
-.uploader .file-field .btn-large {
-  width: 140px;
 }
 
 /*******************
@@ -434,4 +414,19 @@ input[type=search] {
 
 .upload-btn {
       background-color: #007baa
+}
+
+/* Error Messages */
+
+.error-card {
+  padding: 5px 5px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.error-message {
+  color: white;
+  font-size: 1.2em;
+  margin: 5px;
 }

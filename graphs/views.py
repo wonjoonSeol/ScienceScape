@@ -64,7 +64,7 @@ def edit_fields(request, filename):
 	file_path = os.path.join(APP_DIR, folder)
 	return redirect('fields', file_path)
 
-""" 
+"""
 Deletes a file from a specific user folder, and redirects the user to the upload page.
 """
 def delete_file(request, filename):
@@ -170,7 +170,7 @@ def load_graph(request, path):
 		message = "Your graph"
 	else:
 		message = "No graph has been produced {sad_face} Please check your input file".format(sad_face = u'\U0001f62d')
-		
+
 	return render(request, 'graph_template.html', {'fpath': turn_path_into_string(file_path), 'filename': message})
 
 """
@@ -217,9 +217,9 @@ def login_process(request):
 			if user.is_active:
 				login(request, user)
 			else:
-				return redirect('wrongUser', "Incorrect credentials")
+				return redirect('wrongUser', "Incorrect Credentials")
 		else:
-			 return redirect('wrongUser', "Incorrect credentials")
+			 return redirect('wrongUser', "Incorrect Credentials")
 
 	return redirect('upload', " ")
 
@@ -227,4 +227,4 @@ def login_process(request):
 Renders the account page.
 """
 def account(request):
-	return render(request, 'account.html')
+	return redirect('upload', " ")

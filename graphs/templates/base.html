@@ -13,8 +13,6 @@
     <link rel="stylesheet" href="{% static 'css/nouislider.css' %}">
     <!-- Import Materialize.css -->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection"/>
-    <!-- Materialize.css Local Dev Backup for when CDN is down -->
-    <!-- <link type="text/css" rel="stylesheet" href="{% static 'fonts/materialize-css-icon-font.woff2' %}" media="screen,projection"/> -->
     <!-- Import Dropzone JS style-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/dropzone.css">
     <!-- Import custom styling CSS -->
@@ -24,19 +22,17 @@
     <!-- Let browser know website is optimised for mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg" color="#229dbf' %}">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+
     <title>ScienceScapeS - Scientometrics, made easy</title>
-
-    <style>
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        .userAuthorised {
-            animation: fadeIn;
-            animation-duration: 4s;
-        }
-    </style>
 
   </head>
 
@@ -64,10 +60,12 @@
               <li><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light"><i class="material-icons">help</i></a></li>
             </ul>
         </div>
+
         <div>
             {% block aboutTabbedNavigation %}
             {% endblock aboutTabbedNavigation %}
         </div>
+
       </nav>
     </div>
 
@@ -98,11 +96,17 @@
         <li class="top-level"><a href="{% url 'upload' guest %}" class="waves-effect waves-light">Upload As Guest<i class="material-icons">file_upload</i></a></li>
         {% endif %}
 
-        <li class="top-level"><a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a></li>
+        <li class="top-level">
+          <a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a>
+        </li>
 
-        <li class="top-level"><a href="{% url 'about' %}" class="waves-effect waves-light">About<i class="material-icons">info</i></a></li>
+        <li class="top-level">
+          <a href="{% url 'about' guest %}" class="waves-effect waves-light">About<i class="material-icons">info</i></a>
+        </li>
 
-        <li class="top-level"><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light">Help / Wiki<i class="material-icons">help</i></a></li>
+        <li class="top-level">
+          <a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light">Help / Wiki<i class="material-icons">help</i></a>
+        </li>
 
       </ul>
     </div>
@@ -112,32 +116,54 @@
 
     <!-- FOOTER -->
     <footer class="page-footer">
-      <div class="container">
+      <div class="row">
 
-        <div class="row">
-          <div class="col s12 underline footer-description">
-            <h5 class="center">Scientometrics, Reinvented</h5>
-            <p>ScienceScape<sup>S</sup> builds upon scientometrics applications such as ScienceScape, developed by M.Jacomy at the <a href="http://medialab.sciences-po.fr/">Sciences Po Médialab</a>, Paris.</p>
-            <p>Our powerful data processing scripts are based on Sebastian Grauwin's work, <a href="http://www.sebastian-grauwin.com">Bibliotools 3.0</a></p>
-            <p>For detailed information about this project, visit our <a href="http://github.com/wonjoonSeol/ScienceScape">GitHub Repository</a> and the <a href="{% url 'about' %}">about</a> page.</p>
-            </div>
+        <h4 class="center">Scientometrics, Reinvented</h4>
 
 
         </div>
+        <div class="row">
+          <div class="col s12 underline footer-description">
+            <div class="col s12 m4">
+              <div class="center promo">
+                <i class="material-icons medium">done_all</i>
+                <p class="promo-caption">ScienceScape<sup>S</sup> builds upon scientometrics applications such as ScienceScape, developed by M.Jacomy at the <a href="http://medialab.sciences-po.fr/">Sciences Po Médialab</a>, Paris.</p>
+              </div>
+            </div>
+
+            <div class="col s12 m4">
+              <div class="center promo">
+                <i class="material-icons medium">flash_on</i>
+                <p class="promo-caption">Our powerful data processing scripts are based on Sebastian Grauwin's work, <a href="http://www.sebastian-grauwin.com">Bibliotools 3.0</a></p>
+              </div>
+            </div>
+
+            <div class="col s12 m4">
+              <div class="center promo">
+                <i class="material-icons medium">code</i>
+                <p class="promo-caption">For detailed information about this project, visit our <a href="http://github.com/wonjoonSeol/ScienceScape">GitHub Repository</a> and the <a href="{% url 'about' %}">about</a> page.</p>
+              </div>
+            </div>
+        </div>
+
 
       </div>
 
       <div class="footer-copyright">
-        <div class="container">
-          
-          <span id="copyright left-align">&copy; 2018 The Codokans, King's College London</span>
-          <a href="https://www.kcl.ac.uk" class="">
-          <img id="kcl-footer" src="{% static 'images/kcl.png' %}"/>
+        <div class="container center">
 
-        </a>
+
+              <a href="https://www.kcl.ac.uk" class="">
+                <img id="kcl-footer" src="{% static 'images/kcl.png' %}"/>
+              </a>
+              <br>
+              <span id="copyright left-align">&copy; 2018 The Codokans, King's College London</span>
+
+
         </div>
       </div>
     </footer>
+
 
     <!-- ***************
       JAVASCRIPT
@@ -147,13 +173,10 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
-    <!-- Local source for noUiSlider.js -->
-    <script type="text/javascript" src="{% static 'javascript/nouislider.js' %}"></script>
-
     <!-- CDN source for particles-js -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
-  <!-- Particles JS Initialisation -->
+    <!-- Particles JS Initialisation -->
     <script type="text/javascript">
       particlesJS.load('particles-js',         // Param 1 - div ID
                        '{% static 'json/particles.json' %}',  // Param 2 - JSON settings
@@ -170,8 +193,6 @@
       });
     </script>
 
-
-
     <!-- Additional Dropown Navigation Initialisation Settings -->
     <script>
     $('.nav-dropdown').dropdown({
@@ -187,38 +208,5 @@
 
     </script>
 
-    <!-- Getting Sub Nav Tab Links to Work Outside Of Tab Menu -->
-    <script>
-      $(document).ready(function () {
-        $('ul.tabs').tabs();
-        $('#nav-menu-built-with').click(function () {
-          $('ul.tabs').tabs('select_tab', 'built-with');
-        });
-      });
-
-      $(document).ready(function () {
-        $('ul.tabs').tabs();
-        $('#nav-menu-built-by').click(function () {
-          $('ul.tabs').tabs('select_tab', 'built-by');
-        });
-      });
-
-      $(document).ready(function () {
-        $('ul.tabs').tabs();
-        $('#nav-menu-acknowledgements').click(function () {
-          $('ul.tabs').tabs('select_tab', 'acknowledgements');
-        });
-      });
-
-      $(document).ready(function () {
-        $('ul.tabs').tabs();
-        $('#nav-menu-related-tools').click(function () {
-          $('ul.tabs').tabs('select_tab', 'related-tools');
-        });
-      });
-    </script>
-
-
   </body>
-
 </html>
