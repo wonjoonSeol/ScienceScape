@@ -50,7 +50,7 @@ class FormModelTest(TestCase):
 
     def test_mini_form_with_request(self):
         client = Client()
-        with open(os.path.join(APP_DIR ,'tests','front_end_tests','savedrecs.txt')) as file_path:
+        with open(os.path.join(APP_DIR ,'tests','tests_front_end','savedrecs.txt')) as file_path:
             response = client.post('/upload/', {'file': file_path}, follow = True)
             choices= [("TEST", "Select a value")]
             self.assertEqual(choices, create_mini_form(choices, response).choicesInField)
