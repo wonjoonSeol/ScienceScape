@@ -62,9 +62,26 @@ def produce_form_set(dictionary, unknown_values):
 	for i in unknown_values:
 		unknown.append((i,i))
 
-
+	
 	form = formset_factory(create_mini_form(sorted(unknown)), extra=0)
-	initial = [{'Name': "accession_number"},{'Name': "authors"},{'Name': "author_keywords"},{'Name': "keywords_plus"},{'Name': "document_title"},{'Name': "wos_categories"},{'Name': "cited_references"},{'Name': "author_address"}, {'Name': "year_published"}, {'Name': "twenty_nine_character_source_abbreviation"}, {'Name': "volume"}, {'Name': "beginning_page"}, {'Name': "doi"},{'Name': "publication_type"},{'Name': "document_type"},{'Name': "wos_core_collection_times_cited"}]
+	headers = ['UT','AU','DE','ID','TI','EC','CR','C1','PY','J9','VL','BP','DI','PT','DT','TC']
+	initial = [{'Name': "accession_number", 'Key': headers[0]},
+	{'Name': "authors",'Key': headers[1]},
+	{'Name': "author_keywords",'Key': headers[2]},
+	{'Name': "keywords_plus",'Key': headers[3]},
+	{'Name': "document_title",'Key': headers[4]},
+	{'Name': "wos_categories",'Key': headers[5]},
+	{'Name': "cited_references",'Key': headers[6]},
+	{'Name': "author_address",'Key': headers[7]}, 
+	{'Name': "year_published",'Key': headers[8]}, 
+	{'Name': "twenty_nine_character_source_abbreviation",'Key': headers[9]}, 
+	{'Name': "volume",'Key': headers[10]}, 
+	{'Name': "beginning_page",'Key': headers[11]}, 
+	{'Name': "doi",'Key': headers[12]},
+	{'Name': "publication_type",'Key': headers[13]},
+	{'Name': "document_type",'Key': headers[14]},
+	{'Name': "wos_core_collection_times_cited",'Key': headers[15]}]
+	
 	finalForm = form(initial = initial)
 
 	return {'form' : finalForm, 'count' : 16}
