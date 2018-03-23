@@ -6,7 +6,11 @@
 
     {% include "welcome_logo_slogan.html" %}
 
-		<h5 style="text-align: center; color: red">{{msg}}</h5>
+    {% if msg.strip %}
+      <div class="card-panel error-card red darken-3 center">
+        <p class="error-message text-white center">{{msg}}</p>
+      </div>
+    {% endif %}
 
     {% include "logged_in_log_out_widget.html" %}
 
