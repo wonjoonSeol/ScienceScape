@@ -1,7 +1,8 @@
 import os
 import sys
-from django.test import TestCase
+from django.test import *
 from graphs.forms import *
+APP_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 class FormModelTest(TestCase):
@@ -44,5 +45,12 @@ class FormModelTest(TestCase):
         self.assertEqual(choicesInField, create_mini_form().choicesInField)
 
     def test_create_mini_form_with_choice(self):
-        choices= [("TEST", "Select a value")]
+        choices = [("TEST", "Select a value")]
         self.assertEqual(choices, create_mini_form(choices).choicesInField)
+
+    def test_mini_form_with_request(self):
+        client = Client()
+        with open(os.path.join(APP_DIR ,'tests','front_end_tests','savedrecs.txt')) as file_path:
+            response = client.post('/upload/', {'file': file_path}, follow = True)
+            choices= [("TEST", "Select a value")]
+            self.assertEqual(choices, create_mini_form(choices, response).choicesInField)
