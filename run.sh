@@ -35,8 +35,8 @@ else
 		if [ "$2" == "website" ]; then
 			clear
 			echo "\n\n\n ---- Running website locally. ----- | using $python_v alias \n"
-			"$python_v" manage.py migrate --settings=mysite.settings.localNoBase;
-			"$python_v" manage.py runserver --settings=mysite.settings.localNoBase;
+			"$python_v" manage.py migrate --settings=mysite.settings.local;
+			"$python_v" manage.py runserver --settings=mysite.settings.local;
 
 		fi
 		if [ "$2" == "scripts" ]; then
