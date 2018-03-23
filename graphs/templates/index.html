@@ -6,15 +6,17 @@
 
 <div class="container">
 
-{% include "welcome_logo_slogan.html" %}
+  {% include "welcome_logo_slogan.html" %}
 
-<h5 style="text-align: center; color: red">{{msg}}</h5>
-<br>
+  {% if msg != "" %}
+    <div class="card-panel error-card red darken-3 center">
+      <p class="error-message text-white center">{{msg}}</p>
+    </div>
+  {% endif %}
 
-<div class="section">
- {% include "logincard.html" %}
-</div>
-
+  <div class="section">
+   {% include "logincard.html" %}
+  </div>
 
 </div>
 
