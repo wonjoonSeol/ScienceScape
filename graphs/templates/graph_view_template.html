@@ -1,6 +1,4 @@
-
 {% load static %}
-
 
 <style>
     #graph-container {
@@ -12,62 +10,80 @@
     }
  </style>
 
+ <div class="card graphs-buttons-card">
+   <div class="card-content">
+    <div class="row"> <!-- Graph button row -->
+      <div class="col s12 center">
+        <h5> Graph Controls</h5>
+      </div>
+    </div>
 
-  	
-		 <div class="row">
-                   
-        <div class="col s4"> 
-        <div class="card graphs-buttons-card">
-            <div class="card-content">
-
-                <h5> Graph Controls</h5>
-
-                    
-                            <a class="waves-effect waves-light btn graph-select" onclick="startStopForceAtlas2(this)" id="start-force-atlas-2"><i class="material-icons left">play_arrow</i>Start Force Atlas 2</a>
-                            <br>
-                            <a class="waves-effect waves-light btn graph-select" onclick="resetGraph()" id="reset"><i class="material-icons left">power_settings_new</i>Reset</a><br>
-                            <a class="waves-effect waves-light btn graph-select"  onclick="rearrageIntoCircle(this)" id="rearrange-to-circle"><i class="material-icons left">refresh</i>Rearrange to Circle</a>
-                       		 <br>
-                            <div class="switch toggle-graph-edges">
-                                Graph Edges
-                                <label>
-                                  Off
-                                  <input onclick="turnOnOffEdges(this)"  type="checkbox" id="graph-edges">
-                                  <span class="lever"></span>
-                                  On
-                                </label>
-                            </div>
-                        
-                         
-                 
-                       <!--     <form id="graph-node-search">
-                                <div class="input-field">
-                                  <input id="search" type="search" placeholder="Node Search" required>
-                                  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                  <i class="material-icons">close</i>
-                                </div>
-                            </form>
-                            -->
-                        </div>
-                    </div>
-            </div>
-            
-            <div class="col s8">
-            
-						<div class="card">
-								<div class="card-content">
-								<h5>{{filename}}</h5>
-							
-							  	<div  id="graph-container"></div>
-							
-								</div>
-							</div>	
-							
-							
-				 </div>
+    <div class="row">
+      <div class="col s12 m6 l3">
+        <div class="center graph-control-button">
+          <a class="waves-effect waves-light btn graph-select" onclick="startStopForceAtlas2(this)" id="start-force-atlas-2">
+            <i class="material-icons left">play_arrow</i>
+            <span class="graph-button-label">Start Force Atlas 2</span>
+          </a>
         </div>
-      
-    
+      </div>
+
+      <div class="col s12 m6 l3">
+        <div class="center graph-control-button">
+          <a class="waves-effect waves-light btn graph-select" onclick="resetGraph()" id="reset">
+            <i class="material-icons left">power_settings_new</i>
+            <span class="graph-button-label">Reset</span>
+            </a>
+        </div>
+      </div>
+
+      <div class="col s12 m6 l3">
+        <div class="center graph-control-button">
+          <a class="waves-effect waves-light btn graph-select"  onclick="rearrageIntoCircle(this)" id="rearrange-to-circle">
+            <i class="material-icons left">refresh</i>
+            <span class="graph-button-label">Revert to Circle
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="col s12 m6 l3">
+        <div class="center graph-control-button">
+          <div class="switch toggle-graph-edges">
+            Graph Edges <br>
+            <label class="center">
+              Off
+              <input onclick="turnOnOffEdges(this)"  type="checkbox" id="graph-edges">
+              <span class="lever"></span>
+              On
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- <form id="graph-node-search">
+          <div class="input-field">
+            <input id="search" type="search" placeholder="Node Search" required>
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+      </form> -->
+
+  </div>
+</div> <!-- /Graph button row -->
+
+<div class="row s12"> <!-- graph row -->
+  <div class="card">
+    <div class="card-content">
+
+    <h5>{{filename}}</h5>
+
+    <div id="graph-container"></div>
+
+    </div>
+  </div>
+</div> <!-- /graph row -->
 
 
 
