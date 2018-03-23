@@ -14,6 +14,9 @@ from django.contrib.auth import authenticate, login
 
 APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+""" Returns an updated page rendering.
+Attempts to log the user in. If successful, redirect them to the upload page.
+"""
 def home(request, message = ""):
 	print("Username is: {x}".format(x = request.user.username))
 	registration_form = UserRegistrationForm()
@@ -24,6 +27,9 @@ def home(request, message = ""):
 
 	return render(request, 'index.html', {'msg': message, 'reg_form': registration_form, 'fpath': "/standard_graph.gexf", 'filename': "Example Graph {smiley_face}".format(smiley_face = "") })
 
+""" Returns an updated page rendering.
+Uploads and saves a file to the ScienceScape framework, returning output as necessary.
+"""
 def upload_file(request, message = ""):
 	print("Username is: {x}".format(x = request.user.username))
 
@@ -50,12 +56,17 @@ def upload_file(request, message = ""):
 
 	return render(request, 'logged_in.html', {'msg': message,'upload': form,  'usersFiles': files })
 
-
+"""
+Redirects the user to the fields edit page for their particular file.
+"""
 def edit_fields(request, filename):
 	folder = "static/userFiles/{user_name}/{file_name}".format(user_name = request.user.username, file_name = filename)
 	file_path = os.path.join(APP_DIR, folder)
 	return redirect('fields', file_path)
 
+""" 
+Deletes a file from a specific user folder, and redirects the user to the upload page.
+"""
 def delete_file(request, filename):
 	folder = "static/userFiles/{user_name}/{file_name}".format(user_name = request.user.username, file_name = filename)
 	file_path = os.path.join(APP_DIR, folder)
@@ -65,6 +76,9 @@ def delete_file(request, filename):
 		mapping_exists.delete()
 	return redirect(upload_file, " ")
 
+"""
+Selects the year span to be displayed and analyzed, returning an updated page rendering.
+"""
 def select_years(request, file_path):
 	if request.method == 'POST':
 		year_form = DefineYears(request.POST)
@@ -81,6 +95,9 @@ def select_years(request, file_path):
 		year_form = DefineYears()
 	return render(request, 'select_years.html', {'years': year_form, 'fpath': file_path})
 
+"""
+Submits a form defining field linkings, and displays an updated page rendering with output.
+"""
 def field_form(request, file_path):
 	form = load_from_file_path(file_path)
 	message = ""
@@ -112,9 +129,15 @@ def field_form(request, file_path):
 
 	return render(request, 'enter_fields_template.html', {'fields': form['form'], 'filename': file_name, 'message': message})
 
+"""
+Submits a request to display the about page.
+"""
 def about(request):
 	return render(request, 'about.html')
 
+"""
+Submits a request to upload a single gexf file, displaying output as necessary.
+"""
 def upload_single_gexf_file(request, file_path):
 	upload_gexf_form = UploadFileForm()
 
@@ -132,9 +155,15 @@ def upload_single_gexf_file(request, file_path):
 		file_name = "No file uploaded"
 		file_path = "/userFiles/arctic.gexf"
 
+"""
+Replaces a path containing brackets with the empty string, converting it to a parsable path.
+"""
 def turn_path_into_string(path_with_brackets):
 	return path_with_brackets.replace("['", "").replace("']", "")
 
+"""
+Submits a request to load a graph and returns an updated page rendering.
+"""
 def load_graph(request, path):
 	file_path = turn_path_into_string(path)
 	if len(file_path) > 2:
@@ -144,6 +173,9 @@ def load_graph(request, path):
 		
 	return render(request, 'graph_template.html', {'fpath': turn_path_into_string(file_path), 'filename': message})
 
+"""
+Submits a request to register a new user, and returns an updated page rendering.
+"""
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -165,10 +197,16 @@ def register(request):
 
     return render(request, 'mysite/register.html', {'form': form})
 
+"""
+Logs the user out.
+"""
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
 
+"""
+Confirms the request's login credentials, giving output as necessary.
+"""
 def login_process(request):
 	if request.POST:
 		username = request.POST['username']
@@ -185,5 +223,8 @@ def login_process(request):
 
 	return redirect('upload', " ")
 
+"""
+Renders the account page.
+"""
 def account(request):
 	return render(request, 'account.html')

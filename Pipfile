@@ -16,6 +16,8 @@ django = "*"
 dj-database-url = "*"
 django-heroku = "*"
 whitenoise = "*"
+django-nose = "*"
+coverage = "*"
 
 
 [dev-packages]

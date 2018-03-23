@@ -10,9 +10,8 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 # as well as any WSGI server configured to use this file.
 
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
-
 from django.core.wsgi import get_wsgi_application
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings.base")
 application = get_wsgi_application()
 
