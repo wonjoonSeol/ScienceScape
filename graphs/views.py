@@ -180,4 +180,4 @@ def login_process(request):
 	return redirect('upload', " ")
 
 def account(request):
-	return render(request, 'account.html')
+	return redirect('upload', " ")
