@@ -69,9 +69,10 @@ class TestCommands(TestCase):
         returned_dictionary = populate_dictionary(sets, os.path.join(dir, "a_test_file.txt"))
         os.remove(os.path.join(dir, "a_test_file.txt"))
         self.assertEqual(True, 'Value1' in returned_dictionary['Header1'] and 'Value3' in returned_dictionary['Header3'])
-
+    
     """
-    This test checks that calling make_user_folders for a particular input username
+    This test checks that calling make_user_folders for a particular input username 
+
     executes correctly and creates the specified directory, tearing it down afterwards.
     """
     def test_make_user_folders(self):

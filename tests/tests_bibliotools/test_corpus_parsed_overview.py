@@ -18,7 +18,7 @@ class TestCorpusParsedOverview(TestCase):
     def test_get_no_articles_for_empty_resource(self):
 
         dir = os.path.dirname(os.path.dirname(__file__))
-        parsed_data_folder = os.path.join(dir, "bibliotools_tests/testFiles/parsed_data")
+        parsed_data_folder = os.path.join(dir, "tests_bibliotools/testFiles/parsed_data")
 
         self.assertEqual(0, get_no_articles(parsed_data_folder, "span_name"))
 
@@ -29,7 +29,7 @@ class TestCorpusParsedOverview(TestCase):
     def test_get_no_articles_for_fifty_articles(self):
 
         dir = os.path.dirname(os.path.dirname(__file__))
-        parsed_data_folder = os.path.join(dir, "bibliotools_tests/testFiles/parsed_data")
+        parsed_data_folder = os.path.join(dir, "tests_bibliotools/testFiles/parsed_data")
 
         self.assertEqual(50, get_no_articles(parsed_data_folder, "span_name_2"))
 
@@ -39,7 +39,7 @@ class TestCorpusParsedOverview(TestCase):
     """
     def test_get_stats_for_articles_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
-        parsed_data_folder = os.path.join(dir, "bibliotools_tests/testFiles/parsed_data")
+        parsed_data_folder = os.path.join(dir, "tests_bibliotools/testFiles/parsed_data")
 
         # For span_name_2, there should be 50 unique articles, and 50 entities by articles.
         result = get_stats(parsed_data_folder, "span_name_2", "articles.dat")
@@ -51,7 +51,7 @@ class TestCorpusParsedOverview(TestCase):
     """
     def test_get_stats_for_references_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
-        parsed_data_folder = os.path.join(dir, "bibliotools_tests/testFiles/parsed_data")
+        parsed_data_folder = os.path.join(dir, "tests_bibliotools/testFiles/parsed_data")
 
         # For the given references.dat file, we know there have to be:
         # 2379 unique references, and 2463 references by articles.
@@ -63,15 +63,15 @@ class TestCorpusParsedOverview(TestCase):
     """
     def test_print_to_overview(self):
         dir = os.path.dirname(os.path.dirname(__file__))
-        os.makedirs(os.path.join(dir, "bibliotools_tests/testFiles/reports_for_overview"))
-        reports_directory = os.path.join(dir, "bibliotools_tests/testFiles/reports_for_overview")
+        os.makedirs(os.path.join(dir, "tests_bibliotools/testFiles/reports_for_overview"))
+        reports_directory = os.path.join(dir, "tests_bibliotools/testFiles/reports_for_overview")
 
         print_to_overview("This is a successful test message", reports_directory)
 
-        output = open(os.path.join(dir, "bibliotools_tests/testFiles/reports_for_overview/corpus_overview.txt"))
+        output = open(os.path.join(dir, "tests_bibliotools/testFiles/reports_for_overview/corpus_overview.txt"))
         lines = output.readlines()
         result = len(lines) == 1 and lines[0] == "This is a successful test message\n"
         output.close()
-        os.remove(os.path.join(dir, "bibliotools_tests/testFiles/reports_for_overview/corpus_overview.txt"))
-        os.rmdir(os.path.join(dir, "bibliotools_tests/testFiles/reports_for_overview"))
+        os.remove(os.path.join(dir, "tests_bibliotools/testFiles/reports_for_overview/corpus_overview.txt"))
+        os.rmdir(os.path.join(dir, "tests_bibliotools/testFiles/reports_for_overview"))
         self.assertEqual(True, result)

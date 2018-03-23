@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphs',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -104,3 +105,11 @@ PUBLIC_USER_FILES_DIRECTORY = "static/userFiles/Public"
 
 # Login redirect information
 LOGIN_REDIRECT_URL = '/graphs'
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=graphs,bibliotools3.0',
+]

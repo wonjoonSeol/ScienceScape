@@ -4,43 +4,20 @@
 
 <div class="container">
 
-    <div class="welcome-section"></div>
+    {% include "welcome_logo_slogan.html" %}
 
-    <div id="logo-home" class="center">
-        <img src="{% static 'images/vectorised-logo-outline-white.svg' %}" alt="ScienceScape Logo">
-    </div>
+    {% if msg.strip %}
+      <div class="card-panel error-card red darken-3 center">
+        <p class="error-message text-white center">{{msg}}</p>
+      </div>
+    {% endif %}
 
-    <h6 class="white-text center tagline">
-        <b>Scientometrics, made easy</b>
-        <br>Visualising graphs, smoothly and conveniently. Get started <a href="https://github.com/wonjoonSeol/ScienceScape/wiki" target="_blank" style="color: #ffffff">here</a>.
-    </h6>
-		<h5 style="text-align: center; color: red">{{msg}}</h5>
-    <br>
-
-    <div class="section">
-     {% if user.is_authenticated %}
-
-			<div class="card">
-			  <div class="card-content">
-			      <p>You are logged in as: <b>{{ user.username }}</b></p>
-			      <p><a href="/logout">Logout</a></p>
-			  </div> <!-- /card-content -->
-			
-			</div>
-       {%endif%}
-    </div>
-
-  
-
-    <br>
-    <br>
+    {% include "logged_in_log_out_widget.html" %}
 
    <div>
    {% include "fields.html" %}
    </div>
-   
+
 </div>
-
-
 
 {% endblock %}

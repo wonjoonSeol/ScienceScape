@@ -22,13 +22,13 @@ class TestMergingCorpus(TestCase):
     """
     def test_count_occurrences_and_write_year_distrib_yield_csv_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
-        count_occurences(os.path.join(dir, "bibliotools_tests/testFiles/test.txt"), os.path.join(dir, "bibliotools_tests/testFiles"))
+        count_occurences(os.path.join(dir, "tests_bibliotools/testFiles/test.txt"), os.path.join(dir, "tests_bibliotools/testFiles"))
         years_distrib_found = False
 
-        for file in os.listdir(os.path.join(dir, "bibliotools_tests/testFiles")):
+        for file in os.listdir(os.path.join(dir, "tests_bibliotools/testFiles")):
             if file.endswith('years_distribution.csv'):
                 years_distrib_found = True
-                os.remove(os.path.join(dir, "bibliotools_tests/testFiles/years_distribution.csv"))
+                os.remove(os.path.join(dir, "tests_bibliotools/testFiles/years_distribution.csv"))
         self.assertEqual(True,years_distrib_found)
 
     """
@@ -37,18 +37,18 @@ class TestMergingCorpus(TestCase):
     """
     def test_count_occurrences_yields_blank_file_for_empty_source(self):
         dir = os.path.dirname(os.path.dirname(__file__))
-        count_occurences(os.path.join(dir, "bibliotools_tests/testFiles/test.txt"), os.path.join(dir, "bibliotools_tests/testFiles"))
+        count_occurences(os.path.join(dir, "tests_bibliotools/testFiles/test.txt"), os.path.join(dir, "tests_bibliotools/testFiles"))
         emptyFile = False
 
-        for file in os.listdir(os.path.join(dir, "bibliotools_tests/testFiles")):
+        for file in os.listdir(os.path.join(dir, "tests_bibliotools/testFiles")):
             if file.endswith('years_distribution.csv'):
-                years_distribution = open(os.path.join(dir, "bibliotools_tests/testFiles/years_distribution.csv"), "r")
+                years_distribution = open(os.path.join(dir, "tests_bibliotools/testFiles/years_distribution.csv"), "r")
                 years_distribution.readline()   # We remove the header
 
                 if len(years_distribution.readlines()) == 0:
                     emptyFile = True
 
-                os.remove(os.path.join(dir, "bibliotools_tests/testFiles/years_distribution.csv"))
+                os.remove(os.path.join(dir, "tests_bibliotools/testFiles/years_distribution.csv"))
         self.assertEqual(True,emptyFile)
 
     """
@@ -57,14 +57,14 @@ class TestMergingCorpus(TestCase):
     """
     def test_write_to_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
-        file_to_write_to = open(os.path.join(dir, "bibliotools_tests/testFiles/dummyfile.txt"), "w")
+        file_to_write_to = open(os.path.join(dir, "tests_bibliotools/testFiles/dummyfile.txt"), "w")
         text_to_write = "firstline\nsecondline\nthirdline"
         write_to_file(file_to_write_to, text_to_write)
         file_to_write_to.close()
-        file_to_read = open(os.path.join(dir, "bibliotools_tests/testFiles/dummyfile.txt"), "r")
+        file_to_read = open(os.path.join(dir, "tests_bibliotools/testFiles/dummyfile.txt"), "r")
         lines_read = file_to_read.readlines()
         file_to_read.close()
-        os.remove(os.path.join(dir, "bibliotools_tests/testFiles/dummyfile.txt"))
+        os.remove(os.path.join(dir, "tests_bibliotools/testFiles/dummyfile.txt"))
         result = False
         if lines_read[0] == "firstline\n" and lines_read[1] == "secondline\n" and lines_read[2] == "thirdline":
             result = True
@@ -125,15 +125,15 @@ class TestMergingCorpus(TestCase):
         dir = os.path.dirname(os.path.dirname(__file__))
         parseable_lines = ["my_first_parseable_line", "my_second_parseable_line"]
         lines_with_errors = ["error 1", "error 2"]
-        onefile_output = open(os.path.join(dir, "bibliotools_tests/testFiles/dummy_onefilecorpus.txt"), "w")
-        errorsfile_output = open(os.path.join(dir, "bibliotools_tests/testFiles/dummy_errorsfile.txt"), "w")
+        onefile_output = open(os.path.join(dir, "tests_bibliotools/testFiles/dummy_onefilecorpus.txt"), "w")
+        errorsfile_output = open(os.path.join(dir, "tests_bibliotools/testFiles/dummy_errorsfile.txt"), "w")
 
         write_report(parseable_lines, lines_with_errors, onefile_output, errorsfile_output)
         onefile_output.close()
         errorsfile_output.close()
 
-        onefile_output_read = open(os.path.join(dir, "bibliotools_tests/testFiles/dummy_onefilecorpus.txt"), "r")
-        errorsfile_output_read = open(os.path.join(dir, "bibliotools_tests/testFiles/dummy_errorsfile.txt"), "r")
+        onefile_output_read = open(os.path.join(dir, "tests_bibliotools/testFiles/dummy_onefilecorpus.txt"), "r")
+        errorsfile_output_read = open(os.path.join(dir, "tests_bibliotools/testFiles/dummy_errorsfile.txt"), "r")
 
         onefile_output_lines = onefile_output_read.readlines()
         errorsfile_output_lines = errorsfile_output_read.readlines()
@@ -147,8 +147,8 @@ class TestMergingCorpus(TestCase):
 
         onefile_output_read.close()
         errorsfile_output_read.close()
-        os.remove(os.path.join(dir, "bibliotools_tests/testFiles/dummy_onefilecorpus.txt"))
-        os.remove(os.path.join(dir, "bibliotools_tests/testFiles/dummy_errorsfile.txt"))
+        os.remove(os.path.join(dir, "tests_bibliotools/testFiles/dummy_onefilecorpus.txt"))
+        os.remove(os.path.join(dir, "tests_bibliotools/testFiles/dummy_errorsfile.txt"))
         self.assertEqual(True, result)
 
     """
@@ -158,12 +158,12 @@ class TestMergingCorpus(TestCase):
     def test_prepare_output_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
         headers_to_write = "abcd"
-        prepare_output_file(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_output_file.txt"), headers_to_write)
+        prepare_output_file(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_output_file.txt"), headers_to_write)
 
-        result = open(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_output_file.txt"), "r")
+        result = open(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_output_file.txt"), "r")
         lines = result.readlines()
         result.close()
-        os.remove(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_output_file.txt"))
+        os.remove(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_output_file.txt"))
         self.assertEqual(lines, ['abcd\n'])
 
     """
@@ -172,10 +172,10 @@ class TestMergingCorpus(TestCase):
     """
     def test_prepare_report_directory(self):
         dir = os.path.dirname(os.path.dirname(__file__))
-        prepare_report_directory(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory"))
-        self.assertEqual(True, os.path.exists(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory")))
-        if os.path.exists(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory")):
-            os.rmdir(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory"))
+        prepare_report_directory(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory"))
+        self.assertEqual(True, os.path.exists(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory")))
+        if os.path.exists(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory")):
+            os.rmdir(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory"))
 
     """
     This test tests that upon calling prepare_error_file, with a valid report directory, an error .csv
@@ -183,8 +183,8 @@ class TestMergingCorpus(TestCase):
     """
     def test_prepare_error_file(self):
         dir = os.path.dirname(os.path.dirname(__file__))
-        prepare_report_directory(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory"))
-        prepare_error_file(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory"), "abcd")
-        self.assertEqual(True, os.path.exists(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory/wos_lines_with_errors.csv")))
-        os.remove(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory/wos_lines_with_errors.csv"))
-        os.rmdir(os.path.join(dir, "bibliotools_tests/testFiles/test_prepare_report_directory"))
+        prepare_report_directory(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory"))
+        prepare_error_file(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory"), "abcd")
+        self.assertEqual(True, os.path.exists(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory/wos_lines_with_errors.csv")))
+        os.remove(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory/wos_lines_with_errors.csv"))
+        os.rmdir(os.path.join(dir, "tests_bibliotools/testFiles/test_prepare_report_directory"))
