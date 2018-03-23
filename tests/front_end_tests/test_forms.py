@@ -71,11 +71,13 @@ class TestCommands(TestCase):
        
        self.assertEqual(True, str(response.content).find('No graph has been produced') > 0)   
  
- 
+    
+    ''' 
+      Tests that a logged in user can view their uploaded files
+     '''    
     def test_logged_in_user_views_uploaded_table(self):
         client = Client()
         User.objects.create_user('temp', 'temp@temp.com','temp')
         client.login(username='temp', password='temp')
         response = client.get('/upload', follow = True)
         self.assertEqual(True, str(response.content).find('Uploaded Files') > 1 )
-        
