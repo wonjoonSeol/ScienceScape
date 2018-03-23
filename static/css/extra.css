@@ -141,11 +141,10 @@ footer a {
   background-color: rgba(0, 64, 101, 0.67);
 }
 
-#kcl-footer-img {
-  float: right;
-  height: 60px;
+#kcl-footer {
+  height: 80px;
+  margin-right: 80px;
   margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .page-footer h5 {
