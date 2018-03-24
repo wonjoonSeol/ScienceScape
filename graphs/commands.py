@@ -209,6 +209,18 @@ def generate_bibliotools_launch_command(username, year_start, year_end, headers_
         result_command = f"python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}"
     return result_command
 
+"""Return a string of headers ready for parsing.
+Constructs a string of headers from a field dictionary.
+"""
+def construct_string_of_headers(dictionary_of_fields):
+    headers_as_string = ""
+    for header in dictionary_of_fields:
+        headers_as_string += "{x}-".format(x = dictionary_of_fields[header])
+
+    headers_as_string = headers_as_string[:len(headers_as_string) - 1]
+    headers_as_string = headers_as_string.rstrip()
+    return headers_as_string
+
 """ Return the path to the created graph file
 Starts processing a graph file using the Bibliotools3.0 back-end source code.
 """
@@ -216,16 +228,12 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
     static_user_files_directory = "static/userFiles"
     user_files_folder = "static/userFiles/{x}".format(x = username)
     dictionary_of_fields = retrieve_from_database(file_path)
-    headers_as_string = ""
 
     print("File Path: {f} -> Dictionary: {d}".format(f=file_path, d = str(dictionary_of_fields)))
 
+    headers_as_string = ""
     if dictionary_of_fields:
-        for header in dictionary_of_fields:
-            headers_as_string += "{x}-".format(x = dictionary_of_fields[header])
-
-        headers_as_string = headers_as_string[:len(headers_as_string) - 1]
-        headers_as_string = headers_as_string.rstrip()
+        headers_as_string = construct_string_of_headers(dictionary_of_fields)
 
     user_results_folder = reproduce_bibliotools_environment_in(user_files_folder, file_path)
 
