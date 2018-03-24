@@ -218,12 +218,16 @@ def construct_string_of_headers(dictionary_of_fields):
     headers_as_string = headers_as_string.rstrip()
     return headers_as_string
 
+"""Return a list of file paths matching the provided format in the provided directory.
+"""
 def collect_graph_file(directory, span_name = "span_name_0", format = "gexf"):
     output_directory = os.path.join(directory, span_name)
     file_to_collect = "%s/*" + format
     reg_ex = file_to_collect % output_directory
     return glob.glob(reg_ex)
 
+"""Return the path for the graph file produced by bibliotools.
+"""
 def get_produced_graph_path(user_results_folder, parsed_data_folder):
     graph_file_path = str(collect_graph_file(os.path.join(user_results_folder, parsed_data_folder))).replace("static/", "")
     return graph_file_path
