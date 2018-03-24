@@ -171,8 +171,8 @@ class TestCommands(TestCase):
             result = False
         if not os.path.exists(os.path.join(user_files_folder, 'data-wos', 'savedrecs.txt')):
             result = False
-        self.assertEqual(True, result)
         shutil.rmtree('tests/tests_front_end/test_user_5')
+        self.assertEqual(True, result)
 
     """
     This test tests that the bibliotools environment is properly recreated by the front end
@@ -191,8 +191,8 @@ class TestCommands(TestCase):
             result = False
         if not os.path.exists(os.path.join(user_files_folder, 'data-wos', 'savedrecs.txt')):
             result = False
-        self.assertEqual(True, result)
         shutil.rmtree('tests/tests_front_end/test_user_5')
+        self.assertEqual(True, result)
 
     """
     This test tests that the bibliotools environment is properly recreated by the front end
@@ -211,8 +211,8 @@ class TestCommands(TestCase):
             result = False
         if not os.path.exists(os.path.join(user_files_folder, 'data-wos', 'savedrecs.txt')):
             result = False
-        self.assertEqual(True, result)
         shutil.rmtree('tests/tests_front_end/test_user_5')
+        self.assertEqual(True, result)
 
     """
     This test tests that the bibliotools environment is properly recreated by the front end
@@ -232,10 +232,25 @@ class TestCommands(TestCase):
             result = False
         if not os.path.exists(os.path.join(user_files_folder, 'data-wos', 'savedrecs.txt')):
             result = False
-        self.assertEqual(True, result)
         shutil.rmtree('tests/tests_front_end/test_user_5')
+        self.assertEqual(True, result)
 
+    """
+    This test tests that a string of headers is properly constructed.
+    """
     def test_construct_string_of_headers(self):
         input_dictionary = {"Header1" : 'H1', "Header2" : 'H2'}
         output = construct_string_of_headers(input_dictionary)
         self.assertEqual(output, 'H1-H2')
+
+    def test_graph_collection(self):
+        user_files_folder = "tests/tests_front_end/test_user_5"
+        os.mkdir(os.path.join(user_files_folder))
+        reproduce_bibliotools_environment_in(user_files_folder, "../savedrecs.txt")
+        os.mkdir(os.path.join(user_files_folder, "Result", "parsed_data"))
+        os.mkdir(os.path.join(user_files_folder, "Result", "parsed_data", "span_name_0"))
+        open(os.path.join(user_files_folder, "Result", "parsed_data", "span_name_0", "span_name_0.gexf"), "w")
+
+        output = get_produced_graph_path(os.path.join(user_files_folder, "Result"), "parsed_data")
+        shutil.rmtree('tests/tests_front_end/test_user_5')
+        self.assertEqual(str(output), "['tests/tests_front_end/test_user_5/Result/parsed_data/span_name_0/span_name_0.gexf']")

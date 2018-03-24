@@ -88,15 +88,12 @@ def make_user_folders(username):
     user_files_folder = "static/userFiles/{x}".format(x = username)
 
     if not os.path.exists(os.path.join(APP_DIR, static_user_files_directory)):
-        print("1")
         os.mkdir(os.path.join(APP_DIR, static_user_files_directory))
 
     if not os.path.exists(os.path.join(APP_DIR, public_user_files_directory)):
-        print("2")
         os.mkdir(os.path.join(APP_DIR, public_user_files_directory))
 
     if not os.path.exists(os.path.join(APP_DIR, user_files_folder)):
-        print("3")
         os.mkdir(os.path.join(APP_DIR, user_files_folder))
 
     return user_files_folder
@@ -221,6 +218,16 @@ def construct_string_of_headers(dictionary_of_fields):
     headers_as_string = headers_as_string.rstrip()
     return headers_as_string
 
+def collect_graph_file(directory, span_name = "span_name_0", format = "gexf"):
+    output_directory = os.path.join(directory, span_name)
+    file_to_collect = "%s/*" + format
+    reg_ex = file_to_collect % output_directory
+    return glob.glob(reg_ex)
+
+def get_produced_graph_path(user_results_folder, parsed_data_folder):
+    graph_file_path = str(collect_graph_file(os.path.join(user_results_folder, parsed_data_folder))).replace("static/", "")
+    return graph_file_path
+
 """ Return the path to the created graph file
 Starts processing a graph file using the Bibliotools3.0 back-end source code.
 """
@@ -241,11 +248,4 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
     print("Bibliotools is being launched with command " + str(launch_command))
     os.system(launch_command)
 
-    graph_file_path = str(collect_graph_file(os.path.join(user_results_folder, "parsed_data"))).replace("static/", "")
-    return graph_file_path
-
-def collect_graph_file(directory, span_name = "span_name_0", format = "gexf"):
-    output_directory = os.path.join(directory, span_name)
-    file_to_collect = "%s/*" + format
-    reg_ex = file_to_collect % output_directory
-    return glob.glob(reg_ex)
+    return get_produced_graph_path(user_results_folder, "parsed_data")
