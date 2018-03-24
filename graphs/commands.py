@@ -176,6 +176,39 @@ def get_all_user_files(username):
 
 		return files_valid
 
+"""Return the location of the folder in which to collect bibliotools results.
+This method reproduces the environment needed to run bibliotools in the desired location.
+"""
+def reproduce_bibliotools_environment_in(user_files_folder, file_path):
+	if os.path.exists(os.path.join(user_files_folder, "data-wos")):
+	    shutil.rmtree(os.path.join(user_files_folder, 'data-wos'))
+
+	if os.path.exists(os.path.join(user_files_folder, "Result")):
+	    shutil.rmtree(os.path.join(user_files_folder, 'Result'))
+
+	if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
+		os.mkdir(os.path.join(user_files_folder, 'data-wos'))
+
+	user_wos_folder = os.path.join(user_files_folder, 'data-wos')
+
+	if not os.path.exists(os.path.join(user_files_folder, 'Result')):
+		os.mkdir(os.path.join(user_files_folder, 'Result'))
+
+	user_results_folder = os.path.join(user_files_folder, 'Result')
+	shutil.copy(os.path.join(user_files_folder, file_path), user_wos_folder)
+	return user_results_folder
+
+"""Return the ignition command for bibliotools3.0
+This method generates the os system command to launch bibliotools scripts, given some parameters as below.
+"""
+def generate_bibliotools_launch_command(username, year_start, year_end, headers_as_string):
+	result_command = ""
+	if headers_as_string == "":
+		result_command = f"python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}"
+	else:
+		result_command = f"python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}"
+	return result_command
+
 """ Return the path to the created graph file
 Starts processing a graph file using the Bibliotools3.0 back-end source code.
 """
@@ -195,29 +228,11 @@ def start_bibliotools(year_start, year_end, file_path, username='Public'):
 		headers_as_string = headers_as_string[:len(headers_as_string) - 1]
 		headers_as_string = headers_as_string.rstrip()
 
-	if os.path.exists(os.path.join(user_files_folder, "data-wos")):
-	    shutil.rmtree(os.path.join(user_files_folder, 'data-wos'))
+	user_results_folder = reproduce_bibliotools_environment_in(user_files_folder, file_path)
 
-	if os.path.exists(os.path.join(user_files_folder, "Result")):
-	    shutil.rmtree(os.path.join(user_files_folder, 'Result'))
-
-	if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
-		os.mkdir(os.path.join(user_files_folder, 'data-wos'))
-
-	user_wos_folder = os.path.join(user_files_folder, 'data-wos')
-
-	if not os.path.exists(os.path.join(user_files_folder, 'Result')):
-		os.mkdir(os.path.join(user_files_folder, 'Result'))
-
-	user_results_folder = os.path.join(user_files_folder, 'Result')
-	shutil.copy(os.path.join(user_files_folder, file_path), user_wos_folder)
-
-	print(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
-
-	if headers_as_string == "":
-		os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}')
-	else:
-		os.system(f'python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}')
+	launch_command = generate_bibliotools_launch_command(username, year_start, year_end, headers_as_string)
+	print("Bibliotools is being launched with command " + str(launch_command))
+	os.system(launch_command)
 
 	graph_file_path = str(collect_graph_file(os.path.join(user_results_folder, "parsed_data"))).replace("static/", "")
 	return graph_file_path
