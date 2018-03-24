@@ -234,3 +234,8 @@ class TestCommands(TestCase):
             result = False
         self.assertEqual(True, result)
         shutil.rmtree('tests/tests_front_end/test_user_5')
+
+    def test_construct_string_of_headers(self):
+        input_dictionary = {"Header1" : 'H1', "Header2" : 'H2'}
+        output = construct_string_of_headers(input_dictionary)
+        self.assertEqual(output, 'H1-H2')

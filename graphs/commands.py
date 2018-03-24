@@ -210,7 +210,7 @@ def generate_bibliotools_launch_command(username, year_start, year_end, headers_
     return result_command
 
 """Return a string of headers ready for parsing.
-Constructs a string of headers from a field dictionary.
+Constructs a string of headers from a non-empty field dictionary.
 """
 def construct_string_of_headers(dictionary_of_fields):
     headers_as_string = ""
