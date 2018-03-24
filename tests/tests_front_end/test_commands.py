@@ -154,3 +154,83 @@ class TestCommands(TestCase):
         headers_as_string = "UT-AU-DE-ID-TI-AB-CR-C1-PY-J9-VL-BP-DI-AB-DT-TC"
         expected_command = "python3 bibliotools3.0/scripts/graph_gen.py -user User1 -bound 1998-2018 -headers " + headers_as_string
         self.assertEqual(generate_bibliotools_launch_command("User1", 1998, 2018, headers_as_string), expected_command)
+
+    """
+    This test tests that the bibliotools environment is properly recreated by the front end
+    Case 1: No folder exists in the user folder.
+    """
+    def test_reproduce_bibliotools_environment_when_no_folder_exists(self):
+        # Mock a user folder, and run test.
+        user_files_folder = "tests/tests_front_end/test_user_5"
+        os.mkdir(os.path.join(user_files_folder))
+        reproduce_bibliotools_environment_in(user_files_folder, "../savedrecs.txt")
+        result = True
+        if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
+            result = False
+        if not os.path.exists(os.path.join(user_files_folder, 'Result')):
+            result = False
+        if not os.path.exists(os.path.join(user_files_folder, 'data-wos', 'savedrecs.txt')):
+            result = False
+        self.assertEqual(True, result)
+        shutil.rmtree('tests/tests_front_end/test_user_5')
+
+    """
+    This test tests that the bibliotools environment is properly recreated by the front end
+    Case 2: Only a data-wos folder exists in the user folder.
+    """
+    def test_reproduce_bibliotools_environment_when_datawos_folder_exists(self):
+        # Mock a user folder, and run test.
+        user_files_folder = "tests/tests_front_end/test_user_5"
+        os.mkdir(os.path.join(user_files_folder))
+        os.mkdir(os.path.join(user_files_folder, 'data-wos'))
+        reproduce_bibliotools_environment_in(user_files_folder, "../savedrecs.txt")
+        result = True
+        if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
+            result = False
+        if not os.path.exists(os.path.join(user_files_folder, 'Result')):
+            result = False
+        if not os.path.exists(os.path.join(user_files_folder, 'data-wos', 'savedrecs.txt')):
+            result = False
+        self.assertEqual(True, result)
+        shutil.rmtree('tests/tests_front_end/test_user_5')
+
+    """
+    This test tests that the bibliotools environment is properly recreated by the front end
+    Case 3: Only a Results folder exists in the user folder.
+    """
+    def test_reproduce_bibliotools_environment_when_result_folder_exists(self):
+        # Mock a user folder, and run test.
+        user_files_folder = "tests/tests_front_end/test_user_5"
+        os.mkdir(os.path.join(user_files_folder))
+        os.mkdir(os.path.join(user_files_folder, 'Result'))
+        reproduce_bibliotools_environment_in(user_files_folder, "../savedrecs.txt")
+        result = True
+        if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
+            result = False
+        if not os.path.exists(os.path.join(user_files_folder, 'Result')):
+            result = False
+        if not os.path.exists(os.path.join(user_files_folder, 'data-wos', 'savedrecs.txt')):
+            result = False
+        self.assertEqual(True, result)
+        shutil.rmtree('tests/tests_front_end/test_user_5')
+
+    """
+    This test tests that the bibliotools environment is properly recreated by the front end
+    Case 4: Both data-wos and Result exist in the user folder
+    """
+    def test_reproduce_bibliotools_environment_when_result_folder_exists(self):
+        # Mock a user folder, and run test.
+        user_files_folder = "tests/tests_front_end/test_user_5"
+        os.mkdir(os.path.join(user_files_folder))
+        os.mkdir(os.path.join(user_files_folder, 'data-wos'))
+        os.mkdir(os.path.join(user_files_folder, 'Result'))
+        reproduce_bibliotools_environment_in(user_files_folder, "../savedrecs.txt")
+        result = True
+        if not os.path.exists(os.path.join(user_files_folder, 'data-wos')):
+            result = False
+        if not os.path.exists(os.path.join(user_files_folder, 'Result')):
+            result = False
+        if not os.path.exists(os.path.join(user_files_folder, 'data-wos', 'savedrecs.txt')):
+            result = False
+        self.assertEqual(True, result)
+        shutil.rmtree('tests/tests_front_end/test_user_5')
