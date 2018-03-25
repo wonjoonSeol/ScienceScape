@@ -37,7 +37,7 @@
 
       <div class="col s12 m6 l3">
         <div class="center graph-control-button">
-          <a class="waves-effect waves-light btn graph-select"  onclick="rearrageIntoCircle(this)" id="rearrange-to-circle">
+          <a class="waves-effect waves-light btn graph-select"  onclick="rearrageIntoCircle()" id="rearrange-to-circle">
             <i class="material-icons left">refresh</i>
             <span class="graph-button-label">Revert to Circle
             </span>
@@ -130,6 +130,13 @@
 <script>
 resetGraph();
 
+/**
+ * Reset graph to original state
+ * If original state does not have any coordinates arrange nodes to be
+ circular
+ *
+ * @return {void}
+ */
 function resetGraph(){
 	document.getElementById("graph-container").innerHTML = "";
 	graphs = []
