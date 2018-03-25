@@ -1,4 +1,11 @@
 var graphs = [];
+
+/**
+ * Start or Stop force atlas functionality provided by sigma.js
+ *
+ * @param  {element}    HTML element 
+ * @return {void}
+ */
 function startStopForceAtlas2(element){
 	console.log("no. graphs: " + graphs.length)
 	if(graphs.length > 0){
@@ -20,7 +27,12 @@ function startStopForceAtlas2(element){
 
 }
 
-function rearrageIntoCircle(element) {
+/**
+ * Rearrage each node coordinates into circle
+ *
+ * @return {void}
+ */
+function rearrageIntoCircle() {
 	console.log("Rearrange circle pressed");
 	if(graphs.length > 0){
 		for (i=0 ; i<graphs.length ; i++) {
@@ -37,6 +49,12 @@ function rearrageIntoCircle(element) {
 	}
 }
 
+/**
+ * Turn on and off edges of produced graph
+ *
+ * @param {checkbox}    checkbox element
+ * @return {void}
+ */
 function turnOnOffEdges(checkBox) {
 	console.log("ToggleEdges pressed: " + checkBox.checked);
 	if(graphs.length > 0){
