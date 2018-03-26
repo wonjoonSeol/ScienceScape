@@ -48,7 +48,8 @@
         <div class="nav-wrapper">
           <!-- Activation link for mobile navigation bar -->
           <a href="#" data-activates="nav-mobile-version" class="button-collapse white-text"><i class="material-icons">menu</i></a>
-          <h1 id="nav-h1"><a href="{% url 'home' %}" class="brand-logo center">ScienceScape<sup>s</sup></a></h1>
+
+          <img class="brand-logo center" src="{% static 'images/sciencescapes-logo-white.png' %}" alt="ScienceScapeS Logo">
 
             <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
               <li><a href="{% url 'upload' up %}" class="btn waves-effect waves-lighten" id="nav-login-btn">Upload</a></li>
