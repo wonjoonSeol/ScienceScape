@@ -4,7 +4,7 @@
 
 <html>
   <head>
-    
+
     <!-- Import Google Icon Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <!-- Import particlesJS style -->
@@ -21,6 +21,16 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <!-- Let browser know website is optimised for mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg" color="#229dbf' %}">
+    <link rel="shortcut icon" href="{% static 'favicon/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
 
     <title>ScienceScapeS - Scientometrics, made easy</title>
 
@@ -49,11 +59,13 @@
               <li><a href="{% url 'about' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
               <li><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light"><i class="material-icons">help</i></a></li>
             </ul>
+        </div>
 
+        <div>
             {% block aboutTabbedNavigation %}
             {% endblock aboutTabbedNavigation %}
-
         </div>
+
       </nav>
     </div>
 
@@ -67,44 +79,33 @@
             </div>
           </div>
         </li>
-        <li class="top-level"><a href="#!" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
-        <li>
 
-          <!-- Collapsible Side Nav Component -->
-          <ul class="collapsible collapsible-accordion">
-            <li>
-              <!-- Top Level Accordian Header -->
-              <a href="#!" class="collapsible-header waves-effect waves-light">Account<i class="material-icons">person</i><i class="material-icons right">keyboard_arrow_down</i></a>
-              <div class="collapsible-body">
-                <ul>
-                  <li><a href="#!" class="waves-effect waves-light">Login<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Register<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Proceed As Guest<i class="material-icons"></i></a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+        {% if user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
+        {% endif %}
 
-        <li class="top-level"><a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a></li>
+        {% if not user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home & Login<i class="material-icons">home</i></a></li>
+        {% endif %}
 
-          <!-- Collapsible Side Nav Component -->
-          <ul class="collapsible collapsible-accordion">
-            <li>
-              <!-- Top Level Accordian Header -->
-              <a href="#!" class="collapsible-header waves-effect waves-light">About<i class="material-icons">info</i><i class="material-icons right">keyboard_arrow_down</i></a>
-              <div class="collapsible-body">
-                <ul>
-                  <li><a href="#!" class="waves-effect waves-light">Built With<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Built By<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Acknowledgements<i class="material-icons"></i></a></li>
-                  <li><a href="#!" class="waves-effect waves-light">Related Tools<i class="material-icons"></i></a></li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+        {% if user.is_authenticated %}
+        <li class="top-level"><a href="/logout" class="waves-effect waves-light">Logout<i class="material-icons">power_settings_new</i></a></li>
+        {% endif %}
 
-        <li class="top-level"><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light">Help<i class="material-icons">help</i></a></li>
+        {% if not user.is_authenticated %}
+        <li class="top-level"><a href="{% url 'upload' guest %}" class="waves-effect waves-light">Upload As Guest<i class="material-icons">file_upload</i></a></li>
+        {% endif %}
 
+        <li class="top-level">
+          <a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a>
+        </li>
+
+        <li class="top-level">
+          <a href="{% url 'about' guest %}" class="waves-effect waves-light">About<i class="material-icons">info</i></a>
+        </li>
+
+        <li class="top-level">
+          <a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light">Help / Wiki<i class="material-icons">help</i></a>
         </li>
 
       </ul>
@@ -123,21 +124,21 @@
         </div>
         <div class="row">
           <div class="col s12 underline footer-description">
-            <div class="col s4">
+            <div class="col s12 m4">
               <div class="center promo">
                 <i class="material-icons medium">done_all</i>
                 <p class="promo-caption">ScienceScape<sup>S</sup> builds upon scientometrics applications such as ScienceScape, developed by M.Jacomy at the <a href="http://medialab.sciences-po.fr/">Sciences Po Médialab</a>, Paris.</p>
               </div>
             </div>
 
-            <div class="col s4">
+            <div class="col s12 m4">
               <div class="center promo">
                 <i class="material-icons medium">flash_on</i>
                 <p class="promo-caption">Our powerful data processing scripts are based on Sebastian Grauwin's work, <a href="http://www.sebastian-grauwin.com">Bibliotools 3.0</a></p>
               </div>
             </div>
 
-            <div class="col s4">
+            <div class="col s12 m4">
               <div class="center promo">
                 <i class="material-icons medium">code</i>
                 <p class="promo-caption">For detailed information about this project, visit our <a href="http://github.com/wonjoonSeol/ScienceScape">GitHub Repository</a> and the <a href="{% url 'about' %}">about</a> page.</p>

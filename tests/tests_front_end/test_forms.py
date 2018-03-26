@@ -13,7 +13,7 @@ class TestCommands(TestCase):
     """
     def test_upload_forms(self):
         client = Client()
-        with open(os.path.join(APP_DIR ,'tests','front_end_tests','savedrecs.txt')) as file_path:
+        with open(os.path.join(APP_DIR ,'tests','tests_front_end','savedrecs.txt')) as file_path:
             response = client.post('/upload/', {'file': file_path}, follow = True)
         self.assertRedirects(response, "/addFields/{directory}".format(directory = str(os.path.join(APP_DIR ,'static','userFiles','Public','savedrecs.txt')).replace(" ",'%20')))
 
@@ -25,7 +25,7 @@ class TestCommands(TestCase):
         User.objects.create_user('temp', 'temp@temp.com','temp')
         client.login(username='temp', password='temp')
 
-        with open(os.path.join(APP_DIR ,'tests','front_end_tests','savedrecs.txt')) as file_path:
+        with open(os.path.join(APP_DIR ,'tests','tests_front_end','savedrecs.txt')) as file_path:
             response = client.post('/upload/', {'file': file_path}, follow = True)
         self.assertRedirects(response, "/addFields/{directory}".format(directory = str(os.path.join(APP_DIR ,'static','userFiles','temp','savedrecs.txt')).replace(" ",'%20')))
 
@@ -37,7 +37,7 @@ class TestCommands(TestCase):
         User.objects.create_user('temp', 'temp@temp.com','temp')
         client.login(username='temp', password='temp')
 
-        with open(os.path.join(APP_DIR ,'tests','front_end_tests','savedrecs.txt')) as file_path:
+        with open(os.path.join(APP_DIR ,'tests','tests_front_end','savedrecs.txt')) as file_path:
             response = client.post('/upload/', {'file': file_path}, follow = True)
 
             default_headers = ['UT', 'AU', 'DE', 'ID', 'TI', 'WC', 'CR', 'C1', 'PY', 'J9', 'VL', 'BP', 'DI', 'PT', 'DT', 'TC']
@@ -57,7 +57,7 @@ class TestCommands(TestCase):
         User.objects.create_user('temp', 'temp@temp.com','temp')
         client.login(username='temp', password='temp')
 
-        with open(os.path.join(APP_DIR ,'tests','front_end_tests','savedrecs.txt')) as file_path:
+        with open(os.path.join(APP_DIR ,'tests','tests_front_end','savedrecs.txt')) as file_path:
             response = client.post('/upload/', {'file': file_path}, follow = True)
             submission_response = client.post("/addFields/{directory}".format(directory = str(os.path.join(APP_DIR ,'static','userFiles','temp','savedrecs.txt')).replace(" ",'%20')), {'form-1-Name' : ''})
             self.assertEqual(True, str(submission_response.content).find('Not all fields have been defined') > 0)
