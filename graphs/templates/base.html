@@ -49,7 +49,9 @@
           <!-- Activation link for mobile navigation bar -->
           <a href="#" data-activates="nav-mobile-version" class="button-collapse white-text"><i class="material-icons">menu</i></a>
 
-          <img class="brand-logo center" src="{% static 'images/sciencescapes-logo-white.png' %}" alt="ScienceScapeS Logo">
+          <a href="{% url 'home' %}">
+            <img class="brand-logo center" src="{% static 'images/sciencescapes-logo-white.png' %}" alt="ScienceScapeS Logo">
+          </a>
 
             <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
               <li><a href="{% url 'upload' up %}" class="btn waves-effect waves-lighten" id="nav-login-btn">Upload</a></li>
@@ -85,7 +87,7 @@
         {% endif %}
 
         {% if not user.is_authenticated %}
-        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home & Login<i class="material-icons">home</i></a></li>
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home / Login<i class="material-icons">home</i></a></li>
         {% endif %}
 
         {% if user.is_authenticated %}
