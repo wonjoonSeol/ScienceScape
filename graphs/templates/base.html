@@ -55,7 +55,6 @@
             </ul>
 
             <ul class="right hide-on-med-and-down"> <!-- Right Menu -->
-              <li><a href="#!" class="waves-effect waves-light">Demo</a></li>
               <li><a href="{% url 'about' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
               <li><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light"><i class="material-icons">help</i></a></li>
             </ul>
@@ -95,10 +94,6 @@
         {% if not user.is_authenticated %}
         <li class="top-level"><a href="{% url 'upload' guest %}" class="waves-effect waves-light">Upload As Guest<i class="material-icons">file_upload</i></a></li>
         {% endif %}
-
-        <li class="top-level">
-          <a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a>
-        </li>
 
         <li class="top-level">
           <a href="{% url 'about' guest %}" class="waves-effect waves-light">About<i class="material-icons">info</i></a>
