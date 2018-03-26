@@ -432,3 +432,12 @@ input[type=search] {
 .upload-btn {
       background-color: #007baa
 }
+
+.error-card {
+  padding: 1px 0px;
+}
+
+.error-message {
+  color: white;
+  font-size: 1.2em;
+}
