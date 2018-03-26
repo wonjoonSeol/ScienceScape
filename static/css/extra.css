@@ -203,12 +203,23 @@ footer a {
 .toggle-graph-edges {
   text-transform: uppercase;
   color: #0D47A1;
-  margin-top: 5px;
+  margin-top: -3px;
 }
 
 .toggle-graph-edges label {
   margin-right: 10px;
   margin-left: 10px;
+}
+
+.center.graph-control-button {
+    margin-top: 10px;
+}
+
+#graph-container {
+border: 1px solid #e0f4ff;
+border-radius: 2px;
+background: #fafdff;
+box-shadow: inset 1px 1px 10px #e0e0e061, inset -1px -1px 10px #e0e0e061;
 }
 
 .graph-edges-container{
@@ -226,6 +237,7 @@ footer a {
   color: #0D47A1;
   background-color: white !important;
   border: 1px solid #0D47A1;
+  width: 100%
 }
 
 /* Sigma.js */
