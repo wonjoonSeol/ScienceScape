@@ -48,14 +48,16 @@
         <div class="nav-wrapper">
           <!-- Activation link for mobile navigation bar -->
           <a href="#" data-activates="nav-mobile-version" class="button-collapse white-text"><i class="material-icons">menu</i></a>
-          <h1 id="nav-h1"><a href="{% url 'home' %}" class="brand-logo center">ScienceScape<sup>s</sup></a></h1>
+
+          <a href="{% url 'home' %}">
+            <img class="brand-logo center" src="{% static 'images/sciencescapes-logo-white.png' %}" alt="ScienceScapeS Logo">
+          </a>
 
             <ul class="left hide-on-med-and-down"> <!-- Left Menu -->
               <li><a href="{% url 'upload' up %}" class="btn waves-effect waves-lighten" id="nav-login-btn">Upload</a></li>
             </ul>
 
             <ul class="right hide-on-med-and-down"> <!-- Right Menu -->
-              <li><a href="#!" class="waves-effect waves-light">Demo</a></li>
               <li><a href="{% url 'about' %}" class="dropdown-button nav-dropdown waves-effect waves-light" data-activates="dropdown-about">About</a></li> <!-- Dropdown Trigger -->
               <li><a href="https://github.com/wonjoonSeol/ScienceScape/wiki" class="waves-effect waves-light"><i class="material-icons">help</i></a></li>
             </ul>
@@ -81,11 +83,11 @@
         </li>
 
         {% if user.is_authenticated %}
-        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home<i class="material-icons">home</i></a></li>
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home / Upload<i class="material-icons">home</i></a></li>
         {% endif %}
 
         {% if not user.is_authenticated %}
-        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home & Login<i class="material-icons">home</i></a></li>
+        <li class="top-level"><a href="{% url 'home' %}" class="waves-effect waves-light">Home / Login<i class="material-icons">home</i></a></li>
         {% endif %}
 
         {% if user.is_authenticated %}
@@ -95,10 +97,6 @@
         {% if not user.is_authenticated %}
         <li class="top-level"><a href="{% url 'upload' guest %}" class="waves-effect waves-light">Upload As Guest<i class="material-icons">file_upload</i></a></li>
         {% endif %}
-
-        <li class="top-level">
-          <a href="#!" class="waves-effect waves-light">Demo<i class="material-icons">mouse</i></a>
-        </li>
 
         <li class="top-level">
           <a href="{% url 'about' guest %}" class="waves-effect waves-light">About<i class="material-icons">info</i></a>
