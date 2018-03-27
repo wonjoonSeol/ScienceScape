@@ -381,10 +381,6 @@ Graph Controls
   background-color: #0D47A1;
 }
 
-.field-selector-header,
-.field-selector-footer {
-      background: #ccccccb3;
-}
 
 /* Search Box */
 input[type=search]:focus {
