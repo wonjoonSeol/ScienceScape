@@ -71,9 +71,14 @@ def parse_authors(id, article, output):
         for author in article_authors:
             position = article_authors.index(author)
             author = author.replace(',', '')
-            first_name = author.split(' ')[0].capitalize()
-            last_name = author.split(' ')[1].capitalize()
-            name = first_name + ' ' + last_name
+            author_name = author.split(' ')
+            name = ' '
+            if len(author_name) > 0:
+                first_name = author_name[0].capitalize()
+                name = first_name
+            if len(author_name) > 1:
+                last_name = author_name[1].capitalize()
+                name = name + ' ' + last_name
             output.write(f'{id}\t{position}\t{name}\n')
 
 """ Write the author keywords to the given output path.
