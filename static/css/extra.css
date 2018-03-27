@@ -331,7 +331,29 @@ box-shadow: inset 1px 1px 10px #e0e0e061, inset -1px -1px 10px #e0e0e061;
   height: 100px;
 }
 
+.about .the-codokans .row {
+  margin-top: 12px;
+}
 
+.the-codokans img {
+  margin-top: 2px;
+}
+
+.the-codokans .social-links {
+  margin-top: 5px;
+}
+
+.skills {
+    margin-top: 25px;
+}
+
+.social-links a{
+  margin-right: 7px;
+}
+
+#acknowledgements p {
+  color: white;
+}
 
 
 /*******************
