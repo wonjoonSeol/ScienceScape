@@ -32,12 +32,6 @@ nav .dropdown-content li {
   background-color: rgba(22, 97, 139, 1) !important;
 }
 
-.nav-wrapper img.brand-logo.center{
-  height: 30px;
-  margin-top: 14px;
-  transform: translateX(-50%);
-}
-
 nav .dropdown-content li.top-level:hover,
 .side-nav li.top-level:hover {
   background-color: rgba(6, 80, 122, .91);
