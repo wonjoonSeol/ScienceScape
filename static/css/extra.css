@@ -351,8 +351,19 @@ box-shadow: inset 1px 1px 10px #e0e0e061, inset -1px -1px 10px #e0e0e061;
   margin-right: 7px;
 }
 
-#acknowledgements p {
+#acknowledgements p,
+#acknowledgements ul {
   color: white;
+}
+
+#acknowledgements a {
+  color: white;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+#additional-thanks {
+  text-align: center;
 }
 
 
