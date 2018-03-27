@@ -1,4 +1,3 @@
-<img src="/images/sciencescapes-logo.png?raw=true" width="20%" align="left">
 
 <h2 align="right">Something wrong?</h2>
 

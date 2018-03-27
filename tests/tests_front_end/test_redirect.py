@@ -24,24 +24,36 @@ class TestCommands(TestCase):
         #print("Redirect for upload: " + str(response.redirect_chain))
         self.assertEqual(response.redirect_chain, [('/upload/%20', 302)])
 
+    """
+    Tests that the graph redirection happens properly.
+    """
     def test_valid_graph_redirection(self):
         client = Client()
         response = client.get('/graph/', {'username': '', 'password': ''}, follow = True)
         print("Redirect for graphs: " + str(response.redirect_chain))
         self.assertEqual(str(response.redirect_chain), "[]")
 
+    """
+    Tests that the about page yields no redirection.
+    """
     def test_no_redirect_for_about(self):
         client = Client()
         response = client.get('/about/', follow = True)
         print("Redirect for About: " + str(response.redirect_chain))
         self.assertEqual(str(response.redirect_chain), "[]")
 
+    """
+    Tests that there is no upload redirection.
+    """
     def test_no_redirect_for_upload(self):
         client = Client()
         response = client.get('/upload/', follow = True)
         print("Redirect for Upload: " + str(response.redirect_chain))
         self.assertEqual(str(response.redirect_chain), "[]")
 
+    """
+    Tests that creating an account redirects to the upload page.
+    """
     def test_account_redirect_to_upload(self):
         client = Client()
         response = client.get('/account/', follow = True)
