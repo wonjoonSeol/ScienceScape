@@ -154,8 +154,11 @@ resetGraph();
  */
 function resetGraph(){
 	document.getElementById("graph-container").innerHTML = "";
-	graphs = []
-	var colourOfRestOfGraph = '#eee'
+	graphs = [];
+	var colourOfRestOfGraph = '#eee';
+	
+	var defaultNodeColor = '#f0000';
+	var defaultEdgeColor = '#00ff00';
 	
 	sigma.parsers.gexf("{% static fpath%}", {container: 'graph-container'},
 		function (sigmaObject) {
@@ -170,19 +173,32 @@ function resetGraph(){
 	    	  node.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
 	    	  
 	    	 }
-	    	 
-	    	
 
 	    	  if (!node.label) {
 	    	  	node.label = n.id;
 	    	  }
 			
-			console.log("node: " + node.label);
+				console.log("node: " + node.label);
 
 	    	  if(!node.size){
 	    	  	node.size = 1;
 	    	  }
+	    	  
+	    	  if(!node.color){
+	    	  	node.color = defaultNodeColor;
+	    	  }
+	    	  
+
 	        counter ++ ;
+	      });
+	      
+	      
+	      sigmaObject.graph.edges().forEach(function(edge) {
+   	  
+	    	  if(!edge.color){
+	    	  	edge.color = defaultEdgeColor;
+	    	  }
+	    	 
 	      });
 	      
 	      
