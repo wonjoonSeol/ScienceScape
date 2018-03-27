@@ -1,6 +1,4 @@
-<img src="/images/sciencescapes-logo.png?raw=true" width="20%" align="left">
-
-<h2 align="right">Pull Request</h2>
+<h2 align="left">Pull Request</h2>
 
 PULL REQUEST DESCRIPTION HERE
 
