@@ -356,10 +356,25 @@ box-shadow: inset 1px 1px 10px #e0e0e061, inset -1px -1px 10px #e0e0e061;
   font-weight: bold;
 }
 
+#acknowledgements .col {
+  background-color: rgba(0, 64, 101, 0.17);
+  background-color: rgba(0, 64, 101, 0.17);
+}
+
 #additional-thanks {
   text-align: center;
 }
 
+#built-with .row {
+  margin-top:40px;
+  margin-bottom:80px;
+  padding-top:40px;
+  background-color: rgba(0, 64, 101, 0.17);
+}
+
+#built-with .col {
+  margin-bottom:30px;
+}
 
 /*******************
  User Account Page
