@@ -167,7 +167,7 @@ Submits a request to load a graph and returns an updated page rendering.
 def load_graph(request, path):
 	file_path = turn_path_into_string(path)
 	if len(file_path) > 2:
-		message = "Your graph: click on a node to visualise data pattern subtrees"
+		message = "Your graph"
 	else:
 		message = "No graph has been produced {sad_face} Please check your input file".format(sad_face = u'\U0001f62d')
 
