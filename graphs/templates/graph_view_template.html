@@ -66,7 +66,16 @@
   <div class="card">
     <div class="card-content">
 
-    <h5>{{filename}}</h5>
+    <div class="row">
+      <div class="col s11">
+        <h5>{{filename}}</h5>
+      </div>
+      <div class="col s1">
+        <div id="graph-info">
+          <i class="material-icons tooltipped" data-position="left" data-delay="0" data-tooltip="Select a node to show a sub-graph and related data points to that node">info_outline</i>
+        </div>
+      </div>
+    </div>
 
     <div id="graph-container"></div>
     </div>
