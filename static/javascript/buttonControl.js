@@ -7,12 +7,35 @@ var graphs = [];
  * @return {void}
  */
 function startStopForceAtlas2(element){
-	console.log("no. graphs: " + graphs.length)
+	
+	var edgeWeight = parseFloat(document.getElementById("edge-weight").value);
+	var iterations = parseInt(document.getElementById("iterations").value);
+	var gravityValue = parseFloat(document.getElementById("gravity").value);
+	var scalingValue = parseFloat(document.getElementById("scaling").value);	
+	
+	if(!edgeWeight){
+		edgeWeight = 0;
+	}
+	
+	if(!iterations){
+		iterations = 1;
+	}
+	
+	if(!gravityValue){
+		gravityValue = 1;
+	}
+	
+	if(!scalingValue){
+		scalingValue = 1;
+	}
+	
+	console.log("Force Atlas 2: edgeWeight: " + edgeWeight + " iterations: "+ iterations +" gravity: " + gravityValue + " scaling: " + scalingValue);
+	
 	if(graphs.length > 0){
 		if (!graphs[0].isForceAtlas2Running()){
 		//start spacialization
 			for (i=0 ; i<graphs.length; i++) {
-				graphs[i].startForceAtlas2({worker: true, barnesHutOptimize: false});
+				graphs[i].startForceAtlas2({worker: true, barnesHutOptimize: false, iterationsPerRender: iterations, scalingRatio: scalingValue, edgeWeightInfluence: edgeWeight, gravity: gravityValue});
 			}
 			element.innerHTML="<i class=\"material-icons left\">stop</i>Stop Force Atlas 2";
 
