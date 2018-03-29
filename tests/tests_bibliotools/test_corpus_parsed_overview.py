@@ -2,7 +2,7 @@ from django.test import TestCase
 import sys
 import os
 
-lib_path = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'bibliotools3.0', 'scripts'))
+lib_path = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'bibliotools3', 'scripts'))
 sys.path.append(lib_path)
 
 from corpus_parsed_overview import get_no_articles
