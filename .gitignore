@@ -1,6 +1,6 @@
 # Created by https://www.gitignore.io/api/vim,macos,python,eclipse,windows,intellij
 
-bibliotools3.0/Result
+bibliotools3/Result
 
 #ENV & Heroku deployment
 venv
