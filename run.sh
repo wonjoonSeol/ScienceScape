@@ -42,7 +42,7 @@ else
 		if [ "$2" == "scripts" ]; then
 			clear
 			echo "\n\n\n ---- Runnings scripts without website. ----- | using $python_v alias \n"
-			"$python_v" bibliotools3.0/scripts/graph_gen.py
+			"$python_v" bibliotools3/scripts/graph_gen.py
 		fi
 		if [ "$2" == "heroku" ]; then
 			 clear
