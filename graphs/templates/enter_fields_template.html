@@ -3,21 +3,15 @@
 {% block Content %}
 
 <div class="container">
-
     {% include "welcome_logo_slogan.html" %}
-
     {% if msg.strip %}
       <div class="card-panel error-card red darken-3 center">
         <p class="error-message text-white center">{{msg}}</p>
       </div>
     {% endif %}
-
     {% include "logged_in_log_out_widget.html" %}
-
    <div>
    {% include "fields.html" %}
    </div>
-
 </div>
-
 {% endblock %}
