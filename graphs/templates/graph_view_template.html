@@ -149,8 +149,11 @@
 <script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.layout.forceAtlas2/worker.js'%}"></script>
 <script src="{% static 'javascript/sigma.js-1.2.1/plugins/sigma.layout.forceAtlas2/supervisor.js'%}"></script>
 <script src="{% static 'javascript/buttonControl.js'%}"></script>
-
 <script>
+    var defaultNodeColor = '#366688';
+    var colorOfRestOfGraph = '#eee';
+    var defaultEdgeColor = '#333F50';
+
     sigma.classes.graph.addMethod('subtree', function(nodeId) {
         var nodeIndex,
         subtree = {},
@@ -161,8 +164,8 @@
 
         return subtree;
     });
-
     resetGraph();
+
 
     /**
     * Reset graph to original state
@@ -174,90 +177,102 @@
     function resetGraph(){
         document.getElementById("graph-container").innerHTML = "";
         graphs = [];
-        var colourOfRestOfGraph = '#eee';
-
-        var defaultNodeColor = '#366688';
-        var defaultEdgeColor = '#333F50';
 
         sigma.parsers.gexf("{% static fpath%}", {container: 'graph-container'},
         function (sigmaObject) {
-            var numberOfNodes = sigmaObject.graph.nodes().length;
-            var counter = 0;
-
-            sigmaObject.graph.nodes().forEach(function(node) {
-                if (!node.x && !node.y) {
-                    node.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
-                    node.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
-                }
-
-                if (!node.label) {
-                    node.label = n.id;
-                }
-
-                if (!node.size) {
-                    node.size = 1;
-                }
-
-                if (!node.color) {
-                    node.color = defaultNodeColor;
-                }
-                counter++;
-            });
-
-            sigmaObject.graph.edges().forEach(function(edge) {
-                if (!edge.color) {
-                    edge.color = defaultEdgeColor;
-                }
-            });
-
+            redrawNodes(sigmaObject);
+            redrawEdges(sigmaObject);
             graphs.push(sigmaObject);
             turnOnOffEdges(document.getElementById("graph-edges"));
-
-            // When the user clicks outside, the graph's colours are reset to the original.
-            sigmaObject.graph.nodes().forEach(function(node) {
-                node.originalColor = node.color;
-            });
-
-            sigmaObject.graph.edges().forEach(function(edge) {
-                edge.originalColor = edge.color;
-            });
-
-            // Binds the subtree method added to each node when a clickNode event occurs.
-            sigmaObject.bind('clickNode', function(nodeClickedOn) {
-                var nodeId = nodeClickedOn.data.node.id,
-                inSubtree = sigmaObject.graph.subtree(nodeId);
-                inSubtree[nodeId] = nodeClickedOn.data.node;
-
-                sigmaObject.graph.nodes().forEach(function(node) {
-                    if (!inSubtree[node.id]) {
-                        node.color = colourOfRestOfGraph;
-                    }
-                });
-
-                sigmaObject.graph.edges().forEach(function(edge) {
-                    if (!(inSubtree[edge.source] && inSubtree[edge.target])) {
-                        edge.color = colourOfRestOfGraph;
-                    }
-                });
-
-                sigmaObject.refresh();
-            });
-
-            sigmaObject.bind('clickStage', function(nodeClickedOn) {
-                sigmaObject.graph.nodes().forEach(function(node) {
-                    node.color = node.originalColor;
-                });
-
-                sigmaObject.graph.edges().forEach(function(edge) {
-                    edge.color = edge.originalColor;
-                });
-
-                sigmaObject.refresh();
-            });
+            bindSubtree(sigmaObject);
 
             sigmaObject.refresh();
-
             }
         );
     }
+
+
+    /**
+    * Redraw nodes to original state
+    *
+    * @param {sigmaObject}
+    * @return {void}
+    */
+    function redrawNodes(sigmaObject) {
+        var numberOfNodes = sigmaObject.graph.nodes().length;
+        var counter = 0;
+        sigmaObject.graph.nodes().forEach(function(node) {
+            if (!node.x && !node.y) {
+                node.x =100 * Math.cos(2 * counter * Math.PI / numberOfNodes);
+                node.y =100 * Math.sin(2 *  counter * Math.PI / numberOfNodes);
+            }
+            if (!node.label) node.label = n.id;
+            if (!node.size) node.size = 1;
+            if (!node.color) node.color = defaultNodeColor;
+            counter++;
+        });
+
+        // When the user clicks outside, the graph's colours are reset to the original.
+        sigmaObject.graph.nodes().forEach(function(node) {
+            node.originalColor = node.color;
+        });
+
+    }
+
+
+    /**
+    * Redraw edges to original state
+    *
+    * @param {sigmaObject}
+    * @return {void}
+    */
+    function redrawEdges(sigmaObject) {
+        sigmaObject.graph.edges().forEach(function(edge) {
+            if (!edge.color) {
+                edge.color = defaultEdgeColor;
+            }
+        });
+        sigmaObject.graph.edges().forEach(function(edge) {
+            edge.originalColor = edge.color;
+        });
+    }
+
+
+    /**
+    * Binds the subtree method added to each node/edges when a clickNode event occurs.
+    *
+    * @param {sigmaObject}
+    * @return {void}
+    */
+    function bindSubtree(sigmaObject) {
+        sigmaObject.bind('clickNode', function(nodeClickedOn) {
+            var nodeId = nodeClickedOn.data.node.id,
+            inSubtree = sigmaObject.graph.subtree(nodeId);
+            inSubtree[nodeId] = nodeClickedOn.data.node;
+
+            sigmaObject.graph.nodes().forEach(function(node) {
+                if (!inSubtree[node.id]) {
+                    node.color = colorOfRestOfGraph;
+                }
+            });
+
+            sigmaObject.graph.edges().forEach(function(edge) {
+                if (!(inSubtree[edge.source] && inSubtree[edge.target])) {
+                    edge.color = colorOfRestOfGraph;
+                }
+            });
+
+            sigmaObject.refresh();
+        });
+        sigmaObject.bind('clickStage', function(nodeClickedOn) {
+            sigmaObject.graph.nodes().forEach(function(node) {
+                node.color = node.originalColor;
+            });
+            sigmaObject.graph.edges().forEach(function(edge) {
+                edge.color = edge.originalColor;
+            });
+            sigmaObject.refresh();
+        });
+    }
+
 </script>
