@@ -201,9 +201,9 @@ This method generates the os system command to launch bibliotools scripts, given
 def generate_bibliotools_launch_command(username, year_start, year_end, headers_as_string):
     result_command = ""
     if headers_as_string == "":
-        result_command = f"python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}"
+        result_command = f"python3 bibliotools3/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end}"
     else:
-        result_command = f"python3 bibliotools3.0/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}"
+        result_command = f"python3 bibliotools3/scripts/graph_gen.py -user {username} -bound {year_start}-{year_end} -headers {headers_as_string}"
     return result_command
 
 """Return a string of headers ready for parsing.

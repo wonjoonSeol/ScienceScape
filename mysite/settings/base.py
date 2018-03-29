@@ -109,5 +109,5 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
     '--with-coverage',
-    '--cover-package=bibliotools3.0, graphs',
+    '--cover-package=bibliotools3, graphs',
 ]

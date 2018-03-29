@@ -3,7 +3,7 @@ import sys
 import os
 import glob
 
-lib_path = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'bibliotools3.0', 'scripts'))
+lib_path = os.path.abspath(os.path.join(__file__, '..', '..', '..', 'bibliotools3', 'scripts'))
 sys.path.append(lib_path)
 
 import config

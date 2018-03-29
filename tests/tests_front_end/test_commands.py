@@ -143,7 +143,7 @@ class TestCommands(TestCase):
     This is very important for results accuracy and critical to debugging errors. (Case 1: no headers provided)
     """
     def test_generate_bibliotools_command_with_no_header_parameters(self):
-        expected_command = "python3 bibliotools3.0/scripts/graph_gen.py -user User1 -bound 1998-2018"
+        expected_command = "python3 bibliotools3/scripts/graph_gen.py -user User1 -bound 1998-2018"
         self.assertEqual(generate_bibliotools_launch_command("User1", 1998, 2018, ""), expected_command)
 
     """
@@ -152,7 +152,7 @@ class TestCommands(TestCase):
     """
     def test_generate_bibliotools_command_with_some_header_parameters(self):
         headers_as_string = "UT-AU-DE-ID-TI-AB-CR-C1-PY-J9-VL-BP-DI-AB-DT-TC"
-        expected_command = "python3 bibliotools3.0/scripts/graph_gen.py -user User1 -bound 1998-2018 -headers " + headers_as_string
+        expected_command = "python3 bibliotools3/scripts/graph_gen.py -user User1 -bound 1998-2018 -headers " + headers_as_string
         self.assertEqual(generate_bibliotools_launch_command("User1", 1998, 2018, headers_as_string), expected_command)
 
     """
