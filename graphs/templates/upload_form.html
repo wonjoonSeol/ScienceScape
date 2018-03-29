@@ -4,26 +4,21 @@
 		<div class="card uploader">
 			<div class="card-content">
 				<h5>Upload a tab-delimited file</h5>
-
 				<div class="row" id="upload-tab-delimited">
 						<form method="POST" action ="{% url 'upload' up %}" enctype="multipart/form-data">
 												{% csrf_token %}
 								<div class="file-field input-field">
-      							<div class="btn upload-btn">
-      						 		<span>File</span>
-      						  		<!--<input type="file">-->
-      						  		{{upload}}
-     								 </div>
-   								 <div class="file-path-wrapper">
-       									 <input class="file-path validate" type="text">
-     								 </div>
-     								 <input class="btn upload-btn waves-effect upload-submit" type="submit" value="submit">
-   							 </div>
+                                    <div class="btn upload-btn">
+                                        <span>File</span>
+                                        {{upload}}
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                    <input class="btn upload-btn upload-submit" type="submit" value="submit">
+   							    </div>
 						</form>
-
-					<!-- TODO Add upload/submit button -->
 				</div>
-
 			</div> <!-- /card-content -->
 		</div>
 	</div>

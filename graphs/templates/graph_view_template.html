@@ -201,10 +201,8 @@
                 if (!node.color) {
                     node.color = defaultNodeColor;
                 }
-
                 counter++;
             });
-
 
             sigmaObject.graph.edges().forEach(function(edge) {
                 if (!edge.color) {
@@ -244,7 +242,6 @@
 
                 sigmaObject.refresh();
             });
-
 
             sigmaObject.bind('clickStage', function(nodeClickedOn) {
                 sigmaObject.graph.nodes().forEach(function(node) {
